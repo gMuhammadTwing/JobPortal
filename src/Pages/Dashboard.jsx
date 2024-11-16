@@ -26,9 +26,11 @@ import logo from '../assets/logo.png'
 import { Button } from '../Components/Button'
 import userLogo from '../assets/user.jpeg'
 const navigation = [
-  { name: 'Employer Profile', href: '/home', icon: HomeIcon, current: true },
-  { name: 'Applied Jobs', href: '#', icon: UsersIcon, current: false },
-  { name: 'Subscription', href: '#', icon: DocumentDuplicateIcon, current: false },
+  { name: 'Job Profile', href: '/home', icon: HomeIcon, current: true },
+  { name: 'Applied Jobs', href: '/applied-jobs', icon: UsersIcon, current: false },
+  { name: 'View Jobs', href: '/view-jobs', icon: UsersIcon, current: false },
+  { name: 'Resume/CV', href: '/resume', icon: UsersIcon, current: false },
+  { name: 'Subscription & Payment', href: '/subscription', icon: DocumentDuplicateIcon, current: false },
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },

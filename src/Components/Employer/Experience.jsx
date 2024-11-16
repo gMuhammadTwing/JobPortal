@@ -13,7 +13,7 @@ export default function Experience() {
     };
     return (
         <>
-           <div className="flex justify-center px-4 sm:px-0">
+            <div className="flex justify-center px-4 sm:px-0">
                 <div className="p-4 w-full max-w-4xl">
                     <div className={`border rounded-md shadow-lg ${exp ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
@@ -35,13 +35,22 @@ export default function Experience() {
                         <div className={`relative transition-all duration-300 ease-in-out ${exp ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
                             {(!editExp && !exp) && (
-                                <button
-                                    type="button"
-                                    onClick={() => setEditExp(true)}
-                                    className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                >
-                                    <PlusIcon className="h-5 w-5 text-white" />
-                                </button>
+                                <div className="absolute top-4 right-4 flex space-x-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditExp(true)}
+                                        className="hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
+                                    >
+                                        <PencilIcon className="h-5 w-5 text-blue-500" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => console.log("Delete clicked")}
+                                        className="hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
+                                    >
+                                        <TrashIcon className="h-5 w-5 text-red-600" />
+                                    </button>
+                                </div>
                             )}
 
                             {/* Profile Information */}
@@ -51,22 +60,6 @@ export default function Experience() {
                                         <div>
                                             <div className="flex justify-between items-center">
                                                 <h4 className="font-semibold text-lg">Software Developer</h4>
-                                                <div className="flex space-x-2">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setEditExp(true)}
-                                                        className="bg-blue-500 hover:bg-blue-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                                    >
-                                                        <PencilIcon className="h-5 w-5 text-white" />
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setEditExp(true)}
-                                                        className="bg-red-500 hover:bg-red-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                                    >
-                                                        <TrashIcon className="h-5 w-5 text-white" />
-                                                    </button>
-                                                </div>
                                             </div>
 
                                             <p className="text-sm text-gray-600">Private</p>
@@ -76,6 +69,17 @@ export default function Experience() {
                                     </div>
                                 </div>
 
+                            )}
+                            {!editExp && (
+                                <div className="mt-4 flex justify-center border-t-2 py-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditExp(true)}
+                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-2 text-white shadow-md transition-all"
+                                    >
+                                        <PlusIcon className=" h-5 w-5" />
+                                    </button>
+                                </div>
                             )}
 
                             {/* Edit Profile Form */}

@@ -34,13 +34,22 @@ export default function Education() {
                         <div className={`relative transition-all duration-300 ease-in-out ${Education ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
                             {(!editEducation && !Education) && (
-                                <button
-                                    type="button"
-                                    onClick={() => setEditEducation(true)}
-                                    className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                >
-                                    <PlusIcon className="h-5 w-5 text-white" />
-                                </button>
+                                <div className="absolute top-4 right-4 flex space-x-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditEducation(true)}
+                                        className="hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
+                                    >
+                                        <PencilIcon className="h-5 w-5 text-blue-500" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => console.log("Delete clicked")}
+                                        className="hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
+                                    >
+                                        <TrashIcon className="h-5 w-5 text-red-600" />
+                                    </button>
+                                </div>
                             )}
 
                             {/* Profile Information */}
@@ -50,22 +59,6 @@ export default function Education() {
                                         <div>
                                             <div className="flex justify-between items-center">
                                                 <h4 className="font-semibold text-lg">Bahria University, Islamabad</h4>
-                                                <div className="flex space-x-2 ml-2">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setEditEducation(true)}
-                                                        className="bg-blue-500 hover:bg-blue-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                                    >
-                                                        <PencilIcon className="h-5 w-5 text-white" />
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setEditEducation(true)}
-                                                        className="bg-red-500 hover:bg-red-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                                    >
-                                                        <TrashIcon className="h-5 w-5 text-white" />
-                                                    </button>
-                                                </div>
                                             </div>
                                             <p>BS Computer Science 2024</p>
                                         </div>
@@ -73,6 +66,17 @@ export default function Education() {
                                     </div>
                                 </div>
 
+                            )}
+                            {!editEducation && (
+                                <div className="mt-4 flex justify-center border-t-2 py-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditEducation(true)}
+                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-2 text-white shadow-md transition-all"
+                                    >
+                                        <PlusIcon className=" h-5 w-5" />
+                                    </button>
+                                </div>
                             )}
 
                             {/* Edit Profile Form */}

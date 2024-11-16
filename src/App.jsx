@@ -8,6 +8,9 @@ import CreateAccount from './Pages/CreateAccount'
 import JobSeekerSignup from './Pages/JobSeekerSignup'
 import EmployerSignup from './Pages/EmployerSignup'
 import Profile from './Pages/Employer/Profile'
+import JobsApplied from './Pages/Employer/JobsApplied'
+import Resume from './Pages/Employer/Resume'
+import ViewJobs from './Pages/Employer/ViewJobs'
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
             }
           >
             <Route path="home" element={<Profile />} />
+            <Route path="applied-jobs" element={<JobsApplied />} />
+            <Route path="resume" element={<Resume />} />
+            <Route path="view-jobs" element={<ViewJobs />} />
           </Route>
         </Routes>
       </BrowserRouter>
