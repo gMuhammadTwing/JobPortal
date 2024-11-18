@@ -10,28 +10,54 @@ import {
   TransitionChild,
 } from '@headlessui/react'
 import {
+  AdjustmentsHorizontalIcon,
   Bars3Icon,
   BellIcon,
+  BriefcaseIcon,
+  BuildingLibraryIcon,
   CalendarIcon,
   ChartPieIcon,
+  ClipboardIcon,
+  CogIcon,
+  CreditCardIcon,
   DocumentDuplicateIcon,
+  DocumentTextIcon,
+  FlagIcon,
   FolderIcon,
   HomeIcon,
+  HomeModernIcon,
+  NewspaperIcon,
+  UserCircleIcon,
   UsersIcon,
+  ViewfinderCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { Button } from '../Components/Button'
 import userLogo from '../assets/user.jpeg'
 const navigation = [
-  { name: 'Job Profile', href: '/home', icon: HomeIcon, current: true },
-  { name: 'Applied Jobs', href: '/applied-jobs', icon: UsersIcon, current: false },
-  { name: 'View Jobs', href: '/view-jobs', icon: UsersIcon, current: false },
-  { name: 'Resume/CV', href: '/resume', icon: UsersIcon, current: false },
-  { name: 'Subscription & Payment', href: '/subscription', icon: DocumentDuplicateIcon, current: false },
-]
+  { name: 'Job Profile', href: '/home', single: 'home', icon: UserCircleIcon, current: true },
+  { name: 'Resume/CV', href: '/resume', icon: DocumentTextIcon, current: false },
+  { name: 'Search Jobs', href: '/view-jobs', icon: ViewfinderCircleIcon, current: false },
+  { name: 'Applied Jobs', href: '/applied-jobs', single: 'applied-jobs', icon: BriefcaseIcon, current: false },
+  { name: 'Subscription & Payment', href: '/subscription', icon: CreditCardIcon, current: false },
+
+  { name: 'Employer Profile', href: '/employer-profile', icon: UserCircleIcon, current: true },
+  { name: 'View Employer Logs', href: '/view-employer-logs', icon: UserCircleIcon, current: true },
+  { name: 'Employer Job Management', href: '/job-management', icon: BriefcaseIcon, current: false },
+  { name: 'Search Coursework', href: '/coursework', icon: HomeModernIcon, current: false },
+  { name: 'Shortlisting Requests', href: '/shortlisting', icon: ClipboardIcon, current: false },
+  { name: 'Reports', href: '/reports', icon: FlagIcon, current: false },
+  { name: 'Blog/Comments', href: '/blog', icon: NewspaperIcon, current: false },
+  { name: 'Subscription & Payment', href: '/subscription', icon: CreditCardIcon, current: false },
+  // { name: 'Admin Panel', href: '/admin-panel', icon: CogIcon, current: false },
+
+  { name: 'CMS Pages', href: '/cms-pages', icon: CogIcon, current: false },
+  { name: 'CMS Section', href: '/cms-section', icon: CogIcon, current: false },
+];
+
 const userNavigation = [
   { name: 'Your profile', href: '#' },
   { name: 'Sign out', href: '/login' },
@@ -43,7 +69,12 @@ function classNames(...classes) {
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const handleCurrent = (item) => {
+    console.log(item);
 
+  }
+  const location = useLocation();
+  console.log(location.pathname)
   return (
     <>
       <div>
@@ -79,10 +110,12 @@ export default function Dashboard() {
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
                       <ul role="list" className="-mx-2 space-y-1">
-                        {navigation.map((item) => (
+                        {navigation.map((item, index) => (
                           <li key={item.name}>
                             <Link
-                              href={item.href || '#'}
+                              key={index}
+                              onClick={() => handleCurrent(item)}
+                              to={item.href || '#'}
                               className={classNames(
                                 item.current
                                   ? 'bg-gray-50 text-indigo-600'
@@ -99,7 +132,7 @@ export default function Dashboard() {
                               />
                               {item.name}
                             </Link>
-                            {item.submenus && (
+                            {/* {item.submenus && (
                               <ul className="pl-8 space-y-1 mt-2">
                                 {item.submenus.map((submenu) => (
                                   <li key={submenu.name}>
@@ -112,7 +145,7 @@ export default function Dashboard() {
                                   </li>
                                 ))}
                               </ul>
-                            )}
+                            )} */}
                           </li>
                         ))}
                       </ul>
@@ -145,7 +178,8 @@ export default function Dashboard() {
                         <a
                           href={item.href}
                           className={classNames(
-                            item.current
+                            location.pathname.includes(item.href) ||
+                              location.pathname.includes(item?.single)
                               ? 'bg-gray-50 text-indigo-600'
                               : 'text-white hover:bg-gray-50 hover:text-indigo-600',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
@@ -154,7 +188,8 @@ export default function Dashboard() {
                           <item.icon
                             aria-hidden="true"
                             className={classNames(
-                              item.current ? 'text-indigo-600' : 'text-white group-hover:text-indigo-600',
+                              location.pathname.includes(item.href) ||
+                                location.pathname.includes(item?.single) ? 'text-indigo-600' : 'text-white group-hover:text-indigo-600',
                               'h-6 w-6 shrink-0',
                             )}
                           />

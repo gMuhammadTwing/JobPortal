@@ -12,7 +12,7 @@ import { useState } from "react";
 import { DocumentIcon } from "@heroicons/react/24/outline";
 import { Button } from "../../Components/Button";
 import { toast, Toaster } from "sonner";
-import AddResume from "../../Components/Employer/AddResume";
+import AddResume from "../../Components/JobSeeker/AddResume";
 export default function Resume() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {

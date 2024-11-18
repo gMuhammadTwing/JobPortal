@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { Button } from "../../Components/Button";
+import { Button } from "../Button";
 import userLogo from '../../assets/user.jpeg'
 export default function Summary() {
     const [summary, setSummary] = useState(false);

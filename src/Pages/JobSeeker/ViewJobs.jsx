@@ -105,6 +105,66 @@ export default function ViewJobs() {
             ],
             "experienceRequired": "2+ Years",
             "location": "Faisalabad"
+        },
+        {
+            "id": 5,
+            "title": "UI/UX Designer",
+            "href": "#",
+            "description": "Looking for a creative and detail-oriented UI/UX designer who can design user-centric and aesthetically pleasing interfaces for our applications.",
+            "date": "Mar 28, 2020",
+            "datetime": "2020-03-28",
+            "category": {
+                "title": "Design",
+                "href": "#"
+            },
+            "expectedSalary": "70K - 90K",
+            "skills": [
+                "Figma",
+                "Adobe XD",
+                "Sketch"
+            ],
+            "experienceRequired": "2+ Years",
+            "location": "Faisalabad"
+        },
+        {
+            "id": 5,
+            "title": "UI/UX Designer",
+            "href": "#",
+            "description": "Looking for a creative and detail-oriented UI/UX designer who can design user-centric and aesthetically pleasing interfaces for our applications.",
+            "date": "Mar 28, 2020",
+            "datetime": "2020-03-28",
+            "category": {
+                "title": "Design",
+                "href": "#"
+            },
+            "expectedSalary": "70K - 90K",
+            "skills": [
+                "Figma",
+                "Adobe XD",
+                "Sketch"
+            ],
+            "experienceRequired": "2+ Years",
+            "location": "Faisalabad"
+        },
+        {
+            "id": 5,
+            "title": "UI/UX Designer",
+            "href": "#",
+            "description": "Looking for a creative and detail-oriented UI/UX designer who can design user-centric and aesthetically pleasing interfaces for our applications.",
+            "date": "Mar 28, 2020",
+            "datetime": "2020-03-28",
+            "category": {
+                "title": "Design",
+                "href": "#"
+            },
+            "expectedSalary": "70K - 90K",
+            "skills": [
+                "Figma",
+                "Adobe XD",
+                "Sketch"
+            ],
+            "experienceRequired": "2+ Years",
+            "location": "Faisalabad"
         }
     ]
 
@@ -165,15 +225,15 @@ export default function ViewJobs() {
     };
 
     return (
-        <div className="bg-white py-10 sm:py-12">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Jobs</h2>
+        <div className=" py-10 sm:py-12">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
+                <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl">Jobs</h2>
                 <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
 
                 {/* Main Grid Layout */}
                 <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Filters Section */}
-                    <aside className="lg:col-span-1 bg-gray-50 p-6 rounded-lg shadow">
+                    <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow max-h-[120vh]">
                         {filters.map((filter, index) => (
                             <div key={index} className="mb-6">
                                 <h3 className="text-lg font-semibold text-gray-900">{filter.title}</h3>
@@ -199,10 +259,13 @@ export default function ViewJobs() {
                     </aside>
 
                     {/* Job Advertisements Section */}
-                    <section className="lg:col-span-3">
+                    <section className="lg:col-span-3  min-h-screen overflow-y-auto">
                         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
                             {posts.map((post) => (
-                                <article key={post.id} className="flex flex-col items-start justify-between border rounded-lg p-4 shadow">
+                                <article
+                                    key={post.id}
+                                    className="flex flex-col items-start justify-between border rounded-lg p-4 shadow bg-white"
+                                >
                                     <div className="flex items-center gap-x-4 text-xs">
                                         <time dateTime={post.datetime} className="text-gray-500">
                                             {post.date}
@@ -224,9 +287,11 @@ export default function ViewJobs() {
                                         <p className="mt-5 line-clamp-3 text-sm text-gray-600">{post.description}</p>
                                     </div>
                                     <div className="mt-4 space-y-2">
-                                    <div className="text-sm text-gray-600">
+                                        <div className="text-sm text-gray-600">
                                             <strong>Experience:</strong>
-                                            <a className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{post.experienceRequired}</a>
+                                            <a className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                                                {post.experienceRequired}
+                                            </a>
                                         </div>
                                         <div className="text-sm text-gray-600">
                                             <strong>Expected Salary:</strong> {post.expectedSalary}
@@ -234,29 +299,26 @@ export default function ViewJobs() {
                                         <div className="text-sm text-gray-600">
                                             <strong>Location:</strong> {post.location}
                                         </div>
-                                       
                                         <div className="text-sm text-gray-600">
-                                        <strong>Skills:</strong>
+                                            <strong>Skills:</strong>
                                             {post.skills.map((skill) => (
                                                 <a
                                                     key={skill}
-                                                    className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                                    className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-sm text-gray-500 hover:bg-gray-100"
                                                 >
                                                     {skill}
                                                 </a>
                                             ))}
-
                                         </div>
-
-
                                     </div>
                                 </article>
                             ))}
                         </div>
-
-
                     </section>
                 </div>
+
+
+
             </div>
         </div>
     );

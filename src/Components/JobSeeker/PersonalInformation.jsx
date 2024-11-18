@@ -32,9 +32,8 @@ export default function PersonalInformation() {
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
-                            {/* Edit Button in Body */}
-                            {(!editProfile && !profileCollapsed) && (
+                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                            {!editProfile && !profileCollapsed && (
                                 <button
                                     type="button"
                                     onClick={() => setEditProfile(true)}
@@ -46,27 +45,25 @@ export default function PersonalInformation() {
 
                             {/* Profile Information */}
                             {!editProfile && (
-                                <div className="flex flex-col sm:flex-row gap-4">
-                                    <div className="flex items-center gap-4">
-                                        <img
-                                            src={userLogo}
-                                            alt="Ghulam Muhammad"
-                                            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                        />
-                                        <div>
-                                            <h4 className="font-semibold text-lg">Ghulam Muhammad</h4>
-                                            <p className="text-sm text-gray-600">Software Developer</p>
-                                            <p className="text-sm text-gray-600">Private - Islamabad, Pakistan</p>
-                                            <p className="text-sm text-gray-600">g.muh786@gmail.com</p>
-                                            <p className="text-sm text-gray-600">+92.312.0376631</p>
-                                        </div>
+                                <div className=" flex flex-col sm:flex-row gap-6 items-center">
+                                    <img
+                                        src={userLogo}
+                                        alt="User Profile"
+                                        className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                    />
+                                    <div className="text-center sm:text-left">
+                                        <h4 className="font-semibold text-lg">Ghulam Muhammad</h4>
+                                        <p className="text-sm text-gray-600">Software Developer</p>
+                                        <p className="text-sm text-gray-600">Private - Islamabad, Pakistan</p>
+                                        <p className="text-sm text-gray-600">g.muh786@gmail.com</p>
+                                        <p className="text-sm text-gray-600">+92.312.0376631</p>
                                     </div>
                                 </div>
                             )}
 
                             {/* Edit Profile Form */}
                             {editProfile && (
-                                <form className="space-y-4">
+                                <form className="space-y-4 ">
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div className="sm:col-span-1">
                                             <label
@@ -83,7 +80,7 @@ export default function PersonalInformation() {
                                             />
                                         </div>
                                         <div>
-                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email (only provided to employers) *</label>
+                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email *</label>
                                             <input id="email" name="email" type="email" required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                                 defaultValue="g.muh786@gmail.com" />
@@ -127,7 +124,7 @@ export default function PersonalInformation() {
                                             <input id="area" name="area" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="G-7" />
                                         </div>
                                         <div>
-                                            <label htmlFor="mobile" className="block text-sm font-medium text-gray-900">Mobile (only provided to employers) *</label>
+                                            <label htmlFor="mobile" className="block text-sm font-medium text-gray-900">Mobile *</label>
                                             <input id="mobile" name="mobile" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="+92 312 0376631" />
                                         </div>
                                         <div>

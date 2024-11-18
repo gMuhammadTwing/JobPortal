@@ -7,10 +7,12 @@ import Login from './Pages/Login'
 import CreateAccount from './Pages/CreateAccount'
 import JobSeekerSignup from './Pages/JobSeekerSignup'
 import EmployerSignup from './Pages/EmployerSignup'
-import Profile from './Pages/Employer/Profile'
-import JobsApplied from './Pages/Employer/JobsApplied'
-import Resume from './Pages/Employer/Resume'
-import ViewJobs from './Pages/Employer/ViewJobs'
+import Profile from './Pages/JobSeeker/Profile'
+import JobsApplied from './Pages/JobSeeker/JobsApplied'
+import Resume from './Pages/JobSeeker/Resume'
+import ViewJobs from './Pages/JobSeeker/ViewJobs'
+import Payment from './Pages/JobSeeker/Payment'
+import EmployerProfile from './Pages/Employer/EmployerProfile'
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
             <Route path="applied-jobs" element={<JobsApplied />} />
             <Route path="resume" element={<Resume />} />
             <Route path="view-jobs" element={<ViewJobs />} />
+            <Route path="subscription" element={<Payment />} />
+
+            <Route path="employer-profile" element={<EmployerProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>
