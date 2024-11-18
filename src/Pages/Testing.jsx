@@ -138,7 +138,7 @@ export default function Testing() {
   return (
     <>
       <div className=" mx-auto bg-gray-100">
-        {/* <div className="background">
+        <div className="background">
           <div className="mx-auto p-3 grid max-w-2xl grid-cols-1 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-5">
             <div className="col-span-2 items-center rounded-lg border border-gray-300 bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
               <div className="text-orange-600 font-medium">
@@ -431,9 +431,9 @@ export default function Testing() {
               ))}
             </div>
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+        <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
           <div className="col-span-12 sm:col-span-6 lg:col-span-4">
             <ChartOne />
           </div>
@@ -445,15 +445,15 @@ export default function Testing() {
           </div>
 
           {/* <MapOne /> */}
-          {/* <div className="col-span-12 xl:col-span-8">
+          <div className="col-span-12 xl:col-span-8">
             <TableOne />
           </div>
           <ChatCard />
-        </div> */}
+        </div>
 
 
 
-        {/* <div className="bg-white py-24 sm:py-32 mt-4">
+        <div className="bg-white py-24 sm:py-32 mt-4">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0">
               <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Job Advertisements</h2>
@@ -498,7 +498,7 @@ export default function Testing() {
               ))}
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   );
