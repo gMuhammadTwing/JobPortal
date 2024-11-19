@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 
 import Dashboard from './Pages/Dashboard'
@@ -18,7 +18,7 @@ import ManageJobs from './Pages/Employer/ManageJobs'
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="login" element={<Login />} />
           <Route path="create-account" element={<CreateAccount />} />
@@ -40,7 +40,7 @@ function App() {
             <Route path="manage-jobs" element={<ManageJobs />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   )
 }

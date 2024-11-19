@@ -68,7 +68,7 @@ export default function ManageJobs() {
     <>
       <div className=" mx-auto bg-gray-100 max-w-7xl py-6 px-6 lg:px-8">
         <div className=" ">
-          <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl text-center m3-6">Manage Jobs</h2>
+          <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl text-center m-2">Manage Jobs</h2>
           <Button
             type="button"
             color="green"

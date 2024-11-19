@@ -115,7 +115,7 @@ export default function Dashboard() {
                             <Link
                               key={index}
                               onClick={() => handleCurrent(item)}
-                              to={item.href || '#'}
+                              to={"#/"+item.href}
                               className={classNames(
                                 item.current
                                   ? 'bg-gray-50 text-indigo-600'
@@ -175,8 +175,8 @@ export default function Dashboard() {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           className={classNames(
                             location.pathname.includes(item.href) ||
                               location.pathname.includes(item?.single)
@@ -194,7 +194,7 @@ export default function Dashboard() {
                             )}
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -263,15 +263,15 @@ export default function Dashboard() {
                     {userNavigation.map((item) => (
                       <MenuItem key={item.name}>
                         {item?.name == "Sign out" ? (
-                          <a
-                            href={item.href}
+                          <Link
+                            to={item.href}
                             className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                           >
                             <Button type="button"
                               color="gradient"
                               variant="solid">{item.name} </Button>
 
-                          </a>
+                          </Link>
                         ) :
                           <a
                             href={item.href}
