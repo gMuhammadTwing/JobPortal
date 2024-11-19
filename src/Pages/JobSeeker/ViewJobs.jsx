@@ -1,3 +1,4 @@
+import { ArrowDownCircleIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 
 export default function ViewJobs() {
@@ -264,7 +265,7 @@ export default function ViewJobs() {
                             {posts.map((post) => (
                                 <article
                                     key={post.id}
-                                    className="flex flex-col items-start justify-between border rounded-lg p-4 shadow bg-white"
+                                    className="flex flex-col items-start justify-between border rounded-lg p-4 shadow bg-white border-transparent hover:border-orange-500"
                                 >
                                     <div className="flex items-center gap-x-4 text-xs">
                                         <time dateTime={post.datetime} className="text-gray-500">
@@ -310,8 +311,32 @@ export default function ViewJobs() {
                                                 </a>
                                             ))}
                                         </div>
+                                        <div className="mt-4 flex divide-x divide-gray-200 border-gray-300">
+                                            <div className="flex w-0 flex-1">
+                                                <a
+                                                    href="#"
+                                                    className="relative inline-flex w-full items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                                                >
+                                                    <ArrowDownCircleIcon aria-hidden="true" className="size-5 text-gray-400" />
+                                                    View
+                                                </a>
+                                            </div>
+                                            <div className="flex w-0 flex-1">
+                                                <a
+                                                    href="#"
+                                                    className="relative inline-flex w-full items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                                                >
+                                                    <ViewColumnsIcon aria-hidden="true" className="size-5 text-gray-400" />
+                                                    Apply
+                                                </a>
+                                            </div>
+                                        </div>
+
                                     </div>
+
+
                                 </article>
+
                             ))}
                         </div>
                     </section>

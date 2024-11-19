@@ -45,8 +45,8 @@ const navigation = [
   { name: 'Subscription & Payment', href: '/subscription', icon: CreditCardIcon, current: false },
 
   { name: 'Employer Profile', href: '/employer-profile', icon: UserCircleIcon, current: true },
+  { name: 'Employer Job Management', href: '/manage-jobs', icon: BriefcaseIcon, current: false },
   { name: 'View Employer Logs', href: '/view-employer-logs', icon: UserCircleIcon, current: true },
-  { name: 'Employer Job Management', href: '/job-management', icon: BriefcaseIcon, current: false },
   { name: 'Search Coursework', href: '/coursework', icon: HomeModernIcon, current: false },
   { name: 'Shortlisting Requests', href: '/shortlisting', icon: ClipboardIcon, current: false },
   { name: 'Reports', href: '/reports', icon: FlagIcon, current: false },
