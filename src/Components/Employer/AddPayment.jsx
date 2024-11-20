@@ -87,7 +87,7 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                             </DialogTitle>
                             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-12">
                                 {/* Subscription ID */}
-                                <div className="sm:col-span-6">
+                                {/* <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Subscription ID
                                     </label>
@@ -103,10 +103,10 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                                             {formik.errors.subscription_id}
                                         </p>
                                     )}
-                                </div>
+                                </div> */}
 
                                 {/* User ID */}
-                                <div className="sm:col-span-6">
+                                {/* <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
                                         User ID
                                     </label>
@@ -122,7 +122,7 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                                             {formik.errors.user_id}
                                         </p>
                                     )}
-                                </div>
+                                </div> */}
 
                                 {/* Payment Reference */}
                                 <div className="sm:col-span-6">
@@ -196,6 +196,26 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                                     {formik.errors.payment_date && (
                                         <p className="mt-2 text-sm text-red-600">
                                             {formik.errors.payment_date}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="sm:col-span-6">
+                                    <label className="block text-sm font-medium text-gray-900">
+                                        Status
+                                    </label>
+                                    <select
+                                        name="status"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.status}
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    >
+                                        <option>Pending</option>
+                                        <option>Completed</option>
+                                    </select>
+                                    {formik.errors.subscription_id && (
+                                        <p className="mt-2 text-sm text-red-600">
+                                            {formik.errors.subscription_id}
                                         </p>
                                     )}
                                 </div>

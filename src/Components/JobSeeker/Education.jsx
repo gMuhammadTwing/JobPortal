@@ -23,9 +23,9 @@ export default function Education() {
                             <h3 className="font-semibold text-lg">Education</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {Education ? (
-                                    <PlusIcon className="block h-6 w-6 text-green-600 hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-red-600 hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
@@ -72,7 +72,7 @@ export default function Education() {
                                     <button
                                         type="button"
                                         onClick={() => setEditEducation(true)}
-                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-2 text-white shadow-md transition-all"
+                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
                                     >
                                         <PlusIcon className=" h-5 w-5" />
                                     </button>

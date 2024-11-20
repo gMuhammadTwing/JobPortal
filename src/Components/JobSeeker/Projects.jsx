@@ -76,7 +76,7 @@ export default function Projects() {
                                     <button
                                         type="button"
                                         onClick={() => setEditProject(true)}
-                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-2 text-white shadow-md transition-all"
+                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
                                     >
                                         <PlusIcon className=" h-5 w-5" />
                                     </button>

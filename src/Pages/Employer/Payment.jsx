@@ -10,7 +10,7 @@ import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import { Button } from "../../Components/Button";
 import Pagination from "../../Components/Pagination";
-import AddPayment from "../../Components/JobSeeker/AddPayment";
+import AddPayment from "../../Components/Employer/AddPayment";
 
 export default function Payment() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Payment() {
 
     const [payments, setPayments] = useState([
         {
-            subscription_id: "SUB12345",
+            subscription_id: "pay_id",
             user_id: "USER001",
             payment_reference: "PAYREF123",
             payment_method: "Mpesa",
@@ -31,7 +31,7 @@ export default function Payment() {
             receipt: "receipt1.pdf",
         },
         {
-            subscription_id: "SUB67890",
+            subscription_id: "PAY67890",
             user_id: "USER002",
             payment_reference: "PAYREF456",
             payment_method: "Bank Transfer",

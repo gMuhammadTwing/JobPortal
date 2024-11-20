@@ -24,9 +24,9 @@ export default function EmployerProfile() {
                             <h3 className="font-semibold text-lg">Employer Profile</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {profileCollapsed ? (
-                                    <PlusIcon className="block h-6 w-6 text-green-600 hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-red-600 hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>

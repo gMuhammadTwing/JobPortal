@@ -295,7 +295,7 @@ export default function ViewJobs() {
                                             </a>
                                         </div>
                                         <div className="text-sm text-gray-600">
-                                            <strong>Expected Salary:</strong> {post.expectedSalary}
+                                            <strong>Salary:</strong> {post.expectedSalary}
                                         </div>
                                         <div className="text-sm text-gray-600">
                                             <strong>Location:</strong> {post.location}

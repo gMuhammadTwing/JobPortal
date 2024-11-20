@@ -9,6 +9,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { FallingLines } from "react-loader-spinner";
 import { useState } from "react";
+import { Button } from "../Button";
 
 const AddResume = ({ isOpen, onClose, success, error }) => {
     const [file, setFile] = useState(null);
@@ -128,20 +129,23 @@ const AddResume = ({ isOpen, onClose, success, error }) => {
                                 {formik.isSubmitting ? (
                                     <FallingLines height={40} width={40} color="purple" />
                                 ) : (
-                                    <button
+                                    <Button
                                         type="submit"
-                                        className="inline-flex w-full justify-center rounded-md bg-orange-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 sm:w-auto"
+                                        color="gradient"
+                                        variant="solid"
                                     >
                                         Save
-                                    </button>
+                                    </Button>
                                 )}
-                                <button
+                                <Button
                                     type="button"
                                     onClick={() => onClose(false)}
-                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm sm:mt-0 sm:w-auto"
+                                    color="gradient"
+                                    variant="outline"
+                                    className={"mr-1"}
                                 >
                                     Cancel
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </DialogPanel>

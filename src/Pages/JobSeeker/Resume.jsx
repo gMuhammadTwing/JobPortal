@@ -78,11 +78,11 @@ export default function Resume() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                            className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                         >
                                             <Button
                                                 type="button"
-                                                color="green"
+                                                color="gradient"
                                                 variant="solid"
                                                 onClick={()=>openModal()}
                                             >

@@ -14,7 +14,10 @@ import ViewJobs from './Pages/JobSeeker/ViewJobs'
 import Payment from './Pages/JobSeeker/Payment'
 import EmployerProfile from './Pages/Employer/EmployerProfile'
 import ManageJobs from './Pages/Employer/ManageJobs'
-
+import EmployerPayment from './Pages/Employer/Payment'
+import Shortlisting from './Pages/Shortlisting'
+import Coursework from './Pages/Coursework/Index'
+import BlogIndex from './Pages/Blog/Index'
 function App() {
   return (
     <>
@@ -38,6 +41,10 @@ function App() {
 
             <Route path="employer-profile" element={<EmployerProfile />} />
             <Route path="manage-jobs" element={<ManageJobs />} />
+            <Route path="employer-payment" element={<EmployerPayment />} />
+            <Route path="shortlisting" element={<Shortlisting />} />
+            <Route path="coursework" element={<Coursework />} />
+            <Route path="blog" element={<BlogIndex />} />
           </Route>
         </Routes>
       </HashRouter>

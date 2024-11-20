@@ -1,6 +1,15 @@
 import { ArrowDownCircleIcon, ArrowDownOnSquareIcon, ArrowLeftCircleIcon, ArrowRightCircleIcon, EllipsisVerticalIcon, EnvelopeIcon, MagnifyingGlassCircleIcon, PhoneIcon, PlusCircleIcon, ViewColumnsIcon } from '@heroicons/react/24/outline';
 import { Button } from '../../Components/Button';
+import { toast, Toaster } from 'sonner';
+import AddJob from '../../Components/Employer/AddJob';
+import { useState } from 'react';
 export default function ManageJobs() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const ToastSuccess = (str) => toast.success(str);
+  const ToastError = (str) => toast.error(str);
   const posts = [
     {
       "id": 1,
@@ -67,17 +76,21 @@ export default function ManageJobs() {
   return (
     <>
       <div className=" mx-auto bg-gray-100 max-w-7xl py-6 px-6 lg:px-8">
+      <AddJob isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
+      <Toaster richColors />
         <div className=" ">
           <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl text-center m-2">Manage Jobs</h2>
-          <Button
-            type="button"
-            color="green"
-            variant="solid"
-            className={"mb-4"}
-          // onClick={()=>openModal()}
-          >
-            <PlusCircleIcon className="w-6 h-6 text-white" />
-            Create New Job</Button>
+          <div>
+            <Button
+              type="button"
+              color="gradient"
+              variant="solid"
+              className={"mb-4"}
+            onClick={()=>openModal()}
+            >
+              <PlusCircleIcon className="w-6 h-6 text-white" />
+              Create New Job</Button>
+          </div>
           {/* <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p> */}
         </div>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
@@ -114,7 +127,7 @@ export default function ManageJobs() {
                   </a>
                 </div>
                 <div className="text-sm text-gray-600">
-                  <strong>Expected Salary:</strong> {post.expectedSalary}
+                  <strong>Salary:</strong> {post.expectedSalary}
                 </div>
                 <div className="text-sm text-gray-600">
                   <strong>Location:</strong> {post.location}
@@ -130,24 +143,31 @@ export default function ManageJobs() {
                     </a>
                   ))}
                 </div>
-                <div className="mt-4 flex">
-                  <div className="flex w-0 flex-1">
-                    <a
-                      href="#"
-                      className="relative inline-flex w-full items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                <div className="py-2 flex gap-2">
+                  {/* <div className=""> */}
+                    <Button
+                      type="button"
+                      color="blue"
+                      variant="outline"
+                      className={""}
+                    // onClick={()=>openModal()}
                     >
-                      <ArrowDownCircleIcon aria-hidden="true" className="size-5 text-gray-400" />
+                      {/* <ArrowDownCircleIcon aria-hidden="true" className="size-5 text-gray-400" /> */}
                       View
-                    </a>
-                  </div>
-                  <div className="flex w-0 flex-1">
-                    <a
-                      href="#"
-                      className="relative inline-flex w-full items-center justify-center gap-x-3 py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                    </Button>
+                    <Button
+                      type="button"
+                      color="gradient"
+                      variant="outline"
+                      className={""}
+                    // onClick={()=>openModal()}
                     >
-                      <ViewColumnsIcon aria-hidden="true" className="size-5 text-gray-400" />
+                      {/* <ViewColumnsIcon aria-hidden="true" className="size-5 text-gray-400" /> */}
                       Update
-                    </a>
+                    </Button>
+                  {/* </div> */}
+                  <div className="">
+                    
                   </div>
                 </div>
               </div>
