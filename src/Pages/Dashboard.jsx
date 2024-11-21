@@ -35,8 +35,8 @@ import {
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import logo from '../assets/logo.png'
-import { Button } from '../Components/Button'
-import userLogo from '../assets/user.jpeg'
+import { Button } from './../Components/Button'
+import userLogo from './../assets/user.jpeg'
 const navigation = [
   { name: 'Job Profile', href: '/home', single: 'home', icon: UserCircleIcon, current: true },
   { name: 'Resume/CV', href: '/resume', icon: DocumentTextIcon, current: false },

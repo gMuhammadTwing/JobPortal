@@ -1,7 +1,7 @@
 import { ArrowDownCircleIcon, ArrowDownOnSquareIcon, ArrowLeftCircleIcon, ArrowRightCircleIcon, EllipsisVerticalIcon, EnvelopeIcon, MagnifyingGlassCircleIcon, PhoneIcon, PlusCircleIcon, ViewColumnsIcon } from '@heroicons/react/24/outline';
 import { Button } from '../../Components/Button';
 import { toast, Toaster } from 'sonner';
-import AddJob from '../../Components/Employer/AddJob';
+import AddJob from './AddJob';
 import { useState } from 'react';
 export default function ManageJobs() {
   const [isModalOpen, setIsModalOpen] = useState(false);

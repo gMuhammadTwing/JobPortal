@@ -234,7 +234,10 @@ export default function ViewJobs() {
                 {/* Main Grid Layout */}
                 <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Filters Section */}
-                    <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow max-h-[120vh]">
+                    {/* <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow max-h-[120vh]">
+                    <label className="block text-lg font-semibold text-gray-900 text-center mb-4">
+                            Apply Filters
+                        </label>
                         {filters.map((filter, index) => (
                             <div key={index} className="mb-6">
                                 <h3 className="text-lg font-semibold text-gray-900">{filter.title}</h3>
@@ -257,7 +260,37 @@ export default function ViewJobs() {
                                 )}
                             </div>
                         ))}
+                    </aside> */}
+
+                    <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow max-h-[120vh]">
+                        <label className="block text-lg font-semibold text-gray-900 text-center mb-4">
+                            Apply Filters
+                        </label>
+                        {filters.map((filter, index) => (
+                            <div key={index} className="mb-6">
+                                <label className="block text-lg font-semibold text-gray-900">
+                                    {filter.title}
+                                </label>
+                                <select
+                                    className="mt-2 w-full p-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
+                                    onChange={(e) => handleFilterChange(filter.title, e.target.value)}
+                                    value={
+                                        selectedFilters[filter.title]
+                                            ? Object.keys(selectedFilters[filter.title])[0]
+                                            : ""
+                                    }
+                                >
+                                    <option value="">Select {filter.title}</option>
+                                    {filter.options.map((option, i) => (
+                                        <option key={i} value={option.label}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        ))}
                     </aside>
+
 
                     {/* Job Advertisements Section */}
                     <section className="lg:col-span-3  min-h-screen overflow-y-auto">

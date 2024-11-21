@@ -18,7 +18,7 @@ export default function EmployerProfile() {
                     <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-orange-500 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 bg-gradient-to-r to-orange-500 from-pink-600 border-b cursor-pointer text-white"
                             onClick={handleCollapseToggle}
                         >
                             <h3 className="font-semibold text-lg">Employer Profile</h3>

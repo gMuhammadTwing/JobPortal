@@ -8,9 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
-import { Button } from "../../Components/Button";
 import Pagination from "../../Components/Pagination";
-import AddPayment from "../../Components/Employer/AddPayment";
 
 export default function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +59,7 @@ export default function Index() {
 
     return (
         <div className="container mx-auto px-4">
-            <AddPayment isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
+            {/* <AddPayment isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} /> */}
             <div className="mt-4">
                 <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
                     Shortlisting Requests

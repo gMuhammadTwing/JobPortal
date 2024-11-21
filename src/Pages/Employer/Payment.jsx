@@ -10,7 +10,7 @@ import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import { Button } from "../../Components/Button";
 import Pagination from "../../Components/Pagination";
-import AddPayment from "../../Components/Employer/AddPayment";
+import AddPayment from "./AddPayment";
 
 export default function Payment() {
     const [isModalOpen, setIsModalOpen] = useState(false);

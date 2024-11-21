@@ -18,7 +18,7 @@ export default function PersonalInformation() {
                     <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-orange-500 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
                             onClick={handleCollapseToggle}
                         >
                             <h3 className="font-semibold text-lg">Personal Information</h3>
@@ -32,14 +32,21 @@ export default function PersonalInformation() {
                         </div>
 
                         {/* Card Body */}
-                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`overflow-x-hidden bg-gray-100 relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {!editProfile && !profileCollapsed && (
+                                // <button
+                                //     type="button"
+                                //     onClick={() => setEditProfile(true)}
+                                //     className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
+                                // >
+                                //     <PencilIcon className="h-5 w-5 text-white" />
+                                // </button>
                                 <button
                                     type="button"
                                     onClick={() => setEditProfile(true)}
-                                    className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
+                                    className="absolute right-4 hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
                                 >
-                                    <PencilIcon className="h-5 w-5 text-white" />
+                                    <PencilIcon className="h-5 w-5 text-blue-500" />
                                 </button>
                             )}
 

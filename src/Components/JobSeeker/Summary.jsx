@@ -13,12 +13,12 @@ export default function Summary() {
     };
     return (
         <>
-           <div className="flex justify-center px-4 sm:px-0">
+            <div className="flex justify-center px-4 sm:px-0">
                 <div className="p-4 w-full max-w-4xl">
                     <div className={`border rounded-md shadow-lg ${summary ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-orange-500 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
                             onClick={handleSummary}
                         >
                             <h3 className="font-semibold text-lg">Summary</h3>
@@ -38,9 +38,9 @@ export default function Summary() {
                                 <button
                                     type="button"
                                     onClick={() => setEditSummary(true)}
-                                    className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
+                                    className="absolute right-4 hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
                                 >
-                                    <PencilIcon className="h-5 w-5 text-white" />
+                                    <PencilIcon className="h-5 w-5 text-blue-500" />
                                 </button>
                             )}
 

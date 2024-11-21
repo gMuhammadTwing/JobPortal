@@ -18,7 +18,7 @@ export default function Experience() {
                     <div className={`border rounded-md shadow-lg ${exp ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-orange-500 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
                             onClick={handleExp}
                         >
                             <h3 className="font-semibold text-lg">Experience</h3>

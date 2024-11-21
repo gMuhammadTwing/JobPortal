@@ -8,10 +8,10 @@ export default function Profile() {
     return (
         <>
             <PersonalInformation />
-            <Summary />
             <Experience />
             <Skills />
             <Education />
+            <Summary />
             <Projects/>
         </>
     );
