@@ -40,7 +40,7 @@ export default function DashboardMain() {
     }
 
     return (
-        <div className="flex">
+        <div className="container mx-auto flex relative">
             
             {/* Mobile Sidebar Toggle */}
             <div className="fixed z-20 top-0 left-0 md:hidden">
@@ -54,9 +54,14 @@ export default function DashboardMain() {
 
             {/* Sidebar */}
             <aside
+                // className={classNames(
+                //     " inset-y-0 z-30 w-66 left-0 md:left-[7rem] md:inset-y-10 md:h-[33rem] rounded-lg border border-gray-300 bg-white text-black overflow-y-auto transition-transform transform md:relative md:translate-x-0",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                // )}
                 className={classNames(
-                    " fixed inset-y-0 z-30 w-66 left-0 md:left-[7rem] md:inset-y-10 md:h-[33rem] rounded-lg border border-gray-300 bg-white text-black overflow-y-auto transition-transform transform md:relative md:translate-x-0",
-                    sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    "fixed inset-y-0 z-20 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg border border-gray-300 overflow-y-auto transform transition-transform",
+                    sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                    "md:relative md:translate-x-0 md:w-72"
                 )}
             >
                 <nav className="p-4">

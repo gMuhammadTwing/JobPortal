@@ -7,7 +7,7 @@ import Reviews from './Reviews';
 export default function Index() {
   return (
     <>
-      <div className=" mx-auto container pb-2">
+      <div className=" pb-2">
         <Company />
         <RecentlyUpdatedJobs />
         <FeaturedJobs />

@@ -180,7 +180,7 @@ export default function PersonalInformation() {
                                             {/* <textarea rows={4} id="postalAddress" name="postalAddress" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" /> */}
                                         </div>
                                     </div>
-                                    <div className="flex justify-center gap-4 mt-15">
+                                    <div className="flex justify-center gap-4 mt-17">
                                         <Button
                                             type="button"
                                             color="gradient"
