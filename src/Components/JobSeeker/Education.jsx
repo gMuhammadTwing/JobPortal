@@ -1,6 +1,8 @@
 import { MinusIcon, PlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Button } from "../../Components/Button";
+import AddCoursework from "../../Pages/Coursework/AddCoursework";
+import { toast, Toaster } from "sonner";
 export default function Education() {
     const [Education, setEducation] = useState(false);
     const [editEducation, setEditEducation] = useState(false);
@@ -10,28 +12,36 @@ export default function Education() {
             setEditEducation(false);
         }
     };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    const ToastSuccess = (str) => toast.success(str);
+    const ToastError = (str) => toast.error(str);
     return (
         <>
-           <div className="flex justify-center px-4 sm:px-0">
-                <div className="p-4 w-full max-w-4xl">
+            <div className="flex justify-center sm:px-0">
+                <AddCoursework isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
+                <Toaster richColors />
+                <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${Education ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
                             onClick={handleEducation}
                         >
-                            <h3 className="font-semibold text-lg">Education</h3>
+                            <h3 className="font-semibold text-3xl">Education</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {Education ? (
-                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative transition-all duration-300 ease-in-out ${Education ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`relative bg-white transition-all duration-300 ease-in-out ${Education ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
                             {(!editEducation && !Education) && (
                                 <div className="absolute top-4 right-4 flex space-x-2">
@@ -49,6 +59,12 @@ export default function Education() {
                                     >
                                         <TrashIcon className="h-5 w-5 text-red-600" />
                                     </button>
+                                    <Button
+                                        type="button"
+                                        color="gradient"
+                                        variant="outline"
+                                        onClick={() => openModal()}
+                                    >Add Course</Button>
                                 </div>
                             )}
 
@@ -68,11 +84,11 @@ export default function Education() {
 
                             )}
                             {!editEducation && (
-                                <div className="mt-4 flex justify-center border-t-2 py-2">
+                                <div className="mt-4 flex justify-center border-t py-2">
                                     <button
                                         type="button"
                                         onClick={() => setEditEducation(true)}
-                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
                                     >
                                         <PlusIcon className=" h-5 w-5" />
                                     </button>

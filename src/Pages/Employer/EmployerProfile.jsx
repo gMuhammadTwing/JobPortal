@@ -2,6 +2,7 @@ import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@her
 import { useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
+import ReactQuill from "react-quill";
 export default function EmployerProfile() {
     const [profileCollapsed, setprofileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
@@ -11,36 +12,37 @@ export default function EmployerProfile() {
             setEditProfile(false);
         }
     };
+    const [value, setValue] = useState("");
     return (
         <>
-            <div className="flex justify-center px-4 sm:px-0">
-                <div className="p-4 w-full max-w-4xl">
+            <div className="flex justify-center sm:px-0 h-screen">
+                <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-gradient-to-r to-orange-500 from-pink-600 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="font-semibold text-lg">Employer Profile</h3>
+                            <h3 className="font-semibold text-3xl">Employer Profile</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {profileCollapsed ? (
-                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
 
                         {/* Card Body */}
-                        <div className={`overflow-x-hidden relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
                             {(!editProfile && !profileCollapsed) && (
                                 <button
                                     type="button"
                                     onClick={() => setEditProfile(true)}
-                                    className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
+                                    className="absolute right-4 top-4 bg-white hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
                                 >
-                                    <PencilIcon className="h-5 w-5 text-white" />
+                                    <PencilIcon className="h-5 w-5 text-blue-500" />
                                 </button>
                             )}
 
@@ -137,7 +139,7 @@ export default function EmployerProfile() {
 
                             {/* Edit Profile Form */}
                             {editProfile && (
-                                <form className="space-y-4">
+                                <form className="">
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div className="sm:col-span-1">
                                             <label
@@ -265,6 +267,36 @@ export default function EmployerProfile() {
 
                                         {/* Company Description Field */}
                                         <div className="col-span-full">
+                                            <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <ReactQuill
+                                                id="summary-editor"
+                                                theme="snow"
+                                                value={value}
+                                                onChange={setValue}
+                                                style={{
+                                                    height: "150px",
+                                                }}
+                                                modules={{
+                                                    toolbar: [
+                                                        ["bold", "italic", "underline", "strike"],
+                                                        [{ header: [1, 2, 3, false] }],
+                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                        ["clean"],
+                                                    ],
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                                placeholder="Write something"
+                                            />
+                                        </div>
+                                        {/* <div className="col-span-full">
                                             <label htmlFor="company_description" className="block text-sm font-medium text-gray-900">
                                                 Company Description
                                             </label>
@@ -274,10 +306,10 @@ export default function EmployerProfile() {
                                                 rows={4}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
-                                        </div>
+                                        </div> */}
                                     </div>
 
-                                    <div className="flex justify-center gap-4 mt-5">
+                                    <div className="flex justify-center gap-4 mt-15">
                                         <Button
                                             type="button"
                                             color="gradient"

@@ -18,33 +18,53 @@ import EmployerPayment from './Pages/Employer/Payment'
 import Shortlisting from './Pages/Shortlisting'
 import Coursework from './Pages/Coursework/Index'
 import BlogIndex from './Pages/Blog/Index'
+import DashboardMain from './Pages/DashboardMain'
+import PublicIndex from './Pages/Public/Index'
+import PublicDashboard from './Pages/PublicDashboard'
+import '@fortawesome/fontawesome-free/css/all.min.css';
 function App() {
   return (
     <>
       <HashRouter>
         <Routes>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="dashboard" element={<PublicIndex />} />
+          </Route>
           <Route path="login" element={<Login />} />
           <Route path="create-account" element={<CreateAccount />} />
           <Route path="signup-jobseeker" element={<JobSeekerSignup />} />
           <Route path="signup-employer" element={<EmployerSignup />} />
-          <Route
-            path="/*"
-            element={
-              <Dashboard />
-            }
-          >
-            <Route path="home" element={<Profile />} />
-            <Route path="applied-jobs" element={<JobsApplied />} />
-            <Route path="resume" element={<Resume />} />
-            <Route path="view-jobs" element={<ViewJobs />} />
-            <Route path="subscription" element={<Payment />} />
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="job-seeker" element={<DashboardMain />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="applied-jobs" element={<JobsApplied />} />
+              <Route path="resume" element={<Resume />} />
+              <Route path="view-jobs" element={<ViewJobs />} />
+              <Route path="subscription" element={<Payment />} />
 
-            <Route path="employer-profile" element={<EmployerProfile />} />
-            <Route path="manage-jobs" element={<ManageJobs />} />
-            <Route path="employer-payment" element={<EmployerPayment />} />
-            <Route path="shortlisting" element={<Shortlisting />} />
-            <Route path="coursework" element={<Coursework />} />
-            <Route path="blog" element={<BlogIndex />} />
+              <Route path="employer-profile" element={<EmployerProfile />} />
+              <Route path="manage-jobs" element={<ManageJobs />} />
+              <Route path="employer-payment" element={<EmployerPayment />} />
+              <Route path="shortlisting" element={<Shortlisting />} />
+              <Route path="coursework" element={<Coursework />} />
+              <Route path="blog" element={<BlogIndex />} />
+            </Route>
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="employer" element={<DashboardMain />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="applied-jobs" element={<JobsApplied />} />
+              <Route path="resume" element={<Resume />} />
+              <Route path="view-jobs" element={<ViewJobs />} />
+              <Route path="subscription" element={<Payment />} />
+
+              <Route path="employer-profile" element={<EmployerProfile />} />
+              <Route path="manage-jobs" element={<ManageJobs />} />
+              <Route path="employer-payment" element={<EmployerPayment />} />
+              <Route path="shortlisting" element={<Shortlisting />} />
+              <Route path="coursework" element={<Coursework />} />
+              <Route path="blog" element={<BlogIndex />} />
+            </Route>
           </Route>
         </Routes>
       </HashRouter>

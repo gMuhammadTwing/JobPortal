@@ -39,6 +39,78 @@ export default function Payment() {
             payment_date: "2024-10-25",
             receipt: "receipt2.jpg",
         },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
+        {
+            subscription_id: "SUB67890",
+            user_id: "USER002",
+            payment_reference: "PAYREF456",
+            payment_method: "Bank Transfer",
+            amount_paid: 10000,
+            payment_date: "2024-10-25",
+            receipt: "receipt2.jpg",
+        },
     ]);
 
     const pageNumber = async (pageNum) => {
@@ -46,9 +118,9 @@ export default function Payment() {
     };
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto max-w-5xl">
             <AddPayment isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
-            <div className="mt-4">
+            <div className="pb-15">
                 <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
                     Manage Payments
                 </div>

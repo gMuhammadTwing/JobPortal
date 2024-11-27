@@ -2,6 +2,7 @@ import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@her
 import { useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
+import ReactQuill from "react-quill";
 export default function Experience() {
     const [exp, setExp] = useState(false);
     const [editExp, setEditExp] = useState(false);
@@ -11,28 +12,29 @@ export default function Experience() {
             setEditExp(false);
         }
     };
+    const [value, setValue] = useState("");
     return (
         <>
-            <div className="flex justify-center px-4 sm:px-0">
-                <div className="p-4 w-full max-w-4xl">
+            <div className="flex justify-center sm:px-0">
+                <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${exp ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 text-orange-600 bg-white border-b cursor-pointer"
                             onClick={handleExp}
                         >
-                            <h3 className="font-semibold text-lg">Experience</h3>
+                            <h3 className="font-semibold text-3xl">Experience</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {exp ? (
-                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative transition-all duration-300 ease-in-out ${exp ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`relative overflow-x-hidden bg-white transition-all duration-300 ease-in-out ${exp ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
                             {(!editExp && !exp) && (
                                 <div className="absolute top-4 right-4 flex space-x-2">
@@ -71,11 +73,11 @@ export default function Experience() {
 
                             )}
                             {!editExp && (
-                                <div className="mt-4 flex justify-center border-t-2 py-2">
+                                <div className="mt-4 flex justify-center border-t py-2">
                                     <button
                                         type="button"
                                         onClick={() => setEditExp(true)}
-                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
                                     >
                                         <PlusIcon className=" h-5 w-5" />
                                     </button>
@@ -84,7 +86,7 @@ export default function Experience() {
 
                             {/* Edit Profile Form */}
                             {editExp && (
-                                <form className="space-y-4">
+                                <form className="">
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div>
                                             <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-900">Job Title *</label>
@@ -188,18 +190,48 @@ export default function Experience() {
                                             <label htmlFor="present" className="text-sm font-medium text-gray-900">Currently Working here</label>
 
                                         </div>
-
                                         <div className="col-span-full">
+                                            <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <ReactQuill
+                                                id="summary-editor"
+                                                theme="snow"
+                                                value={value}
+                                                onChange={setValue}
+                                                style={{
+                                                    height: "150px",
+                                                }}
+                                                modules={{
+                                                    toolbar: [
+                                                        ["bold", "italic", "underline", "strike"],
+                                                        [{ header: [1, 2, 3, false] }],
+                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                        ["clean"],
+                                                    ],
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                                placeholder="Write something"
+                                            />
+                                        </div>
+
+                                        {/* <div className="col-span-full">
                                             <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
                                             <textarea
                                                 id="description"
                                                 rows={4}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
-                                        </div>
+                                        </div> */}
                                     </div>
 
-                                    <div className="flex justify-center gap-4 mt-5">
+                                    <div className="flex justify-center gap-4 mt-20">
                                         <Button
                                             type="button"
                                             color="gradient"

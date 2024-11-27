@@ -1,6 +1,7 @@
 import { MinusIcon, PlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Button } from "../../Components/Button";
+import ReactQuill from "react-quill";
 
 export default function Projects() {
     const [Project, setProject] = useState(false);
@@ -12,29 +13,30 @@ export default function Projects() {
             setEditProject(false);
         }
     };
+    const [value, setValue] = useState("");
 
     return (
         <>
-            <div className="flex justify-center px-4 sm:px-0">
-                <div className="p-4 w-full max-w-4xl">
+            <div className="flex justify-center sm:px-0">
+                <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${Project ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
                             onClick={handleProject}
                         >
-                            <h3 className="font-semibold text-lg">Projects</h3>
+                            <h3 className="font-semibold text-3xl">Projects</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {Project ? (
-                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative transition-all duration-300 ease-in-out ${Project ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`relative bg-white transition-all duration-300 ease-in-out ${Project ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Icons at Top-Right */}
                             {(!editProject && !Project) && (
                                 <div className="absolute top-4 right-4 flex space-x-2">
@@ -72,11 +74,11 @@ export default function Projects() {
 
                             {/* Add Project Button */}
                             {!editProject && (
-                                <div className="mt-4 flex justify-center border-t-2 py-2">
+                                <div className="mt-4 flex justify-center border-t py-2">
                                     <button
                                         type="button"
                                         onClick={() => setEditProject(true)}
-                                        className="bg-orange-500 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
                                     >
                                         <PlusIcon className=" h-5 w-5" />
                                     </button>
@@ -85,7 +87,7 @@ export default function Projects() {
 
                             {/* Edit Profile Form */}
                             {editProject && (
-                                <form className="space-y-4">
+                                <form className="">
                                     <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
 
                                         {/* Name */}
@@ -153,18 +155,49 @@ export default function Projects() {
                                         </div>
 
                                         {/* Description */}
-                                        <div>
+                                        <div className="col-span-full">
+                                            <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <ReactQuill
+                                                id="summary-editor"
+                                                theme="snow"
+                                                value={value}
+                                                onChange={setValue}
+                                                style={{
+                                                    height: "150px",
+                                                }}
+                                                modules={{
+                                                    toolbar: [
+                                                        ["bold", "italic", "underline", "strike"],
+                                                        [{ header: [1, 2, 3, false] }],
+                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                        ["clean"],
+                                                    ],
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                                placeholder="Write something"
+                                            />
+                                        </div>
+
+                                        {/* <div>
                                             <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
                                             <textarea
                                                 id="description"
                                                 rows="4"
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                     {/* Action Buttons */}
-                                    <div className="flex justify-center gap-4 mt-5">
+                                    <div className="flex justify-center gap-4 mt-15">
                                         <Button
                                             type="button"
                                             color="gradient"

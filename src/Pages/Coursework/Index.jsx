@@ -49,7 +49,7 @@ export default function Index() {
     };
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto max-w-5xl h-screen">
             <AddCoursework isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
             <div className="mt-4">
                 <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">

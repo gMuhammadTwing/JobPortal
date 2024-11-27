@@ -9,6 +9,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { FallingLines } from "react-loader-spinner";
 import { Button } from "../../Components/Button";
+import ReactQuill from "react-quill";
 
 const AddBlogPost = ({ isOpen, onClose, success, error }) => {
     const formik = useFormik({
@@ -62,7 +63,7 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                             >
                                 Add Blog Post
                             </DialogTitle>
-                            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-12">
+                            <div className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-12">
                                 {/* Title */}
                                 <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
@@ -81,8 +82,8 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                         </p>
                                     )}
                                 </div>
-                                 {/* Author */}
-                                 <div className="sm:col-span-6">
+                                {/* Author */}
+                                <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Author
                                     </label>
@@ -105,13 +106,40 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                     <label className="block text-sm font-medium text-gray-900">
                                         Content
                                     </label>
-                                    <textarea
+                                    <ReactQuill
+                                        id="content"
+                                        theme="snow"
+                                        value={formik.values.content}
+                                        onChange={formik.handleChange}
+                                        style={{
+                                            height: "150px",
+                                        }}
+                                        modules={{
+                                            toolbar: [
+                                                ["bold", "italic", "underline", "strike"],
+                                                [{ header: [1, 2, 3, false] }],
+                                                [{ list: "ordered" }, { list: "bullet" }],
+                                                ["clean"],
+                                            ],
+                                        }}
+                                        formats={[
+                                            "header",
+                                            "bold",
+                                            "italic",
+                                            "underline",
+                                            "strike",
+                                            "list",
+                                            "bullet",
+                                        ]}
+                                        placeholder="Write something"
+                                    />
+                                    {/* <textarea
                                         name="content"
                                         onChange={formik.handleChange}
                                         value={formik.values.content}
                                         rows="4"
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    />
+                                    /> */}
                                     {formik.errors.content && (
                                         <p className="mt-2 text-sm text-red-600">
                                             {formik.errors.content}
@@ -119,7 +147,7 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                     )}
                                 </div>
                             </div>
-                            <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                            <div className="mt-15 sm:mt-14 sm:flex sm:flex-row-reverse">
                                 {formik.isSubmitting ? (
                                     <FallingLines height={40} width={40} color="purple" />
                                 ) : (

@@ -2,6 +2,7 @@ import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@her
 import { useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
+import ReactQuill from "react-quill";
 export default function PersonalInformation() {
     const [profileCollapsed, setprofileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
@@ -11,33 +12,34 @@ export default function PersonalInformation() {
             setEditProfile(false);
         }
     };
+    const [value, setValue] = useState("");
     return (
         <>
-            <div className="flex justify-center px-4 sm:px-0">
-                <div className="p-4 w-full max-w-4xl">
+            <div className="flex justify-center sm:px-0">
+                <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500 to-pink-600 border-b cursor-pointer text-white"
+                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="font-semibold text-lg">Personal Information</h3>
+                            <h3 className="font-semibold text-3xl">Personal Information</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {profileCollapsed ? (
-                                    <PlusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-white hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
 
                         {/* Card Body */}
-                        <div className={`overflow-x-hidden bg-gray-100 relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {!editProfile && !profileCollapsed && (
                                 // <button
                                 //     type="button"
                                 //     onClick={() => setEditProfile(true)}
-                                //     className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
+                                //     className="absolute right-4 top-4 bg-orange-600 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
                                 // >
                                 //     <PencilIcon className="h-5 w-5 text-white" />
                                 // </button>
@@ -70,7 +72,7 @@ export default function PersonalInformation() {
 
                             {/* Edit Profile Form */}
                             {editProfile && (
-                                <form className="space-y-4 ">
+                                <form className="">
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div className="sm:col-span-1">
                                             <label
@@ -148,10 +150,37 @@ export default function PersonalInformation() {
                                         </div>
                                         <div className="col-span-full">
                                             <label htmlFor="postalAddress" className="block text-sm font-medium text-gray-900">Postal Address</label>
-                                            <textarea rows={4} id="postalAddress" name="postalAddress" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" />
+                                            <ReactQuill
+                                                id="postalAddress"
+                                                theme="snow"
+                                                value={value}
+                                                onChange={setValue}
+                                                style={{
+                                                    height: "150px",
+                                                }}
+                                                modules={{
+                                                    toolbar: [
+                                                        ["bold", "italic", "underline", "strike"],
+                                                        [{ header: [1, 2, 3, false] }],
+                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                        ["clean"],
+                                                    ],
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                                placeholder="Write something"
+                                            />
+                                            {/* <textarea rows={4} id="postalAddress" name="postalAddress" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" /> */}
                                         </div>
                                     </div>
-                                    <div className="flex justify-center gap-4 mt-5">
+                                    <div className="flex justify-center gap-4 mt-15">
                                         <Button
                                             type="button"
                                             color="gradient"

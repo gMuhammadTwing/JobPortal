@@ -50,7 +50,7 @@ const navigation = [
   { name: 'Shortlisting Requests', href: '/shortlisting', icon: ClipboardIcon, current: false },
   { name: 'Search Coursework', href: '/coursework', icon: HomeModernIcon, current: false },
   { name: 'Blog/Comments', href: '/blog', icon: NewspaperIcon, current: false },
-  
+
   { name: 'Reports', href: '/reports', icon: FlagIcon, current: false },
   // { name: 'View Employer Logs', href: '/view-employer-logs', icon: UserCircleIcon, current: true },
   // { name: 'Admin Panel', href: '/admin-panel', icon: CogIcon, current: false },
@@ -115,7 +115,7 @@ export default function Dashboard() {
                             <Link
                               key={index}
                               onClick={() => handleCurrent(item)}
-                              to={"#/"+item.href}
+                              to={"#/" + item.href}
                               className={classNames(
                                 item.current
                                   ? 'bg-gray-50 text-indigo-600'
