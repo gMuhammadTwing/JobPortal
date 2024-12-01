@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon, MapIcon, MapPinIcon, CalendarDaysIcon, EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
@@ -16,21 +16,21 @@ export default function EmployerProfile() {
     return (
         <>
             <div className="flex justify-center sm:px-0 h-screen">
-                <div className="p-4 w-full max-w-5xl">
-                    <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
+                <div className="p-4 w-full max-w-5xl rounded-lg">
+                    <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
+                            className="flex justify-center p-4 border-b cursor-pointer bg-[#FFF5F3]"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="font-semibold text-3xl">Employer Profile</h3>
-                            <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
+                            <h3 className="font-semibold text-3xl text-center">Company Profile</h3>
+                            {/* <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {profileCollapsed ? (
                                     <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
                                     <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
-                            </button>
+                            </button> */}
                         </div>
 
                         {/* Card Body */}
@@ -50,88 +50,77 @@ export default function EmployerProfile() {
                             {!editProfile && (
                                 <>
                                     <div className=" flex flex-col sm:flex-row gap-6 items-center">
-                                    <img
-                                        src={userLogo}
-                                        alt="User Profile"
-                                        className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                    />
-                                    <div className="text-center sm:text-left">
-                                        <h4 className="font-semibold text-lg">Ghulam Muhammad</h4>
-                                        <p className="text-sm text-gray-600">Software Developer</p>
-                                        <p className="text-sm text-gray-600">Private - Islamabad, Pakistan</p>
-                                        <p className="text-sm text-gray-600">g.muh786@gmail.com</p>
-                                        <p className="text-sm text-gray-600">+92.312.0376631</p>
+                                        <img
+                                            src="https://kofejob.dreamstechnologies.com/html/template/assets/img/default-logo.svg"
+                                            alt="User Profile"
+                                            className="h-18 w-18 sm:h-18 sm:w-18 rounded-full border-2 border-white"
+                                        />
+                                        <div className="text-center sm:text-left">
+                                            <strong className="text-sm text-gray-600">Soft Technologies</strong>
+                                            <h1 className="font-semibold text-2xl">Build a Coaching Website Product Store images</h1>
+                                        </div>
                                     </div>
-                                </div>
-                                    <div className="space-y-4 mt-4 border-t border-gray-300 p-2">
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mt-2">
-                                            <div className="sm:col-span-1">
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Company: <span className="text-gray-900 font-medium">Company Name</span>
-                                                </label>
+                                    <div className="flex ml-2 mt-3 gap-x-10">
+                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2 pr-8 border-r border-gray-300">
+                                            <MapPinIcon className="w-5 h-5" />
+                                            Los Angeles
+                                        </p>
+                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2 pr-8 border-r border-gray-300">
+                                            <CalendarDaysIcon className="w-5 h-5" />
+                                            22 September 2023
+                                        </p>
+                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2 pr-8 border-r border-gray-300">
+                                            <EyeIcon className="w-5 h-5" />
+                                            902 Views
+                                        </p>
+                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2">
+                                            <PencilSquareIcon className="w-5 h-5" />
+                                            15 Proposal
+                                        </p>
+                                    </div>
+                                    <div className="sm:col-span-full py-3 p-4 border-t border-gray-300 mt-10">
+                                        <label
+                                            htmlFor="company_name"
+                                            className="block font-semibold"
+                                        >
+                                            Description
+                                        </label>
+                                        <div className="text-sm text-gray-600 mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Industry: <span className="text-gray-900 font-medium">Industry Name</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Location: <span className="text-gray-900 font-medium">Islamabad Pakistan</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Contact Person Name: <span className="text-gray-900 font-medium">GM</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Verification: <span className="text-gray-900 font-medium">Verified</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Date of Registration: <span className="text-gray-900 font-medium">12 Nov, 2024</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Status: <span className="text-gray-900 font-medium">Active</span>
-                                                </label>
-                                            </div>
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                                        </div>
 
-                                            {/* Company Description Field */}
-                                            <div className="col-span-full">
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Company Description: <span className="text-gray-900 font-medium">Private Software Development Company</span>
-                                                </label>
-                                            </div>
+                                    </div>
+                                    <div className="sm:col-span-full py-3 p-4 border-t border-gray-300 mt-10">
+                                        <label
+                                            htmlFor="company_name"
+                                            className="block font-semibold"
+                                        >
+                                            Required Skills
+                                        </label>
+                                        <div className="text-sm text-gray-600 mt-5 grid grid-cols-8 gap-3 text-center">
+                                            <span className="bg-red-100 p-1 rounded">JavaScript</span>
+                                            <span className="bg-red-100 p-1 rounded">Reactjs</span>
+                                            <span className="bg-red-100 p-1 rounded">Nextjs</span>
+                                            <span className="bg-red-100 p-1 rounded">PHP</span>
+                                            <span className="bg-red-100 p-1 rounded">HTML</span>
+                                            <span className="bg-red-100 p-1 rounded">CSS</span>
+                                            <span className="bg-red-100 p-1 rounded">Bootstrap</span>
+                                            <span className="bg-red-100 p-1 rounded">JavaScript</span>
+                                        </div>
+                                    </div>
+                                    <div className="sm:col-span-full py-3 p-4 border-t border-gray-300 mt-10">
+                                        <label
+                                            htmlFor="company_name"
+                                            className="block font-semibold"
+                                        >
+                                            Tags
+                                        </label>
+                                        <div className="text-sm text-gray-600 mt-5 grid grid-cols-5 gap-3 text-center">
+                                            <span className="bg-red-100 p-1 rounded">Machine Learning</span>
+                                            <span className="bg-red-100 p-1 rounded">Virtual Assistant</span>
+                                            <span className="bg-red-100 p-1 rounded">AI Chatbot</span>
                                         </div>
                                     </div>
                                 </>

@@ -261,19 +261,19 @@ export default function ViewJobs() {
                                 </div>
                             ))}
                             <div className="sm:col-span-1 mt-9">
-                                <Button
+                                <button
                                     type="button"
-                                    variant="outline"
-                                    color="slate"
+                                    // variant="outline"
+                                    // color="slate"
                                     // onClick={clearFilterExpenseQuarryWise}
-                                    className="flex items-center"
+                                    className="flex items-center border border-gray-300 p-2 rounded-lg hover:bg-orange-600 hover:text-white"
                                 >
                                     <XCircleIcon
                                         className="-ml-0.5 h-5 w-5 mr-1"
                                         aria-hidden="true"
                                     />
                                     Clear Filter
-                                </Button>
+                                </button>
                             </div>
                         </div>
                     </div>

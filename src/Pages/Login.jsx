@@ -63,7 +63,7 @@ export default function Login() {
                                 <div className="text-center">
                                     {/* <TERipple rippleColor="light" className="w-full"> */}
                                     <Link
-                                        to={"/home"}
+                                        to={"/dashboard"}
                                         type="button"
                                     // className="inline-block w-full rounded px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none bg-gradient-to-r from-orange-500 to-pink-600"
                                     // style={{

@@ -36,7 +36,7 @@ export default function Projects() {
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative bg-white transition-all duration-300 ease-in-out ${Project ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`relative space-y-7 bg-white transition-all duration-300 ease-in-out ${Project ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Icons at Top-Right */}
                             {(!editProject && !Project) && (
                                 <div className="absolute top-4 right-4 flex space-x-2">

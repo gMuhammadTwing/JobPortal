@@ -6,74 +6,98 @@ export default function FeaturedJobs() {
             name: 'Jane Cooper',
             title: 'Regional Paradigm Technician Job',
             role: 'Technical Writer',
+            hourlyRate: "443",
+            location: "Florida, USA",
             email: 'janecooper@example.com',
             telephone: '+1-202-555-0170',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/women/0.jpg',
         },
         {
-            name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician Job',
+            name: 'John Doe',
+            title: 'Senior Software Engineer',
             role: 'Frontend Developer',
-            email: 'janecooper@example.com',
-            telephone: '+1-202-555-0170',
+            hourlyRate: "560",
+            location: "California, USA",
+            email: 'johndoe@example.com',
+            telephone: '+1-202-555-0198',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/men/0.jpg',
         },
         {
-            name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician Job',
-            role: 'Technical Writer',
-            email: 'janecooper@example.com',
-            telephone: '+1-202-555-0170',
+            name: 'Sarah Smith',
+            title: 'Lead UI/UX Designer',
+            role: 'UX Designer',
+            hourlyRate: "490",
+            location: "New York, USA",
+            email: 'sarahsmith@example.com',
+            telephone: '+1-202-555-0135',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/women/1.jpg',
         },
         {
-            name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician Job',
-            role: 'Frontend Developer',
-            email: 'janecooper@example.com',
-            telephone: '+1-202-555-0170',
+            name: 'Michael Johnson',
+            title: 'Project Manager',
+            role: 'Business Analyst',
+            hourlyRate: "520",
+            location: "Texas, USA",
+            email: 'michaeljohnson@example.com',
+            telephone: '+1-202-555-0182',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/men/1.jpg',
         },
         {
-            name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician Job',
-            role: 'Technical Writer',
-            email: 'janecooper@example.com',
-            telephone: '+1-202-555-0170',
+            name: 'Emily Davis',
+            title: 'Data Analyst',
+            role: 'Data Scientist',
+            hourlyRate: "475",
+            location: "Georgia, USA",
+            email: 'emilydavis@example.com',
+            telephone: '+1-202-555-0163',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/women/2.jpg',
         },
         {
-            name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician Job',
-            role: 'Frontend Developer',
-            email: 'janecooper@example.com',
-            telephone: '+1-202-555-0170',
+            name: 'Alex Taylor',
+            title: 'Software Developer',
+            role: 'Backend Developer',
+            hourlyRate: "600",
+            location: "Washington, USA",
+            email: 'alextaylor@example.com',
+            telephone: '+1-202-555-0144',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/men/2.jpg',
         },
         {
-            name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician Job',
-            role: 'Technical Writer',
-            email: 'janecooper@example.com',
-            telephone: '+1-202-555-0170',
+            name: 'Chris Lee',
+            title: 'Software Engineer',
+            role: 'Full Stack Developer',
+            hourlyRate: "650",
+            location: "Illinois, USA",
+            email: 'chrislee@example.com',
+            telephone: '+1-202-555-0111',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://randomuser.me/api/portraits/men/3.jpg',
         },
-        // More people...
-    ]
+        {
+            name: 'Jordan Brown',
+            title: 'Mobile App Developer',
+            role: 'iOS Developer',
+            hourlyRate: "590",
+            location: "Florida, USA",
+            email: 'jordanbrown@example.com',
+            telephone: '+1-202-555-0123',
+            imageUrl:
+                'https://randomuser.me/api/portraits/men/4.jpg',
+        },
+    ];
     return (
         <div className='bg-gradient-to-t to-[#F8ECF8] from-[#FFF3EA] p-2 sm:p-8 md:p-16 lg:p-20'>
             <div className=''>
                 <div className='font-medium text-4xl sm:text-5xl md:text-6x text-center '>Featured Jobs <span className='text-orange-500'>For You</span></div>
                 <div className='text-center mt-2 text-gray-600 font-semibold'>We have over 2000+ Projects waiting for you</div>
             </div>
-            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-6">
                 {jobs.map((person) => (
                     <li
                         key={person.email}

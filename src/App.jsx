@@ -22,6 +22,10 @@ import DashboardMain from './Pages/DashboardMain'
 import PublicIndex from './Pages/Public/Index'
 import PublicDashboard from './Pages/PublicDashboard'
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import AboutUs from './Pages/Public/AboutUs'
+import Teams from './Pages/Public/Teams'
+import Projects from './Pages/Public/Projects'
+import Blogs from './Pages/Public/Blogs'
 function App() {
   return (
     <>
@@ -30,10 +34,30 @@ function App() {
           <Route path="/*" element={<PublicDashboard />}>
             <Route path="dashboard" element={<PublicIndex />} />
           </Route>
-          <Route path="login" element={<Login />} />
-          <Route path="create-account" element={<CreateAccount />} />
-          <Route path="signup-jobseeker" element={<JobSeekerSignup />} />
-          <Route path="signup-employer" element={<EmployerSignup />} />
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="about-us" element={<AboutUs />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="teams" element={<Teams />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="projects" element={<Projects />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="blogs" element={<Blogs />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="login" element={<Login />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="create-account" element={<CreateAccount />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="signup-jobseeker" element={<JobSeekerSignup />} />
+          </Route>
+          <Route path="/*" element={<PublicDashboard />}>
+            <Route path="signup-employer" element={<EmployerSignup />} />
+          </Route>
           <Route path="/*" element={<PublicDashboard />}>
             <Route path="job-seeker" element={<DashboardMain />}>
               <Route path="profile" element={<Profile />} />

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "../../Components/Button";
 import AddCoursework from "../../Pages/Coursework/AddCoursework";
 import { toast, Toaster } from "sonner";
+
 export default function Education() {
     const [Education, setEducation] = useState(false);
     const [editEducation, setEditEducation] = useState(false);
@@ -18,6 +19,7 @@ export default function Education() {
 
     const ToastSuccess = (str) => toast.success(str);
     const ToastError = (str) => toast.error(str);
+
     return (
         <>
             <div className="flex justify-center sm:px-0">
@@ -41,10 +43,10 @@ export default function Education() {
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative bg-white transition-all duration-300 ease-in-out ${Education ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`relative space-y-7 bg-white transition-all duration-300 ease-in-out ${Education ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
                             {(!editEducation && !Education) && (
-                                <div className="absolute top-4 right-4 flex space-x-2">
+                                <div className="absolute top-4 right-4 flex space-x-2 sm:space-x-4">
                                     <button
                                         type="button"
                                         onClick={() => setEditEducation(true)}
@@ -70,7 +72,7 @@ export default function Education() {
 
                             {/* Profile Information */}
                             {!editEducation && (
-                                <div className="flex flex-col sm:flex-row gap-4">
+                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
                                     <div className="flex items-center gap-4">
                                         <div>
                                             <div className="flex justify-between items-center">
@@ -78,19 +80,19 @@ export default function Education() {
                                             </div>
                                             <p>BS Computer Science 2024</p>
                                         </div>
-
                                     </div>
                                 </div>
-
                             )}
+
+                            {/* Add Course Button */}
                             {!editEducation && (
                                 <div className="mt-4 flex justify-center border-t py-2">
                                     <button
                                         type="button"
                                         onClick={() => setEditEducation(true)}
-                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 sm:p-2 text-white shadow-md transition-all"
                                     >
-                                        <PlusIcon className=" h-5 w-5" />
+                                        <PlusIcon className="h-5 w-5" />
                                     </button>
                                 </div>
                             )}
@@ -98,7 +100,7 @@ export default function Education() {
                             {/* Edit Profile Form */}
                             {editEducation && (
                                 <form className="space-y-4">
-                                    <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {/* Degree Title Dropdown */}
                                         <div>
                                             <label htmlFor="degreeTitle" className="block text-sm font-medium text-gray-900">Degree Title *</label>
@@ -179,31 +181,27 @@ export default function Education() {
                                     {/* Action Buttons */}
                                     <div className="flex justify-center gap-4 mt-5">
                                         <Button
-                                            type="button"
+                                            type="submit"
                                             color="gradient"
-                                            variant="outline"
+                                            variant="filled"
+                                        >
+                                            Save
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            color="red"
+                                            variant="filled"
                                             onClick={() => setEditEducation(false)}
                                         >
                                             Cancel
                                         </Button>
-                                        <Button
-                                            type="submit"
-                                            color="gradient"
-                                            variant="solid"
-                                            className="text-white"
-                                        >
-                                            Save
-                                        </Button>
                                     </div>
                                 </form>
-
-
-
                             )}
                         </div>
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }
