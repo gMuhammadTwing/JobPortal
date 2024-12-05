@@ -133,6 +133,15 @@ export default function Testing() {
       imageUrl:
         'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
     },
+    {
+      name: 'Jane Cooper',
+      title: 'Regional Paradigm Technician Job',
+      role: 'Technical Writer',
+      email: 'janecooper@example.com',
+      telephone: '+1-202-555-0170',
+      imageUrl:
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+    },
     // More people...
   ]
   return (
@@ -196,8 +205,8 @@ export default function Testing() {
           </div>
         </div>
 
-        <div className='mt-6 mb-3 border border-gray-300 rounded-lg p-3'>
-          <div className='px-3 font-medium text-4xl sm:text-5xl md:text-6x text-center'>
+        <div className='mt-20 mb-3 rounded-lg p-3'>
+          <div className='px-3 font-medium text-4xl sm:text-5xl md:text-6x text-center pb-5'>
             <h1>Recently Updated Jobs <span className='text-orange-500'>For You</span></h1>
           </div>
           <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-5">
@@ -246,7 +255,7 @@ export default function Testing() {
           </ul>
         </div>
 
-        <div className='mt-6 mb-3 p-3'>
+        <div className='mt-20 mb-3 p-3 bg-gradient-to-t to-[#F8ECF8] from-[#FFF3EA]'>
           <div className='px-3 mb-3'>
             <div className='font-medium text-4xl sm:text-5xl md:text-6x text-center '>Featured Jobs <span className='text-orange-500'>For You</span></div>
             <div className='text-center mt-2 text-gray-600 font-semibold'>We have over 2000+ Projects waiting for you</div>
@@ -384,53 +393,6 @@ export default function Testing() {
               />
             </svg>
           </CardDataStats>
-        </div>
-
-        <div className="bg-white py-24 sm:py-32 mt-4">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:mx-0">
-              <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Job Advertisements</h2>
-              <p className="mt-2 text-lg/8 text-gray-600">Learn how to grow your business with our expert advice.</p>
-            </div>
-            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-              {posts.map((post) => (
-                <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
-                  <div className="flex items-center gap-x-4 text-xs">
-                    <time dateTime={post.datetime} className="text-gray-500">
-                      {post.date}
-                    </time>
-                    <a
-                      href={post.category.href}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                    >
-                      {post.category.title}
-                    </a>
-                  </div>
-                  <div className="group relative">
-                    <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                      <a href={post.href}>
-                        <span className="absolute inset-0" />
-                        {post.title}
-                      </a>
-                    </h3>
-                    <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">{post.description}</p>
-                  </div>
-                  <div className="relative mt-8 flex items-center gap-x-4">
-                    <img alt="" src={post.author.imageUrl} className="h-10 w-10 rounded-full bg-gray-50" />
-                    <div className="text-sm/6">
-                      <p className="font-semibold text-gray-900">
-                        <a href={post.author.href}>
-                          <span className="absolute inset-0" />
-                          {post.author.name}
-                        </a>
-                      </p>
-                      <p className="text-gray-600">{post.author.role}</p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">

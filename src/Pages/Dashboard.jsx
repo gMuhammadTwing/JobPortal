@@ -35,8 +35,8 @@ import {
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import logo from '../assets/logo.png'
-import { Button } from '../Components/Button'
-import userLogo from '../assets/user.jpeg'
+import { Button } from './../Components/Button'
+import userLogo from './../assets/user.jpeg'
 const navigation = [
   { name: 'Job Profile', href: '/home', single: 'home', icon: UserCircleIcon, current: true },
   { name: 'Resume/CV', href: '/resume', icon: DocumentTextIcon, current: false },
@@ -45,15 +45,15 @@ const navigation = [
   { name: 'Subscription & Payment', href: '/subscription', icon: CreditCardIcon, current: false },
 
   { name: 'Employer Profile', href: '/employer-profile', icon: UserCircleIcon, current: true },
-  { name: 'View Employer Logs', href: '/view-employer-logs', icon: UserCircleIcon, current: true },
-  { name: 'Employer Job Management', href: '/job-management', icon: BriefcaseIcon, current: false },
-  { name: 'Search Coursework', href: '/coursework', icon: HomeModernIcon, current: false },
+  { name: 'Employer Job Management', href: '/manage-jobs', icon: BriefcaseIcon, current: false },
+  { name: 'Employer Payment', href: '/employer-payment', icon: CreditCardIcon, current: false },
   { name: 'Shortlisting Requests', href: '/shortlisting', icon: ClipboardIcon, current: false },
-  { name: 'Reports', href: '/reports', icon: FlagIcon, current: false },
+  { name: 'Search Coursework', href: '/coursework', icon: HomeModernIcon, current: false },
   { name: 'Blog/Comments', href: '/blog', icon: NewspaperIcon, current: false },
-  { name: 'Subscription & Payment', href: '/subscription', icon: CreditCardIcon, current: false },
-  // { name: 'Admin Panel', href: '/admin-panel', icon: CogIcon, current: false },
 
+  { name: 'Reports', href: '/reports', icon: FlagIcon, current: false },
+  // { name: 'View Employer Logs', href: '/view-employer-logs', icon: UserCircleIcon, current: true },
+  // { name: 'Admin Panel', href: '/admin-panel', icon: CogIcon, current: false },
   { name: 'CMS Pages', href: '/cms-pages', icon: CogIcon, current: false },
   { name: 'CMS Section', href: '/cms-section', icon: CogIcon, current: false },
 ];
@@ -115,7 +115,7 @@ export default function Dashboard() {
                             <Link
                               key={index}
                               onClick={() => handleCurrent(item)}
-                              to={item.href || '#'}
+                              to={"#/" + item.href}
                               className={classNames(
                                 item.current
                                   ? 'bg-gray-50 text-indigo-600'
@@ -175,8 +175,8 @@ export default function Dashboard() {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           className={classNames(
                             location.pathname.includes(item.href) ||
                               location.pathname.includes(item?.single)
@@ -194,7 +194,7 @@ export default function Dashboard() {
                             )}
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -263,15 +263,15 @@ export default function Dashboard() {
                     {userNavigation.map((item) => (
                       <MenuItem key={item.name}>
                         {item?.name == "Sign out" ? (
-                          <a
-                            href={item.href}
+                          <Link
+                            to={item.href}
                             className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                           >
                             <Button type="button"
                               color="gradient"
                               variant="solid">{item.name} </Button>
 
-                          </a>
+                          </Link>
                         ) :
                           <a
                             href={item.href}

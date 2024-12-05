@@ -44,6 +44,27 @@ export default function Resume() {
             uploadDate: "2024-10-15",
             pdf: "Default CV"
         },
+        {
+            title: "CV2",
+            uploadDate: "2024-10-15",
+            pdf: "Default CV"
+        },
+
+        {
+            title: "CV2",
+            uploadDate: "2024-10-15",
+            pdf: "Default CV"
+        },
+        {
+            title: "CV2",
+            uploadDate: "2024-10-15",
+            pdf: "Default CV"
+        },
+        {
+            title: "CV2",
+            uploadDate: "2024-10-15",
+            pdf: "Default CV"
+        },
     ]);
 
     const pageNumber = async (pageNum) => {
@@ -51,15 +72,15 @@ export default function Resume() {
     };
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto max-w-5xl">
             <AddResume isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess}
                 error={ToastError} />
-            <div className="mt-4">
+            <div className="pb-15">
                 <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
                     Manage Your CVs
                 </div>
                 <Toaster richColors />
-                <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                <div className="overflow-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
                     <div className="inline-block min-w-full align-middle">
                         <div className="overflow-hidden">
                             <table className="min-w-full divide-y divide-gray-300">
@@ -78,11 +99,11 @@ export default function Resume() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                            className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                         >
                                             <Button
                                                 type="button"
-                                                color="green"
+                                                color="gradient"
                                                 variant="solid"
                                                 onClick={()=>openModal()}
                                             >

@@ -7,12 +7,14 @@ import Projects from "../../Components/JobSeeker/Projects";
 export default function Profile() {
     return (
         <>
-            <PersonalInformation />
-            <Summary />
-            <Experience />
-            <Skills />
-            <Education />
-            <Projects/>
+            <div className="mb-5 pb-15">
+                <PersonalInformation />
+                <Experience />
+                <Skills />
+                <Education />
+                <Summary />
+                <Projects />
+            </div>
         </>
     );
 }

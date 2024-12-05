@@ -8,53 +8,34 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { FallingLines } from "react-loader-spinner";
-import { useState } from "react";
-import { Button } from "../Button";
+import { Button } from "../../Components/Button";
 
-const AddPayment = ({ isOpen, onClose, success, error }) => {
-    const [file, setFile] = useState(null);
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
-    };
-
+const AddCoursework = ({ isOpen, onClose, success, error }) => {
     const formik = useFormik({
         initialValues: {
-            subscription_id: "",
-            user_id: "",
-            payment_reference: "",
-            payment_method: "",
-            amount_paid: "",
-            payment_date: "",
-            upload_file: null,
+            degree_program: "",
+            institution_name: "",
+            course_title: "",
+            grade: "",
+            year_of_completion: "",
         },
         validationSchema: Yup.object({
-            subscription_id: Yup.string().required("Subscription ID is required"),
-            user_id: Yup.string().required("User ID is required"),
-            payment_reference: Yup.string().required("Payment reference is required"),
-            payment_method: Yup.string().required("Payment method is required"),
-            amount_paid: Yup.number()
-                .required("Amount paid is required")
-                .positive("Amount must be positive"),
-            payment_date: Yup.date().required("Payment date is required"),
-            upload_file: Yup.mixed().required("File is required"),
+            degree_program: Yup.string().required("Degree program is required"),
+            institution_name: Yup.string().required("Institution name is required"),
+            course_title: Yup.string().required("Course title is required"),
+            grade: Yup.string().required("Grade is required"),
+            year_of_completion: Yup.date().required("Year of completion is required"),
         }),
         onSubmit: async (values) => {
-            const formData = new FormData();
-            Object.keys(values).forEach((key) => {
-                formData.append(key, key === "upload_file" ? file : values[key]);
-            });
-
             try {
-                // API call to submit data
-                console.log("Form submitted:", formData);
-                success("Payment added successfully");
+                console.log("Form submitted:", values);
+                success("Coursework added successfully");
                 onClose(false);
-            } catch (error) {
-                console.error("Error submitting form:", error);
-                error("Failed to add payment");
+            } catch (err) {
+                console.error("Error submitting form:", err);
+                error("Failed to add coursework");
             } finally {
                 formik.resetForm();
-                setFile(null);
             }
         },
     });
@@ -83,140 +64,100 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                                 as="h3"
                                 className="text-base font-semibold leading-6 text-gray-900"
                             >
-                                Add Payment
+                                Add Coursework
                             </DialogTitle>
                             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-12">
-                                {/* Subscription ID */}
+                                {/* Degree Program */}
                                 <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
-                                        Subscription ID
+                                        Degree Program
                                     </label>
                                     <input
                                         type="text"
-                                        name="subscription_id"
+                                        name="degree_program"
                                         onChange={formik.handleChange}
-                                        value={formik.values.subscription_id}
+                                        value={formik.values.degree_program}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.subscription_id && (
+                                    {formik.errors.degree_program && (
                                         <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.subscription_id}
+                                            {formik.errors.degree_program}
                                         </p>
                                     )}
                                 </div>
 
-                                {/* User ID */}
+                                {/* Institution Name */}
                                 <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
-                                        User ID
+                                        Institution Name
                                     </label>
                                     <input
                                         type="text"
-                                        name="user_id"
+                                        name="institution_name"
                                         onChange={formik.handleChange}
-                                        value={formik.values.user_id}
+                                        value={formik.values.institution_name}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.user_id && (
+                                    {formik.errors.institution_name && (
                                         <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.user_id}
+                                            {formik.errors.institution_name}
                                         </p>
                                     )}
                                 </div>
 
-                                {/* Payment Reference */}
+                                {/* Course Title */}
                                 <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
-                                        Payment Reference
+                                        Course Title
                                     </label>
                                     <input
                                         type="text"
-                                        name="payment_reference"
+                                        name="course_title"
                                         onChange={formik.handleChange}
-                                        value={formik.values.payment_reference}
+                                        value={formik.values.course_title}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.payment_reference && (
+                                    {formik.errors.course_title && (
                                         <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.payment_reference}
+                                            {formik.errors.course_title}
                                         </p>
                                     )}
                                 </div>
 
-                                {/* Payment Method */}
+                                {/* Grade */}
                                 <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
-                                        Payment Method
+                                        Grade
                                     </label>
                                     <input
                                         type="text"
-                                        name="payment_method"
+                                        name="grade"
                                         onChange={formik.handleChange}
-                                        value={formik.values.payment_method}
+                                        value={formik.values.grade}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.payment_method && (
+                                    {formik.errors.grade && (
                                         <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.payment_method}
+                                            {formik.errors.grade}
                                         </p>
                                     )}
                                 </div>
 
-                                {/* Amount Paid */}
+                                {/* Year of Completion */}
                                 <div className="sm:col-span-6">
                                     <label className="block text-sm font-medium text-gray-900">
-                                        Amount Paid
-                                    </label>
-                                    <input
-                                        type="number"
-                                        name="amount_paid"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.amount_paid}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    />
-                                    {formik.errors.amount_paid && (
-                                        <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.amount_paid}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Payment Date */}
-                                <div className="sm:col-span-6">
-                                    <label className="block text-sm font-medium text-gray-900">
-                                        Payment Date
+                                        Year of Completion
                                     </label>
                                     <input
                                         type="date"
-                                        name="payment_date"
+                                        name="year_of_completion"
                                         onChange={formik.handleChange}
-                                        value={formik.values.payment_date}
+                                        value={formik.values.year_of_completion}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.payment_date && (
+                                    {formik.errors.year_of_completion && (
                                         <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.payment_date}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Upload File */}
-                                <div className="sm:col-span-6">
-                                    <label className="block text-sm font-medium text-gray-900">
-                                        Upload File
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="upload_file"
-                                        onChange={(event) => {
-                                            handleFileChange(event);
-                                            formik.setFieldValue("upload_file", event.target.files[0]);
-                                        }}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    />
-                                    {formik.errors.upload_file && (
-                                        <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.upload_file}
+                                            {formik.errors.year_of_completion}
                                         </p>
                                     )}
                                 </div>
@@ -225,11 +166,7 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                                 {formik.isSubmitting ? (
                                     <FallingLines height={40} width={40} color="purple" />
                                 ) : (
-                                    <Button
-                                        type="submit"
-                                        color="gradient"
-                                        variant="solid"
-                                    >
+                                    <Button type="submit" color="gradient" variant="solid">
                                         Save
                                     </Button>
                                 )}
@@ -238,7 +175,7 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
                                     onClick={() => onClose(false)}
                                     color="gradient"
                                     variant="outline"
-                                    className={"mr-1"}
+                                    className="mr-1"
                                 >
                                     Cancel
                                 </Button>
@@ -251,4 +188,4 @@ const AddPayment = ({ isOpen, onClose, success, error }) => {
     );
 };
 
-export default AddPayment;
+export default AddCoursework;

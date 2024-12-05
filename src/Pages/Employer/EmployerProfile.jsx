@@ -1,7 +1,8 @@
-import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon, MapIcon, MapPinIcon, CalendarDaysIcon, EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
+import ReactQuill from "react-quill";
 export default function EmployerProfile() {
     const [profileCollapsed, setprofileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
@@ -11,125 +12,99 @@ export default function EmployerProfile() {
             setEditProfile(false);
         }
     };
+    const [value, setValue] = useState("");
     return (
         <>
-            <div className="flex justify-center px-4 sm:px-0">
-                <div className="p-4 w-full max-w-4xl">
-                    <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
+            <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+                <div className="p-4 w-full max-w-5xl rounded-lg">
+                    <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 bg-orange-500 border-b cursor-pointer text-white"
+                            className="flex justify-center p-4 border-b cursor-pointer bg-[#FFF5F3]"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="font-semibold text-lg">Employer Profile</h3>
-                            <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
+                            <h3 className="font-semibold text-3xl text-center">Company Profile</h3>
+                            {/* <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {profileCollapsed ? (
-                                    <PlusIcon className="block h-6 w-6 text-green-600 hover:scale-[160%] duration-300" />
+                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-red-600 hover:scale-[160%] duration-300" />
+                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
-                            </button>
+                            </button> */}
                         </div>
 
                         {/* Card Body */}
-                        <div className={`relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4 sm:p-6"}`}>
                             {/* Edit Button in Body */}
                             {(!editProfile && !profileCollapsed) && (
                                 <button
                                     type="button"
                                     onClick={() => setEditProfile(true)}
-                                    className="absolute right-4 top-4 bg-orange-500 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
+                                    className="absolute right-4 top-4 bg-white hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
                                 >
-                                    <PencilIcon className="h-5 w-5 text-white" />
+                                    <PencilIcon className="h-5 w-5 text-blue-500" />
                                 </button>
                             )}
 
                             {/* Profile Information */}
                             {!editProfile && (
                                 <>
-                                    <div className=" flex flex-col sm:flex-row gap-6 items-center">
-                                    <img
-                                        src={userLogo}
-                                        alt="User Profile"
-                                        className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                    />
-                                    <div className="text-center sm:text-left">
-                                        <h4 className="font-semibold text-lg">Ghulam Muhammad</h4>
-                                        <p className="text-sm text-gray-600">Software Developer</p>
-                                        <p className="text-sm text-gray-600">Private - Islamabad, Pakistan</p>
-                                        <p className="text-sm text-gray-600">g.muh786@gmail.com</p>
-                                        <p className="text-sm text-gray-600">+92.312.0376631</p>
+                                    <div className="flex flex-col sm:flex-row gap-6 items-center">
+                                        <img
+                                            src="https://kofejob.dreamstechnologies.com/html/template/assets/img/default-logo.svg"
+                                            alt="User Profile"
+                                            className="h-24 w-24 sm:h-28 sm:w-28 rounded-full border-2 border-white"
+                                        />
+                                        <div className="text-center sm:text-left">
+                                            <strong className="text-sm text-gray-600">Soft Technologies</strong>
+                                            <h1 className="font-semibold text-xl sm:text-2xl">Build a Coaching Website Product Store images</h1>
+                                        </div>
                                     </div>
-                                </div>
-                                    <div className="space-y-4 mt-4 border-t border-gray-300 p-2">
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mt-2">
-                                            <div className="sm:col-span-1">
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Company: <span className="text-gray-900 font-medium">Company Name</span>
-                                                </label>
 
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Industry: <span className="text-gray-900 font-medium">Industry Name</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Location: <span className="text-gray-900 font-medium">Islamabad Pakistan</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Contact Person Name: <span className="text-gray-900 font-medium">GM</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Verification: <span className="text-gray-900 font-medium">Verified</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Date of Registration: <span className="text-gray-900 font-medium">12 Nov, 2024</span>
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Status: <span className="text-gray-900 font-medium">Active</span>
-                                                </label>
-                                            </div>
+                                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-4">
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                            <MapPinIcon className="w-5 h-5" />
+                                            Los Angeles
+                                        </p>
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                            <CalendarDaysIcon className="w-5 h-5" />
+                                            22 September 2023
+                                        </p>
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                            <EyeIcon className="w-5 h-5" />
+                                            902 Views
+                                        </p>
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                            <PencilSquareIcon className="w-5 h-5" />
+                                            15 Proposal
+                                        </p>
+                                    </div>
+                                    <div className="mt-6 border-t pt-4">
+                                        <label className="block font-semibold">Description</label>
+                                        <p className="text-sm text-gray-600 mt-2">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-                                            {/* Company Description Field */}
-                                            <div className="col-span-full">
-                                                <label
-                                                    htmlFor="company_name"
-                                                    className="block text-sm"
-                                                >
-                                                    Company Description: <span className="text-gray-900 font-medium">Private Software Development Company</span>
-                                                </label>
-                                            </div>
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                                        </p>
+                                    </div>
+                                    <div className="mt-6 border-t pt-4">
+                                        <label className="block font-semibold">Required Skills</label>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                                            {["JavaScript", "Reactjs", "Nextjs", "PHP", "HTML", "CSS", "Bootstrap"].map((skill) => (
+                                                <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="mt-6 border-t pt-4">
+                                        <label className="block font-semibold">Tags</label>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                                            {["Machine Learning", "Virtual Assistant", "AI Chatbot"].map((skill) => (
+                                                <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
+                                                    {skill}
+                                                </span>
+                                            ))}
                                         </div>
                                     </div>
                                 </>
@@ -137,7 +112,7 @@ export default function EmployerProfile() {
 
                             {/* Edit Profile Form */}
                             {editProfile && (
-                                <form className="space-y-4">
+                                <form className="">
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div className="sm:col-span-1">
                                             <label
@@ -265,6 +240,36 @@ export default function EmployerProfile() {
 
                                         {/* Company Description Field */}
                                         <div className="col-span-full">
+                                            <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <ReactQuill
+                                                id="summary-editor"
+                                                theme="snow"
+                                                value={value}
+                                                onChange={setValue}
+                                                style={{
+                                                    height: "150px",
+                                                }}
+                                                modules={{
+                                                    toolbar: [
+                                                        ["bold", "italic", "underline", "strike"],
+                                                        [{ header: [1, 2, 3, false] }],
+                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                        ["clean"],
+                                                    ],
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                                placeholder="Write something"
+                                            />
+                                        </div>
+                                        {/* <div className="col-span-full">
                                             <label htmlFor="company_description" className="block text-sm font-medium text-gray-900">
                                                 Company Description
                                             </label>
@@ -274,10 +279,10 @@ export default function EmployerProfile() {
                                                 rows={4}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
-                                        </div>
+                                        </div> */}
                                     </div>
 
-                                    <div className="flex justify-center gap-4 mt-5">
+                                    <div className="flex justify-center gap-4 mt-15">
                                         <Button
                                             type="button"
                                             color="gradient"

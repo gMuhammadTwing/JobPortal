@@ -1,4 +1,6 @@
+import { ArrowDownCircleIcon, ViewColumnsIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
+import { Button } from "../../Components/Button";
 
 export default function ViewJobs() {
     const [selectedFilters, setSelectedFilters] = useState({});
@@ -6,7 +8,7 @@ export default function ViewJobs() {
     const posts = [
         {
             "id": 1,
-            "title": "Boost your conversion rate",
+            "title": "Website Designer Required For Directory Theme",
             "href": "#",
             "description": "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
             "date": "Mar 16, 2020",
@@ -225,100 +227,118 @@ export default function ViewJobs() {
     };
 
     return (
-        <div className=" py-10 sm:py-12">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
+        <div className="container mx-auto max-w-5xl pb-15">
+            <div className="px-6 lg:px-8 ">
                 <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl">Jobs</h2>
                 <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
-
-                {/* Main Grid Layout */}
-                <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    {/* Filters Section */}
-                    <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow max-h-[120vh]">
-                        {filters.map((filter, index) => (
-                            <div key={index} className="mb-6">
-                                <h3 className="text-lg font-semibold text-gray-900">{filter.title}</h3>
-                                <ul className="mt-2 space-y-1">
-                                    {filter.options.map((option, i) => (
-                                        <li key={i} className="flex items-center text-sm text-gray-700">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                                checked={!!selectedFilters[filter.title]?.[option.label]}
-                                                onChange={() => handleFilterChange(filter.title, option.label)}
-                                            />
-                                            <span>{option.label}</span>
-                                            <span className="ml-auto text-gray-500">({option.count})</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                {filter.options.length > 5 && (
-                                    <button className="mt-2 text-indigo-600 text-sm hover:underline">Show More</button>
-                                )}
-                            </div>
-                        ))}
-                    </aside>
-
-                    {/* Job Advertisements Section */}
-                    <section className="lg:col-span-3  min-h-screen overflow-y-auto">
-                        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
-                            {posts.map((post) => (
-                                <article
-                                    key={post.id}
-                                    className="flex flex-col items-start justify-between border rounded-lg p-4 shadow bg-white"
-                                >
-                                    <div className="flex items-center gap-x-4 text-xs">
-                                        <time dateTime={post.datetime} className="text-gray-500">
-                                            {post.date}
-                                        </time>
-                                        <a
-                                            href={post.category.href}
-                                            className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                                        >
-                                            {post.category.title}
-                                        </a>
-                                    </div>
-                                    <div className="group relative">
-                                        <h3 className="mt-3 text-lg font-semibold text-gray-900 group-hover:text-gray-600">
-                                            <a href={post.href}>
-                                                <span className="absolute inset-0" />
-                                                {post.title}
-                                            </a>
-                                        </h3>
-                                        <p className="mt-5 line-clamp-3 text-sm text-gray-600">{post.description}</p>
-                                    </div>
-                                    <div className="mt-4 space-y-2">
-                                        <div className="text-sm text-gray-600">
-                                            <strong>Experience:</strong>
-                                            <a className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
-                                                {post.experienceRequired}
-                                            </a>
-                                        </div>
-                                        <div className="text-sm text-gray-600">
-                                            <strong>Expected Salary:</strong> {post.expectedSalary}
-                                        </div>
-                                        <div className="text-sm text-gray-600">
-                                            <strong>Location:</strong> {post.location}
-                                        </div>
-                                        <div className="text-sm text-gray-600">
-                                            <strong>Skills:</strong>
-                                            {post.skills.map((skill) => (
-                                                <a
-                                                    key={skill}
-                                                    className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-sm text-gray-500 hover:bg-gray-100"
-                                                >
-                                                    {skill}
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </article>
+                <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  ">
+                    {/* <label className="block text-lg font-semibold text-gray-900 text-center mb-4">
+                        Apply Filters
+                    </label> */}
+                    <div>
+                        <div className="py-2 px-1 grid grid-cols-1 gap-x-6 sm:grid-cols-5">
+                            {filters.map((filter, index) => (
+                                <div key={index} className="mb-6">
+                                    <label className="block text-lg font-semibold text-gray-900">
+                                        {filter.title}
+                                    </label>
+                                    <select
+                                        className="mt-2 w-full p-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
+                                        onChange={(e) => handleFilterChange(filter.title, e.target.value)}
+                                        value={
+                                            selectedFilters[filter.title]
+                                                ? Object.keys(selectedFilters[filter.title])[0]
+                                                : ""
+                                        }
+                                    >
+                                        <option value="">Select {filter.title}</option>
+                                        {filter.options.map((option, i) => (
+                                            <option key={i} value={option.label}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                             ))}
+                            <div className="sm:col-span-1 mt-9">
+                                <button
+                                    type="button"
+                                    // variant="outline"
+                                    // color="slate"
+                                    // onClick={clearFilterExpenseQuarryWise}
+                                    className="flex items-center border border-gray-300 p-2 rounded-lg hover:bg-orange-600 hover:text-white"
+                                >
+                                    <XCircleIcon
+                                        className="-ml-0.5 h-5 w-5 mr-1"
+                                        aria-hidden="true"
+                                    />
+                                    Clear Filter
+                                </button>
+                            </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
+                <section className="lg:col-span-4 ">
+                    <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-1">
+                        {posts.map((post) => (
+                            <article
+                                key={post.id}
+                                className="flex flex-col items-start justify-between border rounded-lg p-4 shadow bg-white"
+                            >
+                                <div className="flex items-center gap-x-4 text-xs">
+                                    <time dateTime={post.datetime} className="text-gray-500">
+                                        {post.date}
+                                    </time>
+                                    <a
+                                        href={post.category.href}
+                                        className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                    >
+                                        {post.category.title}
+                                    </a>
+                                </div>
+                                <div className="">
+                                    <div className="mt-3 flex justify-between">
+                                        <span className="text-2xl font-semibold">
+                                            {post.title}
+                                        </span>
+                                        <button className="bg-orange-50 text-orange-600 p-2 px-5 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                                            View Details
+                                        </button>
+                                    </div>
+                                    <p className="mt-2 line-clamp-3 text-sm text-gray-600">{post.description}</p>
+                                </div>
 
+                                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-6">
+                                    <div className="text-sm text-gray-600">
+                                        <span>Experience</span>
+                                        <div className="text-black font-semibold text-[1.1rem]">
+                                            {post.experienceRequired}
+                                        </div>
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                        <span>Salary</span>
+                                        <div className="text-black font-semibold text-[1.1rem]">
+                                            {post.expectedSalary}
+                                        </div>
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                        <span>Location</span>
+                                        <div className="text-black font-semibold text-[1.1rem]">
+                                            {post.location}
+                                        </div>
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                        <span>Expiry</span>
+                                        <div className="text-black font-semibold text-[1.1rem]">
+                                            4 Days left
+                                        </div>
+                                    </div>
+                                </div>
 
-
+                            </article>
+                        ))}
+                    </div>
+                </section>
             </div>
         </div>
     );

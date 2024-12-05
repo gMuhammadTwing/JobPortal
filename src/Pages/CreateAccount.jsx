@@ -7,7 +7,7 @@ export default function CreateAccount() {
     const [checked, setChecked] = useState(false);
     const [disable, setDisable] = useState(true);
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100"> {/* Full-screen center */}
+        <div className="flex items-center justify-center min-h-[50vh] bg-gray-100"> {/* Full-screen center */}
             <div className="container mx-auto p-4 text-center"> {/* Centered main div */}
                 <div className="p-4">
                     <h1 className="font-medium text-4xl sm:text-xl md:text-4xl mb-5">Join as a Job Seeker or Employer</h1>
@@ -51,12 +51,12 @@ export default function CreateAccount() {
                     disabled={disable}
                 >
                     {checked && (
-                        <Link to={"/signup-jobseeker"}>
+                        <Link to={"/create-account/signup-jobseeker"}>
                             Join Us As Job Seeker
                         </Link>
                     )}
                     {!checked && (
-                        <Link to={"/signup-employer"}>
+                        <Link to={"/create-account/signup-employee"}>
                             Join Us As Employer
                         </Link>
                     )}
