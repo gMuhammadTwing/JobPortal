@@ -1,194 +1,306 @@
-import { StarIcon } from "@heroicons/react/20/solid";
-import { AcademicCapIcon, ArrowDownOnSquareIcon, Bars2Icon, ClockIcon, CreditCardIcon, CurrencyDollarIcon, MapIcon, MapPinIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
-import Reviews from "./Reviews";
+// import { StarIcon } from "@heroicons/react/20/solid";
+// import { AcademicCapIcon, ArrowDownOnSquareIcon, Bars2Icon, ClockIcon, CreditCardIcon, CurrencyDollarIcon, MapIcon, MapPinIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
+// import { motion } from "framer-motion";
+// import Reviews from "./Reviews";
 
+// export default function Projects() {
+//     const features = [
+//         {
+//             name: 'Browse Portfolios',
+//             title: 'Find professionals you can trust by browsing their samples of previous work .',
+//             icon: AcademicCapIcon,
+//         },
+//         {
+//             name: 'Fast Bids',
+//             title: 'Receive obligation free quotes from our talented freelancers fast. 80% of projects get bid',
+//             icon: CreditCardIcon,
+//         },
+//         {
+//             name: 'Quality Work',
+//             title: 'Kofejob.com has by far the largest pool of quality freelancers globally- over 50 million to choose from.',
+//             icon: Bars2Icon,
+//         },
+//         {
+//             name: 'Track Progress',
+//             title: 'Keep up-to-date and on-the-go with our time tracker Always know what freelancers are up to.',
+//             icon: ClockIcon,
+//         },
+//     ];
+
+//     const posts = [
+//         {
+//             id: 1,
+//             title: 'Boost your conversion rate',
+//             href: '#',
+//             description:
+//                 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//             date: 'Mar 16, 2020',
+//             datetime: '2020-03-16',
+//             category: { title: 'Sales', href: '#' },
+//             author: {
+//                 name: 'Michael Foster',
+//                 role: 'Co-Founder / CTO',
+//                 href: '#',
+//                 imageUrl:
+//                     'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+//             },
+//         },
+//         {
+//             id: 1,
+//             title: 'Boost your conversion rate',
+//             href: '#',
+//             description:
+//                 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//             date: 'Mar 16, 2020',
+//             datetime: '2020-03-16',
+//             category: { title: 'Banking', href: '#' },
+//             author: {
+//                 name: 'Michael Foster',
+//                 role: 'Co-Founder / CTO',
+//                 href: '#',
+//                 imageUrl:
+//                     'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//             },
+//         },
+//         {
+//             id: 1,
+//             title: 'Boost your conversion rate',
+//             href: '#',
+//             description:
+//                 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//             date: 'Mar 16, 2020',
+//             datetime: '2020-03-16',
+//             category: { title: 'Report Writing', href: '#' },
+//             author: {
+//                 name: 'Michael Foster',
+//                 role: 'Co-Founder / CTO',
+//                 href: '#',
+//                 imageUrl:
+//                     'https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+//             },
+//         }
+//     ]
+
+
+//     return (
+//         <div
+//             className='bg-white h-screen'
+//         >
+//             <div className='font-medium text-4xl sm:text-4xl md:text-5xl text-center bg-[#FFF5F3] p-20'>
+//                 <h1>Projects</h1>
+//             </div>
+//             <div>
+
+//             </div>
+
+//         </div>
+//     );
+// }
+
+
+import React, { useState } from "react";
 export default function Projects() {
-    const features = [
-        {
-            name: 'Browse Portfolios',
-            title: 'Find professionals you can trust by browsing their samples of previous work .',
-            icon: AcademicCapIcon,
-        },
-        {
-            name: 'Fast Bids',
-            title: 'Receive obligation free quotes from our talented freelancers fast. 80% of projects get bid',
-            icon: CreditCardIcon,
-        },
-        {
-            name: 'Quality Work',
-            title: 'Kofejob.com has by far the largest pool of quality freelancers globally- over 50 million to choose from.',
-            icon: Bars2Icon,
-        },
-        {
-            name: 'Track Progress',
-            title: 'Keep up-to-date and on-the-go with our time tracker Always know what freelancers are up to.',
-            icon: ClockIcon,
-        },
-    ];
-
+    const [selectedFilters, setSelectedFilters] = useState({});
     const posts = [
         {
-            id: 1,
-            title: 'Boost your conversion rate',
-            href: '#',
-            description:
-                'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-            date: 'Mar 16, 2020',
-            datetime: '2020-03-16',
-            category: { title: 'Sales', href: '#' },
-            author: {
-                name: 'Michael Foster',
-                role: 'Co-Founder / CTO',
-                href: '#',
-                imageUrl:
-                    'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+            "id": 1,
+            "title": "Boost your conversion rate",
+            "href": "#",
+            "description": "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
+            "date": "Mar 16, 2020",
+            "datetime": "2020-03-16",
+            "category": {
+                "title": "Sales",
+                "href": "#"
             },
+            "expectedSalary": "100K - 120K",
+            "skills": [
+                "HTML",
+                "JavaScript",
+                "React JS"
+            ],
+            "experienceRequired": "3+ Years",
+            "location": "Islamabad"
         },
         {
-            id: 1,
-            title: 'Boost your conversion rate',
-            href: '#',
-            description:
-                'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-            date: 'Mar 16, 2020',
-            datetime: '2020-03-16',
-            category: { title: 'Banking', href: '#' },
-            author: {
-                name: 'Michael Foster',
-                role: 'Co-Founder / CTO',
-                href: '#',
-                imageUrl:
-                    'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            "id": 2,
+            "title": "Frontend Developer - React",
+            "href": "#",
+            "description": "We are looking for a talented Frontend Developer to join our team and work with cutting-edge technologies to build modern web applications.",
+            "date": "Mar 20, 2020",
+            "datetime": "2020-03-20",
+            "category": {
+                "title": "Software Development",
+                "href": "#"
             },
+            "expectedSalary": "80K - 100K",
+            "skills": [
+                "React JS",
+                "HTML",
+                "CSS3"
+            ],
+            "experienceRequired": "2+ Years",
+            "location": "Lahore"
         },
         {
-            id: 1,
-            title: 'Boost your conversion rate',
-            href: '#',
-            description:
-                'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-            date: 'Mar 16, 2020',
-            datetime: '2020-03-16',
-            category: { title: 'Report Writing', href: '#' },
-            author: {
-                name: 'Michael Foster',
-                role: 'Co-Founder / CTO',
-                href: '#',
-                imageUrl:
-                    'https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+            "id": 3,
+            "title": "Senior Frontend Developer - React JS",
+            "href": "#",
+            "description": "We are looking for a senior developer with extensive experience in React JS to lead our frontend development team and build scalable web applications.",
+            "date": "Mar 22, 2020",
+            "datetime": "2020-03-22",
+            "category": {
+                "title": "Engineering",
+                "href": "#"
             },
-        }
+            "expectedSalary": "120K - 150K",
+            "skills": [
+                "React JS",
+                "Redux",
+                "JavaScript",
+                "CSS3"
+            ],
+            "experienceRequired": "5+ Years",
+            "location": "Karachi"
+        },
     ]
-
-
+    const filters = [
+        {
+            title: "Title",
+            options: [
+                { label: "Frontend Developer", count: 2 },
+                { label: "Frontend Software Engineer", count: 1 },
+                { label: "Frontend UI / UX Developer", count: 1 },
+                { label: "Frontend Web Developer", count: 1 },
+                { label: "Senior Frontend Developer", count: 1 },
+                { label: "Senior Software Engineer", count: 1 },
+                { label: "Senior Next.js", count: 1 },
+                { label: "Senior React.JS", count: 1 },
+            ],
+        },
+        {
+            title: "City",
+            options: [
+                { label: "Islamabad", count: 7 },
+                { label: "Lahore", count: 6 },
+                { label: "Rawalpindi", count: 6 },
+                { label: "Faisalabad", count: 4 },
+                { label: "Gujranwala", count: 3 },
+                { label: "Gujrat", count: 3 },
+                { label: "Karachi", count: 2 },
+                { label: "Akhora Khattak", count: 1 },
+                { label: "Ali Chak", count: 1 },
+                { label: "Allahabad", count: 1 },
+            ],
+        },
+        {
+            title: "Type",
+            options: [{ label: "Full Time/Permanent", count: 9 }],
+        },
+    ];
+    const handleFilterChange = (category, option) => {
+        setSelectedFilters((prev) => ({
+            ...prev,
+            [category]: {
+                ...prev[category],
+                [option]: !prev[category]?.[option],
+            },
+        }));
+    };
     return (
-        <div
-            className='bg-white h-screen'
-        >
+        <div className="bg-white">
             <div className='font-medium text-4xl sm:text-4xl md:text-5xl text-center bg-[#FFF5F3] p-20'>
                 <h1>Projects</h1>
             </div>
-
-            {/* <div className="text-center p-15 space-y-4 max-w-7xl mx-auto">
-                <div className="font-medium text-4xl sm:text-4xl md:text-5xl">
-                    About We’re on a mission to empowering Jobs worldwide.
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est modi, saepe hic esse maxime quasi, sapiente ex debitis quis dolorum unde, neque quibusdam eveniet nobis enim porro repudiandae nesciunt quidem.
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni delectus soluta adipisci beatae ullam quisquam, quia recusandae rem assumenda, praesentium porro sequi eaque doloremque tenetur incidunt officiis explicabo optio perferendis.
-                </div>
-            </div> */}
-
-            {/* <div className="text-center pb-4 max-w-7xl mx-auto flex justify-center items-center gap-x-5">
-                <img
-                    src="https://kofejob.dreamstechnologies.com/html/template/assets/img/blog/aboutus.jpg"
-                    alt="User Profile"
-                    className="h-100 w-150 rounded-lg border-2 border-white"
-                />
-                <img
-                    src="https://kofejob.dreamstechnologies.com/html/template/assets/img/blog/aboutus1.jpg"
-                    alt="User Profile"
-                    className="h-100 w-150  rounded-lg border-2 border-white"
-                />
-            </div> */}
-            {/* <div className=' text-center bg-[#FFF5F3] p-20'>
-                <h1 className="font-medium text-3xl sm:text-3xl md:text-4xl p-1">What’s great about it?</h1>
-                <div>All the features of Job Portal below</div>
-                <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5">
-                    {features.map((person, index) => (
-                        <li
-                            key={index}
-                            className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-                        >
-                            <div className="flex flex-1 flex-col items-center p-8">
-                                <person.icon
-                                    aria-hidden="true"
-                                    className="h-16 w-16 bg-orange-100 text-orange-600 rounded-full p-2 flex items-center justify-center"
-                                />
-                                <h3 className="mt-6 text-sm font-medium text-gray-900">{person.name}</h3>
-                                <dl className="mt-1 flex grow flex-col justify-between text-center">
-                                    <dt className="sr-only">Title</dt>
-                                    <dd className="text-sm text-gray-500">{person.title}</dd>
-                                </dl>
+            <div className="mx-auto max-w-7xl px-6 lg:px-8 p-1">
+                {/* <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Jobs</h2>
+                <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p> */}
+                {/* Main Grid Layout */}
+                <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    {/* Filters Section */}
+                    <aside className="lg:col-span-1 border p-6 rounded-lg shadow h-[30rem]">
+                        {filters.map((filter, index) => (
+                            <div key={index} className="mb-6">
+                                <h3 className="text-lg font-semibold text-gray-900">{filter.title}</h3>
+                                <select
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    onChange={(e) => handleFilterChange(filter.title, e.target.value)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select {filter.title}
+                                    </option>
+                                    {filter.options.map((option, i) => (
+                                        <option key={i} value={option.label}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
+                        ))}
 
-                        </li>
-                    ))}
-                </ul>
-            </div> */}
-
-            {/* <div className=' text-center p-20'>
-                <h1 className="font-medium text-3xl sm:text-3xl md:text-4xl p-1">Client testimonials</h1>
-                <div>Learning communicate to global world and build a bright future and career development, increase your skill with our histudy.</div>
-                <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                    {posts.map((post) => (
-                        <article
-                            key={post.id}
-                            className="shadow border flex flex-col items-start justify-between bg-white p-4 rounded-lg transition-transform duration-300 transform hover:scale-105 hover:shadow-lg"
-                        >
-                            <div className="relative flex items-center gap-x-4">
-                                <img
-                                    alt=""
-                                    src={post.author.imageUrl}
-                                    className="h-20 w-20 rounded-full bg-gray-50 transition-transform duration-300 transform hover:scale-110"
-                                />
-                                <div className="text-sm/6">
-                                    <p className="font-semibold text-gray-900 text-xl">
-                                        <a href={post.author.href}>
-                                            <span className="absolute inset-0" />
-                                            {post.author.name}
+                    </aside>
+                    {/* Job Advertisements Section */}
+                    <section className="lg:col-span-3">
+                        <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-1">
+                            {posts.map((post) => (
+                                <article
+                                    key={post.id}
+                                    className="flex flex-col items-start justify-between border rounded-lg p-4 shadow bg-white"
+                                >
+                                    <div className="flex items-center gap-x-4 text-xs">
+                                        <time dateTime={post.datetime} className="text-gray-500">
+                                            {post.date}
+                                        </time>
+                                        <a
+                                            href={post.category.href}
+                                            className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                        >
+                                            {post.category.title}
                                         </a>
-                                    </p>
-                                    <p className="text-gray-600">{post.author.role}</p>
-                                </div>
-                            </div>
-                            <div className="group relative">
-                                <p className="mt-5 text-sm/6 text-gray-600 transition-all duration-300 ease-in-out group-hover:text-gray-900">
-                                    {post.description}
-                                </p>
-                            </div>
-                            <div className="flex items-center gap-x-4 text-gray-500 mt-2">
-                                <time dateTime={post.datetime} className="text-gray-500">
-                                    {post.date}
-                                </time>
-                                <div className="truncate text-sm text-gray-500 flex">
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
+                                    </div>
+                                    <div className="mt-3 flex items-center justify-between w-full">
+                                        <span className="text-2xl font-semibold truncate">
+                                            {post.title}
+                                        </span>
+                                        <button className="ml-auto bg-orange-100 text-orange-600 p-2 px-5 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                                            View Details
+                                        </button>
+                                    </div>
 
-                                    <span className="ml-1">5.0</span>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
+
+                                    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-6">
+                                        <div className="text-sm text-gray-600">
+                                            <span>Experience</span>
+                                            <div className="text-black font-semibold text-[1.1rem]">
+                                                {post.experienceRequired}
+                                            </div>
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                            <span>Salary</span>
+                                            <div className="text-black font-semibold text-[1.1rem]">
+                                                {post.expectedSalary}
+                                            </div>
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                            <span>Location</span>
+                                            <div className="text-black font-semibold text-[1.1rem]">
+                                                {post.location}
+                                            </div>
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                            <span>Expiry</span>
+                                            <div className="text-black font-semibold text-[1.1rem]">
+                                                4 Days left
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </article>
+                            ))}
+                        </div>
+                    </section>
                 </div>
-            </div> */}
-
+            </div>
         </div>
     );
 }

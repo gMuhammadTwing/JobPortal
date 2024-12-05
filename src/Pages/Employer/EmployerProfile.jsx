@@ -15,7 +15,7 @@ export default function EmployerProfile() {
     const [value, setValue] = useState("");
     return (
         <>
-            <div className="flex justify-center sm:px-0 h-screen">
+            <div className="flex justify-center px-4 sm:px-6 lg:px-8">
                 <div className="p-4 w-full max-w-5xl rounded-lg">
                     <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
@@ -34,7 +34,7 @@ export default function EmployerProfile() {
                         </div>
 
                         {/* Card Body */}
-                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4 sm:p-6"}`}>
                             {/* Edit Button in Body */}
                             {(!editProfile && !profileCollapsed) && (
                                 <button
@@ -49,78 +49,62 @@ export default function EmployerProfile() {
                             {/* Profile Information */}
                             {!editProfile && (
                                 <>
-                                    <div className=" flex flex-col sm:flex-row gap-6 items-center">
+                                    <div className="flex flex-col sm:flex-row gap-6 items-center">
                                         <img
                                             src="https://kofejob.dreamstechnologies.com/html/template/assets/img/default-logo.svg"
                                             alt="User Profile"
-                                            className="h-18 w-18 sm:h-18 sm:w-18 rounded-full border-2 border-white"
+                                            className="h-24 w-24 sm:h-28 sm:w-28 rounded-full border-2 border-white"
                                         />
                                         <div className="text-center sm:text-left">
                                             <strong className="text-sm text-gray-600">Soft Technologies</strong>
-                                            <h1 className="font-semibold text-2xl">Build a Coaching Website Product Store images</h1>
+                                            <h1 className="font-semibold text-xl sm:text-2xl">Build a Coaching Website Product Store images</h1>
                                         </div>
                                     </div>
-                                    <div className="flex ml-2 mt-3 gap-x-10">
-                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2 pr-8 border-r border-gray-300">
+
+                                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-4">
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                             <MapPinIcon className="w-5 h-5" />
                                             Los Angeles
                                         </p>
-                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2 pr-8 border-r border-gray-300">
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                             <CalendarDaysIcon className="w-5 h-5" />
                                             22 September 2023
                                         </p>
-                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2 pr-8 border-r border-gray-300">
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                             <EyeIcon className="w-5 h-5" />
                                             902 Views
                                         </p>
-                                        <p className="flex text-md text-gray-600 text-center items-center gap-x-2">
+                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                             <PencilSquareIcon className="w-5 h-5" />
                                             15 Proposal
                                         </p>
                                     </div>
-                                    <div className="sm:col-span-full py-3 p-4 border-t border-gray-300 mt-10">
-                                        <label
-                                            htmlFor="company_name"
-                                            className="block font-semibold"
-                                        >
-                                            Description
-                                        </label>
-                                        <div className="text-sm text-gray-600 mt-5">
+                                    <div className="mt-6 border-t pt-4">
+                                        <label className="block font-semibold">Description</label>
+                                        <p className="text-sm text-gray-600 mt-2">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
                                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                        </div>
-
+                                        </p>
                                     </div>
-                                    <div className="sm:col-span-full py-3 p-4 border-t border-gray-300 mt-10">
-                                        <label
-                                            htmlFor="company_name"
-                                            className="block font-semibold"
-                                        >
-                                            Required Skills
-                                        </label>
-                                        <div className="text-sm text-gray-600 mt-5 grid grid-cols-8 gap-3 text-center">
-                                            <span className="bg-red-100 p-1 rounded">JavaScript</span>
-                                            <span className="bg-red-100 p-1 rounded">Reactjs</span>
-                                            <span className="bg-red-100 p-1 rounded">Nextjs</span>
-                                            <span className="bg-red-100 p-1 rounded">PHP</span>
-                                            <span className="bg-red-100 p-1 rounded">HTML</span>
-                                            <span className="bg-red-100 p-1 rounded">CSS</span>
-                                            <span className="bg-red-100 p-1 rounded">Bootstrap</span>
-                                            <span className="bg-red-100 p-1 rounded">JavaScript</span>
+                                    <div className="mt-6 border-t pt-4">
+                                        <label className="block font-semibold">Required Skills</label>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                                            {["JavaScript", "Reactjs", "Nextjs", "PHP", "HTML", "CSS", "Bootstrap"].map((skill) => (
+                                                <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
+                                                    {skill}
+                                                </span>
+                                            ))}
                                         </div>
                                     </div>
-                                    <div className="sm:col-span-full py-3 p-4 border-t border-gray-300 mt-10">
-                                        <label
-                                            htmlFor="company_name"
-                                            className="block font-semibold"
-                                        >
-                                            Tags
-                                        </label>
-                                        <div className="text-sm text-gray-600 mt-5 grid grid-cols-5 gap-3 text-center">
-                                            <span className="bg-red-100 p-1 rounded">Machine Learning</span>
-                                            <span className="bg-red-100 p-1 rounded">Virtual Assistant</span>
-                                            <span className="bg-red-100 p-1 rounded">AI Chatbot</span>
+                                    <div className="mt-6 border-t pt-4">
+                                        <label className="block font-semibold">Tags</label>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                                            {["Machine Learning", "Virtual Assistant", "AI Chatbot"].map((skill) => (
+                                                <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
+                                                    {skill}
+                                                </span>
+                                            ))}
                                         </div>
                                     </div>
                                 </>

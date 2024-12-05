@@ -102,18 +102,19 @@ export default function AboutUs() {
                 </div>
             </div>
 
-            <div className="text-center pb-4 max-w-7xl mx-auto flex justify-center items-center gap-x-5">
+            <div className="text-center pb-4 max-w-7xl mx-auto flex flex-wrap justify-center items-center gap-4">
                 <img
                     src="https://kofejob.dreamstechnologies.com/html/template/assets/img/blog/aboutus.jpg"
                     alt="User Profile"
-                    className="h-100 w-150 rounded-lg border-2 border-white"
+                    className="rounded-lg border-2 border-white max-w-full sm:w-40 md:w-60 lg:w-80 h-auto"
                 />
                 <img
                     src="https://kofejob.dreamstechnologies.com/html/template/assets/img/blog/aboutus1.jpg"
                     alt="User Profile"
-                    className="h-100 w-150  rounded-lg border-2 border-white"
+                    className="rounded-lg border-2 border-white max-w-full sm:w-40 md:w-60 lg:w-80 h-auto"
                 />
             </div>
+
             <div className=' text-center bg-[#FFF5F3] p-20'>
                 <h1 className="font-medium text-3xl sm:text-3xl md:text-4xl p-1">What’s great about it?</h1>
                 <div>All the features of Job Portal below</div>

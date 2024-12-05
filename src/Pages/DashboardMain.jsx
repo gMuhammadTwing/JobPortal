@@ -13,35 +13,37 @@ import {
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import Footer from "./Footer";
+import { CustomScroll } from "react-custom-scroll";
 
 export default function DashboardMain() {
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const navigation = [
-        { name: "Job Profile", href: "profile", single: "profile", icon: UserCircleIcon, current: true },
+    const jobSeekerNav = [
+        { name: "Job Profile", href: "profile", icon: UserCircleIcon, current: true },
         { name: "Resume/CV", href: "resume", icon: DocumentTextIcon, current: false },
         { name: "Search Jobs", href: "view-jobs", icon: ViewfinderCircleIcon, current: false },
         { name: "Applied Jobs", href: "applied-jobs", single: "applied-jobs", icon: BriefcaseIcon, current: false },
         { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
-        { name: "Employer Profile", href: "employer-profile", icon: UserCircleIcon, current: true },
+        { name: "Coursework", href: "coursework", icon: HomeModernIcon, current: false },
+    ]
+    const navigation = [
+        { name: "Employer Profile", href: "profile", icon: UserCircleIcon, current: true },
         { name: "Employer Job Management", href: "manage-jobs", icon: BriefcaseIcon, current: false },
         { name: "Employer Payment", href: "employer-payment", icon: CreditCardIcon, current: false },
         { name: "Shortlisting Requests", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
-        { name: "Search Coursework", href: "coursework", icon: HomeModernIcon, current: false },
         { name: "Blog/Comments", href: "blog", icon: NewspaperIcon, current: false },
         // { name: "Reports", href: "reports", icon: FlagIcon, current: false },
         // { name: "CMS Pages", href: "cms-pages", icon: CogIcon, current: false },
         // { name: "CMS Section", href: "cms-section", icon: CogIcon, current: false },
     ];
-
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
 
     return (
         <div className="container mx-auto flex relative">
-            
+
             {/* Mobile Sidebar Toggle */}
             <div className="fixed z-20 top-0 left-0 md:hidden">
                 <button
@@ -54,10 +56,6 @@ export default function DashboardMain() {
 
             {/* Sidebar */}
             <aside
-                // className={classNames(
-                //     " inset-y-0 z-30 w-66 left-0 md:left-[7rem] md:inset-y-10 md:h-[33rem] rounded-lg border border-gray-300 bg-white text-black overflow-y-auto transition-transform transform md:relative md:translate-x-0",
-                //     sidebarOpen ? "translate-x-0" : "-translate-x-full"
-                // )}
                 className={classNames(
                     "fixed inset-y-0 z-20 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg border border-gray-300 overflow-y-auto transform transition-transform",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full",
@@ -66,30 +64,61 @@ export default function DashboardMain() {
             >
                 <nav className="p-4">
                     <ul role="list" className="space-y-1">
-                        {navigation.map((item) => (
-                            <li key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
-                                <Link
-                                    to={item.href}
-                                    className={classNames(
-                                        location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                            ? "bg-orange-600 text-white"
-                                            : "text-black hover:bg-orange-600 hover:text-white",
-                                        "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
-                                    )}
-                                >
-                                    <item.icon
-                                        aria-hidden="true"
+                        {location.pathname.includes('/employer') && (
+
+                            navigation.map((item) => (
+                                <li key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
+                                    <Link
+                                        to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "text-white"
-                                                : "text-black group-hover:text-white",
-                                            "h-6 w-6"
+                                                ? "bg-orange-600 text-white"
+                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                            "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
-                                    />
-                                    {item.name}
-                                </Link>
-                            </li>
-                        ))}
+                                    >
+                                        <item.icon
+                                            aria-hidden="true"
+                                            className={classNames(
+                                                location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                                    ? "text-white"
+                                                    : "text-black group-hover:text-white",
+                                                "h-6 w-6"
+                                            )}
+                                        />
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            ))
+
+                        )}
+
+                        {location.pathname.includes('/job-seeker') && (
+                            jobSeekerNav.map((item) => (
+                                <li key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
+                                    <Link
+                                        to={item.href}
+                                        className={classNames(
+                                            location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                                ? "bg-orange-600 text-white"
+                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                            "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
+                                        )}
+                                    >
+                                        <item.icon
+                                            aria-hidden="true"
+                                            className={classNames(
+                                                location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                                    ? "text-white"
+                                                    : "text-black group-hover:text-white",
+                                                "h-6 w-6"
+                                            )}
+                                        />
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            ))
+                        )}
                     </ul>
                 </nav>
             </aside>

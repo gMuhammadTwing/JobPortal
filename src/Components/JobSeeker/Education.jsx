@@ -86,14 +86,17 @@ export default function Education() {
 
                             {/* Add Course Button */}
                             {!editEducation && (
-                                <div className="mt-4 flex justify-center border-t py-2">
-                                    <button
-                                        type="button"
-                                        onClick={() => setEditEducation(true)}
-                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 sm:p-2 text-white shadow-md transition-all"
-                                    >
-                                        <PlusIcon className="h-5 w-5" />
-                                    </button>
+                                <div className="mt-4 flex justify-center border-t">
+
+                                    <div className="mt-4 flex justify-center py-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setEditEducation(true)}
+                                            className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                        >
+                                            <PlusIcon className=" h-5 w-5" />
+                                        </button>
+                                    </div>
                                 </div>
                             )}
 
@@ -183,14 +186,14 @@ export default function Education() {
                                         <Button
                                             type="submit"
                                             color="gradient"
-                                            variant="filled"
+                                            variant="solid"
                                         >
                                             Save
                                         </Button>
                                         <Button
                                             type="button"
                                             color="red"
-                                            variant="filled"
+                                            variant="outline"
                                             onClick={() => setEditEducation(false)}
                                         >
                                             Cancel
