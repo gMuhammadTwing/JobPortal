@@ -17,11 +17,12 @@ export default function Login() {
         },
         onSubmit: async (values) => {
             setLoading(true)
-            await auth.login(values)
-            console.log("token: ",localStorage.token);
-            
+            await auth.login(values)            
             if (localStorage.token && localStorage.token!='undefined') {
                 navigate("/home")
+            }
+            else{
+                toast.error("Incorrect username or password")
             }
             setLoading(false)
         },

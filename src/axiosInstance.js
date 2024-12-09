@@ -42,7 +42,7 @@ export const handleError = (error) => {
     if (error?.response?.status==401) {
       toast.error("Session Out")
       auth.logout();
-     window.location.reload();
+    //  window.location.reload();
     }
     toast.error(message);
   }

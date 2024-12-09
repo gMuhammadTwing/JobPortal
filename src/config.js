@@ -1,6 +1,6 @@
 var app_vars = {
     domain: {
-      baseURL:"http://172.16.9.67:8000"
+      baseURL:"https://www.ehostkenya.com/job/job_portal/public"
     },
   };
   export default app_vars;

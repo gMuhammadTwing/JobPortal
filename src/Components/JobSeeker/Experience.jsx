@@ -1,8 +1,13 @@
 import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
 import ReactQuill from "react-quill";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axiosInstance, { handleError } from "../../axiosInstance";
+import { toast } from "sonner";
+import { InfinitySpin } from "react-loader-spinner";
 export default function Experience() {
     const [exp, setExp] = useState(false);
     const [editExp, setEditExp] = useState(false);
@@ -12,7 +17,93 @@ export default function Experience() {
             setEditExp(false);
         }
     };
-    const [value, setValue] = useState("");
+    const [data, setData] = useState();
+    const [updateData, setUpdateData] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const user_id = localStorage.user_id;
+    const formik = useFormik({
+        initialValues: {
+            job_title: updateData?.job_title || "",
+            company: updateData?.company || "",
+            industry: updateData?.industry || "",
+            salary: updateData?.salary || "",
+            location: updateData?.location || "",
+            managed_team: updateData?.managed_team || true,
+            start_date: updateData?.start_date || "",
+            end_date: updateData?.end_date || "",
+            currently_working_here: updateData?.currently_working_here || false,
+            details: updateData?.details || "",
+            user_id: user_id,
+        },
+        enableReinitialize: true,
+        validationSchema: Yup.object({
+            job_title: Yup.string().required("Job Title is required"),
+            company: Yup.string().required("Company is required"),
+            industry: Yup.string().required("Industry is required"),
+            salary: Yup.string().required("Salary is required"),
+            location: Yup.string().required("Location is required"),
+            start_date: Yup.date().required("Start Date is required"),
+            // end_date: Yup.date().when("currently_working_here", {
+            //     is: (currentlyWorkingHere) => currentlyWorkingHere === false, // Ensure it's explicitly checked
+            //     then: Yup.date().required("End Date is required"),
+            // }),
+
+        }),
+        onSubmit: async (values) => {
+
+            setLoading(true);
+            if (updateData) {
+                try {
+                    const response = await axiosInstance.post(`api/job_seeker_experience/update/${updateData?.id}`, values);
+                    if (response) {
+                        toast.success("Experience Data Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setEditExp(false);
+                    fetchData()
+                    setLoading(false);
+                }
+            }
+            else {
+                try {
+                    const response = await axiosInstance.post(`api/job_seeker_experience/store`, values);
+                    if (response) {
+                        toast.success("Experience Data Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setEditExp(false);
+                    fetchData()
+                    setLoading(false);
+                }
+            }
+        },
+    });
+    const fetchData = async () => {
+        try {
+            const response = await axiosInstance.get(`api/job_seeker_experience?user_id=${user_id}`);
+            if (response) {
+                setData(response?.data)
+                console.log(response?.data);
+
+            }
+        } catch (error) {
+            handleError(error);
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const update = (item) => {
+        setEditExp(true)
+        console.log("Item: ", item);
+        setUpdateData(item)
+    }
     return (
         <>
             <div className="flex justify-center sm:px-0">
@@ -23,7 +114,7 @@ export default function Experience() {
                             className="flex justify-between items-center p-4 text-orange-600 bg-white border-b cursor-pointer"
                             onClick={handleExp}
                         >
-                            <h3 className="font-semibold text-3xl">Experience</h3>
+                            <h3 className="font-bold text-xl">Experience</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {exp ? (
                                     <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
@@ -36,44 +127,56 @@ export default function Experience() {
                         {/* Card Body */}
                         <div className={`relative space-y-7 overflow-x-hidden bg-white transition-all duration-300 ease-in-out ${exp ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
-                            {(!editExp && !exp) && (
-                                <div className="absolute top-4 right-4 flex space-x-2">
-                                    <button
-                                        type="button"
-                                        onClick={() => setEditExp(true)}
-                                        className="hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
-                                    >
-                                        <PencilIcon className="h-5 w-5 text-blue-500" />
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => console.log("Delete clicked")}
-                                        className="hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
-                                    >
-                                        <TrashIcon className="h-5 w-5 text-red-600" />
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* Profile Information */}
-                            {!editExp && (
-                                <div className="flex flex-col sm:flex-row gap-4">
-                                    <div className="flex items-center gap-4">
-                                        <div>
-                                            <div className="flex justify-between items-center">
-                                                <h4 className="font-semibold text-lg">Software Developer</h4>
+                            {!editExp && !exp && (
+                                data?.length > 0 ? (
+                                    data.map((item, index) => (
+                                        <div
+                                            key={item.id}
+                                            className="border-b p-4 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center relative"
+                                        >
+                                            {/* Action Buttons */}
+                                            <div className="flex space-x-2 sm:absolute sm:right-4 sm:top-4">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => update(item)}
+                                                    className="hover:bg-gray-100 rounded-full p-2 focus:outline-none transition-colors"
+                                                >
+                                                    <PencilIcon className="h-5 w-5 text-blue-500" />
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => console.log("Delete clicked")}
+                                                    className="hover:bg-gray-100 rounded-full p-2 focus:outline-none transition-colors"
+                                                >
+                                                    <TrashIcon className="h-5 w-5 text-red-600" />
+                                                </button>
                                             </div>
 
-                                            <p className="text-sm text-gray-600">Private</p>
-                                            <p className="text-sm text-gray-600">Jan 2022 - Present | Islamabad, Pakistan</p>
+                                            {/* Profile Information */}
+                                            {!editExp && (
+                                                <div className="flex flex-col gap-2 sm:flex-row sm:gap-4 sm:items-center">
+                                                    {/* Job Details */}
+                                                    <div>
+                                                        <h4 className="font-semibold text-lg">{item?.job_title}</h4>
+                                                        <p className="text-sm text-gray-600">
+                                                            {item?.company} - {item?.industry}
+                                                        </p>
+                                                        <p className="text-sm text-gray-600">
+                                                            {item?.start_date} - {item?.currently_working_here ? "Present" : item?.end_date} | {item?.location}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
 
-                                    </div>
-                                </div>
-
+                                    ))
+                                ) : (
+                                    <div>No Experiences have been added yet</div>
+                                )
                             )}
+
                             {!editExp && (
-                                <div className="mt-4 flex justify-center border-t py-2">
+                                <div className="mt-4 flex justify-center">
                                     <button
                                         type="button"
                                         onClick={() => setEditExp(true)}
@@ -86,16 +189,22 @@ export default function Experience() {
 
                             {/* Edit Profile Form */}
                             {editExp && (
-                                <form className="">
+                                <form className="" onSubmit={formik.handleSubmit}>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div>
-                                            <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-900">Job Title *</label>
+                                            <label htmlFor="job_title" className="block text-sm font-medium text-gray-900">Job Title *</label>
                                             <input
                                                 type="text"
-                                                id="jobTitle"
+                                                id="job_title"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.job_title}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
+                                            {formik.touched.job_title && formik.errors.job_title && (
+                                                <p className="text-red-500 text-sm">{formik.errors.job_title}</p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -105,7 +214,13 @@ export default function Experience() {
                                                 id="company"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.company}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
+                                            {formik.touched.company && formik.errors.company && (
+                                                <p className="text-red-500 text-sm">{formik.errors.company}</p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -115,7 +230,13 @@ export default function Experience() {
                                                 id="industry"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.industry}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
+                                            {formik.touched.industry && formik.errors.industry && (
+                                                <p className="text-red-500 text-sm">{formik.errors.industry}</p>
+                                            )}
                                         </div>
                                         <div>
                                             <label htmlFor="salary" className="block text-sm font-medium text-gray-900">Salary *</label>
@@ -124,7 +245,13 @@ export default function Experience() {
                                                 id="salary"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.salary}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
+                                            {formik.touched.salary && formik.errors.salary && (
+                                                <p className="text-red-500 text-sm">{formik.errors.salary}</p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -134,7 +261,13 @@ export default function Experience() {
                                                 id="location"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.location}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
+                                            {formik.touched.location && formik.errors.location && (
+                                                <p className="text-red-500 text-sm">{formik.errors.location}</p>
+                                            )}
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-900 mt-2">Did you directly manage a team? *</label>
@@ -143,9 +276,10 @@ export default function Experience() {
                                                     <input
                                                         type="radio"
                                                         id="manageYes"
-                                                        name="manageTeam"
-                                                        value="yes"
+                                                        name="managed_team"
+                                                        value={formik.values.managed_team}
                                                         className="mr-2"
+                                                        onChange={() => formik.setFieldValue("managed_team", true)}
                                                     />
                                                     Yes
                                                 </label>
@@ -153,9 +287,10 @@ export default function Experience() {
                                                     <input
                                                         type="radio"
                                                         id="manageNo"
-                                                        name="manageTeam"
-                                                        value="no"
+                                                        name="managed_team"
+                                                        value={formik.values.managed_team}
                                                         className="mr-2"
+                                                        onChange={() => formik.setFieldValue("managed_team", false)}
                                                     />
                                                     No
                                                 </label>
@@ -163,40 +298,53 @@ export default function Experience() {
                                         </div>
 
                                         <div>
-                                            <label htmlFor="startDate" className="block text-sm font-medium text-gray-900">Start Date *</label>
+                                            <label htmlFor="start_date" className="block text-sm font-medium text-gray-900">Start Date *</label>
                                             <input
                                                 type="date"
-                                                id="startDate"
+                                                id="start_date"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.start_date}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
+                                            {formik.touched.start_date && formik.errors.start_date && (
+                                                <p className="text-red-500 text-sm">{formik.errors.start_date}</p>
+                                            )}
                                         </div>
                                         <div>
-                                            <label htmlFor="endDate" className="block text-sm font-medium text-gray-900">End Date *</label>
+                                            <label htmlFor="end_date" className="block text-sm font-medium text-gray-900">End Date *</label>
                                             <input
                                                 type="date"
-                                                id="endDate"
+                                                id="end_date"
                                                 required
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.end_date}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                disabled={formik.values.currently_working_here}
                                             />
+                                            {formik.touched.end_date && formik.errors.end_date && (
+                                                <p className="text-red-500 text-sm">{formik.errors.end_date}</p>
+                                            )}
                                         </div>
                                         <div className="flex items-center gap-2 mt-6">
                                             <input
                                                 type="checkbox"
-                                                id="present"
-                                                required
+                                                id="currently_working_here"
+                                                checked={formik.values.currently_working_here}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                                 className="py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500"
                                             />
-                                            <label htmlFor="present" className="text-sm font-medium text-gray-900">Currently Working here</label>
+                                            <label htmlFor="currently_working_here" className="text-sm font-medium text-gray-900">Currently Working here</label>
 
                                         </div>
                                         <div className="col-span-full">
-                                            <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <label htmlFor="details" className="block text-sm font-medium text-gray-900">Details</label>
                                             <ReactQuill
-                                                id="summary-editor"
+                                                id="details"
                                                 theme="snow"
-                                                value={value}
-                                                onChange={setValue}
                                                 style={{
                                                     height: "150px",
                                                 }}
@@ -218,13 +366,18 @@ export default function Experience() {
                                                     "bullet",
                                                 ]}
                                                 placeholder="Write something"
+                                                value={formik.values.details}
+                                                onChange={(value) => formik.setFieldValue("details", value)}
                                             />
+                                            {formik.touched.details && formik.errors.details && (
+                                                <p className="text-red-500 text-sm">{formik.errors.details}</p>
+                                            )}
                                         </div>
 
                                         {/* <div className="col-span-full">
-                                            <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <label htmlFor="details" className="block text-sm font-medium text-gray-900">Details</label>
                                             <textarea
-                                                id="description"
+                                                id="details"
                                                 rows={4}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
@@ -232,22 +385,26 @@ export default function Experience() {
                                     </div>
 
                                     <div className="flex justify-center gap-4 mt-20">
-                                        <Button
-                                            type="button"
-                                            color="gradient"
-                                            variant="outline"
-                                            onClick={() => setEditExp(false)}
-                                        >
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            type="submit"
-                                            color="gradient"
-                                            variant="solid"
-                                            className="text-white"
-                                        >
-                                            Save
-                                        </Button>
+                                        {loading ? <div className="flex justify-center mr-5"><InfinitySpin width={150} color="green" /></div> :
+                                            <>
+                                                <Button
+                                                    type="button"
+                                                    color="gradient"
+                                                    variant="outline"
+                                                    onClick={() => setEditExp(false)}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                                <Button
+                                                    type="submit"
+                                                    color="gradient"
+                                                    variant="solid"
+                                                    className="text-white"
+                                                >
+                                                    Save
+                                                </Button>
+                                            </>
+                                        }
                                     </div>
                                 </form>
 

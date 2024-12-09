@@ -16,10 +16,10 @@ const login = async (credentials) => {
     localStorage.setItem("user_name", response?.user?.name);
     localStorage.setItem("role_id", response?.user?.role_id);
     localStorage.setItem("permissions", JSON.stringify(response?.data?.permissions));
-    localStorage.setItem("user_id", response?.data.token.token.user_id);
+    localStorage.setItem("user_id", response?.user?.id);
     localStorage.setItem("user_role", response?.data?.user_role);
     localStorage.setItem("login_time", Date.now());
-  } catch (error) {    
+  } catch (error) {
     handleError(error)
   }
 

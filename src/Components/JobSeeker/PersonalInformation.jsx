@@ -1,210 +1,307 @@
-import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { MinusIcon, PlusIcon, PencilIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 import { Button } from "../../Components/Button";
-import userLogo from '../../assets/user.jpeg'
+import userLogo from '../../assets/user.jpeg';
 import ReactQuill from "react-quill";
+import { toast } from 'sonner';
+import axiosInstance, { handleError } from '../../axiosInstance';
+import { InfinitySpin } from 'react-loader-spinner';
+
 export default function PersonalInformation() {
-    const [profileCollapsed, setprofileCollapsed] = useState(false);
+    const [profileCollapsed, setProfileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
+
     const handleCollapseToggle = () => {
-        setprofileCollapsed(!profileCollapsed);
+        setProfileCollapsed(!profileCollapsed);
         if (!profileCollapsed) {
             setEditProfile(false);
         }
     };
-    const [value, setValue] = useState("");
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(false);
+    const user_id = localStorage.user_id;
+    const formik = useFormik({
+        initialValues: {
+            father_name: data?.data[0]?.father_name,
+            dob: data?.data[0]?.dob,
+            gender: data?.data[0]?.gender,
+            contact_number: data?.data[0]?.contact_number,
+            years_experience: data?.data[0]?.years_experience,
+            expected_salary: data?.data[0]?.expected_salary,
+            address: data?.data[0]?.address,
+            user_id: user_id,
+
+        },
+        enableReinitialize: true,
+        validationSchema: Yup.object({
+            father_name: Yup.string().required("Father's Name is required"),
+            dob: Yup.date().required("Date of Birth is required"),
+            gender: Yup.string().required("Gender is required"),
+            contact_number: Yup.string().required("Contact_number is required"),
+            years_experience: Yup.string().required("Years_experience is required"),
+            expected_salary: Yup.string().required("Expected Salary is required"),
+        }),
+        onSubmit: async (values) => {
+            setLoading(true);
+            if (data) {
+                try {
+                    const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data?.id}`, values);
+                    if (response) {
+                        toast.success("Personal Information Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setEditProfile(false);
+                    fetchData()
+                    setLoading(false);
+                }
+            } else {
+                try {
+                    const response = await axiosInstance.post(`api/job_seeker_basic_info/store`, values);
+                    if (response) {
+                        toast.success("Personal Information Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setEditProfile(false);
+                    fetchData()
+                    setLoading(false);
+                }
+            }
+
+        },
+    });
+
+    const fetchData = async () => {
+        try {
+            const response = await axiosInstance.get(`api/job_seeker_basic_info?user_id=${user_id}`);
+            if (response) {
+                setData(response)
+            }
+        } catch (error) {
+            handleError(error);
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, []); // Empty array ensures this runs once on mount
+
+
     return (
-        <>
-            <div className="flex justify-center sm:px-0">
-                <div className="p-4 w-full max-w-5xl">
-                    <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
-                        {/* Header Section */}
-                        <div
-                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
-                            onClick={handleCollapseToggle}
-                        >
-                            <h3 className="font-semibold text-3xl">Personal Information</h3>
-                            <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
-                                {profileCollapsed ? (
-                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
-                                ) : (
-                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
-                                )}
-                            </button>
-                        </div>
-
-                        {/* Card Body */}
-                        <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
-                            {!editProfile && !profileCollapsed && (
-                                // <button
-                                //     type="button"
-                                //     onClick={() => setEditProfile(true)}
-                                //     className="absolute right-4 top-4 bg-orange-600 hover:bg-orange-600 rounded-full p-2 focus:outline-none shadow-md transition-colors"
-                                // >
-                                //     <PencilIcon className="h-5 w-5 text-white" />
-                                // </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setEditProfile(true)}
-                                    className="absolute right-4 hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
-                                >
-                                    <PencilIcon className="h-5 w-5 text-blue-500" />
-                                </button>
+        <div className="flex justify-center sm:px-0">
+            <div className="p-4 w-full max-w-5xl">
+                <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
+                    {/* Header Section */}
+                    <div
+                        className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
+                        onClick={handleCollapseToggle}
+                    >
+                        <h3 className="font-bold text-xl">Personal Information</h3>
+                        <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
+                            {profileCollapsed ? (
+                                <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                            ) : (
+                                <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                             )}
+                        </button>
+                    </div>
 
-                            {/* Profile Information */}
-                            {!editProfile && (
-                                <div className=" flex flex-col sm:flex-row gap-6 items-center">
-                                    <img
-                                        src={userLogo}
-                                        alt="User Profile"
-                                        className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                    />
-                                    <div className="text-center sm:text-left">
-                                        <h4 className="font-semibold text-lg">Ghulam Muhammad</h4>
-                                        <p className="text-sm text-gray-600">Software Developer</p>
-                                        <p className="text-sm text-gray-600">Private - Islamabad, Pakistan</p>
-                                        <p className="text-sm text-gray-600">g.muh786@gmail.com</p>
-                                        <p className="text-sm text-gray-600">+92.312.0376631</p>
+                    {/* Card Body */}
+                    <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
+                        {!editProfile && !profileCollapsed && (
+                            <button
+                                type="button"
+                                onClick={() => setEditProfile(true)}
+                                className="absolute right-4 hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
+                            >
+                                <PencilIcon className="h-5 w-5 text-blue-500" />
+                            </button>
+                        )}
+
+                        {/* Profile Information */}
+                        {!editProfile && (
+                            <div className="flex flex-col sm:flex-row gap-6 items-center">
+                                <img
+                                    src={userLogo}
+                                    alt="User Profile"
+                                    className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                />
+                                <div className="text-center sm:text-left">
+                                    <h4 className="font-semibold text-lg">{localStorage.user_name}</h4>
+                                    <p className="text-sm text-gray-600">{localStorage.email}</p>
+                                    <p className="text-sm text-gray-600">{data?.contact_number}</p>
+                                    <p className="text-sm text-gray-600">{data?.address}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Edit Profile Form */}
+                        {editProfile && (
+                            <form onSubmit={formik.handleSubmit}>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                    <div>
+                                        <label htmlFor="father_name" className="block text-sm font-medium text-gray-900">Father's Name</label>
+                                        <input
+                                            id="father_name"
+                                            name="father_name"
+                                            type="text"
+                                            value={formik.values.father_name}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        />
+                                        {formik.touched.father_name && formik.errors.father_name && (
+                                            <div className="text-red-600 text-sm">{formik.errors.father_name}</div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="dob" className="block text-sm font-medium text-gray-900">Date of Birth</label>
+                                        <input
+                                            id="dob"
+                                            name="dob"
+                                            type="date"
+                                            value={formik.values.dob}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        />
+                                        {formik.touched.dob && formik.errors.dob && (
+                                            <div className="text-red-600 text-sm">{formik.errors.dob}</div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="gender" className="block text-sm font-medium text-gray-900">Gender</label>
+                                        <select
+                                            id="gender"
+                                            name="gender"
+                                            value={formik.values.gender}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        >
+                                            <option value={""}>Select</option>
+                                            <option value={1}>Male</option>
+                                            <option value={2}>Female</option>
+                                            <option value={3}>Other</option>
+                                        </select>
+                                        {formik.touched.gender && formik.errors.gender && (
+                                            <div className="text-red-600 text-sm">{formik.errors.gender}</div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="contact_number" className="block text-sm font-medium text-gray-900">Contact_number</label>
+                                        <input
+                                            id="contact_number"
+                                            name="contact_number"
+                                            type="text"
+                                            value={formik.values.contact_number}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        />
+                                        {formik.touched.contact_number && formik.errors.contact_number && (
+                                            <div className="text-red-600 text-sm">{formik.errors.contact_number}</div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="years_experience" className="block text-sm font-medium text-gray-900">Years_experience</label>
+                                        <input
+                                            id="years_experience"
+                                            name="years_experience"
+                                            type="text"
+                                            value={formik.values.years_experience}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        />
+                                        {formik.touched.years_experience && formik.errors.years_experience && (
+                                            <div className="text-red-600 text-sm">{formik.errors.years_experience}</div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label htmlFor="expected_salary" className="block text-sm font-medium text-gray-900">Expected Salary</label>
+                                        <input
+                                            id="expected_salary"
+                                            name="expected_salary"
+                                            type="text"
+                                            value={formik.values.expected_salary}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        />
+                                        {formik.touched.expected_salary && formik.errors.expected_salary && (
+                                            <div className="text-red-600 text-sm">{formik.errors.expected_salary}</div>
+                                        )}
+                                    </div>
+                                    <div className='col-span-full'>
+                                        <label htmlFor="address" className="block text-sm font-medium text-gray-900">Postal Address</label>
+                                        <ReactQuill
+                                            id="address"
+                                            theme="snow"
+                                            value={formik.values.address}
+                                            onBlur={formik.handleBlur}
+                                            onChange={(value) => formik.setFieldValue("address", value)}
+                                            style={{
+                                                height: "150px",
+                                            }}
+                                            modules={{
+                                                toolbar: [
+                                                    ["bold", "italic", "underline", "strike"],
+                                                    [{ header: [1, 2, 3, false] }],
+                                                    [{ list: "ordered" }, { list: "bullet" }],
+                                                    ["clean"],
+                                                ],
+                                            }}
+                                            formats={[
+                                                "header",
+                                                "bold",
+                                                "italic",
+                                                "underline",
+                                                "strike",
+                                                "list",
+                                                "bullet",
+                                            ]}
+                                            placeholder="Write something"
+                                        />
+                                        {formik.touched.address && formik.errors.address && (
+                                            <div className="text-red-600 text-sm">{formik.errors.address}</div>
+                                        )}
                                     </div>
                                 </div>
-                            )}
-
-                            {/* Edit Profile Form */}
-                            {editProfile && (
-                                <form className="">
-                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                        <div className="sm:col-span-1">
-                                            <label
-                                                htmlFor="name"
-                                                className="block text-sm font-medium text-gray-900"
+                                <div className="flex justify-center gap-4 mt-17">
+                                    {loading ? <div className="flex justify-center mr-5"><InfinitySpin width={150} color="green" /></div> :
+                                        <>
+                                            <Button
+                                                type="button"
+                                                color="gradient"
+                                                variant="outline"
+                                                onClick={() => setEditProfile(false)}
                                             >
-                                                Full Name {" "}
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                placeholder=""
-                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email *</label>
-                                            <input id="email" name="email" type="email" required
-                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                                defaultValue="g.muh786@gmail.com" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="fatherName" className="block text-sm font-medium text-gray-900">Father Name</label>
-                                            <input id="fatherName" name="fatherName" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="dob" className="block text-sm font-medium text-gray-900">Date of Birth *</label>
-                                            <input id="dob" name="dob" type="date" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="1998-05-12" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="gender" className="block text-sm font-medium text-gray-900">Gender *</label>
-                                            <select id="gender" name="gender" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label htmlFor="maritalStatus" className="block text-sm font-medium text-gray-900">Marital Status *</label>
-                                            <select id="maritalStatus" name="maritalStatus" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2">
-                                                <option>Single</option>
-                                                <option>Married</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label htmlFor="nationality" className="block text-sm font-medium text-gray-900">Nationality *</label>
-                                            <input id="nationality" name="nationality" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="Pakistani" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="cnic" className="block text-sm font-medium text-gray-900">CNIC *</label>
-                                            <input id="cnic" name="cnic" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="4320292188993" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="city" className="block text-sm font-medium text-gray-900">City *</label>
-                                            <input id="city" name="city" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="Islamabad" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="area" className="block text-sm font-medium text-gray-900">Area *</label>
-                                            <input id="area" name="area" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="G-7" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="mobile" className="block text-sm font-medium text-gray-900">Mobile *</label>
-                                            <input id="mobile" name="mobile" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="+92 312 0376631" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="careerLevel" className="block text-sm font-medium text-gray-900">Career Level *</label>
-                                            <input id="careerLevel" name="careerLevel" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="Experienced Professional" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="experience" className="block text-sm font-medium text-gray-900">Experience *</label>
-                                            <input id="experience" name="experience" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="3 Years" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="expectedSalary" className="block text-sm font-medium text-gray-900">Expected Salary (PKR) *</label>
-                                            <input id="expectedSalary" name="expectedSalary" type="text" required className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" defaultValue="125,000 - 149,999" />
-                                        </div>
-                                        <div className="col-span-full">
-                                            <label htmlFor="postalAddress" className="block text-sm font-medium text-gray-900">Postal Address</label>
-                                            <ReactQuill
-                                                id="postalAddress"
-                                                theme="snow"
-                                                value={value}
-                                                onChange={setValue}
-                                                style={{
-                                                    height: "150px",
-                                                }}
-                                                modules={{
-                                                    toolbar: [
-                                                        ["bold", "italic", "underline", "strike"],
-                                                        [{ header: [1, 2, 3, false] }],
-                                                        [{ list: "ordered" }, { list: "bullet" }],
-                                                        ["clean"],
-                                                    ],
-                                                }}
-                                                formats={[
-                                                    "header",
-                                                    "bold",
-                                                    "italic",
-                                                    "underline",
-                                                    "strike",
-                                                    "list",
-                                                    "bullet",
-                                                ]}
-                                                placeholder="Write something"
-                                            />
-                                            {/* <textarea rows={4} id="postalAddress" name="postalAddress" type="text" className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2" /> */}
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-center gap-4 mt-17">
-                                        <Button
-                                            type="button"
-                                            color="gradient"
-                                            variant="outline"
-                                            onClick={() => setEditProfile(false)}
-                                        >
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            type="submit"
-                                            color="gradient"
-                                            variant="solid"
-                                            className="text-white"
-                                        >
-                                            Save
-                                        </Button>
-                                    </div>
-                                </form>
+                                                Cancel
+                                            </Button>
 
-                            )}
-                        </div>
+                                            <Button
+                                                type="submit"
+                                                color="gradient"
+                                                variant="solid"
+                                                className="text-white"
+                                            >
+                                                Save
+                                            </Button>
+                                        </>
+                                    }
+                                </div>
+                            </form>
+                        )}
                     </div>
                 </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }

@@ -37,9 +37,9 @@ const ProtectedRoutes = ({ children }) => {
   // );
 
 
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />; // Redirect to login if not logged in
-  }
+  // if (!isLoggedIn) {
+  //   return <Navigate to="/login" replace />; // Redirect to login if not logged in
+  // }
   if (requiredPermission == "view_dashboard") {
     if (!hasPermission) {
       return <Navigate to="/" replace />;
