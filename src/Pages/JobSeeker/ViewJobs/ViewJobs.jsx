@@ -1,0 +1,505 @@
+import { ArrowDownCircleIcon, ViewColumnsIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import React, { useEffect, useState } from "react";
+import { Button } from "../../../Components/Button";
+import { LoaderTable } from "../../../Components/LoaderTable";
+import axiosInstance, { handleError } from "../../../axiosInstance";
+import Pagination from "../../../Components/Pagination";
+import app_vars from "../../../config";
+import ReactQuill from "react-quill";
+import ApplyModal from "./ApplyModal";
+
+export default function ViewJobs() {
+    const [selectedFilters, setSelectedFilters] = useState({});
+    const filters = [
+        {
+            title: "Job Title",
+            options: [
+                { label: "Frontend Developer", count: 2 },
+                { label: "Frontend Software Engineer", count: 1 },
+                { label: "Frontend UI / UX Developer", count: 1 },
+                { label: "Frontend Web Developer", count: 1 },
+                { label: "Senior Frontend Developer", count: 1 },
+                { label: "Senior Software Engineer", count: 1 },
+                { label: "Senior Next.js", count: 1 },
+                { label: "Senior React.JS", count: 1 },
+            ],
+        },
+        {
+            title: "City",
+            options: [
+                { label: "Islamabad", count: 7 },
+                { label: "Lahore", count: 6 },
+                { label: "Rawalpindi", count: 6 },
+                { label: "Faisalabad", count: 4 },
+                { label: "Gujranwala", count: 3 },
+                { label: "Gujrat", count: 3 },
+                { label: "Karachi", count: 2 },
+                { label: "Akhora Khattak", count: 1 },
+                { label: "Ali Chak", count: 1 },
+                { label: "Allahabad", count: 1 },
+            ],
+        },
+        {
+            title: "Experience",
+            options: [
+                { label: "1 Year", count: 2 },
+                { label: "2 Years", count: 1 },
+                { label: "3 Years", count: 2 },
+                { label: "4 Years", count: 1 },
+                { label: "5 Years", count: 3 },
+            ],
+        },
+        {
+            title: "Job Type",
+            options: [{ label: "Full Time/Permanent", count: 9 }],
+        },
+    ];
+    const handleFilterChange = (category, option) => {
+        setSelectedFilters((prev) => ({
+            ...prev,
+            [category]: {
+                ...prev[category],
+                [option]: !prev[category]?.[option],
+            },
+        }));
+    };
+    const user_id = localStorage.user_id;
+    const company_id = localStorage?.company_id;
+    const [tableLoader, setTableLoader] = useState(false);
+    const parser = new DOMParser();
+    const [data, setData] = useState();
+    const [viewDetails, setViewDetails] = useState(false);
+    const [viewData, setViewData] = useState();
+    const [applyModal, setApplyModal] = useState(false);
+    const fetchData = async (page) => {
+        if (company_id != "undefined") {
+            setTableLoader(true);
+            try {
+                const response = await axiosInstance.get(`api/job_list?page=${page}`);
+                if (response) {
+                    setData(response.data)
+                    console.log("res: ", response);
+                }
+            } catch (error) {
+                handleError(error);
+            } finally {
+                setTableLoader(false)
+            }
+        }
+    }
+    useEffect(() => {
+        fetchData(1);
+    }, []);
+
+    const pageNumber = (pageNum) => {
+        fetchData(pageNum);
+    };
+    const [applyData, setApplyData] = useState();
+    const applyHandler = (job) => {
+        setApplyData(job);
+        setApplyModal(true);
+    }
+    const closeApplyModal = ()=>{
+        setApplyModal(false);
+        fetchData(1)
+    }
+
+
+    return (
+        <div className="container mx-auto max-w-5xl pb-15 min-h-screen">
+            <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal}/>
+            {!viewDetails ? (
+                <div className="px-6 lg:px-8 ">
+                    <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl">Jobs</h2>
+                    <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
+                    <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  ">
+                        {/* <label className="block text-lg font-semibold text-gray-900 text-center mb-4">
+                        Apply Filters
+                    </label> */}
+                        <div>
+                            <div className="py-2 px-1 grid grid-cols-1 gap-x-6 sm:grid-cols-5">
+                                {filters.map((filter, index) => (
+                                    <div key={index} className="mb-6">
+                                        <label className="block text-lg font-semibold text-gray-900">
+                                            {filter.title}
+                                        </label>
+                                        <select
+                                            className="mt-2 w-full p-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
+                                            onChange={(e) => handleFilterChange(filter.title, e.target.value)}
+                                            value={
+                                                selectedFilters[filter.title]
+                                                    ? Object.keys(selectedFilters[filter.title])[0]
+                                                    : ""
+                                            }
+                                        >
+                                            <option value="">Select {filter.title}</option>
+                                            {filter.options.map((option, i) => (
+                                                <option key={i} value={option.label}>
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
+                                <div className="sm:col-span-1 mt-9">
+                                    <button
+                                        type="button"
+                                        // variant="outline"
+                                        // color="slate"
+                                        // onClick={clearFilterExpenseQuarryWise}
+                                        className="flex items-center border border-gray-300 p-2 rounded-lg hover:bg-orange-600 hover:text-white"
+                                    >
+                                        <XCircleIcon
+                                            className="-ml-0.5 h-5 w-5 mr-1"
+                                            aria-hidden="true"
+                                        />
+                                        Clear Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <section className="lg:col-span-4 ">
+                        {tableLoader ? <LoaderTable /> :
+                            <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1">
+                                {data?.data?.length > 0 ? (
+                                    data?.data?.map((item) => (
+                                        <>
+                                            <article className="border rounded-lg p-4 shadow bg-white">
+                                                <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
+                                                    <span
+                                                        className={`relative z-10 rounded-full px-3 py-1.5 font-medium ${item?.job_status === 1
+                                                            ? "bg-green-100 text-green-600 hover:bg-green-200"
+                                                            : item?.job_status === 2
+                                                                ? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+                                                                : item?.job_status === 3
+                                                                    ? "bg-red-100 text-red-600 hover:bg-red-200"
+                                                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                                            }`}
+                                                    >
+                                                        {item?.job_status === 1
+                                                            ? "Submitted"
+                                                            : item?.job_status === 2
+                                                                ? "Shortlisted"
+                                                                : item?.job_status === 3
+                                                                    ? "Rejected"
+                                                                    : "Unknown"}
+                                                    </span>
+                                                    <div className="flex flex-wrap sm:flex-row gap-2">
+                                                        <button onClick={() => {
+                                                            setViewDetails(true);
+                                                            setViewData(item)
+                                                        }
+                                                        } className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                                                            View Details
+                                                        </button>
+                                                        {(item?.veritas_to_short_list == 0 || item?.veritas_to_short_list == null) && (
+                                                            <button
+                                                                className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                View Job Instruction to Apply
+                                                            </button>
+                                                        )}
+                                                        {item?.veritas_to_short_list == 1 && (
+                                                            <button onClick={()=>applyHandler(item)}
+                                                                className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                Apply for Job
+                                                            </button>
+                                                        )}
+
+                                                    </div>
+                                                </div>
+                                                <div className="">
+                                                    <h3 className="text-xl font-semibold text-gray-900 items-start text-start">Job Title: {item?.job_title} ({item?.expected_salary})</h3>
+                                                    <p className=''> {item?.company_id?.company_name} , {item?.location}</p>
+                                                    <p className='mt-2'>Description: </p>
+                                                    <p className="mt-1 text-sm text-gray-600 line-clamp-3">
+                                                        {parser.parseFromString(item?.job_description || "", "text/html").body.textContent.trim()}
+                                                    </p>
+                                                </div>
+                                            </article>
+                                        </>
+                                    ))
+                                ) : (
+                                    <table className="min-w-full divide-y divide-gray-300 border bg-white">
+                                        <tr>
+                                            <td colSpan="5" className="text-center py-4">
+                                                <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                                    No Record Found
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                )}
+                                <Pagination
+                                    page={pageNumber}
+                                    total={data?.total}
+                                    page_size={data?.per_page}
+                                />
+                            </div>
+                        }
+                    </section>
+                </div>
+            ) :
+                (
+                    <form className='border p-4 bg-white rounded-lg'>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setViewDetails(false);
+                            }
+                            }
+                            className='border rounded-full p-1 px-4'
+                        >
+                            Back
+                        </button>
+                        <h1
+                            className=" font-semibold leading-6 text-gray-900 text-center text-2xl pb-5"
+                        >
+                            View Job
+                        </h1>
+                        <div className=" grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+                            {/* Job Title */}
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Job Title
+                                </label>
+                                <input
+                                    type="text"
+                                    name="job_title"
+                                    // onChange={formik.handleChange}
+                                    value={viewData?.job_title}
+                                    disabled={true}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                />
+                            </div>
+
+                            {/* Job Type */}
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Job Type
+                                </label>
+                                <select
+                                    name="job_type"
+                                    // onChange={formik.handleChange}
+                                    disabled={true}
+                                    value={viewData?.job_type}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                >
+                                    <option value="">Select</option>
+                                    <option value="1">Full-Time</option>
+                                    <option value="2">Part-Time</option>
+                                </select>
+                            </div>
+                            {/* Salary Range */}
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Salary Range
+                                </label>
+                                <input
+                                    type="text"
+                                    name="expected_salary"
+                                    // onChange={formik.handleChange}
+                                    value={viewData?.expected_salary}
+                                    disabled={true}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                />
+                            </div>
+
+                            {/* Location */}
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Location
+                                </label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    // onChange={formik.handleChange}
+                                    value={viewData?.location}
+                                    disabled={true}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                />
+                            </div>
+
+                            {/* Job Status */}
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Job Status
+                                </label>
+                                <select
+                                    name="job_status"
+                                    // onChange={formik.handleChange}
+                                    value={viewData?.job_status}
+                                    disabled={true}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                >
+                                    <option value="">Select</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">Closed</option>
+                                </select>
+                            </div>
+
+
+                            {/* Veritas To Shortlist */}
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Veritas To Shortlist
+                                </label>
+                                <select
+                                    name="veritas_to_short_list"
+                                    // onChange={formik.handleChange}
+                                    disabled={true}
+                                    value={viewData?.veritas_to_short_list}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                >
+                                    <option value="">Select</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            {/* Job Description */}
+                            <div className="sm:col-span-full">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Job Description
+                                </label>
+                                <ReactQuill
+                                    id="job_description"
+                                    theme="snow"
+                                    value={viewData?.job_description}
+                                    readOnly={true}
+                                    // onChange={(value) => formik.setFieldValue("job_description", value)}
+                                    style={{
+                                        height: "150px",
+                                    }}
+                                    modules={{
+                                        toolbar: [
+                                            ["bold", "italic", "underline", "strike"],
+                                            [{ header: [1, 2, 3, false] }],
+                                            [{ list: "ordered" }, { list: "bullet" }],
+                                            ["clean"],
+                                        ],
+                                    }}
+                                    formats={[
+                                        "header",
+                                        "bold",
+                                        "italic",
+                                        "underline",
+                                        "strike",
+                                        "list",
+                                        "bullet",
+                                    ]}
+                                    placeholder="Write something"
+                                />
+                            </div>
+
+                            {/* Job_qualification */}
+                            <div className="sm:col-span-full mt-7">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Job Qualification
+                                </label>
+                                <ReactQuill
+                                    id="job_qualification"
+                                    readOnly={true}
+                                    theme="snow"
+                                    value={viewData?.job_qualification}
+                                    // onChange={(value) => formik.setFieldValue("job_qualification", value)}
+                                    style={{
+                                        height: "150px",
+                                    }}
+                                    modules={{
+                                        toolbar: [
+                                            ["bold", "italic", "underline", "strike"],
+                                            [{ header: [1, 2, 3, false] }],
+                                            [{ list: "ordered" }, { list: "bullet" }],
+                                            ["clean"],
+                                        ],
+                                    }}
+                                    formats={[
+                                        "header",
+                                        "bold",
+                                        "italic",
+                                        "underline",
+                                        "strike",
+                                        "list",
+                                        "bullet",
+                                    ]}
+                                    placeholder="Write something"
+                                />
+                            </div>
+                            <div className="sm:col-span-full mt-7">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Job Responsibilities
+                                </label>
+                                <ReactQuill
+                                    id="job_responsibilities"
+                                    theme="snow"
+                                    readOnly={true}
+                                    value={viewData?.job_responsibilities}
+                                    // onChange={(value) => formik.setFieldValue("job_responsibilities", value)}
+                                    style={{
+                                        height: "150px",
+                                    }}
+                                    modules={{
+                                        toolbar: [
+                                            ["bold", "italic", "underline", "strike"],
+                                            [{ header: [1, 2, 3, false] }],
+                                            [{ list: "ordered" }, { list: "bullet" }],
+                                            ["clean"],
+                                        ],
+                                    }}
+                                    formats={[
+                                        "header",
+                                        "bold",
+                                        "italic",
+                                        "underline",
+                                        "strike",
+                                        "list",
+                                        "bullet",
+                                    ]}
+                                    placeholder="Write something"
+                                />
+                            </div>
+
+                            {/* Instruction to Apply */}
+                            <div className="sm:col-span-full mt-7 mb-14">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Instruction to Apply
+                                </label>
+                                <ReactQuill
+                                    id="job_instructions_to_apply"
+                                    theme="snow"
+                                    readOnly={true}
+                                    value={viewData.job_instructions_to_apply}
+                                    // onChange={(value) => formik.setFieldValue("job_instructions_to_apply", value)}
+                                    style={{
+                                        height: "150px",
+                                    }}
+                                    modules={{
+                                        toolbar: [
+                                            ["bold", "italic", "underline", "strike"],
+                                            [{ header: [1, 2, 3, false] }],
+                                            [{ list: "ordered" }, { list: "bullet" }],
+                                            ["clean"],
+                                        ],
+                                    }}
+                                    formats={[
+                                        "header",
+                                        "bold",
+                                        "italic",
+                                        "underline",
+                                        "strike",
+                                        "list",
+                                        "bullet",
+                                    ]}
+                                    placeholder="Write something"
+                                />
+                            </div>
+
+                        </div>
+                    </form>
+                )}
+        </div>
+    );
+}

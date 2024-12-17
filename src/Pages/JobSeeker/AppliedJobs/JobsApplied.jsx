@@ -3,10 +3,12 @@ import {
     AdjustmentsVerticalIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import Pagination from "../../Components/Pagination";
-import { useState } from "react";
+import Pagination from "../../../Components/Pagination";
+import { useEffect, useState } from "react";
+import axiosInstance, { handleError } from "../../../axiosInstance";
 
 export default function JobsApplied() {
+    const user_id = localStorage.user_id;
     const [data, setData] = useState([
         {
             jobTitle: "Software Engineer",
@@ -31,8 +33,26 @@ export default function JobsApplied() {
         },
     ]);
 
-    const pageNumber = async (pageNum) => {
-        // Pagination logic can go here
+    const fetchData = async (page) => {
+        // setTableLoader(true);
+        try {
+            const response = await axiosInstance.get(`api/job_application/applied_job_listing?user_id=${user_id}&page=${page}`);
+            if (response) {
+                // setData(response.data)
+                console.log("Applied Jobs: ", response);
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            // setTableLoader(false)
+        }
+    }
+    useEffect(() => {
+        fetchData(1);
+    }, []);
+
+    const pageNumber = (pageNum) => {
+        fetchData(pageNum);
     };
 
     return (

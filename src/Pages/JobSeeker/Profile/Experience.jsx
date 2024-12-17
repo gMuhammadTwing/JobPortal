@@ -1,15 +1,17 @@
 import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import { Button } from "../../Components/Button";
-import userLogo from '../../assets/user.jpeg'
+import { Button } from "../../../Components/Button";
 import ReactQuill from "react-quill";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axiosInstance, { handleError } from "../../axiosInstance";
+import axiosInstance, { handleError } from "../../../axiosInstance";
 import { toast } from "sonner";
 import { InfinitySpin } from "react-loader-spinner";
+import DeleteModal from "../../../Components/DeleteModal";
+import { LoaderTable } from "../../../Components/LoaderTable";
+import { Skeleton } from "../../../Components/Skeleton";
 export default function Experience() {
-    const [exp, setExp] = useState(false);
+    const [exp, setExp] = useState(true);
     const [editExp, setEditExp] = useState(false);
     const handleExp = () => {
         setExp(!exp);
@@ -18,6 +20,7 @@ export default function Experience() {
         }
     };
     const [data, setData] = useState();
+    const [tableLoader, setTableLoader] = useState(false);
     const [updateData, setUpdateData] = useState(null)
     const [loading, setLoading] = useState(false);
     const user_id = localStorage.user_id;
@@ -65,6 +68,7 @@ export default function Experience() {
                     setEditExp(false);
                     fetchData()
                     setLoading(false);
+                    setUpdateData(null)
                 }
             }
             else {
@@ -80,11 +84,13 @@ export default function Experience() {
                     setEditExp(false);
                     fetchData()
                     setLoading(false);
+                    setUpdateData(null)
                 }
             }
         },
     });
     const fetchData = async () => {
+        setTableLoader(true)
         try {
             const response = await axiosInstance.get(`api/job_seeker_experience?user_id=${user_id}`);
             if (response) {
@@ -94,32 +100,56 @@ export default function Experience() {
             }
         } catch (error) {
             handleError(error);
+        } finally {
+            setTableLoader(false)
         }
     }
-    useEffect(() => {
-        fetchData();
-    }, []);
     const update = (item) => {
         setEditExp(true)
-        console.log("Item: ", item);
         setUpdateData(item)
     }
+    const [isDelete, setIsDelete] = useState(false)
+    const [endpoint, setEndpoint] = useState()
+    const deleteHandler = (data) => {
+        setEndpoint(`api/job_seeker_experience/destroy/${data?.id}`)
+        setIsDelete(true)
+
+    }
+    const closeDeleteModal = () => {
+        setIsDelete(false);
+        fetchData();
+    }
+    // useEffect(() => {
+    //     fetchData();
+    // }, [isDelete]);
     return (
         <>
             <div className="flex justify-center sm:px-0">
+                <DeleteModal
+                    isOpen={isDelete}
+                    onClose={closeDeleteModal}
+                    name="Experience"
+                    endpoint={endpoint}
+                />
                 <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${exp ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
                             className="flex justify-between items-center p-4 text-orange-600 bg-white border-b cursor-pointer"
-                            onClick={handleExp}
                         >
                             <h3 className="font-bold text-xl">Experience</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {exp ? (
-                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                                    <PlusIcon onClick={() => {
+                                        handleExp()
+                                        fetchData();
+                                    }}
+                                        className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
+                                    <MinusIcon onClick={() => {
+                                        handleExp()
+                                    }}
+                                        className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
@@ -127,64 +157,70 @@ export default function Experience() {
                         {/* Card Body */}
                         <div className={`relative space-y-7 overflow-x-hidden bg-white transition-all duration-300 ease-in-out ${exp ? "max-h-0 p-0" : "max-h-screen p-4"}`}>
                             {/* Edit Button in Body */}
-                            {!editExp && !exp && (
-                                data?.length > 0 ? (
-                                    data.map((item, index) => (
-                                        <div
-                                            key={item.id}
-                                            className="border-b p-4 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center relative"
-                                        >
-                                            {/* Action Buttons */}
-                                            <div className="flex space-x-2 sm:absolute sm:right-4 sm:top-4">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => update(item)}
-                                                    className="hover:bg-gray-100 rounded-full p-2 focus:outline-none transition-colors"
+                            {tableLoader ? (
+                                <Skeleton />
+                            ) : (
+                                <>
+                                    {!editExp && !exp && (
+                                        data?.length > 0 ? (
+                                            data.map((item, index) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="border-b p-3 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center relative"
                                                 >
-                                                    <PencilIcon className="h-5 w-5 text-blue-500" />
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => console.log("Delete clicked")}
-                                                    className="hover:bg-gray-100 rounded-full p-2 focus:outline-none transition-colors"
-                                                >
-                                                    <TrashIcon className="h-5 w-5 text-red-600" />
-                                                </button>
-                                            </div>
-
-                                            {/* Profile Information */}
-                                            {!editExp && (
-                                                <div className="flex flex-col gap-2 sm:flex-row sm:gap-4 sm:items-center">
-                                                    {/* Job Details */}
-                                                    <div>
-                                                        <h4 className="font-semibold text-lg">{item?.job_title}</h4>
-                                                        <p className="text-sm text-gray-600">
-                                                            {item?.company} - {item?.industry}
-                                                        </p>
-                                                        <p className="text-sm text-gray-600">
-                                                            {item?.start_date} - {item?.currently_working_here ? "Present" : item?.end_date} | {item?.location}
-                                                        </p>
+                                                    {/* Action Buttons */}
+                                                    <div className="flex sm:absolute sm:right-4 sm:top-4">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => update(item)}
+                                                            className="hover:bg-gray-100 rounded-full p-2 focus:outline-none transition-colors"
+                                                        >
+                                                            <PencilIcon className="h-5 w-5 text-blue-500" />
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => deleteHandler(item)}
+                                                            className="hover:bg-gray-100 rounded-full p-2 focus:outline-none transition-colors"
+                                                        >
+                                                            <TrashIcon className="h-5 w-5 text-red-600" />
+                                                        </button>
                                                     </div>
+
+                                                    {/* Profile Information */}
+                                                    {!editExp && (
+                                                        <div className="flex flex-col gap-2 sm:flex-row sm:gap-4 sm:items-center">
+                                                            {/* Job Details */}
+                                                            <div>
+                                                                <h4 className="font-semibold text-lg">{item?.job_title}</h4>
+                                                                <p className="text-sm text-gray-600">
+                                                                    {item?.company} - {item?.industry}
+                                                                </p>
+                                                                <p className="text-sm text-gray-600">
+                                                                    {item?.start_date} - {item?.currently_working_here ? "Present" : item?.end_date} | {item?.location}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
+
+                                            ))
+                                        ) : (
+                                            <div>No Experiences have been added yet</div>
+                                        )
+                                    )}
+
+                                    {!editExp && (
+                                        <div className="mt-4 flex justify-center">
+                                            <button
+                                                type="button"
+                                                onClick={() => setEditExp(true)}
+                                                className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                            >
+                                                <PlusIcon className=" h-5 w-5" />
+                                            </button>
                                         </div>
-
-                                    ))
-                                ) : (
-                                    <div>No Experiences have been added yet</div>
-                                )
-                            )}
-
-                            {!editExp && (
-                                <div className="mt-4 flex justify-center">
-                                    <button
-                                        type="button"
-                                        onClick={() => setEditExp(true)}
-                                        className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
-                                    >
-                                        <PlusIcon className=" h-5 w-5" />
-                                    </button>
-                                </div>
+                                    )}
+                                </>
                             )}
 
                             {/* Edit Profile Form */}
@@ -391,7 +427,10 @@ export default function Experience() {
                                                     type="button"
                                                     color="gradient"
                                                     variant="outline"
-                                                    onClick={() => setEditExp(false)}
+                                                    onClick={() => (
+                                                        setEditExp(false),
+                                                        setUpdateData(null)
+                                                    )}
                                                 >
                                                     Cancel
                                                 </Button>

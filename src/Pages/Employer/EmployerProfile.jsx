@@ -1,11 +1,22 @@
-import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon, MapIcon, MapPinIcon, CalendarDaysIcon, EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { MinusIcon, PlusIcon, PencilIcon, TrashIcon, PlusCircleIcon, MapIcon, MapPinIcon, CalendarDaysIcon, EyeIcon, PencilSquareIcon, UserCircleIcon, EnvelopeOpenIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../../Components/Button";
 import userLogo from '../../assets/user.jpeg'
 import ReactQuill from "react-quill";
+import axiosInstance, { handleError } from "../../axiosInstance";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { toast } from "sonner";
+import { InfinitySpin } from "react-loader-spinner";
+import app_vars from "../../config";
+import { table } from "framer-motion/client";
+import { LoaderTable } from "../../Components/LoaderTable";
+import { Skeleton } from "../../Components/Skeleton";
 export default function EmployerProfile() {
+    const [tableLoader, setTableLoader] = useState(false);
     const [profileCollapsed, setprofileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
+    const [loading, setLoading] = useState(false);
     const handleCollapseToggle = () => {
         setprofileCollapsed(!profileCollapsed);
         if (!profileCollapsed) {
@@ -13,17 +24,117 @@ export default function EmployerProfile() {
         }
     };
     const [value, setValue] = useState("");
+    const parser = new DOMParser();
+    const [data, setData] = useState();
+    const user_id = localStorage.user_id;
+    const fileInputRef = useRef(null);
+    const handleIconClick = () => {
+        fileInputRef.current.click();
+    };
+    const formik = useFormik({
+        initialValues: {
+            company_name: data?.company_name || '',
+            company_industry: data?.company_industry || "",
+            location: data?.location || "",
+            contact_person_name: data?.contact_person_name || "",
+            contact_number: data?.contact_number || "",
+            contact_email: data?.contact_email || "",
+            logo: data?.logo || null,
+            description: data?.description || "",
+            user_id: user_id,
+        },
+        enableReinitialize: true,
+        validationSchema: Yup.object({
+            company_name: Yup.string().required("Company name is required"),
+            company_industry: Yup.string().required("Company_industry is required"),
+            location: Yup.string().required("Location is required"),
+            contact_person_name: Yup.string().required("Contact person name is required"),
+            // contact_number: Yup.string()
+            //     .required("Phone number is required")
+            //     .matches(/^[0-9]{11}$/, "Phone number must be 11 digits"),
+            contact_email: Yup.string().email("Invalid email format").required("Email is required"),
+            logo: Yup.mixed().nullable(),
+        }),
+        onSubmit: async (values) => {
+            const formData = new FormData();
+            setLoading(true);
+            for (const key in values) {
+                formData.append(key, values[key]);
+            }
+            console.log("Form data submitted: ", values);
+            if (data) {
+                try {
+                    const response = await axiosInstance.post(`api/employer_company_profile/update/${data?.id}`, formData);
+                    if (response) {
+                        toast.success("Personal Information Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setEditProfile(false);
+                    fetchData()
+                    setLoading(false);
+                }
+            } else {
+                try {
+                    const response = await axiosInstance.post(`api/employer_company_profile/store`, formData);
+                    if (response) {
+                        toast.success("Personal Information Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setEditProfile(false);
+                    fetchData()
+                    setLoading(false);
+                }
+            }
+        },
+    });
+    const fetchData = async () => {
+        setTableLoader(true);
+        try {
+            const response = await axiosInstance.get(`api/employer_company_profile?user_id=${user_id}`);
+            if (response) {
+                setData(response.data[0])
+                localStorage.setItem("company_id", response.data[0]?.id)
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
+        }
+    }
+    const handleFileChange = async (event) => {
+        const file = event.currentTarget.files[0];
+        const formData = new FormData();
+        formData.append("row_id", user_id);
+        formData.append("user_image", file);
+        try {
+            const response = await axiosInstance.post(`/api/job_seeker_basic_info/upload_user_image`, formData);
+            if (response) {
+                toast.success("Profile Picture Saved")
+            }
+        } catch (error) {
+            handleError(error);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <>
-            <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-center px-4 sm:px-6 lg:px-8 min-h-screen">
                 <div className="p-4 w-full max-w-5xl rounded-lg">
                     <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-center p-4 border-b cursor-pointer bg-[#FFF5F3]"
+                            className="flex justify-center p-4 border-b cursor-pointer bg-white rounded-lg"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="font-semibold text-3xl text-center">Company Profile</h3>
+                            <h3 className="font-semibold text-3xl text-center">{localStorage.role_id == 3 ? "Employee Profile" : "Company Profile"}</h3>
                             {/* <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {profileCollapsed ? (
                                     <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
@@ -35,84 +146,116 @@ export default function EmployerProfile() {
 
                         {/* Card Body */}
                         <div className={`overflow-x-hidden bg-white relative transition-all duration-300 ease-in-out ${profileCollapsed ? "max-h-0 p-0" : "max-h-screen p-4 sm:p-6"}`}>
-                            {/* Edit Button in Body */}
-                            {(!editProfile && !profileCollapsed) && (
-                                <button
-                                    type="button"
-                                    onClick={() => setEditProfile(true)}
-                                    className="absolute right-4 top-4 bg-white hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
-                                >
-                                    <PencilIcon className="h-5 w-5 text-blue-500" />
-                                </button>
-                            )}
+                            {tableLoader ? <Skeleton /> :
+                                <> {(!editProfile && !profileCollapsed) && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditProfile(true)}
+                                        className="absolute right-4 top-4 bg-white hover:bg-white rounded-full p-2 focus:outline-none transition-colors"
+                                    >
+                                        <PencilIcon className="h-5 w-5 text-blue-500" />
+                                    </button>
+                                )
+                                }
 
-                            {/* Profile Information */}
-                            {!editProfile && (
-                                <>
-                                    <div className="flex flex-col sm:flex-row gap-6 items-center">
-                                        <img
-                                            src="https://kofejob.dreamstechnologies.com/html/template/assets/img/default-logo.svg"
-                                            alt="User Profile"
-                                            className="h-24 w-24 sm:h-28 sm:w-28 rounded-full border-2 border-white"
-                                        />
-                                        <div className="text-center sm:text-left">
-                                            <strong className="text-sm text-gray-600">Soft Technologies</strong>
-                                            <h1 className="font-semibold text-xl sm:text-2xl">Build a Coaching Website Product Store images</h1>
-                                        </div>
-                                    </div>
+                                    {!editProfile && (
+                                        data ? (
+                                            <>
+                                                <div className="flex flex-col sm:flex-row gap-6 items-center">
+                                                    <div className="relative group">
+                                                        <img
+                                                            src={
+                                                                localStorage?.user_image &&
+                                                                    localStorage.user_image !== 'undefined' &&
+                                                                    localStorage.user_image !== 'null' &&
+                                                                    localStorage.user_image.trim() !== ''
+                                                                    ? `${app_vars?.domain?.fileURL}${localStorage.user_image}`
+                                                                    : userLogo
+                                                            }
+                                                            alt="User Profile"
+                                                            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                                        />
 
-                                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-4">
-                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                            <MapPinIcon className="w-5 h-5" />
-                                            Los Angeles
-                                        </p>
-                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                            <CalendarDaysIcon className="w-5 h-5" />
-                                            22 September 2023
-                                        </p>
-                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                            <EyeIcon className="w-5 h-5" />
-                                            902 Views
-                                        </p>
-                                        <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                            <PencilSquareIcon className="w-5 h-5" />
-                                            15 Proposal
-                                        </p>
-                                    </div>
-                                    <div className="mt-6 border-t pt-4">
-                                        <label className="block font-semibold">Description</label>
-                                        <p className="text-sm text-gray-600 mt-2">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                        </p>
-                                    </div>
-                                    <div className="mt-6 border-t pt-4">
-                                        <label className="block font-semibold">Required Skills</label>
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
-                                            {["JavaScript", "Reactjs", "Nextjs", "PHP", "HTML", "CSS", "Bootstrap"].map((skill) => (
-                                                <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="mt-6 border-t pt-4">
-                                        <label className="block font-semibold">Tags</label>
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
-                                            {["Machine Learning", "Virtual Assistant", "AI Chatbot"].map((skill) => (
-                                                <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
+                                                        {/* Pencil Icon on Hover */}
+                                                        {/* <form onSubmit={imageFormik.handleSubmit}> */}
+                                                        <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                                            <PencilSquareIcon className="h-5 w-5 text-blue-500" />
+                                                        </div>
+                                                        <input
+                                                            type="file"
+                                                            ref={fileInputRef}
+                                                            className="hidden"
+                                                            accept="image/*"
+                                                            onChange={handleFileChange}
+                                                        />
+                                                    </div>
+                                                    <div className="text-center sm:text-left">
+                                                        <strong className="text-sm text-gray-600">{data?.company_name}</strong>
+                                                        <h1 className="font-semibold text-xl sm:text-2xl">{data?.company_name}</h1>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-4">
+                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                        <MapPinIcon className="w-5 h-5" />
+                                                        {data?.location}
+                                                    </p>
+                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                        <UserCircleIcon className="w-5 h-5" />
+                                                        {data?.contact_person_name}
+                                                    </p>
+                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                        <EnvelopeOpenIcon className="w-5 h-5" />
+                                                        {data?.contact_email}
+                                                    </p>
+                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                        <PhoneIcon className="w-5 h-5" />
+                                                        {data?.contact_number}
+                                                    </p>
+                                                </div>
+
+                                                <div className="mt-6 border-t pt-4">
+                                                    <label className="block font-semibold">Description</label>
+                                                    <p className="text-sm text-gray-600 mt-2">
+                                                        {parser.parseFromString(data?.description, "text/html").body.textContent.trim()}
+                                                    </p>
+                                                </div>
+
+                                                {/* <div className="mt-6 border-t pt-4">
+                                                    <label className="block font-semibold">Required Skills</label>
+                                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                                                        {["JavaScript", "Reactjs", "Nextjs", "PHP", "HTML", "CSS", "Bootstrap"].map((skill) => (
+                                                            <span key={skill} className="bg-red-100 p-2 rounded text-center text-sm">
+                                                                {skill}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="mt-6 border-t pt-4">
+                                                    <label className="block font-semibold">Tags</label>
+                                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                                                        {["Machine Learning", "Virtual Assistant", "AI Chatbot"].map((tag) => (
+                                                            <span key={tag} className="bg-red-100 p-2 rounded text-center text-sm">
+                                                                {tag}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div> */}
+                                            </>
+                                        ) : (
+                                            <div>Profile Information not added yet</div>
+                                        )
+                                    )
+                                    }
                                 </>
-                            )}
+                            }
+
 
                             {/* Edit Profile Form */}
                             {editProfile && (
-                                <form className="">
+                                <form onSubmit={formik.handleSubmit}>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div className="sm:col-span-1">
                                             <label
@@ -122,21 +265,34 @@ export default function EmployerProfile() {
                                                 Company Name *
                                             </label>
                                             <input
-                                                type="text"
                                                 id="company_name"
+                                                name="company_name"
+                                                type="text"
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                value={formik.values.company_name}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
+                                            {formik.touched.company_name && formik.errors.company_name && (
+                                                <div className="text-red-500 text-sm">{formik.errors.company_name}</div>
+                                            )}
                                         </div>
                                         <div>
-                                            <label htmlFor="industry" className="block text-sm font-medium text-gray-900">
+                                            <label htmlFor="company_industry" className="block text-sm font-medium text-gray-900">
                                                 Industry *
                                             </label>
                                             <input
-                                                id="industry"
-                                                name="industry"
+                                                id="company_industry"
+                                                name="company_industry"
                                                 type="text"
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                value={formik.values.company_industry}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
+                                            {formik.touched.company_industry && formik.errors.company_industry && (
+                                                <div className="text-red-500 text-sm">{formik.errors.company_industry}</div>
+                                            )}
                                         </div>
                                         <div>
                                             <label htmlFor="location" className="block text-sm font-medium text-gray-900">
@@ -146,8 +302,14 @@ export default function EmployerProfile() {
                                                 id="location"
                                                 name="location"
                                                 type="text"
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                value={formik.values.location}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
+                                            {formik.touched.location && formik.errors.location && (
+                                                <div className="text-red-500 text-sm">{formik.errors.location}</div>
+                                            )}
                                         </div>
                                         <div>
                                             <label htmlFor="contact_person_name" className="block text-sm font-medium text-gray-900">
@@ -158,32 +320,49 @@ export default function EmployerProfile() {
                                                 name="contact_person_name"
                                                 type="text"
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                value={formik.values.contact_person_name}
                                             />
+                                            {formik.touched.contact_person_name && formik.errors.contact_person_name && (
+                                                <div className="text-red-500 text-sm">{formik.errors.contact_person_name}</div>
+                                            )}
                                         </div>
                                         <div>
-                                            <label htmlFor="phone_number" className="block text-sm font-medium text-gray-900">
+                                            <label htmlFor="contact_number" className="block text-sm font-medium text-gray-900">
                                                 Phone Number *
                                             </label>
                                             <input
-                                                id="phone_number"
-                                                name="phone_number"
+                                                id="contact_number"
+                                                name="contact_number"
                                                 type="text"
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                value={formik.values.contact_number}
                                             />
+                                            {formik.touched.contact_number && formik.errors.contact_number && (
+                                                <div className="text-red-500 text-sm">{formik.errors.contact_number}</div>
+                                            )}
                                         </div>
                                         <div>
-                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                                            <label htmlFor="contact_email" className="block text-sm font-medium text-gray-900">
                                                 Email *
                                             </label>
                                             <input
-                                                id="email"
-                                                name="email"
-                                                type="email"
-                                                required
+                                                id="contact_email"
+                                                name="contact_email"
+                                                type="contact_email"
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                value={formik.values.contact_email}
                                             />
+                                            {formik.touched.contact_email && formik.errors.contact_email && (
+                                                <div className="text-red-500 text-sm">{formik.errors.contact_email}</div>
+                                            )}
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <label htmlFor="verification_status" className="block text-sm font-medium text-gray-900">
                                                 Verification Status *
                                             </label>
@@ -222,33 +401,34 @@ export default function EmployerProfile() {
                                                 <option>Active</option>
                                                 <option>Inactive</option>
                                             </select>
-                                        </div>
+                                        </div> */}
 
                                         {/* Logo Input Field */}
                                         <div>
-                                            <label htmlFor="logo_path" className="block text-sm font-medium text-gray-900">
+                                            <label htmlFor="logo" className="block text-sm font-medium text-gray-900">
                                                 Logo (Upload Image)
                                             </label>
                                             <input
-                                                id="logo_path"
-                                                name="logo_path"
+                                                id="logo"
+                                                name="logo"
                                                 type="file"
-                                                accept="image/*"
+                                                onChange={(event) => formik.setFieldValue("logo", event.currentTarget.files[0])}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
+                                            {formik.errors.logo && (
+                                                <div className="text-red-500 text-sm">{formik.errors.logo}</div>
+                                            )}
                                         </div>
 
                                         {/* Company Description Field */}
                                         <div className="col-span-full">
                                             <label htmlFor="description" className="block text-sm font-medium text-gray-900">Description</label>
                                             <ReactQuill
-                                                id="summary-editor"
+                                                id="description"
                                                 theme="snow"
-                                                value={value}
-                                                onChange={setValue}
-                                                style={{
-                                                    height: "150px",
-                                                }}
+                                                value={formik.values.description}
+                                                onChange={(value) => formik.setFieldValue("description", value)}
+                                                style={{ height: "150px" }}
                                                 modules={{
                                                     toolbar: [
                                                         ["bold", "italic", "underline", "strike"],
@@ -257,15 +437,7 @@ export default function EmployerProfile() {
                                                         ["clean"],
                                                     ],
                                                 }}
-                                                formats={[
-                                                    "header",
-                                                    "bold",
-                                                    "italic",
-                                                    "underline",
-                                                    "strike",
-                                                    "list",
-                                                    "bullet",
-                                                ]}
+                                                formats={["header", "bold", "italic", "underline", "strike", "list", "bullet"]}
                                                 placeholder="Write something"
                                             />
                                         </div>
@@ -281,25 +453,26 @@ export default function EmployerProfile() {
                                             />
                                         </div> */}
                                     </div>
-
-                                    <div className="flex justify-center gap-4 mt-15">
-                                        <Button
-                                            type="button"
-                                            color="gradient"
-                                            variant="outline"
-                                            onClick={() => setEditProfile(false)}
-                                        >
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            type="submit"
-                                            color="gradient"
-                                            variant="solid"
-                                            className="text-white"
-                                        >
-                                            Save
-                                        </Button>
-                                    </div>
+                                    {loading ? <div className="flex justify-center mr-5 mt-18"><InfinitySpin width={150} color="green" /></div> :
+                                        <div className="flex justify-center gap-4 mt-15">
+                                            <Button
+                                                type="button"
+                                                color="gradient"
+                                                variant="outline"
+                                                onClick={() => setEditProfile(false)}
+                                            >
+                                                Cancel
+                                            </Button>
+                                            <Button
+                                                type="submit"
+                                                color="gradient"
+                                                variant="solid"
+                                                className="text-white"
+                                            >
+                                                Save
+                                            </Button>
+                                        </div>
+                                    }
                                 </form>
                             )}
                         </div>

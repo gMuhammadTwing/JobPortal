@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import axiosInstance, { handleError } from "../axiosInstance";
 import { toast } from "sonner";
 import { InfinitySpin } from "react-loader-spinner";
+import { useState } from "react";
 
 // Validation schema
 const validationSchema = Yup.object({
@@ -24,6 +25,8 @@ const validationSchema = Yup.object({
 });
 
 export default function JobSeekerSignup() {
+    const [registered, setRegistered] = useState(false);
+    const [loader, setLoader] = useState(false);
     const initialValues = {
         name: "",
         email: "",
@@ -38,6 +41,7 @@ export default function JobSeekerSignup() {
             if (response) {
                 toast.success(response.message || "Account created successfully!");
                 resetForm();
+                setRegistered(true)
             }
         } catch (error) {
             handleError(error);
@@ -58,76 +62,126 @@ export default function JobSeekerSignup() {
                                     Join us as Job Seeker
                                 </h4>
                             </div>
-                            <Formik
-                                initialValues={initialValues}
-                                validationSchema={validationSchema}
-                                onSubmit={handleSubmit}
-                            >
-                                {({ isSubmitting }) => (
-                                    <Form>
-                                        <p className="mb-2 text-center lg:text-left">
-                                            Create a new account
-                                        </p>
-                                        {["name", "email", "password", "c_password"].map((field, index) => (
-                                            <div key={index} className="mb-2">
-                                                <label
-                                                    htmlFor={field}
-                                                    className="block text-sm font-medium text-gray-900"
+                            {!registered ? (
+                                <>
+                                    <Formik
+                                        initialValues={initialValues}
+                                        validationSchema={validationSchema}
+                                        onSubmit={handleSubmit}
+                                    >
+                                        {({ isSubmitting }) => (
+                                            <Form>
+                                                <p className="mb-2 text-center lg:text-left">
+                                                    Create a new account
+                                                </p>
+                                                {["name", "email", "password", "c_password"].map((field, index) => (
+                                                    <div key={index} className="mb-2">
+                                                        <label
+                                                            htmlFor={field}
+                                                            className="block text-sm font-medium text-gray-900"
+                                                        >
+                                                            {field === "c_password"
+                                                                ? "Confirm Password"
+                                                                : field.charAt(0).toUpperCase() + field.slice(1)}
+                                                        </label>
+                                                        <Field
+                                                            id={field}
+                                                            name={field}
+                                                            type={field.includes("password") ? "password" : "text"}
+                                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                        />
+                                                        <ErrorMessage
+                                                            name={field}
+                                                            component="div"
+                                                            className="text-red-500 text-xs mt-1"
+                                                        />
+                                                    </div>
+                                                ))}
+                                                <div className="text-center">
+                                                    {isSubmitting ? (
+                                                        <div className="flex justify-center">
+                                                            <InfinitySpin width={150} color="green" />
+                                                        </div>
+                                                    ) : (
+                                                        <Button
+                                                            type="submit"
+                                                            color="gradient"
+                                                            variant="solid"
+                                                            className="inline-block w-full text-white"
+                                                        >
+                                                            Sign Up
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                    <div className="mt-4 flex items-center justify-center lg:justify-start">
+                                        <p className="text-sm">Already have an account?</p>
+                                        <TERipple rippleColor="light">
+                                            <Link
+                                                to="/login"
+                                                className="ml-2 inline-block px-6 pb-[6px] pt-2 text-xs font-medium uppercase text-danger"
+                                            >
+                                                <Button
+                                                    type="button"
+                                                    color="gradient"
+                                                    variant="outline"
                                                 >
-                                                    {field === "c_password"
-                                                        ? "Confirm Password"
-                                                        : field.charAt(0).toUpperCase() + field.slice(1)}
-                                                </label>
-                                                <Field
-                                                    id={field}
-                                                    name={field}
-                                                    type={field.includes("password") ? "password" : "text"}
-                                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                                />
-                                                <ErrorMessage
-                                                    name={field}
-                                                    component="div"
-                                                    className="text-red-500 text-xs mt-1"
-                                                />
-                                            </div>
-                                        ))}
-                                        <div className="text-center">
-                                            {isSubmitting ? (
-                                                <div className="flex justify-center">
-                                                    <InfinitySpin width={150} color="green" />
+                                                    Login
+                                                </Button>
+                                            </Link>
+                                        </TERipple>
+                                    </div>
+                                </>
+                            ) :
+                                <div className="">
+                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                        <div className="col-span-full text-gray-600">
+                                            <strong>Payment Instructions:</strong>
+                                            <ul className="list-disc pl-5 space-y-1">
+                                                <li>Job Seeker should pay the following amount to access profile</li>
+                                                <li>Bank Details: </li>
+                                                <li>Account No: 03120376631</li>
+                                                <li>Account Title: Joe Joe</li>
+                                                <li>Bank of Kenya</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="sm:col-span-4">
+                                            <label className="block text-sm font-medium leading-6 text-gray-900">
+                                                Amount
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="amount"
+                                                value={500}
+                                                disabled
+                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                            />
+                                        </div>
+
+                                        <div className="col-span-1 h-20 flex items-center justify-center">
+                                            {loader ? (
+                                                <div className="mt-5">
+                                                    <InfinitySpin height={120} width={120} color="green" />
                                                 </div>
                                             ) : (
-                                                <Button
-                                                    type="submit"
-                                                    color="gradient"
-                                                    variant="solid"
-                                                    className="inline-block w-full text-white"
-                                                >
-                                                    Sign Up
-                                                </Button>
+                                                <div className=" mt-5 ml-2">
+                                                    <Button
+                                                        type="button"
+                                                        color="gradient"
+                                                        variant="solid"
+                                                        onClick={() => setLoader(true)}
+                                                    >
+                                                        Submit
+                                                    </Button>
+                                                </div>
                                             )}
                                         </div>
-                                    </Form>
-                                )}
-                            </Formik>
-                            {/* Login link */}
-                            <div className="mt-4 flex items-center justify-center lg:justify-start">
-                                <p className="text-sm">Already have an account?</p>
-                                <TERipple rippleColor="light">
-                                    <Link
-                                        to="/login"
-                                        className="ml-2 inline-block px-6 pb-[6px] pt-2 text-xs font-medium uppercase text-danger"
-                                    >
-                                        <Button
-                                            type="button"
-                                            color="gradient"
-                                            variant="outline"
-                                        >
-                                            Login
-                                        </Button>
-                                    </Link>
-                                </TERipple>
-                            </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         {/* Right column */}
                         <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-orange-500 to-pink-600">

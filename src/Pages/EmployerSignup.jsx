@@ -9,6 +9,8 @@ import { toast } from "sonner";
 
 export default function EmployerSignup() {
     const [loading, setLoading] = useState(false);
+    const [registered, setRegistered] = useState(false);
+    const [loader, setLoader] = useState(false);
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -62,144 +64,193 @@ export default function EmployerSignup() {
                                     Join us as Employer
                                 </h4>
                             </div>
+                            {!registered ? (
+                                <>
+                                    <form onSubmit={formik.handleSubmit}>
+                                        <p className="mb-2 text-center lg:text-left">Create a new account</p>
 
-                            <form onSubmit={formik.handleSubmit}>
-                                <p className="mb-2 text-center lg:text-left">Create a new account</p>
-
-                                {/* Full Name input */}
-                                <div className="mb-2">
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                                        Full Name
-                                    </label>
-                                    <input
-                                        id="name"
-                                        name="name"
-                                        type="text"
-                                        value={formik.values.name}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        className={`block py-1.5 px-3 border ${formik.touched.name && formik.errors.name ? "border-red-500" : "border-gray-300"
-                                            } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                    />
-                                    {formik.touched.name && formik.errors.name && (
-                                        <p className="mt-1 text-xs text-red-500">{formik.errors.name}</p>
-                                    )}
-                                </div>
-
-                                {/* Registered As */}
-                                <div className="mb-2">
-                                    <label htmlFor="role_id" className="block text-sm font-medium text-gray-900">
-                                        Registered As
-                                    </label>
-                                    <select
-                                        id="role_id"
-                                        name="role_id"
-                                        value={formik.values.role_id}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        className={`block py-1.5 px-3 border ${formik.touched.role_id && formik.errors.role_id ? "border-red-500" : "border-gray-300"
-                                            } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                    >
-                                        <option value="">Select</option>
-                                        <option value="3">Employer</option>
-                                        <option value="4">Agency</option>
-                                    </select>
-                                    {formik.touched.role_id && formik.errors.role_id && (
-                                        <p className="mt-1 text-xs text-red-500">{formik.errors.role_id}</p>
-                                    )}
-                                </div>
-
-                                {/* Email input */}
-                                <div className="mb-2">
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-                                        Email address
-                                    </label>
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        value={formik.values.email}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        className={`block py-1.5 px-3 border ${formik.touched.email && formik.errors.email ? "border-red-500" : "border-gray-300"
-                                            } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                    />
-                                    {formik.touched.email && formik.errors.email && (
-                                        <p className="mt-1 text-xs text-red-500">{formik.errors.email}</p>
-                                    )}
-                                </div>
-
-                                {/* Password input */}
-                                <div className="mb-2">
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-900">
-                                        Password
-                                    </label>
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        value={formik.values.password}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        className={`block py-1.5 px-3 border ${formik.touched.password && formik.errors.password ? "border-red-500" : "border-gray-300"
-                                            } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                    />
-                                    {formik.touched.password && formik.errors.password && (
-                                        <p className="mt-1 text-xs text-red-500">{formik.errors.password}</p>
-                                    )}
-                                </div>
-
-                                {/* Confirm Password input */}
-                                <div className="mb-7">
-                                    <label htmlFor="c_password" className="block text-sm font-medium text-gray-900">
-                                        Confirm Password
-                                    </label>
-                                    <input
-                                        id="c_password"
-                                        name="c_password"
-                                        type="password"
-                                        value={formik.values.c_password}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        className={`block py-1.5 px-3 border ${formik.touched.c_password && formik.errors.c_password ? "border-red-500" : "border-gray-300"
-                                            } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                    />
-                                    {formik.touched.c_password && formik.errors.c_password && (
-                                        <p className="mt-1 text-xs text-red-500">{formik.errors.c_password}</p>
-                                    )}
-                                </div>
-
-                                {/* Signup button */}
-                                <div className="text-center">
-                                    {loading ? (
-                                        <div className="flex justify-center">
-                                            <InfinitySpin width={150} color="green" />
+                                        {/* Full Name input */}
+                                        <div className="mb-2">
+                                            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
+                                                Full Name
+                                            </label>
+                                            <input
+                                                id="name"
+                                                name="name"
+                                                type="text"
+                                                value={formik.values.name}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.name && formik.errors.name ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            />
+                                            {formik.touched.name && formik.errors.name && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.name}</p>
+                                            )}
                                         </div>
-                                    ) : (
-                                        <Button
-                                            type="submit"
-                                            color="gradient"
-                                            variant="solid"
-                                            className="inline-block w-full text-white"
-                                        >
-                                            Sign Up
-                                        </Button>
-                                    )}
-                                </div>
-                            </form>
 
-                            {/* Login link */}
-                            <div className="mt-6 flex items-center justify-center lg:justify-start">
-                                <p className="text-sm">Already have an account?</p>
-                                <Link
-                                    to="/login"
-                                    className="ml-2 inline-block px-6 pb-[6px] pt-2 text-xs font-medium uppercase text-danger"
-                                >
-                                    <Button type="button" color="gradient" variant="outline">
-                                        Login
-                                    </Button>
-                                </Link>
-                            </div>
+                                        {/* Registered As */}
+                                        <div className="mb-2">
+                                            <label htmlFor="role_id" className="block text-sm font-medium text-gray-900">
+                                                Registered As
+                                            </label>
+                                            <select
+                                                id="role_id"
+                                                name="role_id"
+                                                value={formik.values.role_id}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.role_id && formik.errors.role_id ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            >
+                                                <option value="">Select</option>
+                                                <option value="3">Employer</option>
+                                                <option value="4">Agency</option>
+                                            </select>
+                                            {formik.touched.role_id && formik.errors.role_id && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.role_id}</p>
+                                            )}
+                                        </div>
+
+                                        {/* Email input */}
+                                        <div className="mb-2">
+                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                                                Email address
+                                            </label>
+                                            <input
+                                                id="email"
+                                                name="email"
+                                                type="email"
+                                                value={formik.values.email}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.email && formik.errors.email ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            />
+                                            {formik.touched.email && formik.errors.email && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.email}</p>
+                                            )}
+                                        </div>
+
+                                        {/* Password input */}
+                                        <div className="mb-2">
+                                            <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+                                                Password
+                                            </label>
+                                            <input
+                                                id="password"
+                                                name="password"
+                                                type="password"
+                                                value={formik.values.password}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.password && formik.errors.password ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            />
+                                            {formik.touched.password && formik.errors.password && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.password}</p>
+                                            )}
+                                        </div>
+
+                                        {/* Confirm Password input */}
+                                        <div className="mb-7">
+                                            <label htmlFor="c_password" className="block text-sm font-medium text-gray-900">
+                                                Confirm Password
+                                            </label>
+                                            <input
+                                                id="c_password"
+                                                name="c_password"
+                                                type="password"
+                                                value={formik.values.c_password}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.c_password && formik.errors.c_password ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            />
+                                            {formik.touched.c_password && formik.errors.c_password && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.c_password}</p>
+                                            )}
+                                        </div>
+
+                                        {/* Signup button */}
+                                        <div className="text-center">
+                                            {loading ? (
+                                                <div className="flex justify-center">
+                                                    <InfinitySpin width={150} color="green" />
+                                                </div>
+                                            ) : (
+                                                <Button
+                                                    type="submit"
+                                                    color="gradient"
+                                                    variant="solid"
+                                                    className="inline-block w-full text-white"
+                                                >
+                                                    Sign Up
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </form>
+                                    {/* Login link */}
+                                    <div className="mt-6 flex items-center justify-center lg:justify-start">
+                                        <p className="text-sm">Already have an account?</p>
+                                        <Link
+                                            to="/login"
+                                            className="ml-2 inline-block px-6 pb-[6px] pt-2 text-xs font-medium uppercase text-danger"
+                                        >
+                                            <Button type="button" color="gradient" variant="outline">
+                                                Login
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </>
+                            ) :
+                                <div className="">
+                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                        <div className="col-span-full text-gray-600">
+                                            <strong>Payment Instructions:</strong>
+                                            <ul className="list-disc pl-5 space-y-1">
+                                                <li>Agency should pay the following amount to access profile</li>
+                                                <li>Bank Details: </li>
+                                                <li>Account No: 03120376631</li>
+                                                <li>Account Title: Joe Joe</li>
+                                                <li>Bank of Kenya</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="sm:col-span-4">
+                                            <label className="block text-sm font-medium leading-6 text-gray-900">
+                                                Amount
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="amount"
+                                                value={500}
+                                                disabled
+                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                            />
+                                        </div>
+
+                                        <div className="col-span-1 h-20 flex items-center justify-center">
+                                            {loader ? (
+                                                <div className="mt-5">
+                                                    <InfinitySpin height={120} width={120} color="green" />
+                                                </div>
+                                            ) : (
+                                                <div className=" mt-5 ml-2">
+                                                    <Button
+                                                        type="button"
+                                                        color="gradient"
+                                                        variant="solid"
+                                                        onClick={() => setLoader(true)}
+                                                    >
+                                                        Submit
+                                                    </Button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                         {/* Right column */}

@@ -1,14 +1,15 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { MinusIcon, PlusIcon, PencilIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon, PencilIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import { Button } from "../../Components/Button";
-import userLogo from '../../assets/user.jpeg';
+import { Button } from "../../../Components/Button";
+import userLogo from '../../../assets/user.jpeg';
 import ReactQuill from "react-quill";
 import { toast } from 'sonner';
-import axiosInstance, { handleError } from '../../axiosInstance';
+import axiosInstance, { handleError } from '../../../axiosInstance';
 import { InfinitySpin } from 'react-loader-spinner';
-
+import { useRef } from 'react';
+import app_vars from '../../../config';
 export default function PersonalInformation() {
     const [profileCollapsed, setProfileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
@@ -90,8 +91,41 @@ export default function PersonalInformation() {
     }
     useEffect(() => {
         fetchData();
-    }, []); // Empty array ensures this runs once on mount
+    }, []);
 
+    const fileInputRef = useRef(null);
+    // const imageFormik = useFormik({
+    //     initialValues: {
+    //         profileImage: null,
+    //     },
+    //     onSubmit: (values) => {
+    //         console.log(values.profileImage);
+    //     },
+    // });
+
+    const handleIconClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = async (event) => {
+        const file = event.currentTarget.files[0];
+        const formData = new FormData();
+        formData.append("row_id", user_id);
+        formData.append("user_image", file);
+        try {
+            const response = await axiosInstance.post(`/api/job_seeker_basic_info/upload_user_image`, formData);
+            if (response) {
+                toast.success("Profile Picture Saved")
+            }
+        } catch (error) {
+            handleError(error);
+        }
+        //  finally {
+        //     setEditProfile(false);
+        //     fetchData()
+        //     setLoading(false);
+        // }
+    };
 
     return (
         <div className="flex justify-center sm:px-0">
@@ -124,14 +158,37 @@ export default function PersonalInformation() {
                             </button>
                         )}
 
-                        {/* Profile Information */}
                         {!editProfile && (
                             <div className="flex flex-col sm:flex-row gap-6 items-center">
-                                <img
-                                    src={userLogo}
-                                    alt="User Profile"
-                                    className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                />
+                                <div className="relative group">
+                                    <img
+                                        src={
+                                            localStorage?.user_image &&
+                                                localStorage.user_image !== 'undefined' &&
+                                                localStorage.user_image !== 'null' &&
+                                                localStorage.user_image.trim() !== ''
+                                                ? `${app_vars?.domain?.fileURL}${localStorage.user_image}`
+                                                : userLogo
+                                        }
+                                        alt="User Profile"
+                                        className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                    />
+
+
+                                    {/* Pencil Icon on Hover */}
+                                    {/* <form onSubmit={imageFormik.handleSubmit}> */}
+                                    <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                        <PencilSquareIcon className="h-5 w-5 text-blue-500" />
+                                    </div>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                    />
+                                </div>
+
                                 <div className="text-center sm:text-left">
                                     <h4 className="font-semibold text-lg">{localStorage.user_name}</h4>
                                     <p className="text-sm text-gray-600">{localStorage.email}</p>
@@ -140,7 +197,6 @@ export default function PersonalInformation() {
                                 </div>
                             </div>
                         )}
-
                         {/* Edit Profile Form */}
                         {editProfile && (
                             <form onSubmit={formik.handleSubmit}>
