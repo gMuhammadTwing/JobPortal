@@ -9,7 +9,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { FallingLines } from "react-loader-spinner";
 import { useState } from "react";
-import { Button } from "../../Components/Button";
+import { Button } from "../../../Components/Button";
 
 const AddPayment = ({ isOpen, onClose, success, error }) => {
     const [file, setFile] = useState(null);

@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
-import Pagination from "../../Components/Pagination";
+import Pagination from "../../../Components/Pagination";
 
 export default function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false);

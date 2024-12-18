@@ -1,9 +1,9 @@
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
-import Pagination from "../../Components/Pagination";
-import { Button } from "../../Components/Button";
 import AddCoursework from "./AddCoursework";
+import { Button } from "../../../Components/Button";
+import Pagination from "../../../Components/Pagination";
 
 export default function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false);
