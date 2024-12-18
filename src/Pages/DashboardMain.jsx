@@ -40,6 +40,9 @@ export default function DashboardMain() {
     const adminNav = [
         { name: "Employees", href: "employees", icon: UserCircleIcon, current: true },
         { name: "Job Seekers", href: "jobseekers", icon: UserCircleIcon, current: true },
+        { name: "Instructions for payment", href: "instructions", icon: NewspaperIcon, current: false },
+        { name: "Shortlisting Requests", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
+        { name: "Blogs", href: "blogs", icon: NewspaperIcon, current: false },
     ]
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");

@@ -7,10 +7,8 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "sonner";
-import { InfinitySpin } from "react-loader-spinner";
+import { RotatingLines } from "react-loader-spinner";
 import app_vars from "../../config";
-import { table } from "framer-motion/client";
-import { LoaderTable } from "../../Components/LoaderTable";
 import { Skeleton } from "../../Components/Skeleton";
 export default function EmployerProfile() {
     const [tableLoader, setTableLoader] = useState(false);
@@ -99,7 +97,6 @@ export default function EmployerProfile() {
             const response = await axiosInstance.get(`api/employer_company_profile?user_id=${user_id}`);
             if (response) {
                 setData(response.data[0])
-                localStorage.setItem("company_id", response.data[0]?.id)
             }
         } catch (error) {
             handleError(error);
@@ -107,7 +104,10 @@ export default function EmployerProfile() {
             setTableLoader(false)
         }
     }
+    const [image, setImage] = useState(localStorage.user_image);
+    const [imageLoader, setImageLoader] = useState(false);
     const handleFileChange = async (event) => {
+        setImageLoader(true);
         const file = event.currentTarget.files[0];
         const formData = new FormData();
         formData.append("row_id", user_id);
@@ -116,9 +116,24 @@ export default function EmployerProfile() {
             const response = await axiosInstance.post(`/api/job_seeker_basic_info/upload_user_image`, formData);
             if (response) {
                 toast.success("Profile Picture Saved")
+                getProfilePic();
             }
         } catch (error) {
             handleError(error);
+        }
+    };
+    const getProfilePic = async () => {
+        try {
+            const response = await axiosInstance.get(`/api/get_user_image`);
+            if (response) {
+                setImage(response?.data)
+                localStorage.setItem("user_image", response?.data)
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setImageLoader(false);
+            window.location?.reload();
         }
     };
     useEffect(() => {
@@ -163,18 +178,25 @@ export default function EmployerProfile() {
                                             <>
                                                 <div className="flex flex-col sm:flex-row gap-6 items-center">
                                                     <div className="relative group">
-                                                        <img
-                                                            src={
-                                                                localStorage?.user_image &&
-                                                                    localStorage.user_image !== 'undefined' &&
-                                                                    localStorage.user_image !== 'null' &&
-                                                                    localStorage.user_image.trim() !== ''
-                                                                    ? `${app_vars?.domain?.fileURL}${localStorage.user_image}`
-                                                                    : userLogo
-                                                            }
-                                                            alt="User Profile"
-                                                            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                                        />
+                                                        {imageLoader ? (
+                                                            <div className='p-4'><RotatingLines height="70"
+                                                                width="70"
+                                                                color="green" />
+                                                            </div>
+                                                        ) : (
+                                                            <img
+                                                                src={
+                                                                    localStorage?.user_image &&
+                                                                        localStorage.user_image !== 'undefined' &&
+                                                                        localStorage.user_image !== 'null' &&
+                                                                        localStorage.user_image.trim() !== ''
+                                                                        ? `${app_vars?.domain?.fileURL}${image}`
+                                                                        : userLogo
+                                                                }
+                                                                alt="User Profile"
+                                                                className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                                            />
+                                                        )}
 
 
                                                         {/* Pencil Icon on Hover */}

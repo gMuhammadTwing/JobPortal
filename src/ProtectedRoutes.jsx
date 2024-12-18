@@ -17,6 +17,9 @@ const JobSeekerPermission = {
 const adminPermission = {
   "/admin/employees": "view_employees_profile",
   "/admin/jobseekers": "view_jobseekers_profile",
+  "/admin/blogs": "manage_blogs",
+  "/admin/instructions": "manage_instructions",
+  "/admin/shortlisting": "manage_shortlisting",
 }
 
 const ProtectedRoutes = ({ children }) => {

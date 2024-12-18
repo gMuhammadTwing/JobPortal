@@ -27,6 +27,9 @@ import NoPermission from './Pages/NoPermission/NoPermission';
 import PaymentAlert from './Pages/PaymentAlert';
 import EmployeesIndex from './Pages/Admin/Employees/Index';
 import JobSeekersIndex from './Pages/Admin/JobSeekers/Index';
+import BlogIndex from './Pages/Admin/Blog/Index';
+import ShortlistingIndex from './Pages/Admin/Shortlisting/Index';
+import InstructionsIndex from './Pages/Admin/Instructions/Index';
 function App() {
   return (
     <DropdownProvider>
@@ -66,6 +69,9 @@ function App() {
             <Route path="admin" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="employees" element={<ProtectedRoutes><EmployeesIndex /></ProtectedRoutes>} />
               <Route path="jobseekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
+              <Route path="blogs" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
+              <Route path="shortlisting" element={<ProtectedRoutes><ShortlistingIndex /></ProtectedRoutes>} />
+              <Route path="instructions" element={<ProtectedRoutes><InstructionsIndex /></ProtectedRoutes>} />
             </Route>
 
             {/* No Permission Route */}

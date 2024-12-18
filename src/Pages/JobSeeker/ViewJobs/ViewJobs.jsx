@@ -7,157 +7,181 @@ import Pagination from "../../../Components/Pagination";
 import app_vars from "../../../config";
 import ReactQuill from "react-quill";
 import ApplyModal from "./ApplyModal";
+import { useDropdownContext } from "../../../DropdownProvider";
+import { useFormik } from "formik";
 
 export default function ViewJobs() {
-    const [selectedFilters, setSelectedFilters] = useState({});
-    const filters = [
-        {
-            title: "Job Title",
-            options: [
-                { label: "Frontend Developer", count: 2 },
-                { label: "Frontend Software Engineer", count: 1 },
-                { label: "Frontend UI / UX Developer", count: 1 },
-                { label: "Frontend Web Developer", count: 1 },
-                { label: "Senior Frontend Developer", count: 1 },
-                { label: "Senior Software Engineer", count: 1 },
-                { label: "Senior Next.js", count: 1 },
-                { label: "Senior React.JS", count: 1 },
-            ],
-        },
-        {
-            title: "City",
-            options: [
-                { label: "Islamabad", count: 7 },
-                { label: "Lahore", count: 6 },
-                { label: "Rawalpindi", count: 6 },
-                { label: "Faisalabad", count: 4 },
-                { label: "Gujranwala", count: 3 },
-                { label: "Gujrat", count: 3 },
-                { label: "Karachi", count: 2 },
-                { label: "Akhora Khattak", count: 1 },
-                { label: "Ali Chak", count: 1 },
-                { label: "Allahabad", count: 1 },
-            ],
-        },
-        {
-            title: "Experience",
-            options: [
-                { label: "1 Year", count: 2 },
-                { label: "2 Years", count: 1 },
-                { label: "3 Years", count: 2 },
-                { label: "4 Years", count: 1 },
-                { label: "5 Years", count: 3 },
-            ],
-        },
-        {
-            title: "Job Type",
-            options: [{ label: "Full Time/Permanent", count: 9 }],
-        },
-    ];
-    const handleFilterChange = (category, option) => {
-        setSelectedFilters((prev) => ({
-            ...prev,
-            [category]: {
-                ...prev[category],
-                [option]: !prev[category]?.[option],
-            },
-        }));
-    };
-    const user_id = localStorage.user_id;
-    const company_id = localStorage?.company_id;
+    const dropDownValues = useDropdownContext();
     const [tableLoader, setTableLoader] = useState(false);
     const parser = new DOMParser();
     const [data, setData] = useState();
     const [viewDetails, setViewDetails] = useState(false);
     const [viewData, setViewData] = useState();
     const [applyModal, setApplyModal] = useState(false);
-    const fetchData = async (page) => {
-        if (company_id != "undefined") {
-            setTableLoader(true);
-            try {
-                const response = await axiosInstance.get(`api/job_list?page=${page}`);
-                if (response) {
-                    setData(response.data)
-                    console.log("res: ", response);
-                }
-            } catch (error) {
-                handleError(error);
-            } finally {
-                setTableLoader(false)
+    const [filters, setFilters] = useState({
+        job_title: "",
+        job_type: "",
+        location: "",
+        job_status: "",
+    })
+    const formik = useFormik({
+        initialValues: {
+            job_title: "",
+            job_type: "",
+            location: "",
+            job_status: "",
+        },
+        onSubmit: async (values) => {
+            setFilters(values);
+            fetchData(1, values);
+
+        },
+    });
+
+    const fetchData = async (page, filters) => {
+        setTableLoader(true);
+        try {
+            const response = await axiosInstance.get(`api/job_list?job_title=${filters?.job_title}&job_type=${filters?.job_type}&location=${filters?.location}&job_status=${filters?.job_status}&page=${page}`);
+            if (response) {
+                setData(response.data)
             }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
         }
     }
     useEffect(() => {
-        fetchData(1);
+        fetchData(1, filters);
     }, []);
 
     const pageNumber = (pageNum) => {
-        fetchData(pageNum);
+        fetchData(pageNum, filters);
     };
     const [applyData, setApplyData] = useState();
     const applyHandler = (job) => {
         setApplyData(job);
         setApplyModal(true);
     }
-    const closeApplyModal = ()=>{
+    const closeApplyModal = () => {
         setApplyModal(false);
-        fetchData(1)
+        fetchData(1, filters)
     }
-
-
+    const clearFilter = () => {
+        formik.resetForm();
+        setFilters({
+            job_title: "",
+            job_type: "",
+            location: "",
+            job_status: "",
+        })
+        fetchData(1, {
+            job_title: "",
+            job_type: "",
+            location: "",
+            job_status: "",
+        })
+    }
     return (
         <div className="container mx-auto max-w-5xl pb-15 min-h-screen">
-            <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal}/>
+            <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
             {!viewDetails ? (
                 <div className="px-6 lg:px-8 ">
                     <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl">Jobs</h2>
                     <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
                     <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  ">
-                        {/* <label className="block text-lg font-semibold text-gray-900 text-center mb-4">
-                        Apply Filters
-                    </label> */}
-                        <div>
-                            <div className="py-2 px-1 grid grid-cols-1 gap-x-6 sm:grid-cols-5">
-                                {filters.map((filter, index) => (
-                                    <div key={index} className="mb-6">
-                                        <label className="block text-lg font-semibold text-gray-900">
-                                            {filter.title}
-                                        </label>
-                                        <select
-                                            className="mt-2 w-full p-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
-                                            onChange={(e) => handleFilterChange(filter.title, e.target.value)}
-                                            value={
-                                                selectedFilters[filter.title]
-                                                    ? Object.keys(selectedFilters[filter.title])[0]
-                                                    : ""
-                                            }
-                                        >
-                                            <option value="">Select {filter.title}</option>
-                                            {filter.options.map((option, i) => (
-                                                <option key={i} value={option.label}>
-                                                    {option.label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                ))}
-                                <div className="sm:col-span-1 mt-9">
-                                    <button
-                                        type="button"
-                                        // variant="outline"
-                                        // color="slate"
-                                        // onClick={clearFilterExpenseQuarryWise}
-                                        className="flex items-center border border-gray-300 p-2 rounded-lg hover:bg-orange-600 hover:text-white"
+                        {/* <label className="block text-sm font-medium text-gray-900">
+                            Apply Filter
+                        </label> */}
+                        <form onSubmit={formik.handleSubmit}>
+                            <div className="py-2 px-1 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
+                                <div className="sm:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-900">
+                                        Job Title
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="job_title"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.job_title}
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    />
+                                </div>
+
+                                {/* Job Type */}
+                                <div className="sm:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-900">
+                                        Job Type
+                                    </label>
+                                    <select
+                                        name="job_type"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.job_type}
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     >
-                                        <XCircleIcon
-                                            className="-ml-0.5 h-5 w-5 mr-1"
-                                            aria-hidden="true"
-                                        />
+                                        <option value="">Select</option>
+                                        {dropDownValues?.job_family?.map((item) => {
+                                            return (
+                                                <option key={item.id} value={item?.id}>
+                                                    {item?.job_family}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+
+                                {/* Location */}
+                                <div className="sm:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-900">
+                                        Location
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.location}
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    />
+                                </div>
+
+                                {/* Job Status */}
+                                <div className="sm:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-900">
+                                        Job Status
+                                    </label>
+                                    <select
+                                        name="job_status"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.job_status}
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    >
+                                        <option value="">Select</option>
+                                        {dropDownValues?.job_status?.map((item) => {
+                                            return (
+                                                <option key={item.id} value={item?.id}>
+                                                    {item?.job_status}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                                <div className="sm:col-span-2 mt-2 flex gap-2">
+                                    <button
+                                        onClick={clearFilter}
+                                        type="button"
+                                        className="flex mt-5 border border-gray-300 p-[5px] px-5 rounded-lg hover:bg-orange-600 hover:text-white"
+                                    >
                                         Clear Filter
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="flex mt-5 border bg-orange-600 p-[5px] px-5 rounded-lg hover:border-orange-600 text-white"
+                                    >
+                                        Apply Filter
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <section className="lg:col-span-4 ">
                         {tableLoader ? <LoaderTable /> :
@@ -168,22 +192,16 @@ export default function ViewJobs() {
                                             <article className="border rounded-lg p-4 shadow bg-white">
                                                 <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
                                                     <span
-                                                        className={`relative z-10 rounded-full px-3 py-1.5 font-medium ${item?.job_status === 1
+                                                        className={`relative z-10 rounded-full px-3 py-1.5 font-medium ${item?.job_status?.id === 1
                                                             ? "bg-green-100 text-green-600 hover:bg-green-200"
-                                                            : item?.job_status === 2
+                                                            : item?.job_status?.id === 2
                                                                 ? "bg-blue-100 text-blue-600 hover:bg-blue-200"
-                                                                : item?.job_status === 3
+                                                                : item?.job_status?.id === 3
                                                                     ? "bg-red-100 text-red-600 hover:bg-red-200"
                                                                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                                                             }`}
                                                     >
-                                                        {item?.job_status === 1
-                                                            ? "Submitted"
-                                                            : item?.job_status === 2
-                                                                ? "Shortlisted"
-                                                                : item?.job_status === 3
-                                                                    ? "Rejected"
-                                                                    : "Unknown"}
+                                                        {item?.job_status?.job_status}
                                                     </span>
                                                     <div className="flex flex-wrap sm:flex-row gap-2">
                                                         <button onClick={() => {
@@ -201,7 +219,7 @@ export default function ViewJobs() {
                                                             </button>
                                                         )}
                                                         {item?.veritas_to_short_list == 1 && (
-                                                            <button onClick={()=>applyHandler(item)}
+                                                            <button onClick={() => applyHandler(item)}
                                                                 className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
                                                             >
                                                                 Apply for Job

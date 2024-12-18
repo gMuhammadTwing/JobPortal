@@ -20,6 +20,9 @@ const login = async (credentials) => {
     localStorage.setItem("user_role", response?.data?.user_role);
     localStorage.setItem("login_time", Date.now());
     localStorage.setItem("user_image", response?.user?.user_image);
+    if (response?.user?.company_id) {
+      localStorage.setItem("company_id", response?.user?.company_id[0]?.id);
+    }
   } catch (error) {
     handleError(error)
   }

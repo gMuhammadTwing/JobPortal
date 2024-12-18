@@ -7,7 +7,7 @@ import userLogo from '../../../assets/user.jpeg';
 import ReactQuill from "react-quill";
 import { toast } from 'sonner';
 import axiosInstance, { handleError } from '../../../axiosInstance';
-import { InfinitySpin } from 'react-loader-spinner';
+import { Grid, InfinitySpin, RotatingLines } from 'react-loader-spinner';
 import { useRef } from 'react';
 import app_vars from '../../../config';
 export default function PersonalInformation() {
@@ -107,7 +107,10 @@ export default function PersonalInformation() {
         fileInputRef.current.click();
     };
 
+    const [image, setImage] = useState(localStorage.user_image);
+    const [imageLoader, setImageLoader] = useState(false);
     const handleFileChange = async (event) => {
+        setImageLoader(true);
         const file = event.currentTarget.files[0];
         const formData = new FormData();
         formData.append("row_id", user_id);
@@ -116,6 +119,7 @@ export default function PersonalInformation() {
             const response = await axiosInstance.post(`/api/job_seeker_basic_info/upload_user_image`, formData);
             if (response) {
                 toast.success("Profile Picture Saved")
+                getProfilePic();
             }
         } catch (error) {
             handleError(error);
@@ -125,6 +129,20 @@ export default function PersonalInformation() {
         //     fetchData()
         //     setLoading(false);
         // }
+    };
+    const getProfilePic = async () => {
+        try {
+            const response = await axiosInstance.get(`/api/get_user_image`);
+            if (response) {
+                setImage(response?.data)
+                localStorage.setItem("user_image",response?.data)
+            }
+        } catch (error) {
+            handleError(error);
+        }finally{
+            setImageLoader(false);
+            window.location?.reload();
+        }
     };
 
     return (
@@ -161,18 +179,25 @@ export default function PersonalInformation() {
                         {!editProfile && (
                             <div className="flex flex-col sm:flex-row gap-6 items-center">
                                 <div className="relative group">
-                                    <img
-                                        src={
-                                            localStorage?.user_image &&
-                                                localStorage.user_image !== 'undefined' &&
-                                                localStorage.user_image !== 'null' &&
-                                                localStorage.user_image.trim() !== ''
-                                                ? `${app_vars?.domain?.fileURL}${localStorage.user_image}`
-                                                : userLogo
-                                        }
-                                        alt="User Profile"
-                                        className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
-                                    />
+                                    {imageLoader ? (
+                                        <div className='p-4'><RotatingLines height="70"
+                                            width="70"
+                                            color="green" />
+                                        </div>
+                                    ) : (
+                                        <img
+                                            src={
+                                                localStorage?.user_image &&
+                                                    localStorage.user_image !== 'undefined' &&
+                                                    localStorage.user_image !== 'null' &&
+                                                    localStorage.user_image.trim() !== ''
+                                                    ? `${app_vars?.domain?.fileURL}${image}`
+                                                    : userLogo
+                                            }
+                                            alt="User Profile"
+                                            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                        />
+                                    )}
 
 
                                     {/* Pencil Icon on Hover */}

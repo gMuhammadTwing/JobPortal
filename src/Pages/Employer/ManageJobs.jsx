@@ -85,19 +85,17 @@ export default function ManageJobs() {
   });
 
   const fetchData = async (page) => {
-    if (company_id != "undefined") {
-      setTableLoader(true);
-      try {
-        const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id}&company_id=${company_id}&page=${page}`);
-        if (response) {
-          setData(response.data)
-          console.log("res: ", response);
-        }
-      } catch (error) {
-        handleError(error);
-      } finally {
-        setTableLoader(false)
+    setTableLoader(true);
+    try {
+      const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id}&company_id=${company_id}&page=${page}`);
+      if (response) {
+        setData(response.data)
+        console.log("res: ", response);
       }
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setTableLoader(false)
     }
   }
   useEffect(() => {
@@ -154,12 +152,12 @@ export default function ManageJobs() {
                         {/* Post Date and Category */}
                         <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
                           <span
-                            className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status === 1
+                            className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status?.id === 1
                               ? "bg-green-100 text-green-600 hover:bg-green-100"
                               : "bg-red-100 text-red-600 hover:bg-red-100"
                               }`}
                           >
-                            {item?.job_status === 1 ? "Active" : "Closed"}
+                            {item?.job_status?.id === 1 ? "Active" : "Closed"}
                           </span>
 
                           <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
@@ -189,7 +187,7 @@ export default function ManageJobs() {
                         <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm border-t p-2">
                           <div className="text-gray-600">
                             <span>Job Type</span>
-                            <div className="text-black font-semibold">{item?.job_type}</div>
+                            <div className="text-black font-semibold">{item?.job_type?.job_family}</div>
                           </div>
                           <div className="text-gray-600">
                             <span>Salary</span>
