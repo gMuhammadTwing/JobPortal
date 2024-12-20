@@ -102,7 +102,6 @@ export default function Education() {
             const response = await axiosInstance.get(`api/job_seeker_education_institute?user_id=${user_id}`);
             if (response) {
                 setData(response?.data)
-                console.log(response?.data);
             }
         } catch (error) {
             handleError(error);

@@ -30,6 +30,7 @@ import JobSeekersIndex from './Pages/Admin/JobSeekers/Index';
 import BlogIndex from './Pages/Admin/Blog/Index';
 import ShortlistingIndex from './Pages/Admin/Shortlisting/Index';
 import InstructionsIndex from './Pages/Admin/Instructions/Index';
+import PaymentIndex from './Pages/Admin/Payment/PaymentIndex';
 function App() {
   return (
     <DropdownProvider>
@@ -43,7 +44,7 @@ function App() {
             <Route path="teams" element={<Teams />} />
             <Route path="projects" element={<Projects />} />
             <Route path="contact-us" element={<ContactUs />} />
-            <Route path="blogs" element={<Blogs />} />
+            <Route path="blogs_comments" element={<Blogs />} />
             <Route path="login" element={<Login />} />
             <Route path="create-account" element={<CreateAccount />} />
             <Route path="create-account/signup-jobseeker" element={<JobSeekerSignup />} />
@@ -69,9 +70,10 @@ function App() {
             <Route path="admin" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="employees" element={<ProtectedRoutes><EmployeesIndex /></ProtectedRoutes>} />
               <Route path="jobseekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
-              <Route path="blogs" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
+              <Route path="postblog" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
               <Route path="shortlisting" element={<ProtectedRoutes><ShortlistingIndex /></ProtectedRoutes>} />
               <Route path="instructions" element={<ProtectedRoutes><InstructionsIndex /></ProtectedRoutes>} />
+              <Route path="payments" element={<ProtectedRoutes><PaymentIndex /></ProtectedRoutes>} />
             </Route>
 
             {/* No Permission Route */}

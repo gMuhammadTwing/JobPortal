@@ -18,7 +18,6 @@ export default function JobsApplied() {
             const response = await axiosInstance.get(`api/job_application/applied_job_listing?user_id=${user_id}&page=${page}`);
             if (response) {
                 setData(response.data)
-                console.log("Applied Jobs: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -58,7 +57,7 @@ export default function JobsApplied() {
                                                                 {job?.job_id?.job_title}
                                                             </h1>
                                                             <div className="mt-1">
-                                                                {/* <span>{job.industryName}</span>,{" "} */}
+                                                                <span>{job?.job_id?.company_id?.company_name}</span>,{" "}
                                                                 <span>{job?.job_id?.location}</span>
                                                             </div>
                                                         </td>
@@ -75,7 +74,7 @@ export default function JobsApplied() {
                                                         <td className="px-3 py-4 text-sm text-gray-400 flex mt-2 gap-x-2">
                                                             <div className="flex items-center">
                                                                 <AdjustmentsVerticalIcon className="w-5 h-5 text-gray-400" />
-                                                                {job?.job_id?.job_status}
+                                                                {job?.job_status_id?.job_status}
                                                             </div>
                                                         </td>
                                                     </tr>

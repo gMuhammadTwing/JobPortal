@@ -34,18 +34,18 @@ export default function Index() {
     const user_id = localStorage.user_id;
     const [tableLoader, setTableLoader] = useState(false);
     const fetchData = async () => {
-        setTableLoader(true)
-        try {
-            const response = await axiosInstance.get(`api/job_seeker_resume?user_id=${user_id}`);
-            if (response) {
-                setData(response?.data)
-                console.log(response);
-            }
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setTableLoader(false)
-        }
+        // setTableLoader(true)
+        // try {
+        //     const response = await axiosInstance.get(`api/job_seeker_resume?user_id=${user_id}`);
+        //     if (response) {
+        //         setData(response?.data)
+        //         console.log(response);
+        //     }
+        // } catch (error) {
+        //     handleError(error);
+        // } finally {
+        //     setTableLoader(false)
+        // }
     }
     const [endpoint, setEndpoint] = useState()
     useEffect(() => {

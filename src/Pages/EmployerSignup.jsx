@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "../Components/Button";
@@ -6,11 +6,15 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useState } from "react";
 import axiosInstance, { handleError } from "../axiosInstance";
 import { toast } from "sonner";
+import { Skeleton } from "../Components/Skeleton";
+import auth from "../auth";
 
 export default function EmployerSignup() {
     const [loading, setLoading] = useState(false);
     const [registered, setRegistered] = useState(false);
     const [loader, setLoader] = useState(false);
+    const [tableLoader, setTableLoader] = useState(false)
+    const [user_id, setUserId] = useState();
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -42,6 +46,13 @@ export default function EmployerSignup() {
                 const response = await axiosInstance.post("api/auth/register", values);
                 if (response) {
                     toast.success(response.message || "Account created successfully!");
+                    localStorage.setItem("token", response?.data?.token?.accessToken);
+                    localStorage.setItem("user_id", response?.data?.token?.token?.user_id);
+                    setUserId(response?.data?.token?.token?.user_id);
+                    if (values?.role_id == 4) {
+                        setRegistered(true)
+                    }
+                    getPaymentInstructions();
                     formik.resetForm();
                 }
             } catch (error) {
@@ -52,8 +63,46 @@ export default function EmployerSignup() {
         },
     });
 
+    const [paymentInstructions, setPaymentInstructions] = useState()
+    const navigate = useNavigate();
+    const getPaymentInstructions = async () => {
+        setTableLoader(true);
+        try {
+            const response = await axiosInstance.get(`api/admin_payment_instruction?role_id=${formik.values.role_id}`);
+            if (response) {
+                setPaymentInstructions(response?.data[0])
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
+        }
+    };
+    const submitPayment = async () => {
+        setLoader(true)
+        const json = {
+            user_id: user_id,
+            amount: paymentInstructions?.amount,
+        }
+        try {
+            const response = await axiosInstance.post(`api/user_payment_history/store`, json);
+            if (response) {
+                toast.success("Payment submitted successfully");
+                localStorage.setItem("payment", false);
+            }
+        } catch (error) {
+            handleError(error);
+        }
+        finally {
+            setLoader(false)
+            auth.logout();
+            navigate("/login")
+        }
+    }
+    const parser = new DOMParser();
+
     return (
-        <section className="flex items-center justify-center bg-neutral-200 dark:bg-neutral-700">
+        <section className="flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 min-h-screen">
             <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 sm:p-6 md:p-10">
                 <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
                     <div className="flex flex-col lg:flex-row">
@@ -205,50 +254,52 @@ export default function EmployerSignup() {
                                 </>
                             ) :
                                 <div className="">
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                        <div className="col-span-full text-gray-600">
-                                            <strong>Payment Instructions:</strong>
-                                            <ul className="list-disc pl-5 space-y-1">
-                                                <li>Agency should pay the following amount to access profile</li>
-                                                <li>Bank Details: </li>
-                                                <li>Account No: 03120376631</li>
-                                                <li>Account Title: Joe Joe</li>
-                                                <li>Bank of Kenya</li>
-                                            </ul>
-                                        </div>
+                                    {tableLoader ? <Skeleton /> :
+                                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                            <div className="col-span-full text-gray-600">
+                                                <strong>Payment Instructions:</strong>
+                                                <ul className="list-disc pl-5 space-y-1">
+                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()}</li>
+                                                    {/* <li>Bank Details: </li>
+                                                    <li>Account No: 03120376631</li>
+                                                    <li>Account Title: Joe Joe</li>
+                                                    <li>Bank of Kenya</li> */}
+                                                </ul>
+                                            </div>
 
-                                        <div className="sm:col-span-4">
-                                            <label className="block text-sm font-medium leading-6 text-gray-900">
-                                                Amount
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="amount"
-                                                value={500}
-                                                disabled
-                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                            />
-                                        </div>
+                                            <div className="sm:col-span-4">
+                                                <label className="block text-sm font-medium leading-6 text-gray-900">
+                                                    Amount
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="amount"
+                                                    value={paymentInstructions?.amount}
+                                                    disabled
+                                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                />
+                                            </div>
 
-                                        <div className="col-span-1 h-20 flex items-center justify-center">
-                                            {loader ? (
-                                                <div className="mt-5">
-                                                    <InfinitySpin height={120} width={120} color="green" />
-                                                </div>
-                                            ) : (
-                                                <div className=" mt-5 ml-2">
-                                                    <Button
-                                                        type="button"
-                                                        color="gradient"
-                                                        variant="solid"
-                                                        onClick={() => setLoader(true)}
-                                                    >
-                                                        Submit
-                                                    </Button>
-                                                </div>
-                                            )}
+                                            <div className="col-span-1 h-20 flex items-center justify-center">
+                                                {loader ? (
+                                                    <div className="mt-5">
+                                                        <InfinitySpin height={120} width={120} color="green" />
+                                                    </div>
+                                                ) : (
+                                                    <div className=" mt-5 ml-2">
+                                                        <Button
+                                                            type="button"
+                                                            color="gradient"
+                                                            variant="solid"
+                                                            onClick={() => submitPayment()}
+                                                        >
+                                                            Submit
+                                                        </Button>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             }
                         </div>

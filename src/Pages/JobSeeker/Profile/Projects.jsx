@@ -46,7 +46,6 @@ export default function Projects() {
             // }),
         }),
         onSubmit: async (values) => {
-            console.log("Form Data:", values)
             setLoading(true)
             if (updateData) {
                 try {
@@ -88,7 +87,6 @@ export default function Projects() {
             const response = await axiosInstance.get(`api/job_seeker_project?user_id=${user_id}`);
             if (response) {
                 setData(response?.data)
-                console.log(response?.data);
             }
         } catch (error) {
             handleError(error);

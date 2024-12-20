@@ -7,7 +7,7 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "sonner";
-import { RotatingLines } from "react-loader-spinner";
+import { InfinitySpin, RotatingLines } from "react-loader-spinner";
 import app_vars from "../../config";
 import { Skeleton } from "../../Components/Skeleton";
 export default function EmployerProfile() {
@@ -59,7 +59,6 @@ export default function EmployerProfile() {
             for (const key in values) {
                 formData.append(key, values[key]);
             }
-            console.log("Form data submitted: ", values);
             if (data) {
                 try {
                     const response = await axiosInstance.post(`api/employer_company_profile/update/${data?.id}`, formData);
@@ -97,6 +96,7 @@ export default function EmployerProfile() {
             const response = await axiosInstance.get(`api/employer_company_profile?user_id=${user_id}`);
             if (response) {
                 setData(response.data[0])
+                localStorage.setItem("company_id", response.data[0]?.id)
             }
         } catch (error) {
             handleError(error);

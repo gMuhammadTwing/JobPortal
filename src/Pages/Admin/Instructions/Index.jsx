@@ -1,198 +1,235 @@
-import {
-    CalendarIcon,
-    AdjustmentsVerticalIcon,
-    EyeIcon,
-    PencilIcon,
-    TrashIcon,
-    PlusCircleIcon,
-} from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import Pagination from "../../../Components/Pagination";
+import { MinusIcon, PlusIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import { DocumentIcon } from "@heroicons/react/24/outline";
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 import { Button } from "../../../Components/Button";
-import { toast, Toaster } from "sonner";
 import axiosInstance, { handleError } from "../../../axiosInstance";
-import app_vars from "../../../config";
-import DeleteModal from "../../../Components/DeleteModal";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { toast } from "sonner";
+import { InfinitySpin } from "react-loader-spinner";
 import { LoaderTable } from "../../../Components/LoaderTable";
-import { Switch } from "@headlessui/react";
+import { Skeleton } from "../../../Components/Skeleton";
 export default function Index() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isDelete, setIsDelete] = useState(false)
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
+    const [instructions, setInstructions] = useState(false);
+    const [editInstructions, setEditInstructions] = useState(false);
+    const parser = new DOMParser();
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setUpdateData(null)
+    const handleInstructions = () => {
+        setInstructions(!instructions);
+        if (!instructions) {
+            setEditInstructions(false);
+        }
     };
-
-    const [data, setData] = useState([])
-    const [updateData, setUpdateData] = useState(null);
-    const user_id = localStorage.user_id;
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(false);
     const [tableLoader, setTableLoader] = useState(false);
-    const fetchData = async () => {
+    const user_id = localStorage.user_id;
+    const [role_id, setRoleId] = useState(2);
+    const formik = useFormik({
+        initialValues: {
+            instructions: data?.data[0]?.instructions,
+            amount: data?.data[0]?.amount,
+            role_id: role_id,
+        },
+        validationSchema: Yup.object({
+            instructions: Yup.string()
+                .required("Instructions is required")
+            // .min(20, "Instructions must be at least 20 characters long"),
+        }),
+        enableReinitialize: true,
+        onSubmit: async (values) => {
+            console.log(values);
+
+            setLoading(true)
+            if (data) {
+                try {
+                    const response = await axiosInstance.post(`/api/admin_payment_instruction/update/${data?.data[0]?.id}`, values);
+                    if (response) {
+                        toast.success("Instructions saved successfully");
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("An error occurred while saving the instructions");
+                } finally {
+                    setEditInstructions(false);
+                    fetchData(2);
+                    setLoading(false)
+                    formik.resetForm();
+                }
+            }
+            else {
+                try {
+                    const response = await axiosInstance.post(`/api/admin_payment_instruction/store`, values);
+                    if (response) {
+                        toast.success("Instructions saved successfully");
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("An error occurred while saving the instructions");
+                } finally {
+                    fetchData(2);
+                    setLoading(false)
+                }
+            }
+        },
+    });
+    const fetchData = async (role_id) => {
         setTableLoader(true)
         try {
-            const response = await axiosInstance.get(`api/job_seeker_resume?user_id=${user_id}`);
+            const response = await axiosInstance.get(`/api/admin_payment_instruction?role_id=${role_id}`);
             if (response) {
-                setData(response?.data)
-                console.log(response);
+                setData(response)
+                console.log("res: ", response.data);
+
             }
         } catch (error) {
+            setEditInstructions(false);
             handleError(error);
-        } finally {
+            setLoading(false)
+        }
+        finally {
             setTableLoader(false)
         }
     }
-    const [endpoint, setEndpoint] = useState()
     useEffect(() => {
-        fetchData();
-    }, [isModalOpen, isDelete]);
-
-    const pageNumber = async (pageNum) => {
-        // Pagination logic can go here
-    };
-    const update = (item) => {
-        setUpdateData(item)
-        openModal();
-    }
-    const closeDeleteModal = () => {
-        setIsDelete(false);
-    }
-    const deleteHandler = (data) => {
-        setEndpoint(`api/job_seeker_resume/destroy/${data?.id}`)
-        setIsDelete(true)
-    }
-
-    function classNames(...classes) {
-        return classes.filter(Boolean).join(" ");
-    }
-    const handleToggle = async (item) => {
-        setTableLoader(true)
-        var json;
-        if (item.is_current === true) {
-            var json = {
-                is_current: false,
-            };
-        } else if (item.is_current === false) {
-            var json = {
-                is_current: true,
-            };
-        }
-        try {
-            const response = await axiosInstance.post(`api/job_seeker_resume/update/${item?.id}`, json);
-            if (response) {
-                toast.success("Resume Data Saved")
-            }
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setTableLoader(false)
-            fetchData();
-        }
-    };
+        fetchData(role_id);
+    }, []);
 
     return (
-        <div className="container mx-auto max-w-5xl min-h-screen">
-            {/* <AddResume isOpen={isModalOpen} onClose={closeModal} updateData={updateData} /> */}
-            <DeleteModal
-                isOpen={isDelete}
-                onClose={closeDeleteModal}
-                name="Resume"
-                endpoint={endpoint}
-            />
+        <div className="flex justify-center sm:px-0 min-h-screen">
+            <div className="p-4 w-full max-w-5xl">
+                <div className={`border rounded-full shadow-lg ${instructions ? "overflow-hidden" : ""}`}>
+                    {/* Header Section */}
+                    <div
+                        className="flex justify-between items-center p-4 border-b text-orange-600 bg-white"
+                    // onClick={handleInstructions}
+                    >
+                        <h3 className="font-bold text-xl">Instructions for Payment</h3>
+                        <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
+                            <select
+                                id="role_id"
+                                name="role_id"
+                                value={role_id}
+                                onChange={(e) => {
+                                    setRoleId(e.target.value);
+                                    fetchData(e.target.value);
+                                }}
+                                onBlur={formik.handleBlur}
+                                className="block py-1.5 px-3 border text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                            >
+                                <option value="2">Job Seeker</option>
+                                <option value="4">Employer Agency</option>
+                            </select>
+                        </button>
+                    </div>
 
-            <div className="pb-15">
-                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
-                    Manage Payment Instructions
-                </div>
-                <Toaster richColors />
-                {/* {tableLoader ? <LoaderTable /> :
-                    <>
-                        <div className="overflow-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-                            <div className="inline-block min-w-full align-middle">
-                                <div className="overflow-hidden">
-                                    <table className="min-w-full divide-y divide-gray-300">
-                                        <thead className="bg-white hidden sm:table-header-group">
-                                            <tr>
-                                                <th
-                                                    scope="col"
-                                                    className="py-3.5 pl-4 pr-3 text-left text-xl font-semibold text-gray-900 sm:pl-6"
-                                                >
-                                                    List of Employees
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                                >
-                                                </th>
-                                                <th scope="col"
-                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    {/* Card Body */}
+                    <div
+                        className={`relative bg-white transition-all duration-300 ease-in-out ${instructions ? "max-h-0 p-0" : "max-h-screen p-4"
+                            }`}
+                    >
+                        {/* Display Instructions */}
+                        {tableLoader ? (
+                            <Skeleton />
+                        ) : (
+                            <>
+                                {!editInstructions && !instructions && (
+                                    <div className="relative space-y-2">
+                                        <div className="font-semibold text-xl">Instructions and Amount</div>
+                                        <p className=" sm:text-lg pl-5">
+                                            {parser.parseFromString(data?.data[0]?.instructions || '', "text/html").body.textContent.trim()} - {data?.data[0]?.amount}
 
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                                >
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-gray-200 bg-white">
-                                            {data?.length > 0 ? (
-                                                data?.map((item, index) => (
-                                                    <tr
-                                                        key={index}
-                                                        className="flex flex-col sm:table-row sm:flex-row sm:items-center"
-                                                    >
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                            <h1 className="text-blue-600 font-semibold">
-                                                                {item?.is_current ? "Active" : "In-active"}
-                                                            </h1>
-                                                        </td>
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                           
-                                                        </td>
-                                                        <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                                            <div className="flex items-center">
-                                                                
-                                                            </div>
-                                                        </td>
-                                                        <td className="py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                                                            <div className="flex items-center gap-2">
-                                                                <EyeIcon className="w-5 h-5 text-black" />
-                                                                <PencilIcon className="w-5 h-5 text-blue-500 cursor-pointer" />
-                                                                <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" />
+                                        </p>
+                                        <button
+                                            type="button"
+                                            onClick={() => setEditInstructions(true)}
+                                            className="absolute top-0 right-4 hover:bg-gray-100 rounded-full p-2 transition"
+                                        >
+                                            <PencilIcon className="h-5 w-5 text-blue-500" />
+                                        </button>
+                                    </div>
+                                )}
 
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="5" className="text-center py-4">
-                                                        <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                            No Record Found
-                                                        </span>
-                                                    </td>
-                                                </tr>
+                                {/* Edit Instructions Form */}
+                                {editInstructions && (
+                                    <form className="" onSubmit={formik.handleSubmit}>
+                                        <div className="mb-2">
+                                            <label htmlFor="amount" className="block text-sm font-medium text-gray-900">
+                                                Amount
+                                            </label>
+                                            <input
+                                                id="amount"
+                                                name="amount"
+                                                type="amount"
+                                                value={formik.values.amount}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.amount && formik.errors.amount ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            />
+                                            {formik.touched.amount && formik.errors.amount && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.amount}</p>
                                             )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <Pagination
-                            page={pageNumber}
-                            count={Math.ceil(data?.length / 10)}
-                        />
-                    </>
-                } */}
+                                        </div>
+                                        <div className="relative">
+                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                                                Instructions
+                                            </label>
+                                            <ReactQuill
+                                                id="instructions-editor"
+                                                value={formik.values.instructions}
+                                                onChange={(value) => formik.setFieldValue("instructions", value)}
+                                                theme="snow"
+                                                style={{
+                                                    height: "150px",
+                                                }}
+                                                modules={{
+                                                    toolbar: [
+                                                        ["bold", "italic", "underline", "strike"],
+                                                        [{ header: [1, 2, 3, false] }],
+                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                        ["clean"],
+                                                    ],
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                                placeholder="Write something about yourself..."
+                                            />
+                                            {formik.touched.instructions && formik.errors.instructions && (
+                                                <p className="text-red-500 text-sm mt-1">{formik.errors.instructions}</p>
+                                            )}
+                                        </div>
+                                        {loading ? <div className="flex justify-center mr-5 mt-15"><InfinitySpin width={150} color="green" /></div> :
+                                            <div className="flex justify-center gap-4 mt-17">
+                                                <Button
+                                                    type="button"
+                                                    color="gradient"
+                                                    variant="outline"
+                                                    onClick={() => setEditInstructions(false)}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                                <Button type="submit" color="gradient" variant="solid" className="text-white">
+                                                    Save
+                                                </Button>
+                                            </div>
+                                        }
+                                    </form>
+                                )}
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
-
     );
 }

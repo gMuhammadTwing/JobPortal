@@ -7,42 +7,54 @@ import {
     DialogTitle,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { FallingLines } from "react-loader-spinner";
+import { FallingLines, InfinitySpin } from "react-loader-spinner";
 import { Button } from "../../../Components/Button";
 import ReactQuill from "react-quill";
+import { toast } from "sonner";
+import axiosInstance, { handleError } from "../../../axiosInstance";
 
-const AddBlogPost = ({ isOpen, onClose, success, error }) => {
+const AddBlogPost = ({ isOpen, onClose, data }) => {
     const formik = useFormik({
         initialValues: {
             title: "",
             content: "",
-            author: "",
+            is_published: "",
+            thumbnail: null,
         },
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
-            content: Yup.string().required("Content is required"),
-            author: Yup.string().required("Author is required"),
+            // content: Yup.string().required("Content is required"),
+            is_published: Yup.string().required("Publishing status is required"),
+            thumbnail: Yup.mixed().required("Thumbnail is required"),
         }),
         onSubmit: async (values) => {
             try {
-                console.log("Blog post submitted:", values);
-                success("Blog post added successfully");
-                onClose(false);
+                const formData = new FormData();
+                formData.append("title", values.title);
+                formData.append("content", values.content);
+                formData.append("is_published", values.is_published);
+                formData.append("thumbnail", values.thumbnail);
+
+                const response = await axiosInstance.post(`/api/blogs/store`, formData);
+                if (response) {
+                    toast.success("Blog data saved successfully")
+                    onClose(false);
+                }
             } catch (err) {
-                console.error("Error submitting form:", err);
-                error("Failed to add blog post");
+                handleError(err);
             } finally {
                 formik.resetForm();
             }
         },
     });
 
+    // Handle thumbnail file selection
+    const handleFileChange = (event) => {
+        formik.setFieldValue("thumbnail", event.currentTarget.files[0]);
+    };
+
     return (
-        <Dialog
-            open={isOpen}
-            onClose={() => onClose(false)}
-            className="relative z-10"
-        >
+        <Dialog open={isOpen} onClose={() => onClose(false)} className="relative z-10">
             <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75" />
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -56,16 +68,14 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                 <XMarkIcon aria-hidden="true" className="h-6 w-6" />
                             </button>
                         </div>
-                        <form onSubmit={formik.handleSubmit}>
-                            <DialogTitle
-                                as="h3"
-                                className="text-base font-semibold leading-6 text-gray-900"
-                            >
+                        <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
+                            <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
                                 Add Blog Post
                             </DialogTitle>
+
                             <div className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-12">
                                 {/* Title */}
-                                <div className="sm:col-span-6">
+                                <div className="sm:col-span-12">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Title
                                     </label>
@@ -82,27 +92,48 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                         </p>
                                     )}
                                 </div>
-                                {/* Author */}
-                                <div className="sm:col-span-6">
+                                {/* Thumbnail */}
+                                <div className="sm:col-span-6 mt-4">
                                     <label className="block text-sm font-medium text-gray-900">
-                                        Author
+                                        Thumbnail Image
                                     </label>
                                     <input
-                                        type="text"
-                                        name="author"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.author}
+                                        type="file"
+                                        name="thumbnail"
+                                        onChange={handleFileChange}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.author && (
+                                    {formik.errors.thumbnail && (
                                         <p className="mt-2 text-sm text-red-600">
-                                            {formik.errors.author}
+                                            {formik.errors.thumbnail}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Is Published */}
+                                <div className="sm:col-span-6 mt-4">
+                                    <label className="block text-sm font-medium text-gray-900">
+                                        Publish Status
+                                    </label>
+                                    <select
+                                        name="is_published"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.is_published}
+                                        className="block py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    >
+                                        <option value="">Select</option>
+                                        <option value={0}>No</option>
+                                        <option value={1}>Yes</option>
+                                    </select>
+                                    {formik.errors.is_published && (
+                                        <p className="mt-2 text-sm text-red-600">
+                                            {formik.errors.is_published}
                                         </p>
                                     )}
                                 </div>
 
                                 {/* Content */}
-                                <div className="sm:col-span-full">
+                                <div className="sm:col-span-12">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Content
                                     </label>
@@ -110,10 +141,8 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                         id="content"
                                         theme="snow"
                                         value={formik.values.content}
-                                        onChange={formik.handleChange}
-                                        style={{
-                                            height: "150px",
-                                        }}
+                                        onChange={(value) => formik.setFieldValue("content", value)}
+                                        style={{ height: "150px" }}
                                         modules={{
                                             toolbar: [
                                                 ["bold", "italic", "underline", "strike"],
@@ -122,24 +151,9 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                                 ["clean"],
                                             ],
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write something"
+                                        formats={["header", "bold", "italic", "underline", "strike", "list", "bullet"]}
+                                        placeholder="Write something..."
                                     />
-                                    {/* <textarea
-                                        name="content"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.content}
-                                        rows="4"
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    /> */}
                                     {formik.errors.content && (
                                         <p className="mt-2 text-sm text-red-600">
                                             {formik.errors.content}
@@ -147,9 +161,10 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                     )}
                                 </div>
                             </div>
-                            <div className="mt-15 sm:mt-14 sm:flex sm:flex-row-reverse">
+
+                            <div className="mt-15 sm:flex sm:flex-row-reverse">
                                 {formik.isSubmitting ? (
-                                    <FallingLines height={40} width={40} color="purple" />
+                                    <InfinitySpin height={100} width={100} color="green" />
                                 ) : (
                                     <Button type="submit" color="gradient" variant="solid">
                                         Save
@@ -160,7 +175,7 @@ const AddBlogPost = ({ isOpen, onClose, success, error }) => {
                                     onClick={() => onClose(false)}
                                     color="gradient"
                                     variant="outline"
-                                    className="mr-1"
+                                    className="mr-2"
                                 >
                                     Cancel
                                 </Button>

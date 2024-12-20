@@ -70,11 +70,10 @@ function classNames(...classes) {
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const handleCurrent = (item) => {
-    console.log(item);
+    // console.log(item);
 
   }
   const location = useLocation();
-  console.log(location.pathname)
   return (
     <>
       <div>
