@@ -24,6 +24,7 @@ const navigation = [
   //     { name: "Ongoing Projects", href: '' },
   //   ]
   // },
+  { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
   { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
   // { name: 'Reports', href: '#', current: false },
   { name: 'Employer', href: 'employer/profile', single: 'employer', current: false },

@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 
 const employerPermission = {
-  "/employer/manage-jobs": "view_employer_jobs",
+  "/employer/job_management": "view_employer_jobs",
   "/employer/profile": "view_employer_profile",
 };
 
@@ -15,11 +15,12 @@ const JobSeekerPermission = {
 
 const adminPermission = {
   "/admin/employees": "view_employees_profile",
-  "/admin/jobseekers": "view_jobseekers_profile",
+  "/admin/job_seekers": "view_jobseekers_profile",
   "/admin/postblog": "manage_blogs",
   "/admin/instructions": "manage_instructions",
   "/admin/shortlisting": "manage_shortlisting",
   "/admin/payments": "manage_payments",
+  "/admin/contacts": "view_contacts",
 }
 
 const ProtectedRoutes = ({ children }) => {

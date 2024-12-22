@@ -34,74 +34,77 @@ export default function JobsApplied() {
     };
 
     return (
-        <div className=" mx-auto max-w-5xl h-screen">
-            <div className="pb-15">
-                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+        <div className="mx-auto max-w-5xl h-screen p-4">
+            <div className="pb-8">
+                <div className="text-center pb-6 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
                     My Job Applications
                 </div>
-                {tableLoader ? <LoaderTable /> :
+
+                {tableLoader ? (
+                    <LoaderTable />
+                ) : (
                     <>
                         <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-                            <div className="inline-block min-w-full align-middle">
-                                <div className="overflow-hidden">
-                                    <table className="min-w-full divide-y divide-gray-300">
-                                        <tbody className="divide-y divide-gray-200 bg-white">
-                                            {data?.data?.length > 0 ? (
-                                                data?.data?.map((job, index) => (
-                                                    <tr
-                                                        key={index}
-                                                        className="flex flex-col sm:table-row sm:flex-row sm:items-center"
-                                                    >
-                                                        <td className="py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                                                            <h1 className="text-blue-600 font-semibold text-[1.2rem]">
-                                                                {job?.job_id?.job_title}
-                                                            </h1>
-                                                            <div className="mt-1">
-                                                                <span>{job?.job_id?.company_id?.company_name}</span>,{" "}
-                                                                <span>{job?.job_id?.location}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="px-3 py-4 text-sm text-gray-400 flex mt-2 gap-x-2">
-                                                            <div className="flex items-center">
-                                                                <CalendarIcon className="w-5 h-5 text-gray-400" />
-                                                                {new Date(job?.created_at).toLocaleDateString("en-US", {
-                                                                    year: "numeric",
-                                                                    month: "short",
-                                                                    day: "2-digit",
-                                                                })}
-                                                            </div>
-                                                        </td>
-                                                        <td className="px-3 py-4 text-sm text-gray-400 flex mt-2 gap-x-2">
-                                                            <div className="flex items-center">
-                                                                <AdjustmentsVerticalIcon className="w-5 h-5 text-gray-400" />
-                                                                {job?.job_status_id?.job_status}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="5" className="text-center py-4">
-                                                        <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                            No Record Found
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <table className="min-w-full divide-y divide-gray-300">
+                                <tbody className="divide-y divide-gray-200 bg-white">
+                                    {data?.data?.length > 0 ? (
+                                        data?.data?.map((job, index) => (
+                                            <tr
+                                                key={index}
+                                                className="flex flex-col sm:table-row sm:flex-row sm:items-center"
+                                            >
+                                                {/* Job Title and Company Info */}
+                                                <td className="py-4 px-4 text-sm text-gray-500 sm:pl-6">
+                                                    <h1 className="text-blue-600 font-semibold text-lg">
+                                                        {job?.job_id?.job_title}
+                                                    </h1>
+                                                    <div className="mt-1">
+                                                        <span>{job?.job_id?.company_id?.company_name}</span>,{" "}
+                                                        <span>{job?.job_id?.location}</span>
+                                                    </div>
+                                                </td>
+
+                                                {/* Created Date */}
+                                                <td className="px-4 py-4 text-sm text-gray-400 flex gap-x-2 items-center mt-2 sm:mt-0">
+                                                    <CalendarIcon className="w-5 h-5 text-gray-400" />
+                                                    <span>
+                                                        {new Date(job?.created_at).toLocaleDateString("en-US", {
+                                                            year: "numeric",
+                                                            month: "short",
+                                                            day: "2-digit",
+                                                        })}
+                                                    </span>
+                                                </td>
+
+                                                {/* Job Status */}
+                                                <td className="px-4 py-4 text-sm text-gray-400 flex gap-x-2 items-center mt-2 sm:mt-0">
+                                                    <AdjustmentsVerticalIcon className="w-5 h-5 text-gray-400" />
+                                                    <span>{job?.job_status_id?.job_status}</span>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="3" className="text-center py-4">
+                                                <span className="inline-flex text-lg items-center rounded-md bg-blue-50 px-4 py-2 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                                    No Record Found
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
+                        {/* Pagination Component */}
+                        <div className="mt-2">
+                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                        </div>
                     </>
-                }
+                )}
             </div>
         </div>
+
 
     );
 }

@@ -1,13 +1,17 @@
 import {
     BriefcaseIcon,
+    ChatBubbleLeftRightIcon,
     ClipboardDocumentCheckIcon,
+    ClipboardDocumentListIcon,
     CogIcon,
     CreditCardIcon,
+    CurrencyDollarIcon,
     DocumentTextIcon,
     FlagIcon,
     HomeModernIcon,
     NewspaperIcon,
     UserCircleIcon,
+    UsersIcon,
     ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -25,11 +29,11 @@ export default function DashboardMain() {
         { name: "Search Jobs", href: "view-jobs", icon: ViewfinderCircleIcon, current: false },
         { name: "Applied Jobs", href: "applied-jobs", single: "applied-jobs", icon: BriefcaseIcon, current: false },
         // { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
-        { name: "Coursework", href: "coursework", icon: HomeModernIcon, current: false },
+        { name: "Coursework", href: "coursework", icon: ClipboardDocumentListIcon, current: false },
     ]
     const navigation = [
         { name: "Employer Profile", href: "profile", icon: UserCircleIcon, current: true },
-        { name: "Employer Job Management", href: "manage-jobs", icon: BriefcaseIcon, current: false },
+        { name: "Employer Job Management", href: "job_management", single: 'job_management', icon: BriefcaseIcon, current: false },
         // { name: "Employer Payment", href: "employer-payment", icon: CreditCardIcon, current: false },
         // { name: "Shortlisting Requests", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         // { name: "Blog/Comments", href: "blog", icon: NewspaperIcon, current: false },
@@ -39,11 +43,12 @@ export default function DashboardMain() {
     ];
     const adminNav = [
         { name: "Employees", href: "employees", icon: UserCircleIcon, current: true },
-        { name: "Job Seekers", href: "jobseekers", icon: UserCircleIcon, current: true },
-        { name: "Payment", href: "payments", icon: NewspaperIcon, current: false },
-        { name: "Instructions for payment", href: "instructions", icon: NewspaperIcon, current: false },
-        { name: "Jobs & Participants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
+        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single:'admin_job_seekers', current: true },
+        { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
+        { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
+        { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Blogs", href: "postblog", icon: NewspaperIcon, current: false },
+        { name: "Contact Us", href: "contacts", single: 'contacts', icon: ChatBubbleLeftRightIcon, current: false },
     ]
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");

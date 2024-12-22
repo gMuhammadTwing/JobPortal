@@ -13,14 +13,15 @@ import ReactQuill from "react-quill";
 import { toast } from "sonner";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 
-const AddBlogPost = ({ isOpen, onClose, data }) => {
+const AddBlogPost = ({ isOpen, onClose, data, view }) => {
     const formik = useFormik({
         initialValues: {
-            title: "",
-            content: "",
-            is_published: "",
-            thumbnail: null,
+            title: data?.title || "",
+            content: data?.content || "",
+            is_published: data?.is_published ? 1 : 0,
+            thumbnail: data?.thumbnail || null,
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             // content: Yup.string().required("Content is required"),
@@ -28,22 +29,43 @@ const AddBlogPost = ({ isOpen, onClose, data }) => {
             thumbnail: Yup.mixed().required("Thumbnail is required"),
         }),
         onSubmit: async (values) => {
-            try {
-                const formData = new FormData();
-                formData.append("title", values.title);
-                formData.append("content", values.content);
-                formData.append("is_published", values.is_published);
-                formData.append("thumbnail", values.thumbnail);
+            if (data) {
+                try {
+                    const formData = new FormData();
+                    formData.append("title", values.title);
+                    formData.append("content", values.content);
+                    formData.append("is_published", values.is_published);
+                    formData.append("thumbnail", values.thumbnail);
 
-                const response = await axiosInstance.post(`/api/blogs/store`, formData);
-                if (response) {
-                    toast.success("Blog data saved successfully")
-                    onClose(false);
+                    const response = await axiosInstance.post(`/api/blogs/update/${data?.id}`, formData);
+                    if (response) {
+                        toast.success("Blog data saved successfully")
+                        onClose(false);
+                    }
+                } catch (err) {
+                    handleError(err);
+                } finally {
+                    formik.resetForm();
                 }
-            } catch (err) {
-                handleError(err);
-            } finally {
-                formik.resetForm();
+            }
+            else {
+                try {
+                    const formData = new FormData();
+                    formData.append("title", values.title);
+                    formData.append("content", values.content);
+                    formData.append("is_published", values.is_published);
+                    formData.append("thumbnail", values.thumbnail);
+
+                    const response = await axiosInstance.post(`/api/blogs/store`, formData);
+                    if (response) {
+                        toast.success("Blog data saved successfully")
+                        onClose(false);
+                    }
+                } catch (err) {
+                    handleError(err);
+                } finally {
+                    formik.resetForm();
+                }
             }
         },
     });
@@ -70,7 +92,15 @@ const AddBlogPost = ({ isOpen, onClose, data }) => {
                         </div>
                         <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
                             <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                Add Blog Post
+                                {view ? (
+                                    <div>View Blog Details</div>
+                                ) :
+                                    (
+                                        data ? (
+                                            <div>Update Blog Details</div>
+                                        ) :
+                                            (<div> Add Blog</div>)
+                                    )}
                             </DialogTitle>
 
                             <div className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-12">
@@ -84,6 +114,7 @@ const AddBlogPost = ({ isOpen, onClose, data }) => {
                                         name="title"
                                         onChange={formik.handleChange}
                                         value={formik.values.title}
+                                        disabled={view}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
                                     {formik.errors.title && (
@@ -101,6 +132,7 @@ const AddBlogPost = ({ isOpen, onClose, data }) => {
                                         type="file"
                                         name="thumbnail"
                                         onChange={handleFileChange}
+                                        disabled={view}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
                                     {formik.errors.thumbnail && (
@@ -119,6 +151,7 @@ const AddBlogPost = ({ isOpen, onClose, data }) => {
                                         name="is_published"
                                         onChange={formik.handleChange}
                                         value={formik.values.is_published}
+                                        disabled={view}
                                         className="block py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     >
                                         <option value="">Select</option>
@@ -143,6 +176,7 @@ const AddBlogPost = ({ isOpen, onClose, data }) => {
                                         value={formik.values.content}
                                         onChange={(value) => formik.setFieldValue("content", value)}
                                         style={{ height: "150px" }}
+                                        readOnly={view}
                                         modules={{
                                             toolbar: [
                                                 ["bold", "italic", "underline", "strike"],

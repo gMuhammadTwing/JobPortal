@@ -14,7 +14,7 @@ import axiosInstance, { handleError } from "../../../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { LoaderTable } from "../../../Components/LoaderTable";
 
-export default function Participants({ job_id }) {
+export default function Applicants({ job_id }) {
     const [data, setData] = useState();
     const [tableLoader, setTableLoader] = useState(false);
     const fetchData = async (pageNum) => {
@@ -56,7 +56,7 @@ export default function Participants({ job_id }) {
                     Back
                 </button>
                 <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
-                    Participants
+                    Applicants
                 </div>
                 <div className="mb-2">
                 </div>

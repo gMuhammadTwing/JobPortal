@@ -11,8 +11,8 @@ import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 import Pagination from "../../../Components/Pagination";
 import axiosInstance, { handleError } from "../../../axiosInstance";
-import Participants from "./Participants";
 import { LoaderTable } from "../../../Components/LoaderTable";
+import Applicants from "./Applicants";
 
 export default function Index() {
     const [shortlisting, setShortlisting] = useState([
@@ -102,7 +102,7 @@ export default function Index() {
                                                 Location
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                                Status
+                                                Job Status
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                                 Company Name
@@ -129,14 +129,12 @@ export default function Index() {
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         <span
-                                                            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset ${item?.job_status?.job_status === "Submitted"
+                                                            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset ${item?.job_status?.id == 1
                                                                 ? "bg-green-100 text-green-600 ring-green-300"
-                                                                : item?.job_status?.job_status === "Shortlisted"
-                                                                    ? "bg-blue-100 text-blue-600 ring-blue-300"
-                                                                    : "bg-red-100 text-red-600 ring-red-300"
+                                                                : "bg-red-100 text-red-600 ring-red-300"
                                                                 }`}
                                                         >
-                                                            {item?.job_status?.job_status}
+                                                            {item?.job_status?.id == 1 ? "Open" : "Closed"}
                                                         </span>
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
@@ -176,7 +174,7 @@ export default function Index() {
                         </>}
                 </div>
             ) : (
-                <Participants job_id={job_id} />
+                <Applicants job_id={job_id} />
             )}
         </div>
     );
