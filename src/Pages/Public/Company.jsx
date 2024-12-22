@@ -1,7 +1,15 @@
+import { useEffect, useState } from 'react';
 import '../../App.css'
+import bannerImage from './../../assets/banner3.png'
+import axiosInstance, { handleError } from '../../axiosInstance';
 export default function Company() {
     return (
-        <div className="background p-2 sm:p-8 md:p-16 lg:p-20">
+        <div className="p-2 sm:p-8 md:p-16 lg:p-20"
+            style={{
+                backgroundImage: `url(${bannerImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
             <div className="mx-auto p-3 grid max-w-2xl grid-cols-1 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-5">
                 <div className="col-span-2 items-center rounded-lg border border-gray-300 bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
                     <div className="text-orange-600 font-medium">

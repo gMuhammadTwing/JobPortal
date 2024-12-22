@@ -1,12 +1,10 @@
 import { ArrowDownCircleIcon, ArrowDownOnSquareIcon, ArrowLeftCircleIcon, ArrowRightCircleIcon, EllipsisVerticalIcon, EnvelopeIcon, MagnifyingGlassCircleIcon, PhoneIcon, PlusCircleIcon, ViewColumnsIcon } from '@heroicons/react/24/outline';
 import { Button } from '../../Components/Button';
 import { toast, Toaster } from 'sonner';
-import AddJob from './AddJob';
 import { useEffect, useState } from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { DialogTitle } from '@headlessui/react';
-import { FallingLines, InfinitySpin } from 'react-loader-spinner';
+import { InfinitySpin } from 'react-loader-spinner';
 import ReactQuill from 'react-quill';
 import axiosInstance, { handleError } from '../../axiosInstance';
 import { LoaderTable } from '../../Components/LoaderTable';
@@ -26,14 +24,14 @@ export default function ManageJobs() {
   const formik = useFormik({
     initialValues: {
       job_title: updateData?.job_title || "",
-      job_type: updateData?.job_type || "",
+      job_type: updateData?.job_type?.id || "",
       job_description: updateData?.job_description || "",
       job_qualification: updateData?.job_qualification || "",
       job_responsibilities: updateData?.job_responsibilities || "",
       expected_salary: updateData?.expected_salary || "",
       location: updateData?.location || "",
-      job_status: updateData?.job_status || "",
-      veritas_to_short_list: updateData?.veritas_to_short_list || "",
+      job_status: updateData?.job_status?.id,
+      veritas_to_short_list: updateData?.veritas_to_short_list,
       job_instructions_to_apply: updateData?.job_instructions_to_apply || "",
       user_id: user_id,
       company_id: company_id,
@@ -85,17 +83,20 @@ export default function ManageJobs() {
   });
 
   const fetchData = async (page) => {
-    setTableLoader(true);
-    try {
-      const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id}&company_id=${company_id}&page=${page}`);
-      if (response) {
-        setData(response.data)
-        console.log("res: ", response);
+    if (company_id != "undefined") {
+      setTableLoader(true);
+      try {
+        const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id}&company_id=${company_id}&page=${page}`);
+        if (response) {
+          setData(response.data)
+          console.log(response.data);
+
+        }
+      } catch (error) {
+        handleError(error);
+      } finally {
+        setTableLoader(false)
       }
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setTableLoader(false)
     }
   }
   useEffect(() => {
@@ -143,87 +144,88 @@ export default function ManageJobs() {
               }
               {/* <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p> */}
             </div>
-            {tableLoader ? <LoaderTable /> :
-              <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1">
-                {data?.data?.length > 0 ? (
-                  data?.data?.map((item) => (
-                    <>
-                      <article className="border rounded-lg p-4 shadow bg-white">
-                        {/* Post Date and Category */}
-                        <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
-                          <span
-                            className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status?.id === 1
-                              ? "bg-green-100 text-green-600 hover:bg-green-100"
-                              : "bg-red-100 text-red-600 hover:bg-red-100"
-                              }`}
-                          >
-                            {item?.job_status?.id === 1 ? "Active" : "Closed"}
-                          </span>
-
-                          <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
-                          <div className="flex flex-wrap sm:flex-row gap-2">
-                            <button onClick={() => viewDetails(item)} className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
-                              View Details
-                            </button>
-                            <button
-                              onClick={() => update(item)}
-                              className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"
+            {company_id != "undefined" && (
+              tableLoader ? <LoaderTable /> :
+                <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1">
+                  {data?.data?.length > 0 ? (
+                    data?.data?.map((item) => (
+                      <>
+                        <article className="border rounded-lg p-4 shadow bg-white">
+                          {/* Post Date and Category */}
+                          <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
+                            <span
+                              className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status?.id === 1
+                                ? "bg-green-100 text-green-600 hover:bg-green-100"
+                                : "bg-red-100 text-red-600 hover:bg-red-100"
+                                }`}
                             >
-                              Update Details
-                            </button>
-                          </div>
-                        </div>
+                              {item?.job_status?.id === 1 ? "Open" : "Closed"}
+                            </span>
 
-                        {/* Title and Description */}
-                        <div className="mt-3 border-t p-2">
-                          {/* <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3> */}
-                          <p className='mt-2'>Description</p>
-                          <p className="mt-1 text-sm text-gray-600 line-clamp-3">
-                            {parser.parseFromString(item?.job_description, "text/html").body.textContent.trim()}
-                          </p>
-                        </div>
+                            <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
+                            <div className="flex flex-wrap sm:flex-row gap-2">
+                              <button onClick={() => viewDetails(item)} className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                                View Details
+                              </button>
+                              <button
+                                onClick={() => update(item)}
+                                className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"
+                              >
+                                Update Details
+                              </button>
+                            </div>
+                          </div>
 
-                        {/* Additional Info */}
-                        <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm border-t p-2">
-                          <div className="text-gray-600">
-                            <span>Job Type</span>
-                            <div className="text-black font-semibold">{item?.job_type?.job_family}</div>
+                          {/* Title and Description */}
+                          <div className="mt-3 border-t p-2">
+                            {/* <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3> */}
+                            <p className='mt-2'>Description</p>
+                            <p className="mt-1 text-sm text-gray-600 line-clamp-3">
+                              {parser.parseFromString(item?.job_description, "text/html").body.textContent.trim()}
+                            </p>
                           </div>
-                          <div className="text-gray-600">
-                            <span>Salary</span>
-                            <div className="text-black font-semibold">{item?.expected_salary}</div>
-                          </div>
-                          <div className="text-gray-600">
-                            <span>Location</span>
-                            <div className="text-black font-semibold">{item?.location}</div>
-                          </div>
-                          <div className="text-gray-600">
-                            <span>Expiry</span>
-                            <div className="text-black font-semibold">4 Days Left</div>
-                          </div>
-                        </div>
-                      </article>
-                    </>
-                  ))
-                ) : (
-                  <table className="min-w-full divide-y divide-gray-300 border bg-white">
-                    <tr>
-                      <td colSpan="5" className="text-center py-4">
-                        <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          No Record Found
-                        </span>
-                      </td>
-                    </tr>
-                  </table>
 
-                )}
-                <Pagination
-                  page={pageNumber}
-                  total={data?.total}
-                  page_size={data?.per_page}
-                />
-              </div>
-            }
+                          {/* Additional Info */}
+                          <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm border-t p-2">
+                            <div className="text-gray-600">
+                              <span>Job Type</span>
+                              <div className="text-black font-semibold">{item?.job_type?.job_family}</div>
+                            </div>
+                            <div className="text-gray-600">
+                              <span>Salary</span>
+                              <div className="text-black font-semibold">{item?.expected_salary}</div>
+                            </div>
+                            <div className="text-gray-600">
+                              <span>Location</span>
+                              <div className="text-black font-semibold">{item?.location}</div>
+                            </div>
+                            {/* <div className="text-gray-600">
+                              <span>Expiry</span>
+                              <div className="text-black font-semibold">4 Days Left</div>
+                            </div> */}
+                          </div>
+                        </article>
+                      </>
+                    ))
+                  ) : (
+                    <table className="min-w-full divide-y divide-gray-300 border bg-white">
+                      <tr>
+                        <td colSpan="5" className="text-center py-4">
+                          <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                            No Record Found
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+
+                  )}
+                  <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                  />
+                </div>
+            )}
           </div>
         )}
 
@@ -342,13 +344,8 @@ export default function ManageJobs() {
                   className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                 >
                   <option value="">Select</option>
-                  {dropDownValues?.job_status?.map((item) => {
-                    return (
-                      <option key={item.id} value={item?.id}>
-                        {item?.job_status}
-                      </option>
-                    );
-                  })}
+                  <option value={1}>Open</option>
+                  <option value={0}>Closed</option>
                 </select>
                 {formik.errors.job_status && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.job_status}</p>
@@ -369,8 +366,8 @@ export default function ManageJobs() {
                   className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                 >
                   <option value="">Select</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
+                  <option value={1}>Yes</option>
+                  <option value={0}>No</option>
                 </select>
                 {formik.errors.veritas_to_short_list && (
                   <p className="mt-2 text-sm text-red-600">

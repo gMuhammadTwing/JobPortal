@@ -191,7 +191,7 @@ export default function ViewJobs() {
                                         <>
                                             <article className="border rounded-lg p-4 shadow bg-white">
                                                 <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
-                                                    <span
+                                                    {/* <span
                                                         className={`relative z-10 rounded-full px-3 py-1.5 font-medium ${item?.job_status?.id === 1
                                                             ? "bg-green-100 text-green-600 hover:bg-green-200"
                                                             : item?.job_status?.id === 2
@@ -202,8 +202,8 @@ export default function ViewJobs() {
                                                             }`}
                                                     >
                                                         {item?.job_status?.job_status}
-                                                    </span>
-                                                    <div className="flex flex-wrap sm:flex-row gap-2">
+                                                    </span> */}
+                                                    {/* <div className="flex flex-wrap sm:flex-row gap-2">
                                                         <button onClick={() => {
                                                             setViewDetails(true);
                                                             setViewData(item)
@@ -226,10 +226,40 @@ export default function ViewJobs() {
                                                             </button>
                                                         )}
 
-                                                    </div>
+                                                    </div> */}
                                                 </div>
-                                                <div className="">
-                                                    <h3 className="text-xl font-semibold text-gray-900 items-start text-start">Job Title: {item?.job_title} ({item?.expected_salary})</h3>
+                                                <div className="p-3">
+                                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                        <h3 className="text-xl font-semibold text-gray-900 sm:mb-0">
+                                                            Job Title: {item?.job_title} ({item?.expected_salary})
+                                                        </h3>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setViewDetails(true);
+                                                                    setViewData(item);
+                                                                }}
+                                                                className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                View Details
+                                                            </button>
+                                                            {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
+                                                                <button className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                                                                    View Job Instruction to Apply
+                                                                </button>
+                                                            )}
+                                                            {item?.veritas_to_short_list === 1 && (
+                                                                <button
+                                                                    onClick={() => applyHandler(item)}
+                                                                    className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                >
+                                                                    Apply for Job
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* <h3 className="text-xl font-semibold text-gray-900 items-start text-start">Job Title: {item?.job_title} ({item?.expected_salary})</h3> */}
                                                     <p className=''> {item?.company_id?.company_name} , {item?.location}</p>
                                                     <p className='mt-2'>Description: </p>
                                                     <p className="mt-1 text-sm text-gray-600 line-clamp-3">

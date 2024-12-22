@@ -30,7 +30,6 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
 
         }),
         onSubmit: async (values) => {
-            console.log("values: ", values);
             setLoader(true);
             try {
                 const response = await axiosInstance.post(`api/job_application/store`, values);

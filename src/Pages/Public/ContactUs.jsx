@@ -1,8 +1,47 @@
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { Button } from "../../Components/Button";
-
+import ReactQuill from "react-quill";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axiosInstance, { handleError } from "../../axiosInstance";
+import { toast } from "sonner";
 export default function ContactUs() {
+    const formik = useFormik({
+        initialValues: {
+            full_name: "",
+            phone: "",
+            email: "",
+            message: "",
+        },
+        validationSchema: Yup.object({
+            full_name: Yup.string()
+                .required("Full name is required")
+                .min(3, "Full name must be at least 3 characters"),
+            phone: Yup.string()
+                .required("Phone is required")
+                .matches(/^\d+$/, "Phone must be numeric"),
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Email is required"),
+            // message: Yup.string().required("Message is required"),
+        }),
+        onSubmit: async (values) => {
+            console.log("Form submitted:", values);
+            try {
+                const response = await axiosInstance.post(`/api/contact_us/store`, values);
+                if (response) {
+                    toast.success("Message Sent Successfully")
+
+                }
+            } catch (error) {
+                handleError(error);
+            } finally {
+                formik.resetForm();
+            }
+        },
+    });
+
     return (
         <div className="bg-white min-h-screen">
             {/* Header Section */}
@@ -67,22 +106,27 @@ export default function ContactUs() {
                         />
                     </div>
                     <div className="border shadow-1 rounded-lg p-4">
-                        <form className="">
-                            {/* <p className="mb-2 text-center lg:text-left">Prefer doing things in person? We don’t but we have to list our addresses here for legal reasons.</p> */}
-
-                            {/* Full Name input */}
+                        <form className="" onSubmit={formik.handleSubmit}>
+                            {/* Full Name */}
                             <div className="mb-2">
-                                <label htmlFor="fullName" className="block text-sm font-medium text-gray-900">
+                                <label htmlFor="full_name" className="block text-sm font-medium text-gray-900">
                                     Full Name
                                 </label>
                                 <input
-                                    id="fullName"
-                                    name="fullName"
+                                    id="full_name"
+                                    name="full_name"
                                     type="text"
-                                    required
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    value={formik.values.full_name}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                 />
+                                {formik.errors.full_name && formik.touched.full_name && (
+                                    <p className="text-sm text-red-500">{formik.errors.full_name}</p>
+                                )}
                             </div>
+
+                            {/* Phone */}
                             <div className="mb-2">
                                 <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
                                     Phone
@@ -91,12 +135,17 @@ export default function ContactUs() {
                                     id="phone"
                                     name="phone"
                                     type="text"
-                                    required
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    value={formik.values.phone}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                 />
+                                {formik.errors.phone && formik.touched.phone && (
+                                    <p className="text-sm text-red-500">{formik.errors.phone}</p>
+                                )}
                             </div>
 
-                            {/* Email input */}
+                            {/* Email */}
                             <div className="mb-2">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-900">
                                     Email address
@@ -105,24 +154,56 @@ export default function ContactUs() {
                                     id="email"
                                     name="email"
                                     type="email"
-                                    required
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    value={formik.values.email}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                 />
+                                {formik.errors.email && formik.touched.email && (
+                                    <p className="text-sm text-red-500">{formik.errors.email}</p>
+                                )}
                             </div>
+
+                            {/* Message */}
                             <div className="mb-2">
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-900">
                                     Message
                                 </label>
-                                <input
+                                <ReactQuill
                                     id="message"
-                                    name="message"
-                                    type="message"
-                                    required
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                    theme="snow"
+                                    value={formik.values.message}
+                                    onChange={(value) => formik.setFieldValue("message", value)}
+                                    onBlur={() => formik.setFieldTouched("message", true)}
+                                    style={{
+                                        height: "100px",
+                                    }}
+                                    modules={{
+                                        toolbar: [
+                                            ["bold", "italic", "underline", "strike"],
+                                            [{ header: [1, 2, 3, false] }],
+                                            [{ list: "ordered" }, { list: "bullet" }],
+                                            ["clean"],
+                                        ],
+                                    }}
+                                    formats={[
+                                        "header",
+                                        "bold",
+                                        "italic",
+                                        "underline",
+                                        "strike",
+                                        "list",
+                                        "bullet",
+                                    ]}
+                                    placeholder="Write any message"
                                 />
+                                {/* {formik.errors.message && formik.touched.message && (
+                                    <p className="text-sm text-red-500">{formik.errors.message}</p>
+                                )} */}
                             </div>
 
-                            <div className="text-center">
+                            {/* Submit Button */}
+                            <div className="text-center mt-12">
                                 <Button
                                     type="submit"
                                     color="gradient"

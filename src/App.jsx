@@ -30,6 +30,11 @@ import JobSeekersIndex from './Pages/Admin/JobSeekers/Index';
 import BlogIndex from './Pages/Admin/Blog/Index';
 import ShortlistingIndex from './Pages/Admin/Shortlisting/Index';
 import InstructionsIndex from './Pages/Admin/Instructions/Index';
+import PaymentIndex from './Pages/Admin/Payment/PaymentIndex';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import BlogDetails from './Pages/Public/BlogDetails';
+import Jobs from './Pages/Public/Jobs';
+import AdminContactUs from './Pages/Admin/Contacts/Index';
 function App() {
   return (
     <DropdownProvider>
@@ -43,7 +48,9 @@ function App() {
             <Route path="teams" element={<Teams />} />
             <Route path="projects" element={<Projects />} />
             <Route path="contact-us" element={<ContactUs />} />
-            <Route path="blogs" element={<Blogs />} />
+            <Route path="jobs" element={<Jobs />} />
+            <Route path="blogs_comments" element={<Blogs />} />
+            <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="create-account" element={<CreateAccount />} />
             <Route path="create-account/signup-jobseeker" element={<JobSeekerSignup />} />
@@ -62,16 +69,18 @@ function App() {
             {/* Employer Routes */}
             <Route path="employer" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="profile" element={<ProtectedRoutes><EmployerProfile /></ProtectedRoutes>} />
-              <Route path="manage-jobs" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} />
+              <Route path="job_management" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} />
             </Route>
 
             {/* Admin Routes */}
             <Route path="admin" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="employees" element={<ProtectedRoutes><EmployeesIndex /></ProtectedRoutes>} />
-              <Route path="jobseekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
-              <Route path="blogs" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
+              <Route path="job_seekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
+              <Route path="postblog" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
               <Route path="shortlisting" element={<ProtectedRoutes><ShortlistingIndex /></ProtectedRoutes>} />
               <Route path="instructions" element={<ProtectedRoutes><InstructionsIndex /></ProtectedRoutes>} />
+              <Route path="payments" element={<ProtectedRoutes><PaymentIndex /></ProtectedRoutes>} />
+              <Route path="contacts" element={<ProtectedRoutes><AdminContactUs /></ProtectedRoutes>} />
             </Route>
 
             {/* No Permission Route */}

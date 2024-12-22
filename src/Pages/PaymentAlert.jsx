@@ -1,73 +1,115 @@
-import { Link } from "react-router-dom";
-import { TEInput, TERipple } from "tw-elements-react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Components/Button";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import axiosInstance, { handleError } from "../axiosInstance";
 import { toast } from "sonner";
 import { InfinitySpin } from "react-loader-spinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../Components/Skeleton";
 
 export default function PaymentAlert() {
     const [registered, setRegistered] = useState(false);
     const [loader, setLoader] = useState(false);
+    const [tableLoader, setTableLoader] = useState(false);
+    const [paymentInstructions, setPaymentInstructions] = useState();
+    const parser = new DOMParser();
+    const navigate = useNavigate();
+    const role_id = localStorage?.role_id;
+    const user_id = localStorage?.user_id;
+
+    const getPaymentInstructions = async () => {
+        setTableLoader(true);
+        try {
+            const response = await axiosInstance.get(`api/admin_payment_instruction?role_id=${role_id}`);
+            if (response) {
+                setPaymentInstructions(response?.data[0]);
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false);
+        }
+    };
+
+    const submitPayment = async () => {
+        setLoader(true);
+        const json = {
+            user_id: user_id,
+            amount: paymentInstructions?.amount,
+        };
+        try {
+            const response = await axiosInstance.post(`api/user_payment_history/store`, json);
+            if (response) {
+                toast.success("Payment submitted successfully");
+                localStorage.setItem("payment", false);
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setLoader(false);
+            navigate("/home");
+        }
+    };
+
+    useEffect(() => {
+        getPaymentInstructions();
+    }, []);
+
+    const handleBackHome = () => {
+        navigate("/home");
+    };
+
     return (
-        <div className="flex items-center justify-center dark:bg-neutral-700">
-            <div className="w-full sm:max-w-md mx-auto p-4 sm:p-6 md:p-10">
-                <div className="rounded-lg bg-white border dark:bg-neutral-800 shadow-lg">
-                    <div className="p-5">
-                        <div className="text-center">
-                            <h4 className="mb-4 text-xl font-semibold">
-                                Payment Instructions
-                            </h4>
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-100 via-red-100 to-orange-200 p-4">
+            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 w-full max-w-xl">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">Payment</h1>
+
+                {tableLoader ? (
+                    <Skeleton />
+                ) : (
+                    <div className="grid grid-cols-1 gap-y-6">
+                        <div className="text-sm font-medium text-gray-900 ">
+                            <ul className="list-disc space-y-2">
+                                {parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()}
+                            </ul>
                         </div>
-                        <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div className="col-span-full text-gray-600">
-                                <ul className="list-disc pl-5 space-y-4">
-                                    <li>You should pay the following amount to access profile</li>
-                                    <li>Bank Details: </li>
-                                    <li>Account No: 03120376631</li>
-                                    <li>Account Title: Joe Joe</li>
-                                    <li>Bank of Kenya</li>
-                                </ul>
-                            </div>
 
-                            <div className="sm:col-span-4">
-                                <label className="block text-sm font-medium leading-6 text-gray-900">
-                                    Amount
-                                </label>
-                                <input
-                                    type="text"
-                                    name="amount"
-                                    value={500}
-                                    disabled
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                />
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-900 mb-2">Amount</label>
+                            <input
+                                type="text"
+                                name="amount"
+                                value={paymentInstructions?.amount}
+                                disabled
+                                className="w-full py-2 px-3 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"
+                            />
+                        </div>
 
-                            <div className="col-span-full sm:col-span-2 flex items-center justify-center sm:justify-start">
-                                {loader ? (
-                                    <div className="mt-5">
-                                        <InfinitySpin height={80} width={80} color="green" />
-                                    </div>
-                                ) : (
-                                    <div className="mt-5">
-                                        <Button
-                                            type="button"
-                                            color="gradient"
-                                            variant="solid"
-                                            onClick={() => setLoader(true)}
-                                        >
-                                            Submit
-                                        </Button>
-                                    </div>
-                                )}
-                            </div>
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4">
+                            {loader ? (
+                                <div className="flex justify-center">
+                                    <InfinitySpin height={80} width={80} color="green" />
+                                </div>
+                            ) : (
+                                <Button
+                                    type="button"
+                                    color="gradient"
+                                    variant="solid"
+                                    onClick={submitPayment}
+                                    className="w-full md:w-auto"
+                                >
+                                    Submit
+                                </Button>
+                            )}
+                            {/* <button
+                onClick={handleBackHome}
+                className="w-full md:w-auto bg-orange-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-orange-600 transition duration-200"
+              >
+                Go Back to Home
+              </button> */}
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
-
     );
 }

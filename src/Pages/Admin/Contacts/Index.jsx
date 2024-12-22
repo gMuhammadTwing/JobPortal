@@ -12,24 +12,15 @@ import { toast, Toaster } from "sonner";
 import Pagination from "../../../Components/Pagination";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import { LoaderTable } from "../../../Components/LoaderTable";
-import { Button } from "../../../Components/Button";
-import AddBlogPost from "./AddBlogPost";
 
-export default function Index() {
+export default function Contacts() {
     const [data, setData] = useState();
-    const [updatedData, setUpdatedData] = useState(null);
     const [tableLoader, setTableLoader] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
-    const closeModal = () => {
-        setOpenModal(false);
-        setView(false)
-        setUpdatedData(null)
-    }
 
     const fetchData = async (pageNum) => {
         setTableLoader(true);
         try {
-            const response = await axiosInstance.get(`/api/blogs?page=${pageNum}`);
+            const response = await axiosInstance.get(`/api/contact_us?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
                 console.log("data: ", response?.data);
@@ -47,46 +38,36 @@ export default function Index() {
 
     useEffect(() => {
         fetchData(1);
-    }, [openModal]);
-    const [view, setView] = useState(false);
-    const blogHandler = (data ,view)=>{
-        setUpdatedData(data);
-        setView(view)
-        setOpenModal(true);
-    }
+    }, []);
 
     return (
         <div className="container mx-auto px-4 max-w-5xl h-screen">
-            <AddBlogPost isOpen={openModal} onClose={closeModal} data={updatedData} view={view}/>
             <div>
                 <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
-                    Blogs
+                    Contact Us
                 </div>
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
-                        <Button
-                            type="button"
-                            onClick={() => setOpenModal(true)}
-                            color="gradient"
-                            variant="solid"
-                            className="mr-1 mb-2"
-                        >
-                            Add Blog
-                        </Button>
                         <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
                                     <tr>
                                         <th className="py-3 pl-2 pr-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                            Blog Title
+                                            Full Name
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                            Published
+                                           Phone
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                           Email
+                                        </th>
+                                        <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                           Message
+                                        </th>
+                                        {/* <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Actions
-                                        </th>
+                                        </th> */}
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
@@ -99,15 +80,15 @@ export default function Index() {
                                                     </span>
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
-                                                    {item?.is_published ? "Yes":"No"}
+                                                    {item?.is_published ? "Yes" : "No"}
                                                 </td>
-                                                <td className="px-2 py-3 text-xs md:text-sm">
+                                                {/* <td className="px-2 py-3 text-xs md:text-sm">
                                                     <div className="flex items-center space-x-2">
-                                                        <EyeIcon onClick={()=>blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Participant" />
-                                                        <PencilIcon onClick={()=>blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Pa" />
+                                                        <EyeIcon onClick={() => blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Participant" />
+                                                        <PencilIcon onClick={() => blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Pa" />
                                                         <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Payment" />
                                                     </div>
-                                                </td>
+                                                </td> */}
                                             </tr>
                                         ))
                                     ) : (

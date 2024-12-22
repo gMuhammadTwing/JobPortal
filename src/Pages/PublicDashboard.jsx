@@ -24,7 +24,8 @@ const navigation = [
   //     { name: "Ongoing Projects", href: '' },
   //   ]
   // },
-  { name: 'Blogs', href: 'blogs', single: 'blog', current: false },
+  { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
+  { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
   // { name: 'Reports', href: '#', current: false },
   { name: 'Employer', href: 'employer/profile', single: 'employer', current: false },
   { name: 'Job Seeker', href: 'job-seeker/profile', single: 'job-seeker', current: false },
@@ -48,8 +49,11 @@ export default function PublicDashboard() {
   const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
   const role_id = localStorage.getItem("role_id");
+  console.log("role_id: ", role_id);
+
   const payment = localStorage.getItem("payment");
-  console.log("payment: ", payment);
+  console.log("Payment: ", payment);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "/" || window.location.hash == "/#/") {
@@ -82,59 +86,12 @@ export default function PublicDashboard() {
                 {/* !((role_id == 1 || role_id == undefined) && item.name == 'Admin') */}
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {(payment == "true") ? (
-                      navigation
-                        .filter(item => !((role_id ==1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                          !((role_id !=2) && item.name == 'Job Seeker') && 
-                          !((role_id !=1) && item.name == 'Admin' && item.single == 'admin'))
-                        .map((item) => (
-                          <Link
-                            key={item.name}
-                            to={item.href}
-                            aria-current={item.current ? 'page' : undefined}
-                            className={classNames(
-                              location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                ? 'bg-orange-600 text-white'
-                                : 'text-black hover:bg-orange-500 hover:text-white',
-                              'rounded-md px-3 py-2 text-sm font-medium',
-                            )}
-                          >
-                            {item?.subItems ? (
-                              <div
-                                className="relative"
-                                onMouseEnter={() => setShowDropdown(true)}
-                                onMouseLeave={() => setShowDropdown(false)}
-                              >
-                                <div aria-disabled={true}>
-                                  {item?.name}
-                                </div>
-
-                                {showDropdown && (
-                                  <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                    {item?.subItems.map((item1, index) => (
-                                      <Link
-                                        onClick={() => setShowDropdown(false)}
-                                        key={index}
-                                        to={item1.href}
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
-                                      >
-                                        {item1.name}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            ) : (
-                              item.name
-                            )}
-                          </Link>
-                        ))
-                    ) :
+                    {(payment == null || payment == "null") && role_id != 3 ?
                       (
                         navigation
-                          .filter(item => !((role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                            !((role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
-                            !((role_id !=1) && item.name == 'Admin'))
+                          .filter(item => !((role_id == 1 || role_id == 2 ||  role_id == undefined) && item.name == 'Employer') &&
+                            !((role_id == 3 || role_id == 1 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                            !((role_id != 1) && item.name == 'Admin'))
                           .map((item) => (
                             (item?.name == "Employer" || item?.name == 'Job Seeker') ? (
                               <Link
@@ -223,6 +180,153 @@ export default function PublicDashboard() {
                             )
                           ))
                       )
+                      :
+                      <>
+                        {
+                          (payment == "true" || role_id == 3) ? (
+                            navigation
+                              .filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                                !((role_id != 2) && item.name == 'Job Seeker') &&
+                                !((role_id != 1) && item.name == 'Admin'))
+                              .map((item) => (
+                                <Link
+                                  key={item.name}
+                                  to={item.href}
+                                  aria-current={item.current ? 'page' : undefined}
+                                  className={classNames(
+                                    location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                      ? 'bg-orange-600 text-white'
+                                      : 'text-black hover:bg-orange-500 hover:text-white',
+                                    'rounded-md px-3 py-2 text-sm font-medium',
+                                  )}
+                                >
+                                  {item?.subItems ? (
+                                    <div
+                                      className="relative"
+                                      onMouseEnter={() => setShowDropdown(true)}
+                                      onMouseLeave={() => setShowDropdown(false)}
+                                    >
+                                      <div aria-disabled={true}>
+                                        {item?.name}
+                                      </div>
+
+                                      {showDropdown && (
+                                        <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                          {item?.subItems.map((item1, index) => (
+                                            <Link
+                                              onClick={() => setShowDropdown(false)}
+                                              key={index}
+                                              to={item1.href}
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
+                                            >
+                                              {item1.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  ) : (
+                                    item.name
+                                  )}
+                                </Link>
+                              ))
+                          )
+                            :
+                            (
+                              navigation
+                                .filter(item => !((role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                                  !((role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                                  !((role_id != 1) && item.name == 'Admin'))
+                                .map((item) => (
+                                  (item?.name == "Employer" || item?.name == 'Job Seeker') ? (
+                                    <Link
+                                      onClick={() => { toast.info("Payment Approval Pending") }}
+                                      key={item.name}
+                                      // to={'payment-alert'}
+                                      // to={item.href}
+                                      aria-current={item.current ? 'page' : undefined}
+                                      className={classNames(
+                                        location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                          ? 'bg-orange-600 text-white'
+                                          : 'text-black hover:bg-orange-500 hover:text-white',
+                                        'rounded-md px-3 py-2 text-sm font-medium',
+                                      )}
+                                    >
+                                      {item?.subItems ? (
+                                        <div
+                                          className="relative"
+                                          onMouseEnter={() => setShowDropdown(true)}
+                                          onMouseLeave={() => setShowDropdown(false)}
+                                        >
+                                          <div aria-disabled={true}>
+                                            {item?.name}
+                                          </div>
+
+                                          {showDropdown && (
+                                            <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                              {item?.subItems.map((item1, index) => (
+                                                <Link
+                                                  onClick={() => setShowDropdown(false)}
+                                                  key={index}
+                                                  to={item1.href}
+                                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
+                                                >
+                                                  {item1.name}
+                                                </Link>
+                                              ))}
+                                            </div>
+                                          )}
+                                        </div>
+                                      ) : (
+                                        item.name
+                                      )}
+                                    </Link>
+                                  ) : (
+                                    <Link
+                                      key={item.name}
+                                      to={item.href}
+                                      aria-current={item.current ? 'page' : undefined}
+                                      className={classNames(
+                                        location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                          ? 'bg-orange-600 text-white'
+                                          : 'text-black hover:bg-orange-500 hover:text-white',
+                                        'rounded-md px-3 py-2 text-sm font-medium',
+                                      )}
+                                    >
+                                      {item?.subItems ? (
+                                        <div
+                                          className="relative"
+                                          onMouseEnter={() => setShowDropdown(true)}
+                                          onMouseLeave={() => setShowDropdown(false)}
+                                        >
+                                          <div aria-disabled={true}>
+                                            {item?.name}
+                                          </div>
+
+                                          {showDropdown && (
+                                            <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                              {item?.subItems.map((item1, index) => (
+                                                <Link
+                                                  onClick={() => setShowDropdown(false)}
+                                                  key={index}
+                                                  to={item1.href}
+                                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
+                                                >
+                                                  {item1.name}
+                                                </Link>
+                                              ))}
+                                            </div>
+                                          )}
+                                        </div>
+                                      ) : (
+                                        item.name
+                                      )}
+                                    </Link>
+                                  )
+                                ))
+                            )
+                        }
+                      </>
                     }
                   </div>
                 </div>
@@ -341,7 +445,7 @@ export default function PublicDashboard() {
                 <div className='flex gap-2'>
                   {(!localStorage.token || localStorage.token == 'undefined') && (
                     <>
-                    <div
+                      <div
                         className={classNames(
                           location.pathname.includes("/register") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
                           'rounded-md py-2 px-2 text-sm font-medium cursor-pointer mr-2'
@@ -370,7 +474,7 @@ export default function PublicDashboard() {
                           Login
                         </Link>
                       </div>
-                      
+
                     </>
                   )}
                   {(localStorage.token && localStorage.token != 'undefined') && (
