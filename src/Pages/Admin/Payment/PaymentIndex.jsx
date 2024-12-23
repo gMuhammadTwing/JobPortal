@@ -75,7 +75,7 @@ export default function PaymentIndex() {
         <div className="container mx-auto max-w-5xl h-screen">
             {/* <AddPayment isOpen={isModalOpen} onClose={closeModal} /> */}
             <div className="pb-15">
-                <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Manage Payments
                 </div>
                 {/* <div className="mb-2">

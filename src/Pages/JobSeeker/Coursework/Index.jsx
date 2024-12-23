@@ -52,14 +52,14 @@ export default function Index() {
         <div className="container mx-auto max-w-5xl h-screen">
             <AddCoursework isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
             <div className="mt-4">
-                <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Coursework List
                 </div>
-                <div className="mb-2">
+                {/* <div className="mb-2">
                     <Button type="button" color="gradient" variant="solid" onClick={openModal}>
                         Add Coursework
                     </Button>
-                </div>
+                </div> */}
                 <Toaster richColors />
                 <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
                     <div className="inline-block min-w-full align-middle">

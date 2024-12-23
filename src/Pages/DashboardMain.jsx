@@ -26,8 +26,8 @@ export default function DashboardMain() {
     const jobSeekerNav = [
         { name: "Job Profile", href: "profile", icon: UserCircleIcon, current: true },
         { name: "Resume/CV", href: "resume", icon: DocumentTextIcon, current: false },
-        { name: "Search Jobs", href: "view-jobs", icon: ViewfinderCircleIcon, current: false },
-        { name: "Applied Jobs", href: "applied-jobs", single: "applied-jobs", icon: BriefcaseIcon, current: false },
+        { name: "Search Jobs", href: "view_job_list", icon: ViewfinderCircleIcon, current: false },
+        { name: "Applied Jobs", href: "applied_job_list", single: "applied_job_list", icon: BriefcaseIcon, current: false },
         // { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
         { name: "Coursework", href: "coursework", icon: ClipboardDocumentListIcon, current: false },
     ]
@@ -64,7 +64,7 @@ export default function DashboardMain() {
             {/* Mobile Sidebar Toggle */}
             <div className="fixed z-20 top-0 left-0 md:hidden">
                 <button
-                    className="m-4 p-2 text-white bg-orange-600 rounded-md"
+                    className="m-4 p-2 text-white bg-[#ff0000] rounded-md"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                     {sidebarOpen ? "Close Menu" : "Open Menu"}
@@ -89,8 +89,8 @@ export default function DashboardMain() {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "bg-orange-600 text-white"
-                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                                ? "bg-[#ff0000] text-white"
+                                                : "text-black hover:bg-[#ff0000] hover:text-white",
                                             "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
                                     >
@@ -117,8 +117,8 @@ export default function DashboardMain() {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "bg-orange-600 text-white"
-                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                                ? "bg-[#ff0000] text-white"
+                                                : "text-black hover:bg-[#ff0000] hover:text-white",
                                             "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
                                     >
@@ -146,8 +146,8 @@ export default function DashboardMain() {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "bg-orange-600 text-white"
-                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                                ? "bg-[#ff0000] text-white"
+                                                : "text-black hover:bg-[#ff0000] hover:text-white",
                                             "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
                                     >

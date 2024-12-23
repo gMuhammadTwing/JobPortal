@@ -48,7 +48,7 @@ export default function PersonalInformation() {
             setLoading(true);
             if (data) {
                 try {
-                    const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data?.id}`, values);
+                    const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data[0]?.id}`, values);
                     if (response) {
                         toast.success("Personal Information Saved")
                         formik.resetForm();
@@ -135,11 +135,11 @@ export default function PersonalInformation() {
             const response = await axiosInstance.get(`/api/get_user_image`);
             if (response) {
                 setImage(response?.data)
-                localStorage.setItem("user_image",response?.data)
+                localStorage.setItem("user_image", response?.data)
             }
         } catch (error) {
             handleError(error);
-        }finally{
+        } finally {
             setImageLoader(false);
             window.location?.reload();
         }
@@ -151,15 +151,15 @@ export default function PersonalInformation() {
                 <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                     {/* Header Section */}
                     <div
-                        className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
+                        className="flex justify-between items-center p-4 border-b cursor-pointer text-[#ff0000] bg-white"
                         onClick={handleCollapseToggle}
                     >
                         <h3 className="font-bold text-xl">Personal Information</h3>
                         <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                             {profileCollapsed ? (
-                                <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                                <PlusIcon className="block h-6 w-6 text-[#008604] hover:scale-[160%] duration-300" />
                             ) : (
-                                <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
+                                <MinusIcon className="block h-6 w-6 text-[#ff0000] hover:scale-[160%] duration-300" />
                             )}
                         </button>
                     </div>
@@ -276,7 +276,7 @@ export default function PersonalInformation() {
                                         )}
                                     </div>
                                     <div>
-                                        <label htmlFor="contact_number" className="block text-sm font-medium text-gray-900">Contact_number</label>
+                                        <label htmlFor="contact_number" className="block text-sm font-medium text-gray-900">Contact Number</label>
                                         <input
                                             id="contact_number"
                                             name="contact_number"
@@ -291,7 +291,7 @@ export default function PersonalInformation() {
                                         )}
                                     </div>
                                     <div>
-                                        <label htmlFor="years_experience" className="block text-sm font-medium text-gray-900">Years_experience</label>
+                                        <label htmlFor="years_experience" className="block text-sm font-medium text-gray-900">Years Experience</label>
                                         <input
                                             id="years_experience"
                                             name="years_experience"
@@ -322,7 +322,16 @@ export default function PersonalInformation() {
                                     </div>
                                     <div className='col-span-full'>
                                         <label htmlFor="address" className="block text-sm font-medium text-gray-900">Postal Address</label>
-                                        <ReactQuill
+                                        <textarea
+                                            id="address"
+                                            name="address"
+                                            rows={6}
+                                            value={formik.values.address}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        />
+                                        {/* <ReactQuill
                                             id="address"
                                             theme="snow"
                                             value={formik.values.address}
@@ -349,13 +358,13 @@ export default function PersonalInformation() {
                                                 "bullet",
                                             ]}
                                             placeholder="Write something"
-                                        />
+                                        /> */}
                                         {formik.touched.address && formik.errors.address && (
                                             <div className="text-red-600 text-sm">{formik.errors.address}</div>
                                         )}
                                     </div>
                                 </div>
-                                <div className="flex justify-center gap-4 mt-17">
+                                <div className="flex justify-center gap-4 mt-12">
                                     {loading ? <div className="flex justify-center mr-5"><InfinitySpin width={150} color="green" /></div> :
                                         <>
                                             <Button

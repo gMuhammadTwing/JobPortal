@@ -62,14 +62,14 @@ export default function RecentlyUpdatedJobs() {
 
   return (
     <motion.div
-      className="mb-3 rounded-lg p-2 sm:p-8 md:p-16 lg:p-20"
+      className="mx-auto max-w-[85rem] mb-3 rounded-lg p-2 sm:p-8 md:p-16 lg:p-20"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="px-3 font-medium text-4xl sm:text-5xl md:text-6xl text-center pb-5">
+      <div className=" px-3 font-medium text-4xl sm:text-5xl md:text-6xl text-center pb-5">
         <h1>
-          Recently Updated <span className="text-orange-600">Jobs For You</span>
+          Recently Updated <span className="text-[#ff0000]">Jobs For You</span>
         </h1>
       </div>
 
@@ -90,7 +90,7 @@ export default function RecentlyUpdatedJobs() {
         {jobs.map((job, index) => (
           <motion.li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow border border-transparent hover:border-orange-500 text-gray-800 hover:text-orange-600 transform transition-all duration-300"
+            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow border border-transparent hover:border-[#ff0000] text-gray-800 hover:text-[#ff0000] transform transition-all duration-300"
             whileHover={{ scale: 1.05 }} // Hover effect to scale up
             variants={{
               hidden: { opacity: 0, y: 20 },

@@ -98,8 +98,11 @@ export default function Summary() {
                 <div className={`border rounded-md shadow-lg ${summary ? "overflow-hidden" : ""}`}>
                     {/* Header Section */}
                     <div
-                        className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
-                    // onClick={handleSummary}
+                        className="flex justify-between items-center p-4 border-b cursor-pointer text-[#ff0000] bg-white"
+                        onClick={() => {
+                            handleSummary();
+                            fetchData();
+                        }}
                     >
                         <h3 className="font-bold text-xl">Summary</h3>
                         <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
@@ -107,11 +110,11 @@ export default function Summary() {
                                 <PlusIcon onClick={() => {
                                     handleSummary();
                                     fetchData();
-                                }} className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                                }} className="block h-6 w-6 text-[#008604] hover:scale-[160%] duration-300" />
                             ) : (
                                 <MinusIcon onClick={() => {
                                     handleSummary();
-                                }} className="block h-6 w-6 text-red-500 hover:scale-[160%] duration-300" />
+                                }} className="block h-6 w-6 text-[#ff0000] hover:scale-[160%] duration-300" />
                             )}
                         </button>
                     </div>

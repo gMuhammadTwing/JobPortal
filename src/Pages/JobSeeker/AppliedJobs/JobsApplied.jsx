@@ -36,7 +36,7 @@ export default function JobsApplied() {
     return (
         <div className="mx-auto max-w-5xl h-screen p-4">
             <div className="pb-8">
-                <div className="text-center pb-6 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                <div className="text-center pb-6 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     My Job Applications
                 </div>
 

@@ -106,7 +106,7 @@ export default function Index() {
             />
 
             <div className="pb-15">
-                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Manage Job Seeker Accounts
                 </div>
                 <Toaster richColors />

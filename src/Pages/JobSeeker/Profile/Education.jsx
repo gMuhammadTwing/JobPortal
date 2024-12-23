@@ -145,8 +145,11 @@ export default function Education() {
                     <div className={`border rounded-md shadow-lg ${Education ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
-                        // onClick={handleEducation}
+                            className="flex justify-between items-center p-4 border-b cursor-pointer text-[#ff0000] bg-white"
+                            onClick={() => {
+                                handleEducation();
+                                fetchData();
+                            }}
                         >
                             <h3 className="font-bold text-xl">Education</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
@@ -154,11 +157,11 @@ export default function Education() {
                                     <PlusIcon onClick={() => {
                                         handleEducation();
                                         fetchData();
-                                    }} className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                                    }} className="block h-6 w-6 text-[#008604] hover:scale-[160%] duration-300" />
                                 ) : (
                                     <MinusIcon onClick={() => {
                                         handleEducation();
-                                    }} className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
+                                    }} className="block h-6 w-6 text-[#ff0000] hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
@@ -252,7 +255,7 @@ export default function Education() {
                                                 <button
                                                     type="button"
                                                     onClick={() => setEditEducation(true)}
-                                                    className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                                    className="bg-[#ff0000] hover:bg-[#ff0000] rounded-full p-1 text-white shadow-md transition-all"
                                                 >
                                                     <PlusIcon className=" h-5 w-5" />
                                                 </button>

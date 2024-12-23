@@ -82,7 +82,7 @@ export default function Index() {
         <div className="container mx-auto px-4 max-w-5xl h-screen">
             {!jobs ? (
                 <div>
-                    <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                    <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                         Jobs
                     </div>
                     <Toaster richColors />
@@ -129,12 +129,12 @@ export default function Index() {
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         <span
-                                                            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset ${item?.job_status?.id == 1
+                                                            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset ${item?.job_status == "Open"
                                                                 ? "bg-green-100 text-green-600 ring-green-300"
                                                                 : "bg-red-100 text-red-600 ring-red-300"
                                                                 }`}
                                                         >
-                                                            {item?.job_status?.id == 1 ? "Open" : "Closed"}
+                                                            {item?.job_status}
                                                         </span>
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">

@@ -73,7 +73,7 @@ export default function BlogDetails() {
             className='bg-white min-h-screen pb-2'
         >
             <div className='font-medium text-4xl sm:text-4xl md:text-5xl text-center bg-[#FFF5F3] p-20'>
-                <h1>Blog Details</h1>
+                <h1 className="text-[#ff0000]">Blog Details</h1>
             </div>
             <div className="max-w-4xl m-auto p-4">
                 {tableLoader ? <BlogDetailsSkeleton /> : (
@@ -144,16 +144,16 @@ export default function BlogDetails() {
                         <div className="font-semibold">Web Designer</div>
                         <h1 className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</h1>
                         <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-orange-600 hover:text-white transition-all hover:rounded-full">
+                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
                                 <i className="fa-brands fa-facebook-f" aria-hidden="true"></i>
                             </button>
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-orange-600 hover:text-white transition-all hover:rounded-full">
+                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
                                 <i className="fa-brands fa-twitter" aria-hidden="true"></i>
                             </button>
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-orange-600 hover:text-white transition-all hover:rounded-full">
+                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
                                 <i className="fa-brands fa-instagram" aria-hidden="true"></i>
                             </button>
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-orange-600 hover:text-white transition-all hover:rounded-full">
+                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
                                 <i className="fa-brands fa-linkedin" aria-hidden="true"></i>
                             </button>
                         </div>

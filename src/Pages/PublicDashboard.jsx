@@ -8,6 +8,7 @@ import { toast, Toaster } from 'sonner'
 import auth from '../auth'
 import app_vars from '../config'
 import userLogo from '../assets/user.jpeg'
+import menu_logo from '../assets/menu_logo-1.png'
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -79,8 +80,8 @@ export default function PublicDashboard() {
                 <div className="shrink-0">
                   <img
                     alt="Your Company"
-                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                    className="size-8"
+                    src={menu_logo}
+                    className="w-30 h-12"
                   />
                 </div>
                 {/* !((role_id == 1 || role_id == undefined) && item.name == 'Admin') */}
@@ -102,8 +103,8 @@ export default function PublicDashboard() {
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(
                                   location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                    ? 'bg-orange-600 text-white'
-                                    : 'text-black hover:bg-orange-500 hover:text-white',
+                                    ? 'bg-[#ff0000] text-white'
+                                    : 'text-black hover:bg-[#ff0000] hover:text-white',
                                   'rounded-md px-3 py-2 text-sm font-medium',
                                 )}
                               >
@@ -143,8 +144,8 @@ export default function PublicDashboard() {
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(
                                   location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                    ? 'bg-orange-600 text-white'
-                                    : 'text-black hover:bg-orange-500 hover:text-white',
+                                    ? 'bg-[#ff0000] text-white'
+                                    : 'text-black hover:bg-[#ff0000] hover:text-white',
                                   'rounded-md px-3 py-2 text-sm font-medium',
                                 )}
                               >
@@ -195,8 +196,8 @@ export default function PublicDashboard() {
                                   aria-current={item.current ? 'page' : undefined}
                                   className={classNames(
                                     location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                      ? 'bg-orange-600 text-white'
-                                      : 'text-black hover:bg-orange-500 hover:text-white',
+                                      ? 'bg-[#ff0000] text-white'
+                                      : 'text-black hover:bg-[#ff0000] hover:text-white',
                                     'rounded-md px-3 py-2 text-sm font-medium',
                                   )}
                                 >
@@ -240,15 +241,15 @@ export default function PublicDashboard() {
                                 .map((item) => (
                                   (item?.name == "Employer" || item?.name == 'Job Seeker') ? (
                                     <Link
-                                      onClick={() => { toast.info("Payment Approval Pending") }}
+                                      // onClick={() => { toast.info("Payment Approval Pending") }}
                                       key={item.name}
-                                      // to={'payment-alert'}
+                                      to={'payment-pending'}
                                       // to={item.href}
                                       aria-current={item.current ? 'page' : undefined}
                                       className={classNames(
                                         location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                          ? 'bg-orange-600 text-white'
-                                          : 'text-black hover:bg-orange-500 hover:text-white',
+                                          ? 'bg-[#ff0000] text-white'
+                                          : 'text-black hover:bg-[#ff0000] hover:text-white',
                                         'rounded-md px-3 py-2 text-sm font-medium',
                                       )}
                                     >
@@ -288,8 +289,8 @@ export default function PublicDashboard() {
                                       aria-current={item.current ? 'page' : undefined}
                                       className={classNames(
                                         location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                          ? 'bg-orange-600 text-white'
-                                          : 'text-black hover:bg-orange-500 hover:text-white',
+                                          ? 'bg-[#ff0000] text-white'
+                                          : 'text-black hover:bg-[#ff0000] hover:text-white',
                                         'rounded-md px-3 py-2 text-sm font-medium',
                                       )}
                                     >
@@ -339,7 +340,7 @@ export default function PublicDashboard() {
                       <>
                         <div
                           className={classNames(
-                            location.pathname.includes("/register") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                            location.pathname.includes("/register") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                             'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                           )}
                         >
@@ -354,7 +355,7 @@ export default function PublicDashboard() {
                         <div className="border-l border-gray-300 h-8"></div>
                         <div
                           className={classNames(
-                            location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                            location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                             'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                           )}
                         >
@@ -372,7 +373,7 @@ export default function PublicDashboard() {
                       <>
                         <div
                           className={classNames(
-                            location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                            location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                             'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                           )}
                         >

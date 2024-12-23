@@ -59,7 +59,7 @@ export default function Index() {
         <div className="container mx-auto px-4 max-w-5xl h-screen">
             <AddBlogPost isOpen={openModal} onClose={closeModal} data={updatedData} view={view}/>
             <div>
-                <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Blogs
                 </div>
                 <Toaster richColors />
@@ -103,9 +103,9 @@ export default function Index() {
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
                                                     <div className="flex items-center space-x-2">
-                                                        <EyeIcon onClick={()=>blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Participant" />
-                                                        <PencilIcon onClick={()=>blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Pa" />
-                                                        <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Payment" />
+                                                        <EyeIcon onClick={()=>blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Blog" />
+                                                        <PencilIcon onClick={()=>blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Blog" />
+                                                        <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Blog" />
                                                     </div>
                                                 </td>
                                             </tr>

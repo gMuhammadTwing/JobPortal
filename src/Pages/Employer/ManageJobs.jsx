@@ -123,7 +123,7 @@ export default function ManageJobs() {
         {!isModalOpen && (
           <div>
             <div className="">
-              <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl text-center m-2">Manage Jobs</h2>
+              <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl text-center m-2">Manage Jobs</h2>
               {company_id != "undefined" ? (
                 <div>
                   <Button
@@ -164,7 +164,7 @@ export default function ManageJobs() {
 
                             <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
                             <div className="flex flex-wrap sm:flex-row gap-2">
-                              <button onClick={() => viewDetails(item)} className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                              <button onClick={() => viewDetails(item)} className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                 View Details
                               </button>
                               <button

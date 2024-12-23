@@ -35,6 +35,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import BlogDetails from './Pages/Public/BlogDetails';
 import Jobs from './Pages/Public/Jobs';
 import AdminContactUs from './Pages/Admin/Contacts/Index';
+import PaymentApprovalPending from './Pages/PaymentApprovalPending';
 function App() {
   return (
     <DropdownProvider>
@@ -60,9 +61,9 @@ function App() {
             {/* Job Seeker Routes */}
             <Route path="job-seeker" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="profile" element={<ProtectedRoutes><ProfileIndex /></ProtectedRoutes>} />
-              <Route path="applied-jobs" element={<ProtectedRoutes><JobsApplied /></ProtectedRoutes>} />
+              <Route path="applied_job_list" element={<ProtectedRoutes><JobsApplied /></ProtectedRoutes>} />
               <Route path="resume" element={<Resume />} />
-              <Route path="view-jobs" element={<ProtectedRoutes><ViewJobs /></ProtectedRoutes>} />
+              <Route path="view_job_list" element={<ProtectedRoutes><ViewJobs /></ProtectedRoutes>} />
               <Route path="coursework" element={<ProtectedRoutes><CourseWork /></ProtectedRoutes>} />
             </Route>
 
@@ -85,6 +86,7 @@ function App() {
 
             {/* No Permission Route */}
             <Route path="/no-permission" element={<NoPermission />} />
+            <Route path="/payment-pending" element={<PaymentApprovalPending />} />
 
           </Route>
 

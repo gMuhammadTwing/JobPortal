@@ -106,7 +106,7 @@ export default function Resume() {
             />
 
             <div className="pb-15">
-                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Manage Your CVs
                 </div>
                 <Toaster richColors />
@@ -123,6 +123,11 @@ export default function Resume() {
                                                     className="py-3.5 pl-4 pr-3 text-left text-xl font-semibold text-gray-900 sm:pl-6"
                                                 >
                                                     Manage Your CVs
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >
                                                 </th>
                                                 <th
                                                     scope="col"
@@ -159,6 +164,9 @@ export default function Resume() {
                                                             <h1 className="text-blue-600 font-semibold">
                                                                 {item?.is_current ? "Active" : "In-active"}
                                                             </h1>
+                                                        </td>
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                           {item?.resume_file}
                                                         </td>
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <Switch

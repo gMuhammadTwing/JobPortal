@@ -44,7 +44,7 @@ export default function Applicants({ job_id }) {
     return (
         <div className="container mx-auto max-w-5xl h-screen">
             <div className="">
-                <button
+                {/* <button
                     type="button"
                     onClick={() => {
                         // nagivate("/admin/shortlisting");
@@ -54,8 +54,8 @@ export default function Applicants({ job_id }) {
                     className='border border-black rounded-full p-1 px-4'
                 >
                     Back
-                </button>
-                <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                </button> */}
+                <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Applicants
                 </div>
                 <div className="mb-2">
@@ -72,14 +72,14 @@ export default function Applicants({ job_id }) {
                                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                                                     Job Title
                                                 </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Job Type
+                                                </th> */}
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Applicant Name
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Participant Name
-                                                </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Participant Email
+                                                    Applicant Email
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Status
@@ -100,11 +100,11 @@ export default function Applicants({ job_id }) {
                                                                     : "N/A"}
                                                             </span>
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm">
+                                                        {/* <td className="px-3 py-4 text-sm">
                                                             {item?.job_id?.job_type?.job_family}
-                                                        </td>
+                                                        </td> */}
                                                         <td className="px-3 py-4 text-sm">
-                                                            {item?.user_id?.name}
+                                                            {item?.user_id?.unique_name}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.user_id?.email}
@@ -125,7 +125,7 @@ export default function Applicants({ job_id }) {
                                                             <div className="flex items-center space-x-2">
                                                                 <EyeIcon className="w-5 h-5 text-black" title="View Participant" />
                                                                 <PencilIcon className="w-5 h-5 text-blue-500" title="Edit Pa" />
-                                                                <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" />
+                                                                {/* <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" /> */}
                                                             </div>
                                                         </td>
                                                     </tr>

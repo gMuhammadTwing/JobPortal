@@ -90,21 +90,6 @@ export default function ContactUs() {
                         </div>
                     </div>
 
-                    {/* Image Section */}
-                    <div className="flex justify-center items-center">
-                        <img
-                            src="https://www.hubspot.com/hubfs/Contact%20Us/singapore.jpg"
-                            alt="Singapore Office"
-                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
-                        />
-                    </div>
-                    <div className="flex justify-center items-center">
-                        <img
-                            src="https://www.hubspot.com/hubfs/Contact%20Us/sydney.jpg"
-                            alt="Singapore Office"
-                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
-                        />
-                    </div>
                     <div className="border shadow-1 rounded-lg p-4">
                         <form className="" onSubmit={formik.handleSubmit}>
                             {/* Full Name */}
@@ -212,6 +197,22 @@ export default function ContactUs() {
                                 >Contact Us</Button>
                             </div>
                         </form>
+                    </div> 
+
+                    {/* Image Section */}
+                    <div className="flex justify-center items-center">
+                        <img
+                            src="https://www.hubspot.com/hubfs/Contact%20Us/singapore.jpg"
+                            alt="Singapore Office"
+                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
+                        />
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <img
+                            src="https://www.hubspot.com/hubfs/Contact%20Us/sydney.jpg"
+                            alt="Singapore Office"
+                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
+                        />
                     </div>
                 </div>
             </div>

@@ -34,14 +34,14 @@ export default function FeaturedJobs() {
         fetchData(1);
     }, []);
     return (
-        <div className='bg-gradient-to-t to-[#F8ECF8] from-[#FFF3EA] p-2 sm:p-8 md:p-16 lg:p-20'>
+        <div className='bg-gradient-to-t to-[#F8ECF8] from-[#FFF3EA] p-2 sm:p-8 md:p-16'>
             <div className=''>
-                <div className='font-medium text-4xl sm:text-5xl md:text-6x text-center '>Featured Jobs <span className='text-orange-500'>For You</span></div>
+                <div className='font-medium text-4xl sm:text-5xl md:text-6x text-center '>Featured Jobs <span className='text-[#ff0000]'>For You</span></div>
                 <div className='text-center mt-2 text-gray-600 font-semibold'>We have over 2000+ Projects waiting for you</div>
             </div>
             {tableLoader ? <BlogSkeleton /> :
                 <>
-                    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-6">
+                    <ul role="list" className="mx-auto max-w-[75rem] grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-6">
                         {data && data?.data.map((item) => (
                             <div key={item.id} className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
                                 {/* Image Section */}

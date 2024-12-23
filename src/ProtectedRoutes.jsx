@@ -7,8 +7,8 @@ const employerPermission = {
 
 const JobSeekerPermission = {
   "/job-seeker/resume": "view-job-seeker",
-  "/job-seeker/view-jobs": "view_jobs",
-  "/job-seeker/applied-jobs": "view_applied_jobs",
+  "/job-seeker/view_job_list": "view_jobs",
+  "/job-seeker/applied_job_list": "view_applied_jobs",
   "/job-seeker/coursework": "view_coursework",
   "/job-seeker/profile": "view_job_seeker_profile"
 };

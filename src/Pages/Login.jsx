@@ -6,7 +6,7 @@ import auth from "../auth";
 import { InfinitySpin } from "react-loader-spinner";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
-
+import Logo from '../assets/footer_logo.jpeg'
 export default function Login() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
@@ -37,12 +37,12 @@ export default function Login() {
                         <div className="w-full px-4 py-8 md:px-8 lg:w-6/12 lg:p-12">
                             <div className="text-center">
                                 <img
-                                    className="mx-auto w-24 sm:w-32 md:w-40 lg:w-48"
-                                    src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                                    className="mx-auto w-20 sm:w-30 md:w-30 lg:w-30"
+                                    src={Logo}
                                     alt="logo"
                                 />
                                 <h4 className="mb-12 mt-4 text-xl font-semibold">
-                                    We are The Lotus Team
+                                    We are The Veritas Jobs
                                 </h4>
                             </div>
 
@@ -123,7 +123,7 @@ export default function Login() {
 
                         {/* Right column container with background and description */}
                         <div
-                            className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-orange-500 to-pink-600"
+                            className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#ff0000] to-[#008604]"
                         // style={{
                         //     background:
                         //         "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",

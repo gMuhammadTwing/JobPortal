@@ -15,37 +15,37 @@ import axiosInstance, { handleError } from "../../../axiosInstance";
 import { toast } from "sonner";
 import ReactQuill from "react-quill";
 
-const ApplyModal = ({ isOpen, onClose, data }) => {
+const ApplyInstructionsModal = ({ isOpen, onClose, data }) => {
     const user_id = localStorage.user_id;
-    const parser = new DOMParser();
-    const [loader, setLoader] = useState(false);
-    const formik = useFormik({
-        initialValues: {
-            cover_letter: '',
-            user_id: user_id,
-            job_id: data?.id
-        },
-        enableReinitialize: true,
-        validationSchema: Yup.object({
+    // const parser = new DOMParser();
+    // const [loader, setLoader] = useState(false);
+    // const formik = useFormik({
+    //     initialValues: {
+    //         cover_letter: '',
+    //         user_id: user_id,
+    //         job_id: data?.id
+    //     },
+    //     enableReinitialize: true,
+    //     validationSchema: Yup.object({
 
-        }),
-        onSubmit: async (values) => {
-            setLoader(true);
-            try {
-                const response = await axiosInstance.post(`api/job_application/store`, values);
-                if (response) {
-                    toast.success("Job Applied Successfully")
-                    formik.resetForm();
-                }
-            } catch (error) {
-                handleError(error);
-            } finally {
-                setLoader(false);
-                onClose()
-            }
+    //     }),
+    //     onSubmit: async (values) => {
+    //         setLoader(true);
+    //         try {
+    //             const response = await axiosInstance.post(`api/job_application/store`, values);
+    //             if (response) {
+    //                 toast.success("Job Applied Successfully")
+    //                 formik.resetForm();
+    //             }
+    //         } catch (error) {
+    //             handleError(error);
+    //         } finally {
+    //             setLoader(false);
+    //             onClose()
+    //         }
 
-        },
-    });
+    //     },
+    // });
     return (
         <Dialog
             open={isOpen}
@@ -65,7 +65,7 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
                                 <XMarkIcon aria-hidden="true" className="h-6 w-6" />
                             </button>
                         </div>
-                        <form onSubmit={formik.handleSubmit}>
+                        <form>
                             <div className="mt-3 sm:mt-0">
                                 <DialogTitle
                                     as="h3"
@@ -81,13 +81,13 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
 
                                     <div className="sm:col-span-full">
                                         <label className="block text-sm font-medium text-gray-900">
-                                            Cover letter
+                                            Job Instructions to Apply
                                         </label>
                                         <ReactQuill
-                                            id="cover_letter"
-                                            theme="snow"
-                                            value={formik.values.cover_letter}
-                                            onChange={(value) => formik.setFieldValue("cover_letter", value)}
+                                            id="instructions"
+                                            theme="bubble"
+                                            value={data?.job_instructions_to_apply}
+                                            // onChange={(value) => formik.setFieldValue("cover_letter", value)}
                                             style={{
                                                 height: "250px",
                                             }}
@@ -110,16 +110,12 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
                                             ]}
                                             placeholder="Write something"
                                         />
-                                        {formik.errors.cover_letter && (
-                                            <div className="text-red-500 text-sm">
-                                                {formik.errors.cover_letter}
-                                            </div>
-                                        )}
+                                    
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="mt-15 sm:flex sm:flex-row-reverse">
+                            {/* <div className="mt-15 sm:flex sm:flex-row-reverse">
                                 {loader ? (
                                     <InfinitySpin height={120} width={120} color="green" />
                                 ) : (
@@ -143,7 +139,7 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
                                     </>
                                 )}
 
-                            </div>
+                            </div> */}
                         </form>
                     </DialogPanel>
                 </div>
@@ -152,4 +148,4 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
     );
 };
 
-export default ApplyModal;
+export default ApplyInstructionsModal;

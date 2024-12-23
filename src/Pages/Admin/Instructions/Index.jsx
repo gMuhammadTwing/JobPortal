@@ -103,7 +103,7 @@ export default function Index() {
                 <div className={`border rounded-full shadow-lg ${instructions ? "overflow-hidden" : ""}`}>
                     {/* Header Section */}
                     <div
-                        className="flex justify-between items-center p-4 border-b text-orange-600 bg-white"
+                        className="flex justify-between items-center p-4 border-b text-[#ff0000] bg-white"
                     // onClick={handleInstructions}
                     >
                         <h3 className="font-bold text-xl">Instructions for Payment</h3>

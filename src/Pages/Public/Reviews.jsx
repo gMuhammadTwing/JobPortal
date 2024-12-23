@@ -55,15 +55,15 @@ export default function Reviews() {
         }
     ]
     return (
-        <div className="bg-gray-100 py-8 p-15">
-            <div className="mx-auto px-6 lg:px-8">
-                <div className="mx-auto lg:mx-0">
+        <div className="bg-gray-100 py-10 p-4 mx-auto max-w-[78rem]">
+            <div className="">
+                <div className="">
                     <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                        Reviews Of The <span className="text-orange-500">Users</span>
+                        Reviews Of The <span className="text-[#ff0000]">Users</span>
                     </h2>
                     <p className="mt-2 text-lg/8 text-gray-600">What our Clients say about us</p>
                 </div>
-                <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {posts.map((post) => (
                         <article
                             key={post.id}
@@ -95,11 +95,11 @@ export default function Reviews() {
                                     {post.date}
                                 </time>
                                 <div className="truncate text-sm text-gray-500 flex">
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
     
                                     <span className="ml-1">5.0</span>
                                 </div>
