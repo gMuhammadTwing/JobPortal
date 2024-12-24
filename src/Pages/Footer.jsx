@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="border rounded-lg bg-white p-4 sm:pt-6 md:pt-10 lg:pt-10">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 {/* Footer Main Content */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-20 border-gray-200 text-gray-600">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-20 border-gray-200 text-gray-600">
                     {/* Logo and Intro Section */}
                     <div className="col-span-2 space-y-6 text-center lg:text-left">
                         <div className="flex justify-center lg:justify-start items-center">
@@ -17,13 +17,13 @@ export default function Footer() {
                                 className="w-16 h-16 md:w-20 md:h-20"
                             />
                             <h1 className="ml-2 text-xl md:text-2xl font-bold text-gray-900">
-                                Job Portal
+                                Veritas Jobs
                             </h1>
                         </div>
                         <p className="text-gray-700 text-sm md:text-base">
                             We’re always in search of talented and motivated people. Don’t be shy, introduce yourself!
                         </p>
-                        <div className="mt-4 md:mt-6 flex flex-wrap justify-center lg:justify-start gap-4">
+                        {/* <div className="mt-4 md:mt-6 flex flex-wrap justify-center lg:justify-start gap-4">
                             {["facebook-f", "twitter", "instagram", "linkedin"].map((icon, idx) => (
                                 <button
                                     key={idx}
@@ -32,7 +32,7 @@ export default function Footer() {
                                     <i className={`fa-brands fa-${icon}`} aria-hidden="true"></i>
                                 </button>
                             ))}
-                        </div>
+                        </div> */}
                         <button className="bg-black text-white rounded py-2 px-4 hover:bg-[#ff0000] transition-all text-sm md:text-base">
                             Contact with us
                         </button>

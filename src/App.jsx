@@ -17,7 +17,7 @@ import PublicDashboard from './Pages/PublicDashboard';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import AboutUs from './Pages/Public/AboutUs';
 import Teams from './Pages/Public/Teams';
-import Projects from './Pages/Public/Projects';
+// import Projects from './Pages/Public/Projects';
 import Blogs from './Pages/Public/Blogs';
 import ContactUs from './Pages/Public/ContactUs';
 import { DropdownProvider } from './DropdownProvider';
@@ -47,7 +47,7 @@ function App() {
             <Route path="payment-alert" element={<PaymentAlert />} />
             <Route path="about-us" element={<AboutUs />} />
             <Route path="teams" element={<Teams />} />
-            <Route path="projects" element={<Projects />} />
+            {/* <Route path="projects" element={<Projects />} /> */}
             <Route path="contact-us" element={<ContactUs />} />
             <Route path="jobs" element={<Jobs />} />
             <Route path="blogs_comments" element={<Blogs />} />

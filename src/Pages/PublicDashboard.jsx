@@ -87,10 +87,10 @@ export default function PublicDashboard() {
                 {/* !((role_id == 1 || role_id == undefined) && item.name == 'Admin') */}
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {(payment == null || payment == "null") && role_id != 3 ?
+                    {(payment == null || payment == "null") && (role_id != undefined && role_id != 3) ?
                       (
                         navigation
-                          .filter(item => !((role_id == 1 || role_id == 2 ||  role_id == undefined) && item.name == 'Employer') &&
+                          .filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
                             !((role_id == 3 || role_id == 1 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
                             !((role_id != 1) && item.name == 'Admin'))
                           .map((item) => (
