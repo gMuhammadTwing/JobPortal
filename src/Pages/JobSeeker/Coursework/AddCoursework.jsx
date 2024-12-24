@@ -6,62 +6,42 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/react";
-import { PlusCircleIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { FallingLines, InfinitySpin } from "react-loader-spinner";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Button } from "../../../Components/Button";
+import axiosInstance, { handleError } from "../../../axiosInstance";
+import { toast } from "sonner";
+import axios from "axios";
 
-const AddCoursework = ({ isOpen, onClose, success, error }) => {
-    const [loading, setLoading] = useState(false);
+const AddCoursework = ({ isOpen, onClose, id }) => {
     const formik = useFormik({
         initialValues: {
-            course_title: "",
-            grade: "",
-            year_of_completion: "",
+            subject_name: "",
+            grade_obtained: "",
+            details: "",
+            educational_institue_id: id,
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
-            // course_title: Yup.string().required("Course title is required"),
-            // grade: Yup.string().required("Grade is required"),
-            // year_of_completion: Yup.date().required("Year of completion is required"),
+            subject_name: Yup.string().required("Course title is required"),
+            grade_obtained: Yup.string().required("Grade obtained is required"),
+            details: Yup.string().required("Details are required"),
         }),
         onSubmit: async (values) => {
             try {
-                console.log("Form submitted:", courses);
-                success("Coursework added successfully");
-                onClose(false);
-            } catch (err) {
-                console.error("Error submitting form:", err);
-                error("Failed to add coursework");
+                const response = await axiosInstance.post(`/api/job_seeker_course_work/store`, values);
+                if (response) {
+                    toast.success("Course Data Saved")
+                    formik.resetForm();
+                }
+            } catch (error) {
+                handleError(error);
             } finally {
                 formik.resetForm();
+                onClose(false);
             }
         },
     });
-
-
-    const [courses, setCourses] = useState([
-        { course_title: "", grade: "", year_of_completion: "" },
-    ]);
-
-    // Add a new course row
-    const addCourse = () => {
-        setCourses([
-            ...courses,
-            { course_title: "", grade: "", year_of_completion: "" },
-        ]);
-    };
-
-    // Remove a course row
-    const removeCourse = (index) => {
-        setCourses(courses.filter((_, i) => i !== index));
-    };
-
-    // Handle input changes for dynamic fields
-    const handleCourseChange = (index, field, value) => {
-        const updatedCourses = [...courses];
-        updatedCourses[index][field] = value;
-        setCourses(updatedCourses);
-    };
 
     return (
         <Dialog
@@ -89,105 +69,83 @@ const AddCoursework = ({ isOpen, onClose, success, error }) => {
                         >
                             Add Coursework
                         </DialogTitle>
-                        {/* Modal content */}
-                        {courses.map((course, index) => (
-                            <div
-                                key={index}
-                                className="mt-6 grid grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-12 items-center"
+                        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-12 items-center">
+                            {/* Course Title */}
+                            <div className="sm:col-span-6">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Course Title
+                                </label>
+                                <input
+                                    type="text"
+                                    name="subject_name"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.subject_name}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                />
+                                {formik.touched.subject_name && formik.errors.subject_name && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {formik.errors.subject_name}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Grade Obtained */}
+                            <div className="sm:col-span-6">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Grade Obtained
+                                </label>
+                                <input
+                                    type="text"
+                                    name="grade_obtained"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.grade_obtained}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                />
+                                {formik.touched.grade_obtained &&
+                                    formik.errors.grade_obtained && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {formik.errors.grade_obtained}
+                                        </p>
+                                    )}
+                            </div>
+
+                            {/* Details */}
+                            <div className="col-span-full">
+                                <label className="block text-sm font-medium text-gray-900">
+                                    Details
+                                </label>
+                                <textarea
+                                    type="text"
+                                    rows={5}
+                                    name="details"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.details}
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                />
+                                {formik.touched.details && formik.errors.details && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {formik.errors.details}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                        <div className="mt-8 sm:flex sm:flex-row-reverse">
+                            <Button type="submit" color="gradient" variant="solid">
+                                Save
+                            </Button>
+                            <Button
+                                type="button"
+                                onClick={() => onClose(false)}
+                                color="gradient"
+                                variant="outline"
+                                className="mr-1"
                             >
-                                {/* Course Title */}
-                                <div className="sm:col-span-4">
-                                    <label className="block text-sm font-medium text-gray-900">
-                                        Course Title
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name={`course_title_${index}`}
-                                        onChange={(e) => handleCourseChange(index, "course_title", e.target.value)}
-                                        value={course.course_title}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    />
-                                </div>
-
-                                {/* Grade */}
-                                <div className="sm:col-span-4">
-                                    <label className="block text-sm font-medium text-gray-900">
-                                        Grade
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name={`grade_${index}`}
-                                        onChange={(e) => handleCourseChange(index, "grade", e.target.value)}
-                                        value={course.grade}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    />
-                                </div>
-
-                                {/* Year of Completion */}
-                                <div className="sm:col-span-3">
-                                    <label className="block text-sm font-medium text-gray-900">
-                                        Year of Completion
-                                    </label>
-                                    <input
-                                        type="date"
-                                        name={`year_of_completion_${index}`}
-                                        onChange={(e) =>
-                                            handleCourseChange(index, "year_of_completion", e.target.value)
-                                        }
-                                        value={course.year_of_completion}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    />
-                                </div>
-
-                                {/* Trash Icon */}
-                                <div className="sm:col-span-1 cursor-pointer flex mt-6">
-                                    {courses.length > 1 && (
-                                        <TrashIcon
-                                            className="w-7 h-7 text-red-600"
-                                            onClick={() => removeCourse(index)}
-                                        />
-                                    )}
-                                    {index === courses.length - 1 && (
-                                        <PlusCircleIcon
-                                            className="w-7 h-7 text-blue-500 cursor-pointer"
-                                            onClick={addCourse}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-
-
-                        {/* Add Course Button */}
-                        {/* <div className="flex justify-end mt-4">
-                            <PlusCircleIcon
-                                className="w-7 h-7 text-blue-500 cursor-pointer"
-                                onClick={addCourse}
-                            />
-                        </div> */}
-
-                        {loading ? (
-                            <div className="mt-8 sm:mt-8 sm:flex sm:flex-row-reverse"><InfinitySpin height={150} width={150} color="green" /></div>
-                        ) : (
-                            <div className="mt-8 sm:mt-8 sm:flex sm:flex-row-reverse">
-                                <Button type="submit" color="gradient" variant="solid">
-                                    Save
-                                </Button>
-                                <Button
-                                    type="button"
-                                    onClick={() => onClose(false)}
-                                    color="gradient"
-                                    variant="outline"
-                                    className="mr-1"
-                                >
-                                    Cancel
-                                </Button>
-                            </div>
-                        )}
+                                Cancel
+                            </Button>
+                        </div>
                     </form>
                 </DialogPanel>
             </div>
-
         </Dialog>
     );
 };

@@ -10,10 +10,11 @@ import axiosInstance, { handleError } from '../../../axiosInstance';
 import { Grid, InfinitySpin, RotatingLines } from 'react-loader-spinner';
 import { useRef } from 'react';
 import app_vars from '../../../config';
+import { useDropdownContext } from '../../../DropdownProvider';
 export default function PersonalInformation() {
     const [profileCollapsed, setProfileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
-
+    const dropDownValues = useDropdownContext();
     const handleCollapseToggle = () => {
         setProfileCollapsed(!profileCollapsed);
         if (!profileCollapsed) {
@@ -32,6 +33,7 @@ export default function PersonalInformation() {
             years_experience: data?.data[0]?.years_experience,
             expected_salary: data?.data[0]?.expected_salary,
             address: data?.data[0]?.address,
+            occupation: data?.data[0]?.occupation_id,
             user_id: user_id,
 
         },
@@ -40,13 +42,14 @@ export default function PersonalInformation() {
             father_name: Yup.string().required("Father's Name is required"),
             dob: Yup.date().required("Date of Birth is required"),
             gender: Yup.string().required("Gender is required"),
-            contact_number: Yup.string().required("Contact_number is required"),
-            years_experience: Yup.string().required("Years_experience is required"),
-            expected_salary: Yup.string().required("Expected Salary is required"),
+            // contact_number: Yup.string().required("Contact_number is required"),
+            // years_experience: Yup.string().required("Years_experience is required"),
+            // expected_salary: Yup.string().required("Expected Salary is required"),
+            // occupation: Yup.string().required("Occupation is required"),
         }),
         onSubmit: async (values) => {
             setLoading(true);
-            if (data) {
+            if (data?.length>0) {
                 try {
                     const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data[0]?.id}`, values);
                     if (response) {
@@ -304,6 +307,26 @@ export default function PersonalInformation() {
                                         {formik.touched.years_experience && formik.errors.years_experience && (
                                             <div className="text-red-600 text-sm">{formik.errors.years_experience}</div>
                                         )}
+                                    </div>
+                                    <div className="sm:col-span-1">
+                                        <label className="block text-sm font-medium text-gray-900">
+                                            Occupation
+                                        </label>
+                                        <select
+                                            name="occupation"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.occupation}
+                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        >
+                                            <option value="">Select</option>
+                                            {dropDownValues?.job_family?.map((item) => {
+                                                return (
+                                                    <option key={item.id} value={item?.id}>
+                                                        {item?.occupation}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
                                     </div>
                                     <div>
                                         <label htmlFor="expected_salary" className="block text-sm font-medium text-gray-900">Expected Salary</label>

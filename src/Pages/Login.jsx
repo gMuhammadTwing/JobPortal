@@ -123,7 +123,7 @@ export default function Login() {
 
                         {/* Right column container with background and description */}
                         <div
-                            className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#ff0000] to-[#008604]"
+                            className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#008604] to-[#008604]"
                         // style={{
                         //     background:
                         //         "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",

@@ -10,6 +10,7 @@ import DeleteModal from "../../../Components/DeleteModal";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import AddCoursework from "../Coursework/AddCoursework";
 import { Skeleton } from "../../../Components/Skeleton";
+import { Link } from "react-router-dom";
 export default function Education() {
     const [Education, setEducation] = useState(true);
     const [editEducation, setEditEducation] = useState(false);
@@ -20,11 +21,14 @@ export default function Education() {
         }
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = () => setIsModalOpen(true);
+    const [id, setId] = useState();
+    const openModal = (item) => {
+        console.log(item?.id);
+        
+        setId(item?.id)
+        setIsModalOpen(true);
+    }
     const closeModal = () => setIsModalOpen(false);
-
-    const ToastSuccess = (str) => toast.success(str);
-    const ToastError = (str) => toast.error(str);
     const validationSchema = Yup.object({
         degree_title: Yup.string().required('Degree title is required'),
         institute: Yup.string().required('Institute is required'),
@@ -139,7 +143,7 @@ export default function Education() {
                     name="Education"
                     endpoint={endpoint}
                 />
-                <AddCoursework isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
+                <AddCoursework isOpen={isModalOpen} onClose={closeModal} id={id} />
                 <Toaster richColors />
                 <div className="p-4 w-full max-w-5xl">
                     <div className={`border rounded-md shadow-lg ${Education ? "overflow-hidden" : ""}`}>
@@ -204,13 +208,13 @@ export default function Education() {
                                                             // onClick={() => ()}
                                                             className="hover:bg-gray-100 rounded-full p-1 focus:outline-none transition-colors"
                                                         >
-                                                            <EyeIcon className="h-6 w-6 text-black-600" />
+                                                            <Link to={`/job-seeker/coursework/${item?.id}`}><EyeIcon className="h-6 w-6 text-black-600" /></Link>
                                                         </button>
                                                         <Button
                                                             type="button"
                                                             color="gradient"
                                                             variant="outline"
-                                                            onClick={() => openModal()}
+                                                            onClick={() => openModal(item)}
                                                             className="hidden sm:block"
                                                         >
                                                             Add Course

@@ -9,11 +9,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
-import { useNavigate } from "react-router-dom";
-import axiosInstance, { handleError } from "../../../axiosInstance";
-import { LoaderTable } from "../../../Components/LoaderTable";
-import Pagination from "../../../Components/Pagination";
-import { useDropdownContext } from "../../../DropdownProvider";
+import axiosInstance, { handleError } from "../../axiosInstance";
+import { LoaderTable } from "../../Components/LoaderTable";
+import Pagination from "../../Components/Pagination";
 
 export default function Applicants({ job_id }) {
     const [data, setData] = useState();
@@ -21,7 +19,7 @@ export default function Applicants({ job_id }) {
     const fetchData = async (pageNum) => {
         setTableLoader(true)
         try {
-            const response = await axiosInstance.get(`/api/job_application?job_id=${job_id}&page=${pageNum}`);
+            const response = await axiosInstance.get(`/api/employer_veritas_short_listing/applicant_list?job_id=${job_id}&page=${pageNum}`);
             if (response) {
                 setData(response?.data)
                 console.log("data: ", response?.data);
@@ -37,47 +35,14 @@ export default function Applicants({ job_id }) {
     const pageNumber = async (pageNum) => {
         fetchData(pageNum);
     };
-    const dropDownValues = useDropdownContext();
 
     useEffect(() => {
         fetchData(1)
     }, [])
 
-    const handleChange = async (event, item) => {
-        setTableLoader(true);
-        const json = {
-            job_status_id: event.target.value
-        }
-        try {
-            const response = await axiosInstance.post(`/api/job_application/update/${item?.id}`, json);
-            if (response) {
-                toast.success("Applicant's status updated")
-            }
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setTableLoader(false)
-            fetchData(1);
-        }
-    };
-
     return (
         <div className="container mx-auto max-w-5xl h-screen">
             <div className="">
-                {/* <button
-                    type="button"
-                    onClick={() => {
-                        // nagivate("/admin/shortlisting");
-                        window.location.reload();
-                    }
-                    }
-                    className='border border-black rounded-full p-1 px-4'
-                >
-                    Back
-                </button> */}
-                {/* <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
-                    Applicants
-                </div> */}
                 <div className="mb-2">
                 </div>
                 <Toaster richColors />
@@ -109,16 +74,8 @@ export default function Applicants({ job_id }) {
                                                     className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                 >
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                                >
-                                                </th>
                                             </tr>
                                             <tr>
-                                                <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
-                                                    Job Title
-                                                </th>
                                                 {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Job Type
                                                 </th> */}
@@ -140,13 +97,7 @@ export default function Applicants({ job_id }) {
                                             {data?.data.length > 0 ? (
                                                 data?.data.map((item, index) => (
                                                     <tr key={index}>
-                                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-medium font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                                {item?.job_id?.job_title
-                                                                    ? item?.job_id?.job_title
-                                                                    : "N/A"}
-                                                            </span>
-                                                        </td>
+                                                       
                                                         {/* <td className="px-3 py-4 text-sm">
                                                             {item?.job_id?.job_type?.job_family}
                                                         </td> */}
@@ -158,30 +109,20 @@ export default function Applicants({ job_id }) {
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             <span
+                                                                className={`inline-flex items-center rounded-full px-4 py-1 text-xs font-bold ring-1 ring-inset ${item?.job_status_id?.job_status == "Submitted"
+                                                                    ? "bg-green-100 text-green-600 ring-green-300"
+                                                                    : item?.job_status_id?.job_status == "Shortlisted"
+                                                                        ? "bg-blue-100 text-blue-600 ring-blue-300"
+                                                                        : "bg-red-100 text-red-600 ring-red-300"
+                                                                    }`}
                                                             >
-                                                                {/* {item?.job_status_id?.job_status} */}
-                                                                <select
-                                                                    name="job_type"
-                                                                    onChange={(e) => handleChange(e, item)}
-                                                                    // value={formik.values.job_type}
-                                                                    value={item?.job_status_id?.id}
-                                                                    className="block py-1.5 px-2 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                                                >
-                                                                    <option value="">Select</option>
-                                                                    {dropDownValues?.job_status?.map((item) => {
-                                                                        return (
-                                                                            <option key={item.id} value={item?.id}>
-                                                                                {item?.job_status}
-                                                                            </option>
-                                                                        );
-                                                                    })}
-                                                                </select>
+                                                                {item?.job_status_id?.job_status}
                                                             </span>
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             <div className="flex items-center space-x-2">
-                                                                <EyeIcon className="w-5 h-5 text-black" title="View Participant" />
-                                                                {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit Pa" /> */}
+                                                                <EyeIcon className="w-5 h-5 text-black" title="View" />
+                                                                {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit" /> */}
                                                                 {/* <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" /> */}
                                                             </div>
                                                         </td>

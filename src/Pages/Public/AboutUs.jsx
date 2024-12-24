@@ -119,7 +119,7 @@ export default function AboutUs() {
             <div className=' text-center bg-[#FFF5F3] p-20'>
                 <h1 className="font-medium text-3xl sm:text-3xl md:text-4xl p-1">What’s great about it?</h1>
                 <div>All the features of Job Portal below</div>
-                <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5">
+                <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5  mx-auto max-w-[75rem]">
                     {features.map((person, index) => (
                         <li
                             key={index}
@@ -142,7 +142,7 @@ export default function AboutUs() {
                 </ul>
             </div>
 
-            <div className=' text-center p-20'>
+            <div className=' text-center p-20  mx-auto max-w-[85rem]'>
                 <h1 className="font-medium text-3xl sm:text-3xl md:text-4xl p-1">Client testimonials</h1>
                 <div>Learning communicate to global world and build a bright future and career development, increase your skill with our histudy.</div>
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 sm:mt-10 sm:pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">

@@ -36,6 +36,9 @@ import BlogDetails from './Pages/Public/BlogDetails';
 import Jobs from './Pages/Public/Jobs';
 import AdminContactUs from './Pages/Admin/Contacts/Index';
 import PaymentApprovalPending from './Pages/PaymentApprovalPending';
+import ResumeBank from './Pages/Employer/ResumeBank';
+import VertiasShortlisting from './Pages/Employer/VeritasShortlisting';
+import EmployerAgencyList from './Pages/Admin/Agency/Index'
 function App() {
   return (
     <DropdownProvider>
@@ -64,13 +67,16 @@ function App() {
               <Route path="applied_job_list" element={<ProtectedRoutes><JobsApplied /></ProtectedRoutes>} />
               <Route path="resume" element={<Resume />} />
               <Route path="view_job_list" element={<ProtectedRoutes><ViewJobs /></ProtectedRoutes>} />
-              <Route path="coursework" element={<ProtectedRoutes><CourseWork /></ProtectedRoutes>} />
+              <Route path="coursework/:id" element={<ProtectedRoutes><CourseWork /></ProtectedRoutes>} />
+              <Route path="coursework/:id" element={<ProtectedRoutes><CourseWork /></ProtectedRoutes>} />
             </Route>
 
             {/* Employer Routes */}
             <Route path="employer" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="profile" element={<ProtectedRoutes><EmployerProfile /></ProtectedRoutes>} />
               <Route path="job_management" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} />
+              <Route path="resume_bank" element={<ProtectedRoutes><ResumeBank /></ProtectedRoutes>} />
+              <Route path="veritas_shortlisting" element={<ProtectedRoutes><VertiasShortlisting /></ProtectedRoutes>} />
             </Route>
 
             {/* Admin Routes */}
@@ -82,6 +88,7 @@ function App() {
               <Route path="instructions" element={<ProtectedRoutes><InstructionsIndex /></ProtectedRoutes>} />
               <Route path="payments" element={<ProtectedRoutes><PaymentIndex /></ProtectedRoutes>} />
               <Route path="contacts" element={<ProtectedRoutes><AdminContactUs /></ProtectedRoutes>} />
+              <Route path="agencies_list" element={<ProtectedRoutes><EmployerAgencyList /></ProtectedRoutes>} />
             </Route>
 
             {/* No Permission Route */}

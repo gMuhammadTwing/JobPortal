@@ -14,6 +14,7 @@ import axiosInstance, { handleError } from "../../../axiosInstance";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import { Button } from "../../../Components/Button";
 import AddBlogPost from "./AddBlogPost";
+import { Link } from "react-router-dom";
 
 export default function Index() {
     const [data, setData] = useState();
@@ -119,7 +120,7 @@ export default function Index() {
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
                                                     <div className="flex items-center space-x-2">
-                                                        <EyeIcon onClick={() => blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Blog" />
+                                                        <Link to={`/blog/blog_details/${item?.id}`}><EyeIcon className=" cursor-pointer w-5 h-5 text-black" title="View Blog" /></Link>
                                                         <PencilIcon onClick={() => blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Blog" />
                                                         <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Blog" />
                                                     </div>

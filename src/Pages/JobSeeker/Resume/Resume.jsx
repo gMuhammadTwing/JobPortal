@@ -163,13 +163,14 @@ export default function Resume() {
                                                         className="flex flex-col sm:table-row sm:flex-row sm:items-center"
                                                     >
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            {item?.resume_file}
+                                                        </td>
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <h1 className="text-blue-600 font-semibold">
                                                                 {item?.is_current ? "Active" : "In-active"}
                                                             </h1>
                                                         </td>
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                            {item?.resume_file}
-                                                        </td>
+                                                        
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <Switch
                                                                 checked={item.is_current}

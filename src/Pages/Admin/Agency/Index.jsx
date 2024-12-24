@@ -23,7 +23,7 @@ export default function Index() {
     const fetchData = async (page) => {
         setTableLoader(true)
         try {
-            const response = await axiosInstance.get(`/api/admin_user_list?role_id=2&page=${page}`);
+            const response = await axiosInstance.get(`/api/admin_user_list?role_id=4&page=${page}`);
             if (response) {
                 setData(response?.data)
                 console.log(response);
@@ -41,7 +41,6 @@ export default function Index() {
     const pageNumber = async (pageNum) => {
         fetchData(pageNum);
     };
-
     return (
         <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             <div className="pb-15">
@@ -58,16 +57,16 @@ export default function Index() {
                                                     scope="col"
                                                     className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                                 >
-                                                    List of Job Seekers
+                                                    List of Employer Agency
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >
                                                 </th>
                                                 <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
 
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                                >
                                                 </th>
                                             </tr>
                                         </thead>
@@ -79,7 +78,7 @@ export default function Index() {
                                                         className="flex flex-col sm:table-row sm:flex-row sm:items-center"
                                                     >
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                            <h1 className="font-semibold">
+                                                            <h1 className=" font-semibold">
                                                                 {item?.name}
                                                             </h1>
                                                         </td>

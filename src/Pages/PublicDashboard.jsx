@@ -78,11 +78,13 @@ export default function PublicDashboard() {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
-                  <img
-                    alt="Your Company"
-                    src={menu_logo}
-                    className="w-30 h-12"
-                  />
+                  <Link to={"/home"}>
+                    <img
+                      alt="Your Company"
+                      src={menu_logo}
+                      className="w-30 h-12"
+                    />
+                  </Link>
                 </div>
                 {/* !((role_id == 1 || role_id == undefined) && item.name == 'Admin') */}
                 <div className="hidden md:block">
@@ -394,15 +396,6 @@ export default function PublicDashboard() {
 
                   </div>
 
-                  {/* <button
-                    type="button"
-                    className="relative rounded-full bg-orange-600 p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-600"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon aria-hidden="true" className="w-5 h-5 bg-orange-600 text-white" />
-                  </button> */}
-
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <MenuButton className="p-1 relative flex max-w-xs items-center rounded-full text-sm cursor-default">
@@ -448,7 +441,7 @@ export default function PublicDashboard() {
                     <>
                       <div
                         className={classNames(
-                          location.pathname.includes("/register") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                          location.pathname.includes("/register") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                           'rounded-md py-2 px-2 text-sm font-medium cursor-pointer mr-2'
                         )}
                       >
@@ -463,7 +456,7 @@ export default function PublicDashboard() {
                       <div className="border-l border-gray-300 h-8"></div>
                       <div
                         className={classNames(
-                          location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                          location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                           'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                         )}
                       >
@@ -481,7 +474,7 @@ export default function PublicDashboard() {
                   {(localStorage.token && localStorage.token != 'undefined') && (
                     <div
                       className={classNames(
-                        location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                        location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                         'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                       )}
                     >
@@ -499,7 +492,7 @@ export default function PublicDashboard() {
                     </div>
                   )}
                 </div>
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-orange-600 p-2 text-white hover:bg-orange-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-600">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-[#ff0000] p-2 text-white hover:bg-[#ff0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#ff0000]">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
@@ -511,24 +504,74 @@ export default function PublicDashboard() {
 
           <DisclosurePanel className="md:hidden bg-gray-100 text-black">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {navigation.filter(item => !((role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                !((role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker'))
-                .map((item) => (
-                  <DisclosureButton
-                    key={item.name}
-                    as={Link}
-                    to={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      item.current ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-600 hover:text-white',
-                      'block rounded-md px-3 py-2 text-base font-medium',
-                    )}
-                  >
-                    {item.name}
-                  </DisclosureButton>
-                ))}
+              {(payment == null || payment == "null") && (role_id != undefined && role_id != 3) ?
+                (
+                  navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                    !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                    !((role_id != 1) && item.name == 'Admin'))
+                    .map((item) => (
+                      <DisclosureButton
+                        key={item.name}
+                        as={Link}
+                        to={'payment-alert'}
+                        // to={item.href}
+                        aria-current={item.current ? 'page' : undefined}
+                        className={classNames(
+                          item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
+                          'block rounded-md px-3 py-2 text-base font-medium',
+                        )}
+                      >
+                        {item.name}
+                      </DisclosureButton>
+                    ))
+                ) :
+                <>
+                  {
+                    (payment == "true" || role_id == 3) ?
+                      (navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                        !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                        !((role_id != 1) && item.name == 'Admin'))
+                        .map((item) => (
+                          <DisclosureButton
+                            key={item.name}
+                            as={Link}
+                            to={item.href}
+                            aria-current={item.current ? 'page' : undefined}
+                            className={classNames(
+                              item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
+                              'block rounded-md px-3 py-2 text-base font-medium',
+                            )}
+                          >
+                            {item.name}
+                          </DisclosureButton>
+                        ))
+                      )
+                      : (
+                        (navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                          !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                          !((role_id != 1) && item.name == 'Admin'))
+                          .map((item) => (
+                            <DisclosureButton
+                              key={item.name}
+                              as={Link}
+                              to={'payment-pending'}
+                              // to={item.href}
+                              aria-current={item.current ? 'page' : undefined}
+                              className={classNames(
+                                item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                'block rounded-md px-3 py-2 text-base font-medium',
+                              )}
+                            >
+                              {item.name}
+                            </DisclosureButton>
+                          ))
+                        )
+                      )
+                  }
+                </>
+              }
             </div>
-            <div className="border-t border-orange-500 pb-3 pt-4">
+            <div className="border-t border-[#ff0000] pb-3 pt-4">
               <div className="flex items-center px-5">
                 <div className="shrink-0">
                   {(localStorage.token && localStorage.token != 'undefined') && (

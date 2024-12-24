@@ -11,6 +11,8 @@ import { Skeleton } from "../../Components/Skeleton";
 import JobDetails from "./JobDetails";
 import ApplyModal from "../JobSeeker/ViewJobs/ApplyModal";
 import ApplyInstructionsModal from "../JobSeeker/ViewJobs/ApplyInstructionsModal";
+import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 export default function Jobs() {
     const dropDownValues = useDropdownContext();
@@ -19,6 +21,7 @@ export default function Jobs() {
     const [data, setData] = useState();
     const [viewDetails, setViewDetails] = useState(false);
     const [viewData, setViewData] = useState();
+    const user_id = localStorage?.user_id || "";
     const [applyModal, setApplyModal] = useState(false);
     const [filters, setFilters] = useState({
         job_title: "",
@@ -43,7 +46,7 @@ export default function Jobs() {
     const fetchData = async (page, filters) => {
         setTableLoader(true);
         try {
-            const response = await axiosInstance.get(`api/job_list?job_title=${filters?.job_title}&job_type=${filters?.job_type}&location=${filters?.location}&job_status=${filters?.job_status}&page=${page}`);
+            const response = await axiosInstance.get(`api/job_list?user_id=${user_id}&job_title=${filters?.job_title}&job_type=${filters?.job_type}&location=${filters?.location}&job_status=${filters?.job_status}&page=${page}`);
             if (response) {
                 setData(response.data)
             }
@@ -112,7 +115,7 @@ export default function Jobs() {
                         </label> */}
                             <form onSubmit={formik.handleSubmit}>
                                 <div className="py-2 px-1 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
-                                    <div className="sm:col-span-2">
+                                    <div className="sm:col-span-3">
                                         <label className="block text-sm font-medium text-gray-900">
                                             Job Title
                                         </label>
@@ -126,7 +129,7 @@ export default function Jobs() {
                                     </div>
 
                                     {/* Job Type */}
-                                    <div className="sm:col-span-2">
+                                    <div className="sm:col-span-3">
                                         <label className="block text-sm font-medium text-gray-900">
                                             Job Type
                                         </label>
@@ -148,7 +151,7 @@ export default function Jobs() {
                                     </div>
 
                                     {/* Location */}
-                                    <div className="sm:col-span-2">
+                                    <div className="sm:col-span-3">
                                         <label className="block text-sm font-medium text-gray-900">
                                             Location
                                         </label>
@@ -159,23 +162,6 @@ export default function Jobs() {
                                             value={formik.values.location}
                                             className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                         />
-                                    </div>
-
-                                    {/* Job Status */}
-                                    <div className="sm:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-900">
-                                            Job Status
-                                        </label>
-                                        <select
-                                            name="job_status"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.job_status}
-                                            className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                        >
-                                            <option value="">Select</option>
-                                            <option value={1}>Open</option>
-                                            <option value={0}>Closed</option>
-                                        </select>
                                     </div>
                                     <div className="sm:col-span-2 mt-2 flex gap-2">
                                         <button
@@ -209,30 +195,60 @@ export default function Jobs() {
                                                         {item?.job_type?.job_family}
                                                     </span>
                                                 </div>
-                                                <div className="flex flex-wrap gap-2">
-                                                    <button
-                                                        onClick={() => {
-                                                            setViewDetails(true);
-                                                            setViewData(item);
-                                                        }}
-                                                        className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
-                                                    >
-                                                        View Details
-                                                    </button>
-                                                    {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
-                                                        <button onClick={() => applyInstructionsHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                                            View Job Instruction to Apply
-                                                        </button>
-                                                    )}
-                                                    {item?.veritas_to_short_list === 1 && (
+                                                {!item?.has_applied ? (
+                                                    <div className="flex flex-wrap gap-2">
                                                         <button
-                                                            onClick={() => applyHandler(item)}
-                                                            className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                            onClick={() => {
+                                                                setViewDetails(true);
+                                                                setViewData(item);
+                                                            }}
+                                                            className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
                                                         >
-                                                            Apply for Job
+                                                            View Details
                                                         </button>
+                                                        {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
+                                                            <button onClick={() => applyInstructionsHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                                                                View Job Instruction to Apply
+                                                            </button>
+                                                        )}
+                                                        {item?.veritas_to_short_list === 1 && (
+                                                            (localStorage.token && localStorage.token != 'undefined') ? (
+                                                                <>
+
+                                                                    <button
+                                                                        onClick={() => applyHandler(item)}
+                                                                        className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        Apply for Job
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <Link
+                                                                    onClick={() => toast.info("Please login first to apply")}
+                                                                    to={"/login"}
+                                                                    className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                >
+                                                                    Apply for Job
+                                                                </Link>
+                                                            )
+
+                                                        )}
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className="flex flex-wrap gap-2">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setViewDetails(true);
+                                                                    setViewData(item);
+                                                                }}
+                                                                className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                View Details
+                                                            </button>
+                                                            <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
+                                                        </div>
                                                     )}
-                                                </div>
                                             </div>
 
 

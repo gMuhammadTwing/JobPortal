@@ -4,9 +4,12 @@ import ReactQuill from "react-quill";
 import { useParams } from "react-router-dom"
 import ApplyModal from "../JobSeeker/ViewJobs/ApplyModal";
 import ApplyInstructionsModal from "../JobSeeker/ViewJobs/ApplyInstructionsModal";
+import app_vars from "../../config";
 
 export default function JobDetails({ data }) {
     const id = useParams();
+    console.log(data);
+
     const [viewData, setViewData] = useState(data);
     const [applyModal, setApplyModal] = useState(false);
     const [applyData, setApplyData] = useState();
@@ -38,33 +41,62 @@ export default function JobDetails({ data }) {
                 <div className="mb-4">
                 </div>
                 <div className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
-                        <div className="text-start">
-                            <h1 className="font-semibold text-lg md:text-xl">{viewData?.job_title}</h1>
-                            <div className="font-semibold text-md md:text-md">
-                                {viewData?.company_id?.company_name}
+                    <div className="flex flex-wrap justify-end gap-2">
+                        {!viewData?.has_applied ? (
+                            <>
+                                {(viewData?.veritas_to_short_list === 0 || viewData?.veritas_to_short_list === null) && (
+                                    <button
+                                        onClick={() => applyInstructionsHandler(viewData)}
+                                        className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"
+                                    >
+                                        View Job Instruction to Apply
+                                    </button>
+                                )}
+                                {viewData?.veritas_to_short_list === 1 && (
+                                    <button
+                                        onClick={() => applyHandler(viewData)}
+                                        className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                    >
+                                        Apply for Job
+                                    </button>
+                                )}
+                            </>
+                        ) : (
+                            <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg">
+                                Already Applied
                             </div>
-                            <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                {viewData?.job_type?.job_family}
-                            </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-
-                            {(viewData?.veritas_to_short_list === 0 || viewData?.veritas_to_short_list === null) && (
-                                <button onClick={() => applyInstructionsHandler(viewData)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                    View Job Instruction to Apply
-                                </button>
-                            )}
-                            {viewData?.veritas_to_short_list === 1 && (
-                                <button
-                                    onClick={() => applyHandler(viewData)}
-                                    className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
-                                >
-                                    Apply for Job
-                                </button>
-                            )}
-                        </div>
+                        )}
                     </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-between text-center mb-4">
+                        {/* Left Section: Image and Text */}
+                        <div className="flex items-center">
+                            <img
+                                src={
+                                    app_vars?.domain?.fileURL + localStorage?.user_image
+                                }
+
+                                // src={
+                                //     app_vars?.domain?.fileURL + viewData?.company_id?.logo
+                                // }
+                                alt="User Profile"
+                                className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                            />
+                            <div className="text-start ml-4">
+                                <h1 className="font-semibold text-lg md:text-xl">{viewData?.job_title}</h1>
+                                <div className="font-semibold text-md md:text-md">
+                                    {viewData?.company_id?.company_name}
+                                </div>
+                                <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    {viewData?.job_type?.job_family}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Right Section: Buttons */}
+
+                    </div>
+
+
 
                     {/* Details Section */}
                     <div className="flex flex-wrap gap-4">

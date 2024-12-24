@@ -1,11 +1,16 @@
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 import AddCoursework from "./AddCoursework";
 import { Button } from "../../../Components/Button";
 import Pagination from "../../../Components/Pagination";
+import axiosInstance, { handleError } from "../../../axiosInstance";
+import { useParams } from "react-router-dom";
 
 export default function Index() {
+    const param = useParams();
+    console.log("Param: ", param);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -43,11 +48,30 @@ export default function Index() {
             year_of_completion: "2024",
         },
     ]);
+    const [data, setData] = useState();
+    const user_id = localStorage.user_id;
+    const [tableLoader, setTableLoader] = useState(false);
+    const fetchData = async (page) => {
+        setTableLoader(true)
+        try {
+            const response = await axiosInstance.get(`api/job_seeker_course_work?page=${page}`);
+            if (response) {
+                setData(response?.data)
+                console.log(response?.data);
 
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
+        }
+    }
     const pageNumber = async (pageNum) => {
-        // Pagination logic can go here
+        fetchData(pageNum)
     };
-
+    useEffect(() => {
+        fetchData(1)
+    }, [])
     return (
         <div className="container mx-auto max-w-5xl h-screen">
             <AddCoursework isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
@@ -66,7 +90,7 @@ export default function Index() {
                         <div className="overflow-hidden">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
-                                <tr className="border-b border-gray-300">
+                                    <tr className="border-b border-gray-300">
                                         <th
                                             scope="col"
                                             className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
