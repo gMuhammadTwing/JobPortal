@@ -46,8 +46,8 @@ export default function ContactUs() {
         <div className="bg-white min-h-screen">
             {/* Header Section */}
             <div className=' text-center bg-[#FFF5F3] p-20'>
-                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl">Contact Us</h1>
-                <p>We can’t wait to hear from you.</p>
+                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Contact Us</h1>
+                <p>We’d love to hear from you! Whether you have questions, feedback, or need assistance</p>
             </div>
 
             {/* Content Section */}

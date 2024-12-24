@@ -108,7 +108,6 @@ const ApplyInstructionsModal = ({ isOpen, onClose, data }) => {
                                                 "list",
                                                 "bullet",
                                             ]}
-                                            placeholder="Write something"
                                         />
                                     
                                     </div>

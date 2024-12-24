@@ -96,7 +96,7 @@ export default function Index() {
     };
 
     return (
-        <div className="container mx-auto max-w-5xl min-h-screen">
+        <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             {/* <AddResume isOpen={isModalOpen} onClose={closeModal} updateData={updateData} /> */}
             <DeleteModal
                 isOpen={isDelete}
@@ -106,9 +106,9 @@ export default function Index() {
             />
 
             <div className="pb-15">
-                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
+                {/* <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Manage Job Seeker Accounts
-                </div>
+                </div> */}
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
@@ -120,7 +120,7 @@ export default function Index() {
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    className="py-3.5 pl-4 pr-3 text-left text-xl font-semibold text-gray-900 sm:pl-6"
+                                                    className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                                 >
                                                     List of Job Seekers
                                                 </th>

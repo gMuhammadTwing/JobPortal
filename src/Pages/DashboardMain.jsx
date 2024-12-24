@@ -74,7 +74,7 @@ export default function DashboardMain() {
             {/* Sidebar */}
             <aside
                 className={classNames(
-                    "fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg border border-gray-300 overflow-y-auto transform transition-transform",
+                    "fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg  overflow-y-auto transform transition-transform",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full",
                     "md:relative md:translate-x-0 md:w-72"
                 )}

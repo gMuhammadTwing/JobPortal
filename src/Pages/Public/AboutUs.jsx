@@ -86,8 +86,9 @@ export default function AboutUs() {
         <div
             className='bg-white'
         >
-            <div className='font-medium text-4xl sm:text-4xl md:text-5xl text-center bg-[#FFF5F3] p-20'>
-                <h1>About Us</h1>
+           <div className=' text-center bg-[#FFF5F3] p-20'>
+                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">About Us</h1>
+                <p>We are dedicated to bridging the gap between talent and opportunity</p>
             </div>
 
             <div className="text-center p-15 space-y-4 max-w-7xl mx-auto">

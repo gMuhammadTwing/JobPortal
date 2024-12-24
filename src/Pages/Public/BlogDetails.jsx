@@ -132,7 +132,7 @@ export default function BlogDetails() {
                     </div>
                 )}
             </div>
-            <div className="max-w-4xl m-auto mt-10 border rounded p-4">
+            {/* <div className="max-w-4xl m-auto mt-10 border rounded p-4">
                 <div className="font-semibold">About Author</div>
                 <div className=" flex gap-6 items-center">
                     <img
@@ -159,7 +159,7 @@ export default function BlogDetails() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
         </div>
     );

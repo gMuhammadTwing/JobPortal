@@ -42,19 +42,41 @@ export default function Contacts() {
     const parser = new DOMParser();
 
     return (
-        <div className="container mx-auto px-4 max-w-5xl h-screen">
+        <div className="container mx-auto px-4 max-w-5xl h-screen mt-4">
             <div>
-                <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
+                {/* <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Contact Us
-                </div>
+                </div> */}
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
                         <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg mb-2">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
+                                    <tr className="border-b border-gray-300">
+                                        <th
+                                            scope="col"
+                                            className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
+                                        >
+                                           Contact Us
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                    </tr>
                                     <tr>
-                                        <th className="py-3 pl-2 pr-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-3 py-5.5 text-left text-sm font-semibold text-gray-900">
                                             Full Name
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">

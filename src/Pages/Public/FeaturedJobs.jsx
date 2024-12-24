@@ -55,7 +55,7 @@ export default function FeaturedJobs() {
                                 <div className="flex flex-col items-start text-center mb-4">
                                     <h1 className="font-semibold text-lg md:text-xl">{item?.job_title}</h1>
                                     {/* <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"> */}
-                                        {item?.company_id?.company_name}
+                                    {item?.company_id?.company_name}
                                     {/* </span> */}
                                 </div>
 
@@ -93,11 +93,11 @@ export default function FeaturedJobs() {
                                     <div className="flex justify-center -mt-px divide-x divide-gray-300">
                                         <div className="flex items-center justify-center w-1/2 space-x-2">
                                             <ArrowDownOnSquareIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
-                                            <span>View</span>
+                                            <Link to={"/jobs"}><span>View</span></Link>
                                         </div>
                                         <div className="flex items-center justify-center w-1/2 space-x-2">
                                             <ArrowDownRightIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
-                                            <span>Apply</span>
+                                            <Link to={"/jobs"}><span>Apply</span></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -105,11 +105,11 @@ export default function FeaturedJobs() {
                         ))}
 
                     </ul>
-                    <div className="mt-10 text-red-500 underline cursor-pointer">
+                    <div className="mt-10 flex justify-center cursor-pointer">
                         <Link
                             to={"/jobs"}
                         >
-                            {">>Show All"}
+                            <span className="bg-white p-3 rounded-lg">Show more jobs</span>
                         </Link></div>
                 </>
             }

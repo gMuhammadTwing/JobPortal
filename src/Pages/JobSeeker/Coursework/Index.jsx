@@ -52,9 +52,9 @@ export default function Index() {
         <div className="container mx-auto max-w-5xl h-screen">
             <AddCoursework isOpen={isModalOpen} onClose={closeModal} success={ToastSuccess} error={ToastError} />
             <div className="mt-4">
-                <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
+                {/* <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Coursework List
-                </div>
+                </div> */}
                 {/* <div className="mb-2">
                     <Button type="button" color="gradient" variant="solid" onClick={openModal}>
                         Add Coursework
@@ -66,6 +66,39 @@ export default function Index() {
                         <div className="overflow-hidden">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
+                                <tr className="border-b border-gray-300">
+                                        <th
+                                            scope="col"
+                                            className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
+                                        >
+                                            Coursework List
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                    </tr>
                                     <tr>
                                         <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                                             Degree Program

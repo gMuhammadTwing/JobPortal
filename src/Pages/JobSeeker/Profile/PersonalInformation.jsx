@@ -148,10 +148,10 @@ export default function PersonalInformation() {
     return (
         <div className="flex justify-center sm:px-0">
             <div className="p-4 w-full max-w-5xl">
-                <div className={`border rounded-md shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
+                <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : "rounded-lg"}`}>
                     {/* Header Section */}
                     <div
-                        className="flex justify-between items-center p-4 border-b cursor-pointer text-[#ff0000] bg-white"
+                        className="rounded-lg flex justify-between items-center p-4 border-b cursor-pointer text-[#ff0000] bg-white"
                         onClick={handleCollapseToggle}
                     >
                         <h3 className="font-bold text-xl">Personal Information</h3>

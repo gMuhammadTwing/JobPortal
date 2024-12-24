@@ -37,8 +37,9 @@ export default function Blogs() {
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="font-medium text-4xl text-center bg-[#FFF5F3] p-10">
-                <h1 className="text-[#ff0000]">Blogs</h1>
+            <div className=' text-center bg-[#FFF5F3] p-20'>
+                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Blogs</h1>
+                <p>Discover Insights and Stories that Spark Your Curiosity</p>
             </div>
             {tableLoader ? <BlogSkeleton /> :
                 <div className=" mx-auto max-w-[75rem] p-4">

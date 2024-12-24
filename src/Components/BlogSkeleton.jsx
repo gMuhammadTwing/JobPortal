@@ -2,11 +2,11 @@ import React from 'react';
 
 export const BlogSkeleton = () => {
     return (
-        <div className="bg-white min-h-screen p-4">
+        <div className="min-h-screen p-4">
             {/* <div className="font-medium text-4xl text-center bg-[#FFF5F3] p-10 animate-pulse">
                 <div className="h-10 bg-gray-300 rounded-md w-1/3 mx-auto"></div>
             </div> */}
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto max-w-[85rem] p-4">
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5">
                     {[...Array(4)].map((_, index) => (
                         <div key={index} className="border shadow-lg p-4 rounded-lg flex flex-col animate-pulse">

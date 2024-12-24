@@ -8,6 +8,9 @@ import { useFormik } from "formik";
 import { useDropdownContext } from "../../DropdownProvider";
 import { BlogSkeleton } from "../../Components/BlogSkeleton";
 import { Skeleton } from "../../Components/Skeleton";
+import JobDetails from "./JobDetails";
+import ApplyModal from "../JobSeeker/ViewJobs/ApplyModal";
+import ApplyInstructionsModal from "../JobSeeker/ViewJobs/ApplyInstructionsModal";
 
 export default function Jobs() {
     const dropDownValues = useDropdownContext();
@@ -66,6 +69,17 @@ export default function Jobs() {
         setApplyModal(false);
         fetchData(1, filters)
     }
+
+    const [applyInstructionsModal, setApplyInstructionsModal] = useState(false);
+    const [applyInstructionsData, setApplyInstructionsData] = useState();
+    const applyInstructionsHandler = (job) => {
+        setApplyInstructionsData(job);
+        setApplyInstructionsModal(true);
+    }
+    const closeApplyInstructionsModal = () => {
+        setApplyInstructionsModal(false);
+        fetchData(1, filters)
+    }
     const clearFilter = () => {
         formik.resetForm();
         setFilters({
@@ -83,12 +97,13 @@ export default function Jobs() {
     }
     return (
         <div className="bg-white">
-            <div className="font-medium text-4xl text-center bg-[#FFF5F3] p-10">
-                <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl">Jobs</h2>
-                <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
+            <div className=' text-center bg-[#FFF5F3] p-20'>
+                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Jobs</h1>
+                <p>Find your dream job among these opportunities.</p>
             </div>
             <div className="container mx-auto max-w-6xl pb-15 min-h-screen mt-5">
-                {/* <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} /> */}
+                <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
+                <ApplyInstructionsModal data={applyInstructionsData} onClose={closeApplyInstructionsModal} isOpen={applyInstructionsModal} />
                 {!viewDetails ? (
                     <div className="px-6 lg:px-8 ">
                         <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  shadow">
@@ -194,22 +209,29 @@ export default function Jobs() {
                                                         {item?.job_type?.job_family}
                                                     </span>
                                                 </div>
-                                                <div className="flex gap-2 mt-2 sm:mt-0">
+                                                <div className="flex flex-wrap gap-2">
                                                     <button
                                                         onClick={() => {
                                                             setViewDetails(true);
                                                             setViewData(item);
                                                         }}
-                                                        className="text-xs bg-red-50 text-[#ff0000] px-2 py-1 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                                        className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
                                                     >
                                                         View Details
                                                     </button>
-                                                    <button
-                                                        onClick={() => applyHandler(item)}
-                                                        className="text-xs bg-green-50 text-[#008604] px-2 py-1 rounded-lg hover:bg-[#008604] hover:text-white transition duration-200 ease-in-out"
-                                                    >
-                                                        Apply for Job
-                                                    </button>
+                                                    {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
+                                                        <button onClick={() => applyInstructionsHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                                                            View Job Instruction to Apply
+                                                        </button>
+                                                    )}
+                                                    {item?.veritas_to_short_list === 1 && (
+                                                        <button
+                                                            onClick={() => applyHandler(item)}
+                                                            className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                        >
+                                                            Apply for Job
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
 
@@ -258,200 +280,201 @@ export default function Jobs() {
                     </div>
                 ) :
                     (
-                        <ul role="list">
-                            <div className="mb-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setViewDetails(false)}
-                                    className="border rounded-lg px-4 py-2 text-sm bg-white hover:rounded-full transition duration-200 ease-in-out"
-                                >
-                                    Back
-                                </button>
-                            </div>
-                            <div className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
-                                    <div className="text-start">
-                                        <h1 className="font-semibold text-lg md:text-xl">{viewData?.job_title}</h1>
-                                        <div className="font-semibold text-md md:text-md">
-                                            {viewData?.company_id?.company_name}
-                                        </div>
-                                        <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                            {viewData?.job_type?.job_family}
-                                        </span>
-                                    </div>
-                                    <div className="flex flex-wrap gap-2">
+                        <JobDetails data={viewData} />
+                        // <ul role="list">
+                        //     <div className="mb-4">
+                        //         {/* <button
+                        //             type="button"
+                        //             onClick={() => setViewDetails(false)}
+                        //             className="border rounded-lg px-4 py-2 text-sm bg-white hover:rounded-full transition duration-200 ease-in-out"
+                        //         >
+                        //             Back
+                        //         </button> */}
+                        //     </div>
+                        //     <div className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
+                        //         <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
+                        //             <div className="text-start">
+                        //                 <h1 className="font-semibold text-lg md:text-xl">{viewData?.job_title}</h1>
+                        //                 <div className="font-semibold text-md md:text-md">
+                        //                     {viewData?.company_id?.company_name}
+                        //                 </div>
+                        //                 <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                        //                     {viewData?.job_type?.job_family}
+                        //                 </span>
+                        //             </div>
+                        //             <div className="flex flex-wrap gap-2">
 
-                                        {(viewData?.veritas_to_short_list === 0 || viewData?.veritas_to_short_list === null) && (
-                                            <button onClick={() => applyInstructionHandler(viewData)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                                View Job Instruction to Apply
-                                            </button>
-                                        )}
-                                        {viewData?.veritas_to_short_list === 1 && (
-                                            <button
-                                                onClick={() => applyHandler(viewData)}
-                                                className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
-                                            >
-                                                Apply for Job
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
+                        //                 {(viewData?.veritas_to_short_list === 0 || viewData?.veritas_to_short_list === null) && (
+                        //                     <button onClick={() => applyInstructionHandler(viewData)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                        //                         View Job Instruction to Apply
+                        //                     </button>
+                        //                 )}
+                        //                 {viewData?.veritas_to_short_list === 1 && (
+                        //                     <button
+                        //                         onClick={() => applyHandler(viewData)}
+                        //                         className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                        //                     >
+                        //                         Apply for Job
+                        //                     </button>
+                        //                 )}
+                        //             </div>
+                        //         </div>
 
-                                {/* Details Section */}
-                                <div className="flex flex-wrap gap-4">
-                                    <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                        <CalendarDateRangeIcon className="w-5 h-5" />
-                                        {new Date(viewData?.created_at).toLocaleDateString("en-US", {
-                                            year: "numeric",
-                                            month: "short",
-                                            day: "2-digit",
-                                        })}
-                                    </p>
-                                    <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                        <CurrencyDollarIcon className="w-5 h-5" />
-                                        {viewData?.expected_salary}
-                                    </p>
-                                    <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                        <MapPinIcon className="w-5 h-5" />
-                                        {viewData?.location}
-                                    </p>
-                                </div>
+                        //         {/* Details Section */}
+                        //         <div className="flex flex-wrap gap-4">
+                        //             <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                        //                 <CalendarDateRangeIcon className="w-5 h-5" />
+                        //                 {new Date(viewData?.created_at).toLocaleDateString("en-US", {
+                        //                     year: "numeric",
+                        //                     month: "short",
+                        //                     day: "2-digit",
+                        //                 })}
+                        //             </p>
+                        //             <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                        //                 <CurrencyDollarIcon className="w-5 h-5" />
+                        //                 {viewData?.expected_salary}
+                        //             </p>
+                        //             <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                        //                 <MapPinIcon className="w-5 h-5" />
+                        //                 {viewData?.location}
+                        //             </p>
+                        //         </div>
 
-                                {/* Description Section */}
-                                <div className="mt-2 pt-2">
-                                    <label htmlFor="description" className="block font-semibold mb-2">
-                                        Job Description
-                                    </label>
-                                    <ReactQuill
-                                        id="job_description"
-                                        theme="bubble"
-                                        value={viewData?.job_description}
-                                        readOnly={true}
-                                        // onChange={(value) => formik.setFieldValue("job_description", value)}
-                                        style={{
-                                            height: "350px",
-                                        }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
-                                        }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write something"
-                                    />
-                                </div>
-                                <div className="mt-2 pt-2">
-                                    <label htmlFor="" className="block font-semibold mb-2">
-                                        Job Qualification
-                                    </label>
-                                    <ReactQuill
-                                        id=""
-                                        theme="bubble"
-                                        value={viewData?.job_qualification}
-                                        readOnly={true}
-                                        // onChange={(value) => formik.setFieldValue("job_description", value)}
-                                        style={{
-                                            height: "350px",
-                                        }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
-                                        }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write something"
-                                    />
-                                </div>
-                                <div className="mt-2 pt-2">
-                                    <label htmlFor="" className="block font-semibold mb-2">
-                                        Job Responsibilities
-                                    </label>
-                                    <ReactQuill
-                                        id=""
-                                        theme="bubble"
-                                        value={viewData?.job_responsibilities}
-                                        readOnly={true}
-                                        // onChange={(value) => formik.setFieldValue("job_description", value)}
-                                        style={{
-                                            height: "350px",
-                                        }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
-                                        }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write something"
-                                    />
-                                </div>
-                                <div className="mt-2 pt-2">
-                                    <label htmlFor="" className="block font-semibold mb-2">
-                                        Instruction to Apply
-                                    </label>
-                                    <ReactQuill
-                                        id=""
-                                        theme="bubble"
-                                        value={viewData?.job_instructions_to_apply}
-                                        readOnly={true}
-                                        // onChange={(value) => formik.setFieldValue("job_description", value)}
-                                        style={{
-                                            height: "350px",
-                                        }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
-                                        }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write something"
-                                    />
-                                </div>
-                            </div>
-                        </ul>
+                        //         {/* Description Section */}
+                        //         <div className="mt-2 pt-2">
+                        //             <label htmlFor="description" className="block font-semibold mb-2">
+                        //                 Job Description
+                        //             </label>
+                        //             <ReactQuill
+                        //                 id="job_description"
+                        //                 theme="bubble"
+                        //                 value={viewData?.job_description}
+                        //                 readOnly={true}
+                        //                 // onChange={(value) => formik.setFieldValue("job_description", value)}
+                        //                 style={{
+                        //                     maxHeight: "350px",
+                        //                 }}
+                        //                 modules={{
+                        //                     toolbar: [
+                        //                         ["bold", "italic", "underline", "strike"],
+                        //                         [{ header: [1, 2, 3, false] }],
+                        //                         [{ list: "ordered" }, { list: "bullet" }],
+                        //                         ["clean"],
+                        //                     ],
+                        //                 }}
+                        //                 formats={[
+                        //                     "header",
+                        //                     "bold",
+                        //                     "italic",
+                        //                     "underline",
+                        //                     "strike",
+                        //                     "list",
+                        //                     "bullet",
+                        //                 ]}
+
+                        //             />
+                        //         </div>
+                        //         <div className="mt-2 pt-2">
+                        //             <label htmlFor="" className="block font-semibold mb-2">
+                        //                 Job Qualification
+                        //             </label>
+                        //             <ReactQuill
+                        //                 id=""
+                        //                 theme="bubble"
+                        //                 value={viewData?.job_qualification}
+                        //                 readOnly={true}
+                        //                 // onChange={(value) => formik.setFieldValue("job_description", value)}
+                        //                 style={{
+                        //                     height: "350px",
+                        //                 }}
+                        //                 modules={{
+                        //                     toolbar: [
+                        //                         ["bold", "italic", "underline", "strike"],
+                        //                         [{ header: [1, 2, 3, false] }],
+                        //                         [{ list: "ordered" }, { list: "bullet" }],
+                        //                         ["clean"],
+                        //                     ],
+                        //                 }}
+                        //                 formats={[
+                        //                     "header",
+                        //                     "bold",
+                        //                     "italic",
+                        //                     "underline",
+                        //                     "strike",
+                        //                     "list",
+                        //                     "bullet",
+                        //                 ]}
+
+                        //             />
+                        //         </div>
+                        //         <div className="mt-2 pt-2">
+                        //             <label htmlFor="" className="block font-semibold mb-2">
+                        //                 Job Responsibilities
+                        //             </label>
+                        //             <ReactQuill
+                        //                 id=""
+                        //                 theme="bubble"
+                        //                 value={viewData?.job_responsibilities}
+                        //                 readOnly={true}
+                        //                 // onChange={(value) => formik.setFieldValue("job_description", value)}
+                        //                 style={{
+                        //                     height: "350px",
+                        //                 }}
+                        //                 modules={{
+                        //                     toolbar: [
+                        //                         ["bold", "italic", "underline", "strike"],
+                        //                         [{ header: [1, 2, 3, false] }],
+                        //                         [{ list: "ordered" }, { list: "bullet" }],
+                        //                         ["clean"],
+                        //                     ],
+                        //                 }}
+                        //                 formats={[
+                        //                     "header",
+                        //                     "bold",
+                        //                     "italic",
+                        //                     "underline",
+                        //                     "strike",
+                        //                     "list",
+                        //                     "bullet",
+                        //                 ]}
+
+                        //             />
+                        //         </div>
+                        //         <div className="mt-2 pt-2">
+                        //             <label htmlFor="" className="block font-semibold mb-2">
+                        //                 Instruction to Apply
+                        //             </label>
+                        //             <ReactQuill
+                        //                 id=""
+                        //                 theme="bubble"
+                        //                 value={viewData?.job_instructions_to_apply}
+                        //                 readOnly={true}
+                        //                 // onChange={(value) => formik.setFieldValue("job_description", value)}
+                        //                 // style={{
+                        //                 //     maxHeight: "150px",
+                        //                 // }}
+                        //                 modules={{
+                        //                     toolbar: [
+                        //                         ["bold", "italic", "underline", "strike"],
+                        //                         [{ header: [1, 2, 3, false] }],
+                        //                         [{ list: "ordered" }, { list: "bullet" }],
+                        //                         ["clean"],
+                        //                     ],
+                        //                 }}
+                        //                 formats={[
+                        //                     "header",
+                        //                     "bold",
+                        //                     "italic",
+                        //                     "underline",
+                        //                     "strike",
+                        //                     "list",
+                        //                     "bullet",
+                        //                 ]}
+
+                        //             />
+                        //         </div>
+                        //     </div>
+                        // </ul>
                     )}
             </div>
 

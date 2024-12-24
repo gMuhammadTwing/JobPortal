@@ -93,12 +93,12 @@ export default function ViewJobs() {
         })
     }
     return (
-        <div className="container mx-auto max-w-5xl pb-15 min-h-screen">
+        <div className="container mx-auto max-w-4xl pb-15 min-h-screen mt-3">
             <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
             <ApplyInstructionsModal data={applyData} onClose={closeApplyInstructionModal} isOpen={applyInstructionModal} />
             {!viewDetails ? (
-                <div className="px-6 lg:px-8 ">
-                    <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl">Jobs</h2>
+                <div className="py-5 lg:px-8 bg-white rounded-lg">
+                    <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl">Search Jobs</h2>
                     <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
                     <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  ">
                         {/* <label className="block text-sm font-medium text-gray-900">
@@ -299,7 +299,7 @@ export default function ViewJobs() {
             ) :
                 (
                     <ul role="list">
-                        <div className="mb-4">
+                        {/* <div className="mb-4">
                             <button
                                 type="button"
                                 onClick={() => setViewDetails(false)}
@@ -307,7 +307,7 @@ export default function ViewJobs() {
                             >
                                 Back
                             </button>
-                        </div>
+                        </div> */}
                         <div className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
                                 <div className="text-start">
@@ -367,17 +367,12 @@ export default function ViewJobs() {
                                     theme="bubble"
                                     value={viewData?.job_description}
                                     readOnly={true}
-                                    // onChange={(value) => formik.setFieldValue("job_description", value)}
                                     style={{
-                                        height: "350px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -390,26 +385,22 @@ export default function ViewJobs() {
                                     ]}
                                 />
                             </div>
+
                             <div className="mt-2 pt-2">
                                 <label htmlFor="" className="block font-semibold mb-2">
-                                Job Qualification
+                                    Job Qualification
                                 </label>
                                 <ReactQuill
-                                    id=""
+                                    id="job_qualification"
                                     theme="bubble"
                                     value={viewData?.job_qualification}
                                     readOnly={true}
-                                    // onChange={(value) => formik.setFieldValue("job_description", value)}
                                     style={{
-                                        height: "350px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -424,24 +415,19 @@ export default function ViewJobs() {
                             </div>
                             <div className="mt-2 pt-2">
                                 <label htmlFor="" className="block font-semibold mb-2">
-                                Job Responsibilities
+                                    Job Responsibilities
                                 </label>
                                 <ReactQuill
-                                    id=""
+                                    id="job_responsibilities"
                                     theme="bubble"
                                     value={viewData?.job_responsibilities}
                                     readOnly={true}
-                                    // onChange={(value) => formik.setFieldValue("job_description", value)}
                                     style={{
-                                        height: "350px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -456,24 +442,19 @@ export default function ViewJobs() {
                             </div>
                             <div className="mt-2 pt-2">
                                 <label htmlFor="" className="block font-semibold mb-2">
-                                Instruction to Apply
+                                    Instruction to Apply
                                 </label>
                                 <ReactQuill
-                                    id=""
+                                    id="job_instructions_to_apply"
                                     theme="bubble"
                                     value={viewData?.job_instructions_to_apply}
                                     readOnly={true}
-                                    // onChange={(value) => formik.setFieldValue("job_description", value)}
                                     style={{
-                                        height: "350px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",

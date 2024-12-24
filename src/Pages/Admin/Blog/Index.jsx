@@ -49,36 +49,52 @@ export default function Index() {
         fetchData(1);
     }, [openModal]);
     const [view, setView] = useState(false);
-    const blogHandler = (data ,view)=>{
+    const blogHandler = (data, view) => {
         setUpdatedData(data);
         setView(view)
         setOpenModal(true);
     }
 
     return (
-        <div className="container mx-auto px-4 max-w-5xl h-screen">
-            <AddBlogPost isOpen={openModal} onClose={closeModal} data={updatedData} view={view}/>
+        <div className="container mx-auto px-4 max-w-5xl h-screen mt-4">
+            <AddBlogPost isOpen={openModal} onClose={closeModal} data={updatedData} view={view} />
             <div>
-                <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
+                {/* <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Blogs
-                </div>
+                </div> */}
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
-                        <Button
-                            type="button"
-                            onClick={() => setOpenModal(true)}
-                            color="gradient"
-                            variant="solid"
-                            className="mr-1 mb-2"
-                        >
-                            Add Blog
-                        </Button>
                         <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
+                                    <tr className="border-b border-gray-300">
+                                        <th
+                                            scope="col"
+                                            className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
+                                        >
+                                            Blogs Management
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th scope="col"
+                                            className="">
+                                            <Button
+                                                type="button"
+                                                onClick={() => setOpenModal(true)}
+                                                color="gradient"
+                                                variant="solid"
+                                                className="mr-1 mb-2"
+                                            >
+                                                Add Blog
+                                            </Button>
+                                        </th>
+                                    </tr>
                                     <tr>
-                                        <th className="py-3 pl-2 pr-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Blog Title
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
@@ -99,12 +115,12 @@ export default function Index() {
                                                     </span>
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
-                                                    {item?.is_published ? "Yes":"No"}
+                                                    {item?.is_published ? "Yes" : "No"}
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
                                                     <div className="flex items-center space-x-2">
-                                                        <EyeIcon onClick={()=>blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Blog" />
-                                                        <PencilIcon onClick={()=>blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Blog" />
+                                                        <EyeIcon onClick={() => blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Blog" />
+                                                        <PencilIcon onClick={() => blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Blog" />
                                                         <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Blog" />
                                                     </div>
                                                 </td>
