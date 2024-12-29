@@ -69,6 +69,30 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                 >
                                                 </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
+                                            </tr>
+                                            <tr className="border-t">
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >Name
+                                                </th>
+                                                <th scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Email
+                                                </th>
+                                                <th scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Unique Name
+                                                </th>
+                                                <th scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Action
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white">
@@ -89,14 +113,9 @@ export default function Index() {
                                                         <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
                                                             {item?.unique_name}
                                                         </td>
-                                                        {/* <td className="py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                                                            <div className="flex items-center gap-2">
-                                                                <EyeIcon className="w-5 h-5 text-black" />
-                                                                <PencilIcon className="w-5 h-5 text-blue-500 cursor-pointer" />
-                                                                <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" />
-
-                                                            </div>
-                                                        </td> */}
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                        </td>
                                                     </tr>
                                                 ))
                                             ) : (

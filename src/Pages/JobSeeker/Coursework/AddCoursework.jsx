@@ -12,13 +12,15 @@ import { Button } from "../../../Components/Button";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import { toast } from "sonner";
 import axios from "axios";
+import { InfinitySpin } from "react-loader-spinner";
 
-const AddCoursework = ({ isOpen, onClose, id }) => {
+const AddCoursework = ({ isOpen, onClose, id, view, data }) => {
+    const [loader, setLoader] = useState(false)
     const formik = useFormik({
         initialValues: {
-            subject_name: "",
-            grade_obtained: "",
-            details: "",
+            subject_name: data?.subject_name || "",
+            grade_obtained: data?.grade_obtained || "",
+            details: data?.details || "",
             educational_institue_id: id,
         },
         enableReinitialize: true,
@@ -28,17 +30,36 @@ const AddCoursework = ({ isOpen, onClose, id }) => {
             details: Yup.string().required("Details are required"),
         }),
         onSubmit: async (values) => {
-            try {
-                const response = await axiosInstance.post(`/api/job_seeker_course_work/store`, values);
-                if (response) {
-                    toast.success("Course Data Saved")
+            setLoader(true);
+            if (data) {
+                try {
+                    const response = await axiosInstance.post(`/api/job_seeker_course_work/update/${data?.id}`, values);
+                    if (response) {
+                        toast.success("Course Data Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
                     formik.resetForm();
+                    onClose(false);
+                    setLoader(false);
                 }
-            } catch (error) {
-                handleError(error);
-            } finally {
-                formik.resetForm();
-                onClose(false);
+            }
+            else {
+                try {
+                    const response = await axiosInstance.post(`/api/job_seeker_course_work/store`, values);
+                    if (response) {
+                        toast.success("Course Data Saved")
+                        formik.resetForm();
+                    }
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    formik.resetForm();
+                    onClose(false);
+                    setLoader(false);
+                }
             }
         },
     });
@@ -67,7 +88,10 @@ const AddCoursework = ({ isOpen, onClose, id }) => {
                             as="h3"
                             className="text-base font-semibold leading-6 text-gray-900"
                         >
-                            Add Coursework
+                            {view ? "View Coursework" : (
+                                data ? "Update Coursework" :
+                                    "Add Coursework"
+                            )}
                         </DialogTitle>
                         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-12 items-center">
                             {/* Course Title */}
@@ -80,6 +104,7 @@ const AddCoursework = ({ isOpen, onClose, id }) => {
                                     name="subject_name"
                                     onChange={formik.handleChange}
                                     value={formik.values.subject_name}
+                                    disabled={view}
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                 />
                                 {formik.touched.subject_name && formik.errors.subject_name && (
@@ -99,6 +124,7 @@ const AddCoursework = ({ isOpen, onClose, id }) => {
                                     name="grade_obtained"
                                     onChange={formik.handleChange}
                                     value={formik.values.grade_obtained}
+                                    disabled={view}
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                 />
                                 {formik.touched.grade_obtained &&
@@ -118,6 +144,7 @@ const AddCoursework = ({ isOpen, onClose, id }) => {
                                     type="text"
                                     rows={5}
                                     name="details"
+                                    disabled={view}
                                     onChange={formik.handleChange}
                                     value={formik.values.details}
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
@@ -129,20 +156,26 @@ const AddCoursework = ({ isOpen, onClose, id }) => {
                                 )}
                             </div>
                         </div>
-                        <div className="mt-8 sm:flex sm:flex-row-reverse">
-                            <Button type="submit" color="gradient" variant="solid">
-                                Save
-                            </Button>
-                            <Button
-                                type="button"
-                                onClick={() => onClose(false)}
-                                color="gradient"
-                                variant="outline"
-                                className="mr-1"
-                            >
-                                Cancel
-                            </Button>
-                        </div>
+                        {!view && (
+                            <div className="mt-8 sm:flex sm:flex-row-reverse">
+                                {loader ? <div className="flex justify-center mr-5"><InfinitySpin width={150} color="green" /></div> :
+                                    <>
+                                        <Button type="submit" color="gradient" variant="solid">
+                                            Save
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            onClick={() => onClose(false)}
+                                            color="gradient"
+                                            variant="outline"
+                                            className="mr-1"
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </>
+                                }
+                            </div>
+                        )}
                     </form>
                 </DialogPanel>
             </div>

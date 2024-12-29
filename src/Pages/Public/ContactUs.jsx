@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { toast } from "sonner";
+import GreatAboutUs from "./Components/GreatAboutUs";
+import Testimonials from "./Components/Testimonials";
 export default function ContactUs() {
     const formik = useFormik({
         initialValues: {
@@ -51,7 +53,7 @@ export default function ContactUs() {
             </div>
 
             {/* Content Section */}
-            <div className="max-w-6xl mx-auto p-6">
+            <div className="max-w-6xl mx-auto p-6 mt-10 mb-10">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 items-center">
                     {/* Text Section */}
                     <div className="flex flex-col justify-center text-center md:text-left">
@@ -216,6 +218,9 @@ export default function ContactUs() {
                     </div>
                 </div>
             </div>
+
+            <GreatAboutUs/>
+            <Testimonials/>
         </div>
     );
 }

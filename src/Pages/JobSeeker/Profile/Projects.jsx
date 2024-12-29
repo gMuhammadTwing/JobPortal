@@ -184,7 +184,7 @@ export default function Projects() {
                                                                 <h4 className="font-semibold text-lg">Project Title: {item?.project_name}</h4>
                                                             </div>
                                                             <a href={item?.project_url} target="_blank"
-                                                                rel="noopener noreferrer" className="text-blue-600 underline">Project URL</a>
+                                                                rel="noopener noreferrer" className="text-blue-600 underline">{item?.project_url}</a>
                                                             <p>{item?.start_date} - {item?.on_going ? "Ongoing" : item?.end_date}</p>
                                                             <p>{parser.parseFromString(item?.description, "text/html").body.textContent.trim()}</p>
                                                         </div>

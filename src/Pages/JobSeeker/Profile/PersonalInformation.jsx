@@ -33,7 +33,7 @@ export default function PersonalInformation() {
             years_experience: data?.data[0]?.years_experience,
             expected_salary: data?.data[0]?.expected_salary,
             address: data?.data[0]?.address,
-            occupation: data?.data[0]?.occupation_id,
+            occupation: data?.data[0]?.occupation?.id,
             user_id: user_id,
 
         },
@@ -49,7 +49,7 @@ export default function PersonalInformation() {
         }),
         onSubmit: async (values) => {
             setLoading(true);
-            if (data?.length>0) {
+            if (data) {
                 try {
                     const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data[0]?.id}`, values);
                     if (response) {
@@ -87,6 +87,7 @@ export default function PersonalInformation() {
             const response = await axiosInstance.get(`api/job_seeker_basic_info?user_id=${user_id}`);
             if (response) {
                 setData(response)
+                console.log(response?.data[0]);
             }
         } catch (error) {
             handleError(error);
@@ -180,50 +181,88 @@ export default function PersonalInformation() {
                         )}
 
                         {!editProfile && (
-                            <div className="flex flex-col sm:flex-row gap-6 items-center">
-                                <div className="relative group">
-                                    {imageLoader ? (
-                                        <div className='p-4'><RotatingLines height="70"
-                                            width="70"
-                                            color="green" />
+                            <>
+                                <div className="flex flex-col sm:flex-row gap-6 items-center px-2">
+                                    <div className="relative group">
+                                        {imageLoader ? (
+                                            <div className='p-4'><RotatingLines height="70"
+                                                width="70"
+                                                color="green" />
+                                            </div>
+                                        ) : (
+                                            <img
+                                                src={
+                                                    localStorage?.user_image &&
+                                                        localStorage.user_image !== 'undefined' &&
+                                                        localStorage.user_image !== 'null' &&
+                                                        localStorage.user_image.trim() !== ''
+                                                        ? `${app_vars?.domain?.fileURL}${image}`
+                                                        : userLogo
+                                                }
+                                                alt="User Profile"
+                                                className="h-30 w-30 rounded-lg border-2 border-white"
+                                            />
+                                        )}
+
+
+                                        {/* Pencil Icon on Hover */}
+                                        {/* <form onSubmit={imageFormik.handleSubmit}> */}
+                                        <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                            <PencilSquareIcon className="h-5 w-5 text-blue-500" />
                                         </div>
-                                    ) : (
-                                        <img
-                                            src={
-                                                localStorage?.user_image &&
-                                                    localStorage.user_image !== 'undefined' &&
-                                                    localStorage.user_image !== 'null' &&
-                                                    localStorage.user_image.trim() !== ''
-                                                    ? `${app_vars?.domain?.fileURL}${image}`
-                                                    : userLogo
-                                            }
-                                            alt="User Profile"
-                                            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            className="hidden"
+                                            accept="image/*"
+                                            onChange={handleFileChange}
                                         />
-                                    )}
-
-
-                                    {/* Pencil Icon on Hover */}
-                                    {/* <form onSubmit={imageFormik.handleSubmit}> */}
-                                    <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                                        <PencilSquareIcon className="h-5 w-5 text-blue-500" />
                                     </div>
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        className="hidden"
-                                        accept="image/*"
-                                        onChange={handleFileChange}
-                                    />
+
+                                    <div className="text-center sm:text-left">
+                                        <h4 className="font-semibold text-xl text-gray-800">{localStorage.user_name}</h4>
+                                        <p className="text-sm text-gray-600">
+                                            <span className="font-medium text-gray-700">Email:</span> {localStorage.email}
+                                        </p>
+                                        <p className="text-sm text-gray-600">
+                                            <span className="font-medium text-gray-700">Phone:</span> {data?.data[0]?.contact_number}
+                                        </p>
+                                        <p className="text-sm text-gray-600">
+                                            <span className="font-medium text-gray-700">Address:</span> {data?.data[0]?.address}
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <div className="text-center sm:text-left">
-                                    <h4 className="font-semibold text-lg">{localStorage.user_name}</h4>
-                                    <p className="text-sm text-gray-600">{localStorage.email}</p>
-                                    <p className="text-sm text-gray-600">{data?.contact_number}</p>
-                                    <p className="text-sm text-gray-600">{data?.address}</p>
+                                <div className="container mx-auto p-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <div className="">
+                                            <h3 className="font-bold text-gray-700">Father's Name</h3>
+                                            <p>{data?.data[0].father_name}</p>
+                                        </div>
+                                        <div className="">
+                                            <h3 className="font-bold text-gray-700">Date of Birth</h3>
+                                            <p>{data?.data[0].dob}</p>
+                                        </div>
+                                        <div className="">
+                                            <h3 className="font-bold text-gray-700">Gender</h3>
+                                            <p>{data?.data[0].gender_label}</p>
+                                        </div>
+                                        <div className="">
+                                            <h3 className="font-bold text-gray-700">Occupation</h3>
+                                            <p>{data?.data[0].occupation.occupation}</p>
+                                        </div>
+                                        <div className="">
+                                            <h3 className="font-bold text-gray-700">Years of Experience</h3>
+                                            <p>{data?.data[0].years_experience}</p>
+                                        </div>
+                                        <div className="">
+                                            <h3 className="font-bold text-gray-700">Expected Salary</h3>
+                                            <p>{data?.data[0].expected_salary}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
+
                         )}
                         {/* Edit Profile Form */}
                         {editProfile && (

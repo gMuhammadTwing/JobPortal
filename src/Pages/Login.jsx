@@ -17,11 +17,11 @@ export default function Login() {
         },
         onSubmit: async (values) => {
             setLoading(true)
-            await auth.login(values)            
-            if (localStorage.token && localStorage.token!='undefined') {
+            await auth.login(values)
+            if (localStorage.token && localStorage.token != 'undefined') {
                 navigate("/home")
             }
-            else{
+            else {
                 toast.error("Incorrect username or password")
             }
             setLoading(false)
@@ -130,9 +130,9 @@ export default function Login() {
                         // }}
                         >
                             <div className="px-4 py-8 text-white md:p-12">
-                                <h4 className="mb-6 text-xl font-semibold">We are more than just a company</h4>
+                                <h4 className="mb-6 text-xl font-semibold">Veritas Jobs</h4>
                                 <p className="text-sm">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Veritas Jobs is your go-to platform for the latest job listings and career opportunities in Kenya. As a trusted job board, we are committed to helping job seekers find their next opportunity.
                                 </p>
                             </div>
                         </div>

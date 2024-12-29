@@ -14,6 +14,7 @@ import { LoaderTable } from "../../Components/LoaderTable";
 import Pagination from "../../Components/Pagination";
 import { useFormik } from "formik";
 import { useDropdownContext } from "../../DropdownProvider";
+import { Link } from "react-router-dom";
 export default function ResumeBank() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDelete, setIsDelete] = useState(false)
@@ -203,7 +204,7 @@ export default function ResumeBank() {
                                                         </td>
 
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                            <EyeIcon className="w-5 h-5 cursor-pointer" title="View" />
+                                                            <Link to={"view-applicant/"+item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
                                                     </tr>
                                                 ))

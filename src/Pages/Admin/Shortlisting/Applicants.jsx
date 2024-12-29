@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import Pagination from "../../../Components/Pagination";
@@ -178,12 +178,8 @@ export default function Applicants({ job_id }) {
                                                                 </select>
                                                             </span>
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm">
-                                                            <div className="flex items-center space-x-2">
-                                                                <EyeIcon className="w-5 h-5 text-black" title="View Participant" />
-                                                                {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit Pa" /> */}
-                                                                {/* <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" /> */}
-                                                            </div>
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            <Link to={"view-applicant/" + item?.user_id?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
                                                     </tr>
                                                 ))

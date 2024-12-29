@@ -39,6 +39,9 @@ import PaymentApprovalPending from './Pages/PaymentApprovalPending';
 import ResumeBank from './Pages/Employer/ResumeBank';
 import VertiasShortlisting from './Pages/Employer/VeritasShortlisting';
 import EmployerAgencyList from './Pages/Admin/Agency/Index'
+import ViewEmployer from './Pages/Admin/ViewEmployer';
+import ViewAgency from './Pages/Admin/ViewAgency';
+import ViewApplicant from './Pages/Admin/ViewApplicant';
 function App() {
   return (
     <DropdownProvider>
@@ -57,7 +60,7 @@ function App() {
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="create-account" element={<CreateAccount />} />
-            <Route path="create-account/signup-jobseeker" element={<JobSeekerSignup />} />
+            <Route path="create-account/signup_job_seeker" element={<JobSeekerSignup />} />
             <Route path="create-account/signup-employee" element={<EmployerSignup />} />
 
 
@@ -77,6 +80,8 @@ function App() {
               <Route path="job_management" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} />
               <Route path="resume_bank" element={<ProtectedRoutes><ResumeBank /></ProtectedRoutes>} />
               <Route path="veritas_shortlisting" element={<ProtectedRoutes><VertiasShortlisting /></ProtectedRoutes>} />
+              <Route path="resume_bank/view-applicant/:id" element={<ViewApplicant />} />
+              <Route path="veritas_shortlisting/view-applicant/:id" element={<ViewApplicant />} />
             </Route>
 
             {/* Admin Routes */}
@@ -89,6 +94,10 @@ function App() {
               <Route path="payments" element={<ProtectedRoutes><PaymentIndex /></ProtectedRoutes>} />
               <Route path="contacts" element={<ProtectedRoutes><AdminContactUs /></ProtectedRoutes>} />
               <Route path="agencies_list" element={<ProtectedRoutes><EmployerAgencyList /></ProtectedRoutes>} />
+              <Route path="employees/view-employer/:id" element={<ViewEmployer />} />
+              <Route path="job_seekers/view-applicant/:id" element={<ViewApplicant />} />
+              <Route path="shortlisting/view-applicant/:id" element={<ViewApplicant />} />
+              <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
             </Route>
 
             {/* No Permission Route */}

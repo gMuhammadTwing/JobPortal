@@ -87,7 +87,7 @@ export default function Footer() {
 
             </div>
             {/* Footer Bottom Section */}
-            <div className="text-center mt-1 border-t py-2 text-gray-600 text-sm md:text-base">
+            <div className="text-center border-t py-2 mt-10 text-gray-600 text-sm md:text-base">
                 Copyright 2024 © JobPortal. All rights reserved.
             </div>
         </div>

@@ -13,6 +13,8 @@ import ApplyModal from "../JobSeeker/ViewJobs/ApplyModal";
 import ApplyInstructionsModal from "../JobSeeker/ViewJobs/ApplyInstructionsModal";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import GreatAboutUs from "./Components/GreatAboutUs";
+import Testimonials from "./Components/Testimonials";
 
 export default function Jobs() {
     const dropDownValues = useDropdownContext();
@@ -493,7 +495,8 @@ export default function Jobs() {
                         // </ul>
                     )}
             </div>
-
+            <GreatAboutUs/>
+            <Testimonials/>
         </div>
     );
 }

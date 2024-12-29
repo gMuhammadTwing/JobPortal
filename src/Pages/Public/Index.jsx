@@ -3,7 +3,9 @@ import RecentlyUpdatedJobs from './RecentlyUpdatedJobs';
 import FeaturedJobs from './FeaturedJobs';
 import FeaturedDevelopers from './FeaturedDevelopers';
 import FeaturedSkills from './FeaturedSkills';
-import Reviews from './Reviews';
+import Reviews from './Components/Reviews';
+import GreatAboutUs from './Components/GreatAboutUs';
+import Testimonials from './Components/Testimonials';
 export default function Index() {
   return (
     <>
@@ -13,7 +15,9 @@ export default function Index() {
         <FeaturedJobs />
         <FeaturedDevelopers />
         <FeaturedSkills />
-        <Reviews/>
+        <GreatAboutUs/>
+        <Testimonials/>
+
       </div>
     </>
   );

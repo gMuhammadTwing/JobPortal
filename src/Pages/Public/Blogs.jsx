@@ -6,6 +6,8 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import app_vars from "../../config";
 import { LoaderTable } from "../../Components/LoaderTable";
 import { BlogSkeleton } from "../../Components/BlogSkeleton";
+import GreatAboutUs from "./Components/GreatAboutUs";
+import Testimonials from "./Components/Testimonials";
 
 export default function Blogs() {
     const [data, setData] = useState();
@@ -42,7 +44,7 @@ export default function Blogs() {
                 <p>Discover Insights and Stories that Spark Your Curiosity</p>
             </div>
             {tableLoader ? <BlogSkeleton /> :
-                <div className=" mx-auto max-w-[75rem] p-4">
+                <div className=" mx-auto max-w-[75rem] p-4 mt-10 mb-10">
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5">
                         {data?.data.length > 0 ? (
                             data?.data && data?.data?.map((item) => (
@@ -114,6 +116,9 @@ export default function Blogs() {
                     )}
                 </div>
             }
+
+            <GreatAboutUs />
+            <Testimonials />
         </div>
     );
 }

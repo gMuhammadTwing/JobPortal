@@ -6,7 +6,9 @@ import { useParams } from "react-router-dom";
 import app_vars from "../../config";
 import ReactQuill from "react-quill";
 import { BlogDetailsSkeleton } from "../../Components/BlogDetailsSkeleton";
-
+import { toast } from "sonner";
+import userLogo from './../../assets/user.jpeg'
+import { InfinitySpin } from "react-loader-spinner";
 export default function BlogDetails() {
     // const data = [
     //     {
@@ -65,7 +67,41 @@ export default function BlogDetails() {
 
     useEffect(() => {
         fetchData();
+        fetchComments(1)
     }, []);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
+
+    const fetchComments = async (page) => {
+        try {
+            const response = await axiosInstance.get(`/api/blog_comments?blog_id=${id}&page=${page}`);
+            if (response) {
+                setComments(response?.data);
+            }
+        } catch (error) {
+            handleError(error);
+        }
+    };
+    const [loader, setLoader] = useState(false);
+    const handleAddComment = async () => {
+        setLoader(true)
+        try {
+            const response = await axiosInstance.post(`/api/blog_comments/store`, {
+                content: newComment,
+                blog_id: id,
+            });
+            if (response) {
+                setNewComment("");
+                fetchComments(1);
+                toast.success("Blog comment saved")
+            }
+        } catch (error) {
+            handleError(error);
+        }
+        finally {
+            setLoader(false)
+        }
+    };
 
 
     return (
@@ -131,36 +167,69 @@ export default function BlogDetails() {
                         ))}
                     </div>
                 )}
-            </div>
-            {/* <div className="max-w-4xl m-auto mt-10 border rounded p-4">
-                <div className="font-semibold">About Author</div>
-                <div className=" flex gap-6 items-center">
-                    <img
-                        src="https://kofejob.dreamstechnologies.com/html/template/assets/img/img-02.jpg"
-                        alt="User Profile"
-                        className="h-20 w-20 rounded-full border-2 border-white"
-                    />
-                    <div className="text-center sm:text-left mt-2 space-y-1">
-                        <div className="font-semibold">Web Designer</div>
-                        <h1 className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</h1>
-                        <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
-                                <i className="fa-brands fa-facebook-f" aria-hidden="true"></i>
-                            </button>
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
-                                <i className="fa-brands fa-twitter" aria-hidden="true"></i>
-                            </button>
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
-                                <i className="fa-brands fa-instagram" aria-hidden="true"></i>
-                            </button>
-                            <button className="flex items-center justify-center w-10 h-10 font-semibold hover:bg-[#ff0000] hover:text-white transition-all hover:rounded-full">
-                                <i className="fa-brands fa-linkedin" aria-hidden="true"></i>
-                            </button>
+
+                <div className="mt-8">
+                    <h2 className="text-2xl font-semibold">Comments</h2>
+                    <div className="space-y-2">
+                        {comments && comments?.data?.map((comment, index) => (
+                            <>
+                                <div className="mt-2 border rounded p-4">
+                                    <div className=" flex gap-6 items-start">
+                                        <img
+                                            src={userLogo}
+                                            alt="User Profile"
+                                            className="h-20 w-20 rounded-full border-2 border-white"
+                                        />
+                                        <div className="text-center sm:text-left mt-2 space-y-1">
+                                            <div className="font-semibold">{comment?.user_id?.name}</div>
+                                            <div className="text-gray-700 text-sm">{new Date(comment?.created_at).toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "2-digit",
+                                            })}</div>
+                                            <h1 className="text-gray-700">{comment?.content}</h1>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        ))}
+                    </div>
+
+                    {/* Add Comment Form */}
+                    < div className="mt-6" >
+                        <textarea
+                            className="block py-4 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                            rows="4"
+                            placeholder="Write your comment here..."
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                        ></textarea>
+                        <div className="flex justify-center mt-3">
+                            {loader ? (
+                                <InfinitySpin height={120} width={120} color="green" />
+                            ) : (
+                                <button
+                                    className={`px-6 py-2 font-semibold rounded-lg bg-[#ff0000] hover:bg-red-600 ${newComment === ""
+                                        ? " cursor-not-allowed text-white"
+                                        : " text-white"
+                                        }`}
+                                    onClick={handleAddComment}
+                                    disabled={newComment === ""}
+                                    title={newComment === "" ? "Please write a comment before submitting." : ""}
+                                >
+                                    Submit Comment
+                                </button>
+                            )}
+
                         </div>
                     </div>
-                </div>
-            </div> */}
 
-        </div>
+                </div>
+            </div>
+
+
+
+        </div >
     );
 }

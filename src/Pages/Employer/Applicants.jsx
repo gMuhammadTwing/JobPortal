@@ -12,6 +12,7 @@ import { toast, Toaster } from "sonner";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { LoaderTable } from "../../Components/LoaderTable";
 import Pagination from "../../Components/Pagination";
+import { Link } from "react-router-dom";
 
 export default function Applicants({ job_id }) {
     const [data, setData] = useState();
@@ -121,7 +122,7 @@ export default function Applicants({ job_id }) {
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             <div className="flex items-center space-x-2">
-                                                                <EyeIcon className="w-5 h-5 text-black" title="View" />
+                                                                <Link to={"view-applicant/"+item?.user_id?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                                 {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit" /> */}
                                                                 {/* <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" /> */}
                                                             </div>

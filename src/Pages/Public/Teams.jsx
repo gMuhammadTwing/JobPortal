@@ -1,7 +1,7 @@
 import { StarIcon } from "@heroicons/react/20/solid";
 import { AcademicCapIcon, ArrowDownOnSquareIcon, Bars2Icon, ClockIcon, CreditCardIcon, CurrencyDollarIcon, MapIcon, MapPinIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
-import Reviews from "./Reviews";
+import Reviews from "./Components/Reviews";
 
 export default function Teams() {
     const features = [

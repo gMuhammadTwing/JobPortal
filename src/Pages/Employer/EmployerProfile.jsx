@@ -187,7 +187,7 @@ export default function EmployerProfile() {
                                                                         : userLogo
                                                                 }
                                                                 alt="User Profile"
-                                                                className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                                                className="h-30 w-30 rounded-lg border-2 border-white"
                                                             />
                                                         )}
 

@@ -79,11 +79,6 @@ export default function VertiasShortlisting() {
                                                 className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                             >
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
                                         </tr>
                                         <tr>
                                             <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -97,9 +92,6 @@ export default function VertiasShortlisting() {
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                                 Job Status
-                                            </th>
-                                            <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                                Company Name
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                                 Actions
@@ -130,9 +122,6 @@ export default function VertiasShortlisting() {
                                                         >
                                                             {item?.job_status}
                                                         </span>
-                                                    </td>
-                                                    <td className="px-2 py-3 text-xs md:text-sm">
-                                                        {item?.company_id?.company_name}
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         <div className="flex items-center space-x-2">

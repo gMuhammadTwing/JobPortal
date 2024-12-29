@@ -51,7 +51,7 @@ export default function CreateAccount() {
                     disabled={disable}
                 >
                     {checked && (
-                        <Link to={"/create-account/signup-jobseeker"}>
+                        <Link to={"/create-account/signup_job_seeker"}>
                             Join Us As Job Seeker
                         </Link>
                     )}
