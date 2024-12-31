@@ -16,7 +16,7 @@ export default function Index() {
         <FeaturedDevelopers />
         <FeaturedSkills />
         <GreatAboutUs/>
-        <Testimonials/>
+        {/* <Testimonials/> */}
 
       </div>
     </>

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { ViewProfileSkeleton } from "../../Components/ViewProfileSkeleton";
+import app_vars from "../../config";
 
 export default function ViewApplicant() {
     const [data, setData] = useState();
@@ -44,13 +45,13 @@ export default function ViewApplicant() {
                 {/* Profile Section */}
                 {loader ? <ViewProfileSkeleton /> :
                     <div className="mt-6">
-                        {data?.data.length>0 ?
+                        {data?.data.length > 0 ?
                             <>
                                 <div className="flex flex-col sm:flex-row items-center gap-6">
                                     {/* Profile Picture */}
                                     <div className="relative">
                                         <img
-                                            src={userLogo}
+                                            src={app_vars?.domain?.fileURL + data?.data[0]?.user_id?.user_image}
                                             alt="Applicant Profile"
                                             className="h-32 w-32 rounded-lg"
                                         />
@@ -59,17 +60,17 @@ export default function ViewApplicant() {
                                     {/* Applicant Details */}
                                     <div className="text-center sm:text-left">
                                         <h4 className="font-semibold text-xl text-gray-800">
-                                            Name
+                                            Name: {data?.data[0]?.user_id?.unique_name || "NA"}
                                         </h4>
                                         <p className="text-sm text-gray-600">
-                                            <span className="font-medium text-gray-700">Email:</span> Email
+                                            <span className="font-medium text-gray-700">Email:</span> {data?.data[0]?.user_id?.email || "NA"}
+                                        </p>
+                                        {/* <p className="text-sm text-gray-600">
+                                            <span className="font-medium text-gray-700">Phone:</span> {data?.data[0]?.user_id?.phone || "NA"}
                                         </p>
                                         <p className="text-sm text-gray-600">
-                                            <span className="font-medium text-gray-700">Phone:</span> phone
-                                        </p>
-                                        <p className="text-sm text-gray-600">
-                                            <span className="font-medium text-gray-700">Address:</span> address
-                                        </p>
+                                            <span className="font-medium text-gray-700">Address:</span> {data?.data[0]?.user_id?.name || "NA"}
+                                        </p> */}
                                     </div>
                                 </div>
 

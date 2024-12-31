@@ -28,7 +28,7 @@ export default function AboutUs() {
             <OurValues/>
             <VeritasKWD/>
             <GreatAboutUs />
-            <Testimonials />
+            {/* <Testimonials /> */}
 
             {/* <div className="text-center pb-4 max-w-7xl mx-auto flex flex-wrap justify-center items-center gap-4">
                 <img

@@ -42,6 +42,7 @@ import EmployerAgencyList from './Pages/Admin/Agency/Index'
 import ViewEmployer from './Pages/Admin/ViewEmployer';
 import ViewAgency from './Pages/Admin/ViewAgency';
 import ViewApplicant from './Pages/Admin/ViewApplicant';
+import ViewJobDetails from './Pages/Public/ViewJobDetails';
 function App() {
   return (
     <DropdownProvider>
@@ -56,6 +57,7 @@ function App() {
             {/* <Route path="projects" element={<Projects />} /> */}
             <Route path="contact-us" element={<ContactUs />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="view-job-details/:id" element={<ViewJobDetails />} />
             <Route path="blogs_comments" element={<Blogs />} />
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />

@@ -220,7 +220,7 @@ export default function ContactUs() {
             </div>
 
             <GreatAboutUs/>
-            <Testimonials/>
+            {/* <Testimonials/> */}
         </div>
     );
 }

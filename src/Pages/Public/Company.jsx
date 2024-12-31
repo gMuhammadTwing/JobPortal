@@ -23,7 +23,7 @@ export default function Company() {
                         <div>and Projects</div>
                     </div>
                     <div className="col-span-2 py-2 px-2">
-                        <p>A job description is a written document that outlines the responsibilities and requirements for a position</p>
+                        <p>Veritas Jobs is a leading job board of the latest available jobs and opportunities. It is the job seekers’ first stop for the latest opportunities. </p>
                     </div>
                     <div className='col-span-4'></div>
                     <div className="col-span-2 mt-2">

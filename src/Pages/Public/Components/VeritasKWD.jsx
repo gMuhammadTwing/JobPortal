@@ -95,17 +95,17 @@ export default function VeritasKWD() {
                     </div>
                 </li>
                 <li
-                    className="p-6 col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center"
+                    className="p-6 col-span-full flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center"
                 >
                     <div className="flex flex-1 flex-col items-center">
                         <h3 className=" text-3xl font-semibold text-[#ff0000]">Careers</h3>
                         <dl className="mt-3 flex grow flex-col justify-between text-start">
                             <dd className="text-sm">
                                 <h2 className="font-semibold mb-2">VeritasKWD: The BEST Company to Work For</h2>
-                                <p className="mb-4">
+                                <p className="">
                                     VeritasKWD strives to be the very BEST company to work for. Some ways we pursue to be the greatest company to work for include, but are not limited to:
                                 </p>
-                                <ul className="list-disc ml-5 space-y-2">
+                                <ul className="list-disc ml-5 space-y-0">
                                     <li>
                                         <strong>Competitive compensation:</strong> We pay our employees well and offer benefits that are competitive with other companies in the industry.
                                     </li>

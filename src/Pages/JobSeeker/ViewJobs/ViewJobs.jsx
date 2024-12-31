@@ -100,7 +100,7 @@ export default function ViewJobs() {
             {!viewDetails ? (
                 <div className="py-5 lg:px-8 bg-white rounded-lg">
                     <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl">Search Jobs</h2>
-                    <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
+                    <p className="mt-2 text-lg text-gray-600">Ready to get hired?  Search latest Veritas Jobs </p>
                     <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  ">
                         {/* <label className="block text-sm font-medium text-gray-900">
                             Apply Filter
@@ -236,7 +236,7 @@ export default function ViewJobs() {
                                                                 </button>
                                                                 {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
                                                                     <button onClick={() => applyInstructionHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                                                        View Job Instruction to Apply
+                                                                        Instruction to Apply
                                                                     </button>
                                                                 )}
                                                                 {item?.veritas_to_short_list === 1 && (
@@ -325,7 +325,7 @@ export default function ViewJobs() {
                                         <>
                                             {(viewData?.veritas_to_short_list === 0 || viewData?.veritas_to_short_list === null) && (
                                                 <button onClick={() => applyInstructionHandler(viewData)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                                    View Job Instruction to Apply
+                                                    Instruction to Apply
                                                 </button>
                                             )}
                                             {viewData?.veritas_to_short_list === 1 && (

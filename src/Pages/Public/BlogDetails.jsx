@@ -197,33 +197,35 @@ export default function BlogDetails() {
                     </div>
 
                     {/* Add Comment Form */}
-                    < div className="mt-6" >
-                        <textarea
-                            className="block py-4 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                            rows="4"
-                            placeholder="Write your comment here..."
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                        ></textarea>
-                        <div className="flex justify-center mt-3">
-                            {loader ? (
-                                <InfinitySpin height={120} width={120} color="green" />
-                            ) : (
-                                <button
-                                    className={`px-6 py-2 font-semibold rounded-lg bg-[#ff0000] hover:bg-red-600 ${newComment === ""
-                                        ? " cursor-not-allowed text-white"
-                                        : " text-white"
-                                        }`}
-                                    onClick={handleAddComment}
-                                    disabled={newComment === ""}
-                                    title={newComment === "" ? "Please write a comment before submitting." : ""}
-                                >
-                                    Submit Comment
-                                </button>
-                            )}
+                    {(localStorage.token) && (
+                        < div className="mt-6" >
+                            <textarea
+                                className="block py-4 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                rows="4"
+                                placeholder="Write your comment here..."
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                            ></textarea>
+                            <div className="flex justify-center mt-3">
+                                {loader ? (
+                                    <InfinitySpin height={120} width={120} color="green" />
+                                ) : (
+                                    <button
+                                        className={`px-6 py-2 font-semibold rounded-lg bg-[#ff0000] hover:bg-red-600 ${newComment === ""
+                                            ? " cursor-not-allowed text-white"
+                                            : " text-white"
+                                            }`}
+                                        onClick={handleAddComment}
+                                        disabled={newComment === ""}
+                                        title={newComment === "" ? "Please write a comment before submitting." : ""}
+                                    >
+                                        Submit Comment
+                                    </button>
+                                )}
 
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                 </div>
             </div>

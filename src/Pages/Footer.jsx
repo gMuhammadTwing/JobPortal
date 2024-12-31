@@ -4,7 +4,7 @@ import { Button } from "../Components/Button";
 import footer_logo from '../assets/footer_logo.jpeg'
 export default function Footer() {
     return (
-        <div className="border rounded-lg bg-white p-4 sm:pt-6 md:pt-10 lg:pt-10">
+        <div className="border rounded-lg bg-white p-4 pt-20">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 {/* Footer Main Content */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-20 border-gray-200 text-gray-600">
@@ -87,7 +87,7 @@ export default function Footer() {
 
             </div>
             {/* Footer Bottom Section */}
-            <div className="text-center border-t py-2 mt-10 text-gray-600 text-sm md:text-base">
+            <div className="text-center border-t py-2 mt-20 text-gray-600 text-sm md:text-base">
                 Copyright 2024 © JobPortal. All rights reserved.
             </div>
         </div>
