@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import GreatAboutUs from "./Components/GreatAboutUs";
 import Testimonials from "./Components/Testimonials";
-
+import Select from 'react-select'
 export default function Jobs() {
     const dropDownValues = useDropdownContext();
     const [tableLoader, setTableLoader] = useState(false);
@@ -128,7 +128,22 @@ export default function Jobs() {
                                     <label className="block text-sm font-medium text-gray-900">
                                         Job Type
                                     </label>
-                                    <select
+                                    <Select
+                                        options={dropDownValues?.job_family.map((value) => ({
+                                            value: value.id,
+                                            label: value.job_family,
+                                        }))}
+                                        isClearable={true}
+                                        isSearchable={true}
+                                        className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        onChange={(selectedOption) => {
+                                            formik.setFieldValue(
+                                                "job_type",
+                                                selectedOption ? selectedOption.value : ""
+                                            );
+                                        }}
+                                    />
+                                    {/* <select
                                         name="job_type"
                                         onChange={formik.handleChange}
                                         value={formik.values.job_type}
@@ -141,8 +156,8 @@ export default function Jobs() {
                                                     {item?.job_family}
                                                 </option>
                                             );
-                                        })}
-                                    </select>
+                                        })} */}
+                                    {/* </select> */}
                                 </div>
 
                                 {/* Location */}

@@ -15,6 +15,7 @@ import Pagination from "../../Components/Pagination";
 import { useFormik } from "formik";
 import { useDropdownContext } from "../../DropdownProvider";
 import { Link } from "react-router-dom";
+import Select from 'react-select'
 export default function ResumeBank() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDelete, setIsDelete] = useState(false)
@@ -58,7 +59,7 @@ export default function ResumeBank() {
     }, []);
 
     const pageNumber = async (pageNum) => {
-        // Pagination logic can go here
+        fetchData(pageNum, filters);
     }
     const formik = useFormik({
         initialValues: {
@@ -113,7 +114,22 @@ export default function ResumeBank() {
                             <label className="block text-sm font-medium text-gray-900">
                                 Occupation
                             </label>
-                            <select
+                            <Select
+                                options={dropDownValues?.job_family.map((value) => ({
+                                    value: value.id,
+                                    label: value.occupation,
+                                }))}
+                                isClearable={true}
+                                isSearchable={true}
+                                className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                onChange={(selectedOption) => {
+                                    formik.setFieldValue(
+                                        "occupation",
+                                        selectedOption ? selectedOption.value : ""
+                                    );
+                                }}
+                            />
+                            {/* <select
                                 name="occupation"
                                 onChange={formik.handleChange}
                                 value={formik.values.occupation}
@@ -127,7 +143,7 @@ export default function ResumeBank() {
                                         </option>
                                     );
                                 })}
-                            </select>
+                            </select> */}
                         </div>
 
                         {/* Institute */}
@@ -204,7 +220,7 @@ export default function ResumeBank() {
                                                         </td>
 
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                            <Link to={"view-applicant/"+item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                            <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
                                                     </tr>
                                                 ))

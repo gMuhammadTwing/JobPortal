@@ -10,6 +10,7 @@ import axiosInstance, { handleError } from '../../axiosInstance';
 import { LoaderTable } from '../../Components/LoaderTable';
 import Pagination from '../../Components/Pagination';
 import { useDropdownContext } from '../../DropdownProvider';
+import Select from 'react-select'
 export default function ManageJobs() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
@@ -296,7 +297,22 @@ export default function ManageJobs() {
                 <label className="block text-sm font-medium text-gray-900">
                   Job Type
                 </label>
-                <select
+                <Select
+                  options={dropDownValues?.job_family.map((value) => ({
+                    value: value.id,
+                    label: value.job_family,
+                  }))}
+                  isClearable={true}
+                  isSearchable={true}
+                  className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                  onChange={(selectedOption) => {
+                    formik.setFieldValue(
+                      "job_type",
+                      selectedOption ? selectedOption.value : ""
+                    );
+                  }}
+                />
+                {/* <select
                   name="job_type"
                   onChange={formik.handleChange}
                   disabled={view}
@@ -311,7 +327,7 @@ export default function ManageJobs() {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
                 {formik.errors.job_type && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.job_type}</p>
                 )}

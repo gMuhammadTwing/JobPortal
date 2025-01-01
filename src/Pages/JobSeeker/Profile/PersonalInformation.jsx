@@ -10,7 +10,9 @@ import axiosInstance, { handleError } from '../../../axiosInstance';
 import { Grid, InfinitySpin, RotatingLines } from 'react-loader-spinner';
 import { useRef } from 'react';
 import app_vars from '../../../config';
+import Select from 'react-select'
 import { useDropdownContext } from '../../../DropdownProvider';
+import { label } from 'framer-motion/client';
 export default function PersonalInformation() {
     const [profileCollapsed, setProfileCollapsed] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
@@ -351,7 +353,26 @@ export default function PersonalInformation() {
                                         <label className="block text-sm font-medium text-gray-900">
                                             Occupation
                                         </label>
-                                        <select
+                                        <Select
+                                            options={dropDownValues?.job_family.map((value) => ({
+                                                value: value.id,
+                                                label: value.occupation,
+                                            }))}
+                                            isClearable={true}
+                                            isSearchable={true}
+                                            className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                            onChange={(selectedOption) => {
+                                                formik.setFieldValue(
+                                                    "occupation",
+                                                    selectedOption ? selectedOption.value : ""
+                                                );
+                                            }}
+                                            defaultValue={{
+                                                value:data?.data[0]?.occupation?.id,
+                                                label:data?.data[0]?.occupation?.occupation
+                                            }}
+                                        />
+                                        {/* <select
                                             name="occupation"
                                             onChange={formik.handleChange}
                                             value={formik.values.occupation}
@@ -365,7 +386,7 @@ export default function PersonalInformation() {
                                                     </option>
                                                 );
                                             })}
-                                        </select>
+                                        </select> */}
                                     </div>
                                     <div>
                                         <label htmlFor="expected_salary" className="block text-sm font-medium text-gray-900">Expected Salary</label>

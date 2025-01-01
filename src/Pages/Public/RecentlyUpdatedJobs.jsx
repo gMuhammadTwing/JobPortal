@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import RecentlyUpdatedJobsSkeleton from "../../Components/RecentlyUpdatedJobsSkeleton";
+import { Link } from "react-router-dom";
 
 export default function RecentlyUpdatedJobs() {
   const [data, setData] = useState();
@@ -44,7 +45,7 @@ export default function RecentlyUpdatedJobs() {
         (
           <motion.ul
             role="list"
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-10"
             initial="hidden"
             animate="visible"
             variants={{
@@ -57,7 +58,7 @@ export default function RecentlyUpdatedJobs() {
             }}
           >
             {data?.data &&
-              data.data.slice(0, 6).map((job, index) => (
+              data.data.slice(0, 4).map((job, index) => (
                 <motion.li
                   key={index}
                   className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow border border-transparent hover:border-[#ff0000] text-gray-800 hover:text-[#ff0000] transform transition-all duration-300"
@@ -67,15 +68,17 @@ export default function RecentlyUpdatedJobs() {
                     visible: { opacity: 1, y: 0 },
                   }}
                 >
-                  <div className="flex w-full items-center justify-between space-x-6 p-6">
-                    <div className="flex-1 truncate">
-                      <div className="flex items-center space-x-3">
-                        <h3 className="truncate text-xl font-medium">{job?.job_title}</h3>
+                  <Link to={`/view-job-details/${job?.id}`}>
+                    <div className="flex w-full items-center justify-between space-x-6 p-6">
+                      <div className="flex-1 truncate">
+                        <div className="flex items-center space-x-3">
+                          <h3 className="truncate text-xl font-medium">{job?.job_title}</h3>
+                        </div>
+                        <p className="mt-1 truncate text-sm text-gray-500">{job?.job_type?.job_family}</p>
                       </div>
-                      <p className="mt-1 truncate text-sm text-gray-500">{job?.job_type?.job_family}</p>
+                      <ArrowRightIcon className="w-4 h-4 text-gray-500" />
                     </div>
-                    <ArrowRightIcon className="w-4 h-4 text-gray-500" />
-                  </div>
+                  </Link>
                 </motion.li>
               ))}
           </motion.ul>
