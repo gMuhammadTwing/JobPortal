@@ -69,7 +69,7 @@ export default function RecentlyUpdatedJobs() {
                   visible: { opacity: 1, y: 0 },
                 }}
               >
-                <Link to={`/view-job-details/${job?.id}`}>
+                <Link to={`/jobs_type/${job?.id}`}>
                   <div className="flex w-full items-center justify-between space-x-6 p-6">
                     <div className="flex-1 truncate">
                       <div className="flex items-center space-x-3">

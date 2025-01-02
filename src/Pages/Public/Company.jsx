@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import '../../App.css'
 import bannerImage from './../../assets/banner4.jpeg'
 import axiosInstance, { handleError } from '../../axiosInstance';
+import { Link } from 'react-router-dom';
 export default function Company() {
+    const [search, setSearch] = useState("");
     return (
         <div className="p-2 sm:p-8 md:p-16 lg:p-20 "
             style={{
@@ -19,7 +21,7 @@ export default function Company() {
                     </div>
 
                     <div className="col-span-full py-3 font-bold text-4xl sm:text-4xl md:text-5xl mt-2">
-                    Your Gateway to Opportunity
+                        Your Gateway to Opportunity
                         <div>and Growth</div>
                     </div>
                     <div className="col-span-2 py-2 px-2">
@@ -38,6 +40,8 @@ export default function Company() {
                                         id="search-field"
                                         name="search"
                                         type="search"
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
                                         placeholder="Search Jobs"
                                         className="block w-full border-0 text-gray-900 placeholder:text-gray-900 placeholder:font-semibold focus:outline-none"
                                     />
@@ -45,9 +49,9 @@ export default function Company() {
                                 </div>
 
                             </div>
-                            <div className="px-16 bg-[#ff0000] flex w-20 shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white">
+                            <Link to={`/jobs/${search}`} className="px-16 bg-[#ff0000] flex w-20 shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white">
                                 Search
-                            </div>
+                            </Link>
                         </li>
                     </div>
                 </div>

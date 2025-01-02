@@ -179,15 +179,14 @@ export default function EmployerProfile() {
                                                         ) : (
                                                             <img
                                                                 src={
-                                                                    localStorage?.user_image &&
-                                                                        localStorage.user_image !== 'undefined' &&
-                                                                        localStorage.user_image !== 'null' &&
-                                                                        localStorage.user_image.trim() !== ''
-                                                                        ? `${app_vars?.domain?.fileURL}${image}`
+                                                                    data?.logo &&
+                                                                        data?.logo !== 'undefined' &&
+                                                                        data?.logo !== 'null'
+                                                                        ? `${app_vars?.domain?.fileURL}${data?.logo}`
                                                                         : userLogo
                                                                 }
                                                                 alt="User Profile"
-                                                                className="h-32 w-32 rounded-lg"
+                                                                className="h-28 w-28 rounded-full"
                                                             />
                                                         )}
 

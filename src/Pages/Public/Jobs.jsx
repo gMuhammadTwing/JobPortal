@@ -10,28 +10,31 @@ import { Skeleton } from "../../Components/Skeleton";
 import ApplyModal from "../JobSeeker/ViewJobs/ApplyModal";
 import ApplyInstructionsModal from "../JobSeeker/ViewJobs/ApplyInstructionsModal";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import GreatAboutUs from "./Components/GreatAboutUs";
 import Testimonials from "./Components/Testimonials";
 import Select from 'react-select'
 import FooterHeader from "./Components/FooterHeader";
 export default function Jobs() {
-    const dropDownValues = useDropdownContext(); 
+    const param = useParams();
+    console.log(param);
+
+    const dropDownValues = useDropdownContext();
     const [tableLoader, setTableLoader] = useState(false);
     const parser = new DOMParser();
     const [data, setData] = useState();
     const user_id = localStorage?.user_id || "";
     const [applyModal, setApplyModal] = useState(false);
     const [filters, setFilters] = useState({
-        job_title: "",
-        job_type: "",
+        job_title: param?.title || '',
+        job_type: param?.job_type || "",
         location: "",
         job_status: "",
     })
     const formik = useFormik({
         initialValues: {
-            job_title: "",
-            job_type: "",
+            job_title: param?.title || "",
+            job_type: param?.job_type || "",
             location: "",
             job_status: "",
         },
@@ -99,11 +102,11 @@ export default function Jobs() {
     }
     return (
         <div className="bg-white">
-            <div className=' text-center bg-[#FFF5F3] p-20'>
+            <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Jobs</h1>
                 <p>Ready to get hired?  Search latest Veritas Jobs                </p>
             </div>
-            <div className="container mx-auto max-w-5xl pb-15 min-h-screen mt-5">
+            <div className="container mx-auto max-w-5xl pb-15 mt-5">
                 <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
                 <ApplyInstructionsModal data={applyInstructionsData} onClose={closeApplyInstructionsModal} isOpen={applyInstructionsModal} />
                 {/* {!viewDetails ? ( */}
@@ -143,6 +146,12 @@ export default function Jobs() {
                                                 selectedOption ? selectedOption.value : ""
                                             );
                                         }}
+                                        defaultValue={dropDownValues?.job_family
+                                            .filter((value) => value.id == param?.job_type)
+                                            .map((value) => ({
+                                                value: value.id,
+                                                label: value.job_family,
+                                            }))[0]}
                                     />
                                     {/* <select
                                         name="job_type"
@@ -310,7 +319,7 @@ export default function Jobs() {
                 //         <JobDetails data={viewData} />
                 //     )} */}
             </div>
-            <FooterHeader/>
+            <FooterHeader />
             {/* <GreatAboutUs /> */}
             {/* <Testimonials/> */}
         </div>

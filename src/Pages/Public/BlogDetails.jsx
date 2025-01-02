@@ -108,7 +108,7 @@ export default function BlogDetails() {
         <div
             className='bg-white min-h-screen pb-2'
         >
-            <div className='font-medium text-4xl sm:text-4xl md:text-5xl text-center bg-[#FFF5F3] p-20'>
+            <div className='font-medium text-4xl sm:text-4xl md:text-5xl text-center bg-[#FFF5F3] p-12'>
                 <h1 className="text-[#ff0000]">Blog Details</h1>
             </div>
             <div className="max-w-4xl m-auto p-4">

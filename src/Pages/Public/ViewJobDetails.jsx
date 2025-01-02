@@ -111,7 +111,7 @@ export default function ViewJobDetails() {
                                                 app_vars?.domain?.fileURL + data?.company_id?.logo
                                             }
                                             alt="User Profile"
-                                            className="h-32 w-32 rounded-lg border-2 border-white"
+                                            className="h-28 w-28 rounded-full border-2 border-white"
                                         />
                                         <div className="text-start ml-4">
                                             <h1 className="font-semibold text-lg md:text-2xl">{data?.job_title}</h1>
@@ -221,33 +221,35 @@ export default function ViewJobDetails() {
                                             ]}
                                         />
                                     </div>
-                                    <div className="px-2 mt-2 pt-2  border-t text-xl">
-                                        <label htmlFor="" className="block font-semibold mb-2">
-                                            Instruction to Apply
-                                        </label>
-                                        <ReactQuill
-                                            id="job_instructions_to_apply"
-                                            theme="bubble"
-                                            value={data?.job_instructions_to_apply}
-                                            readOnly={true}
-                                            style={{
-                                                minHeight: "50px",
-                                                overflow: "auto",
-                                            }}
-                                            modules={{
-                                                toolbar: false,
-                                            }}
-                                            formats={[
-                                                "header",
-                                                "bold",
-                                                "italic",
-                                                "underline",
-                                                "strike",
-                                                "list",
-                                                "bullet",
-                                            ]}
-                                        />
-                                    </div>
+                                    {(data?.veritas_to_short_list === 0 || data?.veritas_to_short_list === null) && (
+                                        <div className="px-2 mt-2 pt-2  border-t text-xl">
+                                            <label htmlFor="" className="block font-semibold mb-2">
+                                                Instruction to Apply
+                                            </label>
+                                            <ReactQuill
+                                                id="job_instructions_to_apply"
+                                                theme="bubble"
+                                                value={data?.job_instructions_to_apply}
+                                                readOnly={true}
+                                                style={{
+                                                    minHeight: "50px",
+                                                    overflow: "auto",
+                                                }}
+                                                modules={{
+                                                    toolbar: false,
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </ul>

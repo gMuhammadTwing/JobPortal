@@ -53,6 +53,13 @@ import Charities from './Pages/Public/Charities';
 import Incubators from './Pages/Public/Incubators';
 import Volunteers from './Pages/Public/Volunteers';
 import Careers from './Pages/Public/Careers';
+import PostJob from './Pages/Public/PostJob';
+import ResumeBankPublic from './Pages/Public/ResumeBank';
+import VeritasShortlistingPublic from './Pages/Public/VeritasShortlisting';
+import FindCandidates from './Pages/Public/FindCandidates';
+import Subscribe from './Pages/Public/Subscribe';
+import SubmitResume from './Pages/Public/SubmitResume';
+import WhySubscribe from './Pages/Public/WhySubscribe';
 function App() {
   return (
     <DropdownProvider>
@@ -73,11 +80,20 @@ function App() {
             <Route path="incubators" element={<Incubators />} />
             <Route path="volunteers" element={<Volunteers />} />
             <Route path="careers" element={<Careers />} />
+            <Route path="post_job" element={<PostJob />} />
+            <Route path="resume_bank" element={<ResumeBankPublic />} />
+            <Route path="veritas_shortlisting" element={<VeritasShortlistingPublic />} />
+            <Route path="find_candidates" element={<FindCandidates />} />
+            <Route path="subscribe" element={<Subscribe />} />
+            <Route path="submit_resume" element={<SubmitResume />} />
+            <Route path="why_subscribe" element={<WhySubscribe />} />
 
             <Route path="teams" element={<Teams />} />
             {/* <Route path="projects" element={<Projects />} /> */}
             <Route path="contact-us" element={<ContactUs />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="jobs/:title" element={<Jobs />} />
+            <Route path="jobs_type/:job_type" element={<Jobs />} />
             <Route path="view-job-details/:id" element={<ViewJobDetails />} />
             <Route path="blogs_comments" element={<Blogs />} />
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />

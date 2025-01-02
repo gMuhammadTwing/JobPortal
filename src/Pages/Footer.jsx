@@ -42,9 +42,9 @@ export default function Footer() {
                     {/* Useful Links Section */}
                     <div>
                         <ul className="space-y-3 text-center lg:text-left">
-                            <li className="text-black font-semibold text-lg mb-5">
+                            {/* <li className="text-black font-semibold text-lg mb-5">
                                 <span className="underline decoration-[#ff0000] decoration-2 underline-offset-8">Useful</span> Links
-                            </li>
+                            </li> */}
                             {["About Us", "Blog", "Login", "Register", "Forgot Password"].map((link, idx) => (
                                 <li key={idx} className="flex justify-center lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />
@@ -72,9 +72,9 @@ export default function Footer() {
                     {/* Connect With Us Section */}
                     <div>
                         <ul className="space-y-3 text-center lg:text-left">
-                            <li className="text-black font-semibold text-lg mb-5">
+                            {/* <li className="text-black font-semibold text-lg mb-5">
                                 <span className="underline decoration-[#ff0000] decoration-2 underline-offset-8">Connect</span> With Us
-                            </li>
+                            </li> */}
                             {["Terms & Conditions", "Disclaimer", "Privacy Policy", "Refund Policy", "Service/Product Guarantee"].map((item, idx) => (
                                 <li key={idx} className="flex justify-center lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />

@@ -209,7 +209,7 @@ export default function PersonalInformation() {
                                                                 : userLogo
                                                         }
                                                         alt="User Profile"
-                                                        className="h-30 w-30 rounded-lg border-2 border-white"
+                                                        className="h-28 w-28 rounded-full border-2 border-white"
                                                     />
                                                 )}
 

@@ -35,14 +35,15 @@ export default function ResumeBank() {
     const [tableLoader, setTableLoader] = useState(false);
     const [filters, setFilters] = useState({
         occupation: "",
-        graduation_year: "",
+        year_from: "",
+        year_to: "",
         institute: "",
         job_status: "",
     })
     const fetchData = async (page, filters) => {
         setTableLoader(true)
         try {
-            const response = await axiosInstance.get(`/api/employer_resume_bank?occupation=${filters?.occupation}&graduation_year=${filters?.graduation_year}&institute=${filters?.institute}&job_status=${filters?.job_status}&page=${page}`);
+            const response = await axiosInstance.get(`/api/employer_resume_bank?occupation=${filters?.occupation}&year_from=${filters?.year_from}&year_to=${filters?.year_to}&institute=${filters?.institute}&job_status=${filters?.job_status}&page=${page}`);
             if (response) {
                 setData(response?.data)
                 console.log(response?.data);
@@ -64,7 +65,8 @@ export default function ResumeBank() {
     const formik = useFormik({
         initialValues: {
             occupation: "",
-            graduation_year: "",
+            year_from: "",
+            year_to: "",
             institute: "",
             job_status: "",
         },
@@ -79,13 +81,15 @@ export default function ResumeBank() {
         formik.resetForm();
         setFilters({
             occupation: "",
-            graduation_year: "",
+            year_from: "",
+            year_to: "",
             institute: "",
             job_status: "",
         })
         fetchData(1, {
             occupation: "",
-            graduation_year: "",
+            year_from: "",
+            year_to: "",
             institute: "",
             job_status: "",
         })
@@ -99,13 +103,27 @@ export default function ResumeBank() {
                         <div className="col-span-full text-[#ff0000] mb-5 font-bold text-xl">Manage Resume Bank</div>
                         <div className="sm:col-span-3">
                             <label className="block text-sm font-medium text-gray-900">
-                                Graduation Year
+                                Year From
                             </label>
                             <input
-                                type="text"
-                                name="graduation_year"
+                                type="number"
+                                name="year_from"
+                                id="year_from"
                                 onChange={formik.handleChange}
-                                value={formik.values.graduation_year}
+                                value={formik.values.year_from}
+                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                            />
+                        </div>
+                        <div className="sm:col-span-3">
+                            <label className="block text-sm font-medium text-gray-900">
+                                Year To
+                            </label>
+                            <input
+                                type="number"
+                                name="year_to"
+                                id="year_to"
+                                onChange={formik.handleChange}
+                                value={formik.values.year_to}
                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                             />
                         </div>

@@ -37,7 +37,7 @@ const navigation = [
       { name: "Submit your Resume", href: 'submit_resume' },
       { name: "Why Subscribe?", href: 'why_subscribe' },
       { name: "Find a job", href: 'jobs', single: 'find', current: false },
-      { name: "Join our Community", href: 'join_community' },
+      // { name: "Join our Community", href: 'join_community' },
     ]
   },
   { name: 'Admin', href: 'admin/employees', single: 'admin', current: false },
