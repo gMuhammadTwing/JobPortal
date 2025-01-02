@@ -65,6 +65,12 @@ export default function ViewApplicant() {
                                         <p className="text-sm text-gray-600">
                                             <span className="font-medium text-gray-700">Email:</span> {data?.data[0]?.user_id?.email || "NA"}
                                         </p>
+                                        <p className="text-sm text-gray-600">
+                                            <span className="font-medium text-gray-700">Phone:</span> {data?.data[0]?.contact_number || "NA"}
+                                        </p>
+                                        <p className="text-sm text-gray-600">
+                                            <span className="font-medium text-gray-700">Address:</span> {data?.data[0]?.address || "NA"}
+                                        </p>
                                         {/* <p className="text-sm text-gray-600">
                                             <span className="font-medium text-gray-700">Phone:</span> {data?.data[0]?.user_id?.phone || "NA"}
                                         </p>
@@ -77,10 +83,10 @@ export default function ViewApplicant() {
                                 {/* Grid Section */}
                                 <div className="mt-8">
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        <div>
-                                            <h3 className="font-bold text-gray-700">Father's Name</h3>
-                                            <p className="text-sm text-gray-600">{data?.data[0]?.father_name || "NA"}</p>
-                                        </div>
+                                        {/* <div>
+                                            <h3 className="font-bold text-gray-700">Unique Name</h3>
+                                            <p className="text-sm text-gray-600">{data?.data[0]?.user_id?.unique_name || "NA"}</p>
+                                        </div> */}
                                         <div>
                                             <h3 className="font-bold text-gray-700">Date of Birth</h3>
                                             <p className="text-sm text-gray-600">{data?.data[0]?.dob || "NA"}</p>
@@ -88,6 +94,10 @@ export default function ViewApplicant() {
                                         <div>
                                             <h3 className="font-bold text-gray-700">Gender</h3>
                                             <p className="text-sm text-gray-600">{data?.data[0]?.gender_label || "NA"}</p>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-gray-700">National ID</h3>
+                                            <p className="text-sm text-gray-600">{data?.data[0]?.national_id || "NA"}</p>
                                         </div>
                                         <div>
                                             <h3 className="font-bold text-gray-700">Occupation</h3>

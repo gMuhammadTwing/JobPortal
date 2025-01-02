@@ -24,7 +24,7 @@ export default function Education() {
     const [id, setId] = useState();
     const openModal = (item) => {
         console.log(item?.id);
-        
+
         setId(item?.id)
         setIsModalOpen(true);
     }
@@ -32,21 +32,8 @@ export default function Education() {
     const validationSchema = Yup.object({
         degree_title: Yup.string().required('Degree title is required'),
         institute: Yup.string().required('Institute is required'),
-        completion_year: Yup.string().required('Completion year is required'),
-        cgpa_obtained: Yup.number()
+        obtained_grade: Yup.string()
             .required('CGPA obtained is required')
-            .positive('Must be a positive number')
-            .test(
-                'is-less-than-total',
-                'CGPA obtained must be less than or equal to CGPA out of',
-                function (value) {
-                    const { cgpa_total } = this.parent;
-                    return value <= cgpa_total;
-                }
-            ),
-        cgpa_total: Yup.number()
-            .required('CGPA out of is required')
-            .positive('Must be a positive number'),
     });
 
     const [data, setData] = useState();
@@ -58,9 +45,9 @@ export default function Education() {
         initialValues: {
             degree_title: update?.degree_title || '',
             institute: update?.institute || '',
-            completion_year: update?.completion_year || '',
-            cgpa_obtained: update?.cgpa_obtained || '',
-            cgpa_total: update?.cgpa_total || '',
+            year_from: update?.year_from || '',
+            year_to: update?.year_to || '',
+            obtained_grade: update?.obtained_grade || '',
             user_id: user_id,
         },
         enableReinitialize: true,
@@ -225,10 +212,13 @@ export default function Education() {
                                                     <div className="flex flex-col gap-1">
                                                         <h4 className="font-semibold text-lg">{item?.institute}</h4>
                                                         <p className="text-gray-700">
-                                                            {item?.degree_title} - {item?.completion_year}
+                                                            Degree: {item?.degree_title} 
+                                                        </p>
+                                                        <p className="text-gray-700">
+                                                            From: {item?.year_from } To {item?.year_to}
                                                         </p>
                                                         <p className="text-gray-600">
-                                                            CGPA {item?.cgpa_obtained} out of {item?.cgpa_total}
+                                                            Grade Obtained: {item?.obtained_grade}
                                                         </p>
                                                     </div>
 
@@ -311,65 +301,59 @@ export default function Education() {
 
                                         {/* Completion Year Dropdown */}
                                         <div>
-                                            <label htmlFor="completion_year" className="block text-sm font-medium text-gray-900">
-                                                Completion Year *
+                                            <label htmlFor="year_from" className="block text-sm font-medium text-gray-900">
+                                                Year From *
                                             </label>
                                             <input
                                                 type="number"
-                                                id="completion_year"
+                                                id="year_from"
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                                value={formik.values.completion_year}
+                                                value={formik.values.year_from}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
                                             />
-                                            {formik.touched.completion_year && formik.errors.completion_year && (
-                                                <div className="text-sm text-red-500 mt-1">{formik.errors.completion_year}</div>
+                                            {formik.touched.year_from && formik.errors.year_from && (
+                                                <div className="text-sm text-red-500 mt-1">{formik.errors.year_from}</div>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <label htmlFor="year_to" className="block text-sm font-medium text-gray-900">
+                                                Year To *
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="year_to"
+                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                value={formik.values.year_to}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                            />
+                                            {formik.touched.year_to && formik.errors.year_to && (
+                                                <div className="text-sm text-red-500 mt-1">{formik.errors.year_to}</div>
                                             )}
                                         </div>
 
                                         {/* CGPA Obtained and Out Of */}
                                         <div>
                                             <label htmlFor="completion_year" className="block text-sm font-medium text-gray-900">
-                                                CGPA Obtained*
+                                                Grade Obtained*
                                             </label>
                                             <input
                                                 type="text"
-                                                id="cgpa_obtained"
-                                                name="cgpa_obtained"
+                                                id="obtained_grade"
+                                                name="obtained_grade"
                                                 placeholder="Obtained"
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                                // className={`block py-1.5 px-3 border ${formik.touched.cgpa_obtained && formik.errors.cgpa_obtained
+                                                // className={`block py-1.5 px-3 border ${formik.touched.obtained_grade && formik.errors.obtained_grade
                                                 //     ? 'border-red-500'
                                                 //     : 'border-gray-300'
                                                 //     } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                                value={formik.values.cgpa_obtained}
+                                                value={formik.values.obtained_grade}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
                                             />
-                                            {formik.touched.cgpa_obtained && formik.errors.cgpa_obtained && (
-                                                <div className="text-sm text-red-500 mt-1">{formik.errors.cgpa_obtained}</div>
-                                            )}
-                                        </div>
-                                        <div>
-                                            <label htmlFor="cgpa" className="block text-sm font-medium text-gray-900">
-                                                CGPA Out Of *
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="cgpa_total"
-                                                name="cgpa_total"
-                                                placeholder="Out Of"
-                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                                // className={`block py-1.5 px-3 border ${formik.touched.cgpa_total && formik.errors.cgpa_total
-                                                //     ? 'border-red-500'
-                                                //     : 'border-gray-300'
-                                                //     } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500`}
-                                                value={formik.values.cgpa_total}
-                                                onChange={formik.handleChange}
-                                                onBlur={formik.handleBlur}
-                                            />
-                                            {formik.touched.cgpa_total && formik.errors.cgpa_total && (
-                                                <div className="text-sm text-red-500 mt-1">{formik.errors.cgpa_total}</div>
+                                            {formik.touched.obtained_grade && formik.errors.obtained_grade && (
+                                                <div className="text-sm text-red-500 mt-1">{formik.errors.obtained_grade}</div>
                                             )}
                                         </div>
 

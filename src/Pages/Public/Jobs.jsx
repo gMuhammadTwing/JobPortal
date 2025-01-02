@@ -14,8 +14,9 @@ import { Link } from "react-router-dom";
 import GreatAboutUs from "./Components/GreatAboutUs";
 import Testimonials from "./Components/Testimonials";
 import Select from 'react-select'
+import FooterHeader from "./Components/FooterHeader";
 export default function Jobs() {
-    const dropDownValues = useDropdownContext();
+    const dropDownValues = useDropdownContext(); 
     const [tableLoader, setTableLoader] = useState(false);
     const parser = new DOMParser();
     const [data, setData] = useState();
@@ -309,7 +310,8 @@ export default function Jobs() {
                 //         <JobDetails data={viewData} />
                 //     )} */}
             </div>
-            <GreatAboutUs />
+            <FooterHeader/>
+            {/* <GreatAboutUs /> */}
             {/* <Testimonials/> */}
         </div>
     );

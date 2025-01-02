@@ -8,6 +8,7 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import { toast } from "sonner";
 import GreatAboutUs from "./Components/GreatAboutUs";
 import Testimonials from "./Components/Testimonials";
+import FooterHeader from "./Components/FooterHeader";
 export default function ContactUs() {
     const formik = useFormik({
         initialValues: {
@@ -53,7 +54,7 @@ export default function ContactUs() {
             </div>
 
             {/* Content Section */}
-            <div className="max-w-6xl mx-auto p-6 mt-10 mb-10">
+            <div className="max-w-6xl mx-auto p-6 mt-10">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 items-center">
                     {/* Text Section */}
                     <div className="flex flex-col justify-center text-center md:text-left">
@@ -152,41 +153,23 @@ export default function ContactUs() {
                             </div>
 
                             {/* Message */}
-                            <div className="mb-2">
+                            <div className="">
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-900">
                                     Message
                                 </label>
-                                <ReactQuill
+                                <textarea
                                     id="message"
-                                    theme="snow"
+                                    rows={4}
+                                    name="message"
+                                    type="text"
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     value={formik.values.message}
-                                    onChange={(value) => formik.setFieldValue("message", value)}
-                                    onBlur={() => formik.setFieldTouched("message", true)}
-                                    style={{
-                                        height: "100px",
-                                    }}
-                                    modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                    ]}
-                                    placeholder="Write any message"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                 />
-                                {/* {formik.errors.message && formik.touched.message && (
+                                {formik.errors.message && formik.touched.message && (
                                     <p className="text-sm text-red-500">{formik.errors.message}</p>
-                                )} */}
+                                )}
                             </div>
 
                             {/* Submit Button */}
@@ -199,7 +182,7 @@ export default function ContactUs() {
                                 >Contact Us</Button>
                             </div>
                         </form>
-                    </div> 
+                    </div>
 
                     {/* Image Section */}
                     <div className="flex justify-center items-center">
@@ -218,8 +201,8 @@ export default function ContactUs() {
                     </div>
                 </div>
             </div>
-
-            <GreatAboutUs/>
+            <FooterHeader/>
+            {/* <GreatAboutUs/> */}
             {/* <Testimonials/> */}
         </div>
     );

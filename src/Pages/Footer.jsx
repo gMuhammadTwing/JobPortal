@@ -2,15 +2,16 @@ import { ChevronRightIcon, StarIcon } from "@heroicons/react/20/solid";
 import FB from './../assets/fb.png'
 import { Button } from "../Components/Button";
 import footer_logo from '../assets/footer_logo.jpeg'
+import { Link } from "react-router-dom";
 export default function Footer() {
     return (
         <div className="border rounded-lg bg-white p-4 pt-20">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-[78rem] mx-auto">
                 {/* Footer Main Content */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-20 border-gray-200 text-gray-600">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-20 border-gray-200 text-gray-600">
                     {/* Logo and Intro Section */}
                     <div className="col-span-2 space-y-6 text-center lg:text-left">
-                        <div className="flex justify-center lg:justify-start items-center">
+                        <div className="flex justify-start lg:justify-start items-center">
                             <img
                                 alt="Your Company"
                                 src={footer_logo}
@@ -21,7 +22,7 @@ export default function Footer() {
                             </h1>
                         </div>
                         <p className="text-gray-700 text-sm md:text-base">
-                            We’re always in search of talented and motivated people. Don’t be shy, introduce yourself!
+                            Veritas Jobs is your go-to platform for the latest job listings and career opportunities in Kenya. As a trusted job board, we are committed to helping job seekers find their next opportunity.
                         </p>
                         {/* <div className="mt-4 md:mt-6 flex flex-wrap justify-center lg:justify-start gap-4">
                             {["facebook-f", "twitter", "instagram", "linkedin"].map((icon, idx) => (
@@ -34,7 +35,7 @@ export default function Footer() {
                             ))}
                         </div> */}
                         <button className="bg-black text-white rounded py-2 px-4 hover:bg-[#ff0000] transition-all text-sm md:text-base">
-                            Contact with us
+                            <Link to={"contact-us"}>Contact with us</Link>
                         </button>
                     </div>
 
@@ -54,7 +55,7 @@ export default function Footer() {
                     </div>
 
                     {/* Help & Support Section */}
-                    <div>
+                    {/* <div>
                         <ul className="space-y-3 text-center lg:text-left">
                             <li className="text-black font-semibold text-lg mb-5">
                                 <span className="underline decoration-[#ff0000] decoration-2 underline-offset-8">Help</span> & Support
@@ -66,7 +67,7 @@ export default function Footer() {
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </div> */}
 
                     {/* Connect With Us Section */}
                     <div>
@@ -74,7 +75,7 @@ export default function Footer() {
                             <li className="text-black font-semibold text-lg mb-5">
                                 <span className="underline decoration-[#ff0000] decoration-2 underline-offset-8">Connect</span> With Us
                             </li>
-                            {["Chat", "FAQ", "Reviews", "Privacy Policy", "Terms Of Use"].map((item, idx) => (
+                            {["Terms & Conditions", "Disclaimer", "Privacy Policy", "Refund Policy", "Service/Product Guarantee"].map((item, idx) => (
                                 <li key={idx} className="flex justify-center lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />
                                     {item}

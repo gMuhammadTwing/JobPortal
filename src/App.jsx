@@ -43,6 +43,16 @@ import ViewEmployer from './Pages/Admin/ViewEmployer';
 import ViewAgency from './Pages/Admin/ViewAgency';
 import ViewApplicant from './Pages/Admin/ViewApplicant';
 import ViewJobDetails from './Pages/Public/ViewJobDetails';
+import OurVision from './Pages/Public/OurVision';
+import OurMission from './Pages/Public/OurMission';
+import OurValues from './Pages/Public/OurValues';
+import Opportunity from './Pages/Public/Opportunity';
+import Projects from './Pages/Public/Projects';
+import Investors from './Pages/Public/Investors';
+import Charities from './Pages/Public/Charities';
+import Incubators from './Pages/Public/Incubators';
+import Volunteers from './Pages/Public/Volunteers';
+import Careers from './Pages/Public/Careers';
 function App() {
   return (
     <DropdownProvider>
@@ -53,6 +63,17 @@ function App() {
             <Route path="home" element={<PublicIndex />} />
             <Route path="payment-alert" element={<PaymentAlert />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="vision" element={<OurVision />} />
+            <Route path="mission" element={<OurMission />} />
+            <Route path="our-values" element={<OurValues />} />
+            <Route path="opportunity" element={<Opportunity />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="investors" element={<Investors />} />
+            <Route path="charities" element={<Charities />} />
+            <Route path="incubators" element={<Incubators />} />
+            <Route path="volunteers" element={<Volunteers />} />
+            <Route path="careers" element={<Careers />} />
+
             <Route path="teams" element={<Teams />} />
             {/* <Route path="projects" element={<Projects />} /> */}
             <Route path="contact-us" element={<ContactUs />} />

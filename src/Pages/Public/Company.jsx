@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../App.css'
-import bannerImage from './../../assets/banner3.png'
+import bannerImage from './../../assets/banner4.jpeg'
 import axiosInstance, { handleError } from '../../axiosInstance';
 export default function Company() {
     return (
@@ -14,16 +14,16 @@ export default function Company() {
                 <div className="mx-auto max-w-[85rem] p-3 lg:px-20 grid grid-cols-1 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-5">
                     <div className="col-span-2 ">
                         <div className=" font-medium ">
-                            <span className='items-center rounded-full bg-white px-4 py-2'>With the world's #1 Jobs Marketplace</span>
+                            <span className='items-center rounded-full bg-white px-4 py-2'>Kenya #1 Jobs Marketplace</span>
                         </div>
                     </div>
 
                     <div className="col-span-full py-3 font-bold text-4xl sm:text-4xl md:text-5xl mt-2">
-                        Get the perfect Jobs
-                        <div>and Projects</div>
+                    Your Gateway to Opportunity
+                        <div>and Growth</div>
                     </div>
                     <div className="col-span-2 py-2 px-2">
-                        <p>Veritas Jobs is a leading job board of the latest available jobs and opportunities. It is the job seekers’ first stop for the latest opportunities. </p>
+                        <p>Discover your next career move with Veritas Jobs. Connect with top employers, explore diverse opportunities, and take the next step toward your future. Your journey starts here!</p>
                     </div>
                     <div className='col-span-4'></div>
                     <div className="col-span-2 mt-2">

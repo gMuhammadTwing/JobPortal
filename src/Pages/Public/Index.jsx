@@ -6,16 +6,18 @@ import FeaturedSkills from './FeaturedSkills';
 import Reviews from './Components/Reviews';
 import GreatAboutUs from './Components/GreatAboutUs';
 import Testimonials from './Components/Testimonials';
+import FooterHeader from './Components/FooterHeader';
 export default function Index() {
   return (
     <>
-      <div className=" pb-2">
+      <div className="">
         <Company />
         <RecentlyUpdatedJobs />
         <FeaturedJobs />
-        <FeaturedDevelopers />
-        <FeaturedSkills />
-        <GreatAboutUs/>
+        <FooterHeader/>
+        {/* <FeaturedDevelopers /> */}
+        {/* <FeaturedSkills /> */}
+        {/* <GreatAboutUs/> */}
         {/* <Testimonials/> */}
 
       </div>

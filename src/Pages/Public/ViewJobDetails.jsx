@@ -254,7 +254,7 @@ export default function ViewJobDetails() {
                     </div>
                 )
             }
-            <GreatAboutUs />
+            {/* <GreatAboutUs /> */}
         </div>
     )
 }
