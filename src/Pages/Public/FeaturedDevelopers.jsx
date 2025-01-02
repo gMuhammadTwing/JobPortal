@@ -102,13 +102,13 @@ export default function FeaturedDevelopers() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <div className='px-3 font-medium text-4xl sm:text-5xl md:text-6xl text-center pb-5'>
-                <h1>Featured <span className='text-orange-500'>Developers</span></h1>
+            <div className=' font-medium text-4xl sm:text-5xl md:text-6xl text-center pb-2'>
+                <h1>Featured <span className='text-[#ff0000]'>Developers</span></h1>
             </div>
 
             <motion.ul
                 role="list"
-                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-5"
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-5 mx-auto max-w-[75rem]"
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -123,7 +123,7 @@ export default function FeaturedDevelopers() {
                 {jobs.map((job, index) => (
                     <motion.li
                         key={index}
-                        className="col-span-1 divide-y divide-gray-200 rounded-lg shadow-6 bg-white border border-transparent hover:border-orange-500"
+                        className="col-span-1 divide-y divide-gray-200 rounded-lg shadow-6 bg-white border border-transparent hover:border-[#ff0000]"
                         whileHover={{ scale: 1.05 }} // Hover effect
                         variants={{
                             hidden: { opacity: 0, y: 20 },
@@ -138,11 +138,11 @@ export default function FeaturedDevelopers() {
                                 </div>
                                 <div className="text-sm text-gray-500">{job.role}</div>
                                 <div className="mt-2 truncate text-sm text-gray-500 flex">
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
-                                    <StarIcon className="w-5 h-5 text-orange-400" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
+                                    <StarIcon className="w-5 h-5 text-[#ff0000]" />
                                     <span className="ml-1">5.0 (30)</span>
                                 </div>
                             </div>

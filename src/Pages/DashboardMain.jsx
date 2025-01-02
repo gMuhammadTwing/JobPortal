@@ -1,5 +1,6 @@
 import {
     BriefcaseIcon,
+    BuildingOfficeIcon,
     ChatBubbleLeftRightIcon,
     ClipboardDocumentCheckIcon,
     ClipboardDocumentListIcon,
@@ -26,16 +27,16 @@ export default function DashboardMain() {
     const jobSeekerNav = [
         { name: "Job Profile", href: "profile", icon: UserCircleIcon, current: true },
         { name: "Resume/CV", href: "resume", icon: DocumentTextIcon, current: false },
-        { name: "Search Jobs", href: "view-jobs", icon: ViewfinderCircleIcon, current: false },
-        { name: "Applied Jobs", href: "applied-jobs", single: "applied-jobs", icon: BriefcaseIcon, current: false },
+        { name: "Search Jobs", href: "view_job_list", icon: ViewfinderCircleIcon, current: false },
+        { name: "Applied Jobs", href: "applied_job_list", single: "applied_job_list", icon: BriefcaseIcon, current: false },
         // { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
-        { name: "Coursework", href: "coursework", icon: ClipboardDocumentListIcon, current: false },
+        { name: "Coursework", href: "coursework/all", single:'coursework', icon: ClipboardDocumentListIcon, current: false },
     ]
     const navigation = [
         { name: "Employer Profile", href: "profile", icon: UserCircleIcon, current: true },
         { name: "Employer Job Management", href: "job_management", single: 'job_management', icon: BriefcaseIcon, current: false },
-        // { name: "Employer Payment", href: "employer-payment", icon: CreditCardIcon, current: false },
-        // { name: "Shortlisting Requests", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
+        { name: "Resume Bank", href: "resume_bank", icon: CreditCardIcon, current: false },
+        { name: "Veritas Shortlisting", href: "veritas_shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         // { name: "Blog/Comments", href: "blog", icon: NewspaperIcon, current: false },
         // { name: "Reports", href: "reports", icon: FlagIcon, current: false },
         // { name: "CMS Pages", href: "cms-pages", icon: CogIcon, current: false },
@@ -44,6 +45,7 @@ export default function DashboardMain() {
     const adminNav = [
         { name: "Employees", href: "employees", icon: UserCircleIcon, current: true },
         { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single:'admin_job_seekers', current: true },
+        { name: "Employer Agency List", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
         { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
         { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
@@ -62,19 +64,19 @@ export default function DashboardMain() {
         <div className="container mx-auto flex relative">
 
             {/* Mobile Sidebar Toggle */}
-            <div className="fixed z-20 top-0 left-0 md:hidden">
+            <div className="fixed top-12 left-9 md:hidden">
                 <button
-                    className="m-4 p-2 text-white bg-orange-600 rounded-md"
+                    className="m-4 p-2 text-white bg-[#ff0000] rounded-md"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
-                    {sidebarOpen ? "Close Menu" : "Open Menu"}
+                    {sidebarOpen ? "Close Menus" : "Open Menus"}
                 </button>
             </div>
 
             {/* Sidebar */}
             <aside
                 className={classNames(
-                    "fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg border border-gray-300 overflow-y-auto transform transition-transform",
+                    "z-10 fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg  overflow-y-auto transform transition-transform",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full",
                     "md:relative md:translate-x-0 md:w-72"
                 )}
@@ -89,8 +91,8 @@ export default function DashboardMain() {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "bg-orange-600 text-white"
-                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                                ? "bg-[#ff0000] text-white"
+                                                : "text-black hover:bg-[#ff0000] hover:text-white",
                                             "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
                                     >
@@ -117,8 +119,8 @@ export default function DashboardMain() {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "bg-orange-600 text-white"
-                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                                ? "bg-[#ff0000] text-white"
+                                                : "text-black hover:bg-[#ff0000] hover:text-white",
                                             "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
                                     >
@@ -146,8 +148,8 @@ export default function DashboardMain() {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                                ? "bg-orange-600 text-white"
-                                                : "text-black hover:bg-orange-600 hover:text-white",
+                                                ? "bg-[#ff0000] text-white"
+                                                : "text-black hover:bg-[#ff0000] hover:text-white",
                                             "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
                                         )}
                                     >

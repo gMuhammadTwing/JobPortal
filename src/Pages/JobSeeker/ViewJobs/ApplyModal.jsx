@@ -55,7 +55,7 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
             <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75" />
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <DialogPanel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                    <DialogPanel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl sm:my-8 sm:w-full sm:max-w-[40rem] sm:p-6">
                         <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
                             <button
                                 type="button"
@@ -89,7 +89,7 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
                                             value={formik.values.cover_letter}
                                             onChange={(value) => formik.setFieldValue("cover_letter", value)}
                                             style={{
-                                                height: "150px",
+                                                height: "250px",
                                             }}
                                             modules={{
                                                 toolbar: [

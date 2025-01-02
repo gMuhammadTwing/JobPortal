@@ -125,18 +125,21 @@ export default function Projects() {
                     <div className={`border rounded-md shadow-lg ${Project ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 border-b cursor-pointer text-orange-600 bg-white"
-                            // onClick={handleProject}
+                            className="flex justify-between items-center p-4 border-b cursor-pointer text-[#ff0000] bg-white"
+                            onClick={() => {
+                                handleProject();
+                                fetchData();
+                            }}
                         >
                             <h3 className="font-bold text-xl">Projects</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
                                 {Project ? (
-                                    <PlusIcon onClick={()=>{
+                                    <PlusIcon onClick={() => {
                                         handleProject();
                                         fetchData();
-                                    }} className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                                    }} className="block h-6 w-6 text-[#008604] hover:scale-[160%] duration-300" />
                                 ) : (
-                                    <MinusIcon onClick={()=>handleProject()} className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
+                                    <MinusIcon onClick={() => handleProject()} className="block h-6 w-6 text-[#ff0000] hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
@@ -181,7 +184,7 @@ export default function Projects() {
                                                                 <h4 className="font-semibold text-lg">Project Title: {item?.project_name}</h4>
                                                             </div>
                                                             <a href={item?.project_url} target="_blank"
-                                                                rel="noopener noreferrer" className="text-blue-600 underline">Project URL</a>
+                                                                rel="noopener noreferrer" className="text-blue-600 underline">{item?.project_url}</a>
                                                             <p>{item?.start_date} - {item?.on_going ? "Ongoing" : item?.end_date}</p>
                                                             <p>{parser.parseFromString(item?.description, "text/html").body.textContent.trim()}</p>
                                                         </div>
@@ -199,7 +202,7 @@ export default function Projects() {
                                             <button
                                                 type="button"
                                                 onClick={() => setEditProject(true)}
-                                                className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                                className="bg-[#ff0000] hover:bg-[#ff0000] rounded-full p-1 text-white shadow-md transition-all"
                                             >
                                                 <PlusIcon className=" h-5 w-5" />
                                             </button>
@@ -238,7 +241,7 @@ export default function Projects() {
                                                 Project URL
                                             </label>
                                             <input
-                                                type="url"
+                                                type="text"
                                                 id="project_url"
                                                 name="project_url"
                                                 value={formik.values.project_url}

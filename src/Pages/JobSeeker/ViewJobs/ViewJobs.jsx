@@ -1,4 +1,4 @@
-import { ArrowDownCircleIcon, ViewColumnsIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowDownCircleIcon, CalendarDateRangeIcon, CurrencyDollarIcon, MapPinIcon, ViewColumnsIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../../Components/Button";
 import { LoaderTable } from "../../../Components/LoaderTable";
@@ -9,7 +9,8 @@ import ReactQuill from "react-quill";
 import ApplyModal from "./ApplyModal";
 import { useDropdownContext } from "../../../DropdownProvider";
 import { useFormik } from "formik";
-
+import ApplyInstructionsModal from "./ApplyInstructionsModal";
+import Select from "react-select";
 export default function ViewJobs() {
     const dropDownValues = useDropdownContext();
     const [tableLoader, setTableLoader] = useState(false);
@@ -18,6 +19,8 @@ export default function ViewJobs() {
     const [viewDetails, setViewDetails] = useState(false);
     const [viewData, setViewData] = useState();
     const [applyModal, setApplyModal] = useState(false);
+    const user_id = localStorage?.user_id
+    const [applyInstructionModal, setApplyInstructionModal] = useState(false);
     const [filters, setFilters] = useState({
         job_title: "",
         job_type: "",
@@ -41,7 +44,7 @@ export default function ViewJobs() {
     const fetchData = async (page, filters) => {
         setTableLoader(true);
         try {
-            const response = await axiosInstance.get(`api/job_list?job_title=${filters?.job_title}&job_type=${filters?.job_type}&location=${filters?.location}&job_status=${filters?.job_status}&page=${page}`);
+            const response = await axiosInstance.get(`api/job_list?user_id=${user_id}&job_title=${filters?.job_title}&job_type=${filters?.job_type}&location=${filters?.location}&job_status=${filters?.job_status}&page=${page}`);
             if (response) {
                 setData(response.data)
             }
@@ -63,6 +66,14 @@ export default function ViewJobs() {
         setApplyData(job);
         setApplyModal(true);
     }
+    const applyInstructionHandler = (job) => {
+        setApplyData(job);
+        setApplyInstructionModal(true);
+    }
+    const closeApplyInstructionModal = () => {
+        setApplyInstructionModal(false);
+        fetchData(1, filters)
+    }
     const closeApplyModal = () => {
         setApplyModal(false);
         fetchData(1, filters)
@@ -83,19 +94,20 @@ export default function ViewJobs() {
         })
     }
     return (
-        <div className="container mx-auto max-w-5xl pb-15 min-h-screen">
+        <div className="container mx-auto max-w-5xl pb-15 min-h-screen mt-3">
             <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
+            <ApplyInstructionsModal data={applyData} onClose={closeApplyInstructionModal} isOpen={applyInstructionModal} />
             {!viewDetails ? (
-                <div className="px-6 lg:px-8 ">
-                    <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl">Jobs</h2>
-                    <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p>
+                <div className="py-5 lg:px-8 bg-white rounded-lg">
+                    <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl">Search Jobs</h2>
+                    <p className="mt-2 text-lg text-gray-600">Ready to get hired?  Search latest Veritas Jobs </p>
                     <div className="mt-4 p-2 border relative border-gray-200 rounded-md  bg-white mb-2  ">
                         {/* <label className="block text-sm font-medium text-gray-900">
                             Apply Filter
                         </label> */}
                         <form onSubmit={formik.handleSubmit}>
                             <div className="py-2 px-1 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
-                                <div className="sm:col-span-2">
+                                <div className="sm:col-span-3">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Job Title
                                     </label>
@@ -109,11 +121,26 @@ export default function ViewJobs() {
                                 </div>
 
                                 {/* Job Type */}
-                                <div className="sm:col-span-2">
+                                <div className="sm:col-span-3">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Job Type
                                     </label>
-                                    <select
+                                    <Select
+                                        options={dropDownValues?.job_family.map((value) => ({
+                                            value: value.id,
+                                            label: value.job_family,
+                                        }))}
+                                        isClearable={true}
+                                        isSearchable={true}
+                                        className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        onChange={(selectedOption) => {
+                                            formik.setFieldValue(
+                                                "job_type",
+                                                selectedOption ? selectedOption.value : ""
+                                            );
+                                        }}
+                                    />
+                                    {/* <select
                                         name="job_type"
                                         onChange={formik.handleChange}
                                         value={formik.values.job_type}
@@ -127,11 +154,11 @@ export default function ViewJobs() {
                                                 </option>
                                             );
                                         })}
-                                    </select>
+                                    </select> */}
                                 </div>
 
                                 {/* Location */}
-                                <div className="sm:col-span-2">
+                                <div className="sm:col-span-3">
                                     <label className="block text-sm font-medium text-gray-900">
                                         Location
                                     </label>
@@ -143,39 +170,17 @@ export default function ViewJobs() {
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
                                 </div>
-
-                                {/* Job Status */}
-                                <div className="sm:col-span-2">
-                                    <label className="block text-sm font-medium text-gray-900">
-                                        Job Status
-                                    </label>
-                                    <select
-                                        name="job_status"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.job_status}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    >
-                                        <option value="">Select</option>
-                                        {dropDownValues?.job_status?.map((item) => {
-                                            return (
-                                                <option key={item.id} value={item?.id}>
-                                                    {item?.job_status}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
                                 <div className="sm:col-span-2 mt-2 flex gap-2">
                                     <button
                                         onClick={clearFilter}
                                         type="button"
-                                        className="flex mt-5 border border-gray-300 p-[5px] px-5 rounded-lg hover:bg-orange-600 hover:text-white"
+                                        className="flex mt-5 border border-gray-300 p-[5px] px-5 rounded-lg hover:bg-[#ff0000] hover:text-white"
                                     >
                                         Clear Filter
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex mt-5 border bg-orange-600 p-[5px] px-5 rounded-lg hover:border-orange-600 text-white"
+                                        className="flex mt-5 border bg-[#ff0000] p-[5px] px-5 rounded-lg hover:border-[#ff0000] text-white"
                                     >
                                         Apply Filter
                                     </button>
@@ -208,7 +213,7 @@ export default function ViewJobs() {
                                                             setViewDetails(true);
                                                             setViewData(item)
                                                         }
-                                                        } className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                                                        } className="bg-orange-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                                             View Details
                                                         </button>
                                                         {(item?.veritas_to_short_list == 0 || item?.veritas_to_short_list == null) && (
@@ -233,30 +238,46 @@ export default function ViewJobs() {
                                                         <h3 className="text-xl font-semibold text-gray-900 sm:mb-0">
                                                             Job Title: {item?.job_title} ({item?.expected_salary})
                                                         </h3>
-                                                        <div className="flex flex-wrap gap-2">
-                                                            <button
-                                                                onClick={() => {
-                                                                    setViewDetails(true);
-                                                                    setViewData(item);
-                                                                }}
-                                                                className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out"
-                                                            >
-                                                                View Details
-                                                            </button>
-                                                            {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
-                                                                <button className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                                                    View Job Instruction to Apply
-                                                                </button>
-                                                            )}
-                                                            {item?.veritas_to_short_list === 1 && (
+                                                        {!item?.has_applied ? (
+                                                            <div className="flex flex-wrap gap-2">
                                                                 <button
-                                                                    onClick={() => applyHandler(item)}
-                                                                    className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                    onClick={() => {
+                                                                        setViewDetails(true);
+                                                                        setViewData(item);
+                                                                    }}
+                                                                    className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
                                                                 >
-                                                                    Apply for Job
+                                                                    View Details
                                                                 </button>
+                                                                {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
+                                                                    <button onClick={() => applyInstructionHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                                                                        Instruction to Apply
+                                                                    </button>
+                                                                )}
+                                                                {item?.veritas_to_short_list === 1 && (
+                                                                    <button
+                                                                        onClick={() => applyHandler(item)}
+                                                                        className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        Apply for Job
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        ) :
+                                                            (
+                                                                <div className="flex flex-wrap gap-2">
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            setViewDetails(true);
+                                                                            setViewData(item);
+                                                                        }}
+                                                                        className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        View Details
+                                                                    </button>
+                                                                    <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
+                                                                </div>
                                                             )}
-                                                        </div>
                                                     </div>
 
                                                     {/* <h3 className="text-xl font-semibold text-gray-900 items-start text-start">Job Title: {item?.job_title} ({item?.expected_salary})</h3> */}
@@ -292,142 +313,90 @@ export default function ViewJobs() {
                 </div>
             ) :
                 (
-                    <form className='border p-4 bg-white rounded-lg'>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setViewDetails(false);
-                            }
-                            }
-                            className='border rounded-full p-1 px-4'
-                        >
-                            Back
-                        </button>
-                        <h1
-                            className=" font-semibold leading-6 text-gray-900 text-center text-2xl pb-5"
-                        >
-                            View Job
-                        </h1>
-                        <div className=" grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
-                            {/* Job Title */}
-                            <div className="sm:col-span-2">
-                                <label className="block text-sm font-medium text-gray-900">
-                                    Job Title
-                                </label>
-                                <input
-                                    type="text"
-                                    name="job_title"
-                                    // onChange={formik.handleChange}
-                                    value={viewData?.job_title}
-                                    disabled={true}
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                />
+                    <ul role="list">
+                        {/* <div className="mb-4">
+                            <button
+                                type="button"
+                                onClick={() => setViewDetails(false)}
+                                className="border rounded-lg px-4 py-2 text-sm bg-white hover:rounded-full transition duration-200 ease-in-out"
+                            >
+                                Back
+                            </button>
+                        </div> */}
+                        <div className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
+                                <div className="text-start">
+                                    <h1 className="font-semibold text-lg md:text-xl">{viewData?.job_title}</h1>
+                                    <div className="font-semibold text-md md:text-md">
+                                        {viewData?.company_id?.company_name}
+                                    </div>
+                                    <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                        {viewData?.job_type?.job_family}
+                                    </span>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+
+                                    {!viewData?.has_applied ? (
+                                        <>
+                                            {(viewData?.veritas_to_short_list === 0 || viewData?.veritas_to_short_list === null) && (
+                                                <button onClick={() => applyInstructionHandler(viewData)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                                                    Instruction to Apply
+                                                </button>
+                                            )}
+                                            {viewData?.veritas_to_short_list === 1 && (
+                                                <button
+                                                    onClick={() => applyHandler(viewData)}
+                                                    className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                >
+                                                    Apply for Job
+                                                </button>
+                                            )}
+                                        </>
+                                    ) :
+                                        (
+                                            <>
+                                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
+                                            </>
+                                        )}
+                                </div>
                             </div>
 
-                            {/* Job Type */}
-                            <div className="sm:col-span-2">
-                                <label className="block text-sm font-medium text-gray-900">
-                                    Job Type
-                                </label>
-                                <select
-                                    name="job_type"
-                                    // onChange={formik.handleChange}
-                                    disabled={true}
-                                    value={viewData?.job_type}
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                >
-                                    <option value="">Select</option>
-                                    <option value="1">Full-Time</option>
-                                    <option value="2">Part-Time</option>
-                                </select>
-                            </div>
-                            {/* Salary Range */}
-                            <div className="sm:col-span-2">
-                                <label className="block text-sm font-medium text-gray-900">
-                                    Salary Range
-                                </label>
-                                <input
-                                    type="text"
-                                    name="expected_salary"
-                                    // onChange={formik.handleChange}
-                                    value={viewData?.expected_salary}
-                                    disabled={true}
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                />
+                            {/* Details Section */}
+                            <div className="flex flex-wrap gap-4">
+                                <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                    <CalendarDateRangeIcon className="w-5 h-5" />
+                                    {new Date(viewData?.created_at).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "short",
+                                        day: "2-digit",
+                                    })}
+                                </p>
+                                <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                    <CurrencyDollarIcon className="w-5 h-5" />
+                                    {viewData?.expected_salary}
+                                </p>
+                                <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                    <MapPinIcon className="w-5 h-5" />
+                                    {viewData?.location}
+                                </p>
                             </div>
 
-                            {/* Location */}
-                            <div className="sm:col-span-2">
-                                <label className="block text-sm font-medium text-gray-900">
-                                    Location
-                                </label>
-                                <input
-                                    type="text"
-                                    name="location"
-                                    // onChange={formik.handleChange}
-                                    value={viewData?.location}
-                                    disabled={true}
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                />
-                            </div>
-
-                            {/* Job Status */}
-                            <div className="sm:col-span-2">
-                                <label className="block text-sm font-medium text-gray-900">
-                                    Job Status
-                                </label>
-                                <select
-                                    name="job_status"
-                                    // onChange={formik.handleChange}
-                                    value={viewData?.job_status}
-                                    disabled={true}
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                >
-                                    <option value="">Select</option>
-                                    <option value="1">Active</option>
-                                    <option value="2">Closed</option>
-                                </select>
-                            </div>
-
-
-                            {/* Veritas To Shortlist */}
-                            <div className="sm:col-span-2">
-                                <label className="block text-sm font-medium text-gray-900">
-                                    Veritas To Shortlist
-                                </label>
-                                <select
-                                    name="veritas_to_short_list"
-                                    // onChange={formik.handleChange}
-                                    disabled={true}
-                                    value={viewData?.veritas_to_short_list}
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                >
-                                    <option value="">Select</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-                            {/* Job Description */}
-                            <div className="sm:col-span-full">
-                                <label className="block text-sm font-medium text-gray-900">
+                            {/* Description Section */}
+                            <div className="mt-2 pt-2">
+                                <label htmlFor="description" className="block font-semibold mb-2">
                                     Job Description
                                 </label>
                                 <ReactQuill
                                     id="job_description"
-                                    theme="snow"
+                                    theme="bubble"
                                     value={viewData?.job_description}
                                     readOnly={true}
-                                    // onChange={(value) => formik.setFieldValue("job_description", value)}
                                     style={{
-                                        height: "150px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -438,31 +407,24 @@ export default function ViewJobs() {
                                         "list",
                                         "bullet",
                                     ]}
-                                    placeholder="Write something"
                                 />
                             </div>
 
-                            {/* Job_qualification */}
-                            <div className="sm:col-span-full mt-7">
-                                <label className="block text-sm font-medium text-gray-900">
+                            <div className="mt-2 pt-2">
+                                <label htmlFor="" className="block font-semibold mb-2">
                                     Job Qualification
                                 </label>
                                 <ReactQuill
                                     id="job_qualification"
-                                    readOnly={true}
-                                    theme="snow"
+                                    theme="bubble"
                                     value={viewData?.job_qualification}
-                                    // onChange={(value) => formik.setFieldValue("job_qualification", value)}
+                                    readOnly={true}
                                     style={{
-                                        height: "150px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -473,29 +435,23 @@ export default function ViewJobs() {
                                         "list",
                                         "bullet",
                                     ]}
-                                    placeholder="Write something"
                                 />
                             </div>
-                            <div className="sm:col-span-full mt-7">
-                                <label className="block text-sm font-medium text-gray-900">
+                            <div className="mt-2 pt-2">
+                                <label htmlFor="" className="block font-semibold mb-2">
                                     Job Responsibilities
                                 </label>
                                 <ReactQuill
                                     id="job_responsibilities"
-                                    theme="snow"
-                                    readOnly={true}
+                                    theme="bubble"
                                     value={viewData?.job_responsibilities}
-                                    // onChange={(value) => formik.setFieldValue("job_responsibilities", value)}
+                                    readOnly={true}
                                     style={{
-                                        height: "150px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -506,31 +462,23 @@ export default function ViewJobs() {
                                         "list",
                                         "bullet",
                                     ]}
-                                    placeholder="Write something"
                                 />
                             </div>
-
-                            {/* Instruction to Apply */}
-                            <div className="sm:col-span-full mt-7 mb-14">
-                                <label className="block text-sm font-medium text-gray-900">
+                            <div className="mt-2 pt-2">
+                                <label htmlFor="" className="block font-semibold mb-2">
                                     Instruction to Apply
                                 </label>
                                 <ReactQuill
                                     id="job_instructions_to_apply"
-                                    theme="snow"
+                                    theme="bubble"
+                                    value={viewData?.job_instructions_to_apply}
                                     readOnly={true}
-                                    value={viewData.job_instructions_to_apply}
-                                    // onChange={(value) => formik.setFieldValue("job_instructions_to_apply", value)}
                                     style={{
-                                        height: "150px",
+                                        minHeight: "50px", // A minimum height to prevent collapsing
+                                        overflow: "auto", // Scroll if the content exceeds the visible area
                                     }}
                                     modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
+                                        toolbar: false, // Disable toolbar for read-only mode
                                     }}
                                     formats={[
                                         "header",
@@ -541,12 +489,10 @@ export default function ViewJobs() {
                                         "list",
                                         "bullet",
                                     ]}
-                                    placeholder="Write something"
                                 />
                             </div>
-
                         </div>
-                    </form>
+                    </ul>
                 )}
         </div>
     );

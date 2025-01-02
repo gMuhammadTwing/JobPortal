@@ -10,6 +10,7 @@ import axiosInstance, { handleError } from '../../axiosInstance';
 import { LoaderTable } from '../../Components/LoaderTable';
 import Pagination from '../../Components/Pagination';
 import { useDropdownContext } from '../../DropdownProvider';
+import Select from 'react-select'
 export default function ManageJobs() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
@@ -30,7 +31,7 @@ export default function ManageJobs() {
       job_responsibilities: updateData?.job_responsibilities || "",
       expected_salary: updateData?.expected_salary || "",
       location: updateData?.location || "",
-      job_status: updateData?.job_status?.id,
+      job_status: updateData?.job_status === "Open" ? 1 : 2,
       veritas_to_short_list: updateData?.veritas_to_short_list,
       job_instructions_to_apply: updateData?.job_instructions_to_apply || "",
       user_id: user_id,
@@ -119,13 +120,36 @@ export default function ManageJobs() {
 
   return (
     <>
-      <div className=" mx-auto bg-gray-100 lg:px-8 max-w-5xl pb-15 mb-8 min-h-screen">
+      <div className=" mx-auto bg-gray-100 lg:px-8 max-w-5xl pb-15 mb-8 min-h-screen mt-4">
         {!isModalOpen && (
           <div>
-            <div className="">
-              <h2 className="text-4xl font-semibold tracking-tight text-orange-500 sm:text-5xl text-center m-2">Manage Jobs</h2>
-              {company_id != "undefined" ? (
-                <div>
+            {/* <div className="">
+              <h2 className="text-4xl font-semibold tracking-tight text-[#ff0000] sm:text-5xl text-center m-2">Manage Jobs</h2>
+                {company_id != "undefined" ? (
+                  <div>
+                    <Button
+                      type="button"
+                      color="gradient"
+                      variant="solid"
+                      className={"mb-4"}
+                      onClick={() => {
+                        setUpdateData(null)
+                        openModal()
+                      }}
+                    >
+                      <PlusCircleIcon className="w-6 h-6 text-white" />
+                      Create New Job</Button>
+                  </div>
+                ) :
+                (<div className='text-red font-semibold border text-center mt-10 bg-red-100 border-red-100'>Please Update Profile Information First</div>)
+              }
+            </div> */}
+            <div
+              className="flex justify-between p-4 border-b cursor-pointer bg-white rounded-lg"
+            >
+              <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">Job Management</h3>
+              {company_id != "undefined" && (
+                <div className='mt-2'>
                   <Button
                     type="button"
                     color="gradient"
@@ -139,14 +163,12 @@ export default function ManageJobs() {
                     <PlusCircleIcon className="w-6 h-6 text-white" />
                     Create New Job</Button>
                 </div>
-              ) :
-                (<div className='text-red font-semibold border text-center mt-10 bg-red-100 border-red-100'>Please Update Profile Information First</div>)
+              )
               }
-              {/* <p className="mt-2 text-lg text-gray-600">Find your dream job among these opportunities.</p> */}
             </div>
             {company_id != "undefined" && (
               tableLoader ? <LoaderTable /> :
-                <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1">
+                <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1 rounded-lg">
                   {data?.data?.length > 0 ? (
                     data?.data?.map((item) => (
                       <>
@@ -154,17 +176,17 @@ export default function ManageJobs() {
                           {/* Post Date and Category */}
                           <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
                             <span
-                              className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status?.id === 1
+                              className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status === "Open"
                                 ? "bg-green-100 text-green-600 hover:bg-green-100"
                                 : "bg-red-100 text-red-600 hover:bg-red-100"
                                 }`}
                             >
-                              {item?.job_status?.id === 1 ? "Open" : "Closed"}
+                              {item?.job_status === "Open" ? "Open" : "Closed"}
                             </span>
 
                             <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
                             <div className="flex flex-wrap sm:flex-row gap-2">
-                              <button onClick={() => viewDetails(item)} className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition duration-200 ease-in-out">
+                              <button onClick={() => viewDetails(item)} className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                 View Details
                               </button>
                               <button
@@ -208,7 +230,7 @@ export default function ManageJobs() {
                       </>
                     ))
                   ) : (
-                    <table className="min-w-full divide-y divide-gray-300 border bg-white">
+                    <table className="min-w-full rounded-lg bg-white">
                       <tr>
                         <td colSpan="5" className="text-center py-4">
                           <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
@@ -275,7 +297,22 @@ export default function ManageJobs() {
                 <label className="block text-sm font-medium text-gray-900">
                   Job Type
                 </label>
-                <select
+                <Select
+                  options={dropDownValues?.job_family.map((value) => ({
+                    value: value.id,
+                    label: value.job_family,
+                  }))}
+                  isClearable={true}
+                  isSearchable={true}
+                  className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                  onChange={(selectedOption) => {
+                    formik.setFieldValue(
+                      "job_type",
+                      selectedOption ? selectedOption.value : ""
+                    );
+                  }}
+                />
+                {/* <select
                   name="job_type"
                   onChange={formik.handleChange}
                   disabled={view}
@@ -290,7 +327,7 @@ export default function ManageJobs() {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
                 {formik.errors.job_type && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.job_type}</p>
                 )}
@@ -345,7 +382,7 @@ export default function ManageJobs() {
                 >
                   <option value="">Select</option>
                   <option value={1}>Open</option>
-                  <option value={0}>Closed</option>
+                  <option value={2}>Closed</option>
                 </select>
                 {formik.errors.job_status && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.job_status}</p>

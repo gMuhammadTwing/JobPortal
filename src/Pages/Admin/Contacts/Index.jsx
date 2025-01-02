@@ -39,31 +39,54 @@ export default function Contacts() {
     useEffect(() => {
         fetchData(1);
     }, []);
+    const parser = new DOMParser();
 
     return (
-        <div className="container mx-auto px-4 max-w-5xl h-screen">
+        <div className="container mx-auto px-4 max-w-5xl h-screen mt-4">
             <div>
-                <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                {/* <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Contact Us
-                </div>
+                </div> */}
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
-                        <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                        <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg mb-2">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
+                                    <tr className="border-b border-gray-300">
+                                        <th
+                                            scope="col"
+                                            className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
+                                        >
+                                           Contact Us
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                        <th scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                    </tr>
                                     <tr>
-                                        <th className="py-3 pl-2 pr-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-3 py-5.5 text-left text-sm font-semibold text-gray-900">
                                             Full Name
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                           Phone
+                                            Phone
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                           Email
+                                            Email
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                           Message
+                                            Message
                                         </th>
                                         {/* <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Actions
@@ -76,19 +99,18 @@ export default function Contacts() {
                                             <tr key={index}>
                                                 <td className="whitespace-nowrap px-2 py-3 text-xs md:text-sm text-gray-500">
                                                     <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                        {item?.title || "N/A"}
+                                                        {item?.full_name || "N/A"}
                                                     </span>
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
-                                                    {item?.is_published ? "Yes" : "No"}
+                                                    {item?.phone}
                                                 </td>
-                                                {/* <td className="px-2 py-3 text-xs md:text-sm">
-                                                    <div className="flex items-center space-x-2">
-                                                        <EyeIcon onClick={() => blogHandler(item, true)} className=" cursor-pointer w-5 h-5 text-black" title="View Participant" />
-                                                        <PencilIcon onClick={() => blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Pa" />
-                                                        <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Payment" />
-                                                    </div>
-                                                </td> */}
+                                                <td className="px-2 py-3 text-xs md:text-sm">
+                                                    {item?.email}
+                                                </td>
+                                                <td className="px-2 py-3 text-xs md:text-sm">
+                                                    {parser.parseFromString(item?.message || "", "text/html").body.textContent.trim()}
+                                                </td>
                                             </tr>
                                         ))
                                     ) : (

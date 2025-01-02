@@ -305,7 +305,7 @@ export default function EmployerSignup() {
                         </div>
 
                         {/* Right column */}
-                        <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-orange-500 to-pink-600">
+                        <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#008604] to-[#008604]">
                             <div className="px-4 py-8 text-white md:p-12">
                                 <h4 className="mb-6 text-xl font-semibold">Welcome to our community</h4>
                                 <p className="text-sm">

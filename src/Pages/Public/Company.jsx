@@ -1,69 +1,74 @@
 import { useEffect, useState } from 'react';
 import '../../App.css'
-import bannerImage from './../../assets/banner3.png'
+import bannerImage from './../../assets/banner4.jpeg'
 import axiosInstance, { handleError } from '../../axiosInstance';
 export default function Company() {
     return (
-        <div className="p-2 sm:p-8 md:p-16 lg:p-20"
+        <div className="p-2 sm:p-8 md:p-16 lg:p-20 "
             style={{
                 backgroundImage: `url(${bannerImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
             }}>
-            <div className="mx-auto p-3 grid max-w-2xl grid-cols-1 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-                <div className="col-span-2 items-center rounded-lg border border-gray-300 bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
-                    <div className="text-orange-600 font-medium">
-                        With the world's #1 Jobs Marketplace
+            <div className='mx-auto max-w-[85rem]'>
+                <div className="mx-auto max-w-[85rem] p-3 lg:px-20 grid grid-cols-1 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+                    <div className="col-span-2 ">
+                        <div className=" font-medium ">
+                            <span className='items-center rounded-full bg-white px-4 py-2'>Kenya #1 Jobs Marketplace</span>
+                        </div>
+                    </div>
+
+                    <div className="col-span-full py-3 font-bold text-4xl sm:text-4xl md:text-5xl mt-2">
+                    Your Gateway to Opportunity
+                        <div>and Growth</div>
+                    </div>
+                    <div className="col-span-2 py-2 px-2">
+                        <p>Discover your next career move with Veritas Jobs. Connect with top employers, explore diverse opportunities, and take the next step toward your future. Your journey starts here!</p>
+                    </div>
+                    <div className='col-span-4'></div>
+                    <div className="col-span-2 mt-2">
+                        <li className="flex">
+
+                            <div className="flex flex-1 items-center justify-between truncate rounded-l-md bg-white">
+                                <div className="flex-1 px-4 py-3">
+                                    <label htmlFor="search-field" className="sr-only">
+                                        Search
+                                    </label>
+                                    <input
+                                        id="search-field"
+                                        name="search"
+                                        type="search"
+                                        placeholder="Search Jobs"
+                                        className="block w-full border-0 text-gray-900 placeholder:text-gray-900 placeholder:font-semibold focus:outline-none"
+                                    />
+
+                                </div>
+
+                            </div>
+                            <div className="px-16 bg-[#ff0000] flex w-20 shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white">
+                                Search
+                            </div>
+                        </li>
                     </div>
                 </div>
 
-                <div className="col-span-full p-3 font-medium text-4xl sm:text-5xl md:text-6xl">
-                    Get the perfect
-                </div>
+                {/* <div className="py-3 lg:px-20 grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-5">
 
-                <div className="col-span-full px-3 font-medium text-4xl sm:text-5xl md:text-6xl">
-                    Jobs & Projects
-                </div>
+                    <div className="col-span-1 px-3">
+                        <div className="font-medium text-2xl">9,207</div>
+                        <div className="text-gray-600">Freelance Jobs</div>
+                    </div>
 
-                <div className="col-span-3">
-                    <li className="flex p-4">
-                        <div className="bg-orange-500 flex w-20 shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white">
-                            Projects
-                        </div>
-                        <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
-                            <div className="flex-1 px-4 py-4">
-                                <label htmlFor="search-field" className="sr-only">
-                                    Search
-                                </label>
-                                <input
-                                    id="search-field"
-                                    name="search"
-                                    type="search"
-                                    placeholder="Search Projects..."
-                                    className="block w-full border-0 text-gray-900 placeholder:text-gray-400 focus:outline-none"
-                                />
-                            </div>
-                        </div>
-                    </li>
-                </div>
-            </div>
+                    <div className="col-span-1 px-3">
+                        <div className="font-medium text-2xl">6000+</div>
+                        <div className="text-gray-600">Jobs Added</div>
+                    </div>
 
-            <div className="p-3 grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-
-                <div className="col-span-1 px-3">
-                    <div className="font-medium text-2xl">9,207</div>
-                    <div className="text-gray-600">Freelance Jobs</div>
-                </div>
-
-                <div className="col-span-1 px-3">
-                    <div className="font-medium text-2xl">6000+</div>
-                    <div className="text-gray-600">Jobs Added</div>
-                </div>
-
-                <div className="col-span-1 px-3">
-                    <div className="font-medium text-2xl">9,207</div>
-                    <div className="text-gray-600">Completed Jobs</div>
-                </div>
+                    <div className="col-span-1 px-3">
+                        <div className="font-medium text-2xl">9,207</div>
+                        <div className="text-gray-600">Completed Jobs</div>
+                    </div>
+                </div> */}
             </div>
         </div>
     )

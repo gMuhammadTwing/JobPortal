@@ -9,10 +9,11 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
-import Pagination from "../../../Components/Pagination";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance, { handleError } from "../../../axiosInstance";
-import { useNavigate } from "react-router-dom";
 import { LoaderTable } from "../../../Components/LoaderTable";
+import Pagination from "../../../Components/Pagination";
+import { useDropdownContext } from "../../../DropdownProvider";
 
 export default function Applicants({ job_id }) {
     const [data, setData] = useState();
@@ -36,15 +37,34 @@ export default function Applicants({ job_id }) {
     const pageNumber = async (pageNum) => {
         fetchData(pageNum);
     };
+    const dropDownValues = useDropdownContext();
 
     useEffect(() => {
         fetchData(1)
     }, [])
 
+    const handleChange = async (event, item) => {
+        setTableLoader(true);
+        const json = {
+            job_status_id: event.target.value
+        }
+        try {
+            const response = await axiosInstance.post(`/api/job_application/update/${item?.id}`, json);
+            if (response) {
+                toast.success("Applicant's status updated")
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
+            fetchData(1);
+        }
+    };
+
     return (
         <div className="container mx-auto max-w-5xl h-screen">
             <div className="">
-                <button
+                {/* <button
                     type="button"
                     onClick={() => {
                         // nagivate("/admin/shortlisting");
@@ -54,10 +74,10 @@ export default function Applicants({ job_id }) {
                     className='border border-black rounded-full p-1 px-4'
                 >
                     Back
-                </button>
-                <div className="text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                </button> */}
+                {/* <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Applicants
-                </div>
+                </div> */}
                 <div className="mb-2">
                 </div>
                 <Toaster richColors />
@@ -68,18 +88,45 @@ export default function Applicants({ job_id }) {
                                 <div className="overflow-hidden">
                                     <table className="min-w-full divide-y divide-gray-300">
                                         <thead className="bg-white">
+                                            <tr className="border-b border-gray-300">
+                                                <th
+                                                    scope="col"
+                                                    className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
+                                                >
+                                                    List of Applicants
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
+                                                <th scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
+                                            </tr>
                                             <tr>
                                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                                                     Job Title
                                                 </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Job Type
+                                                </th> */}
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Applicant Name
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Participant Name
-                                                </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Participant Email
+                                                    Applicant Email
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Status
@@ -100,33 +147,39 @@ export default function Applicants({ job_id }) {
                                                                     : "N/A"}
                                                             </span>
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm">
+                                                        {/* <td className="px-3 py-4 text-sm">
                                                             {item?.job_id?.job_type?.job_family}
-                                                        </td>
+                                                        </td> */}
                                                         <td className="px-3 py-4 text-sm">
-                                                            {item?.user_id?.name}
+                                                            {item?.user_id?.unique_name}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.user_id?.email}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             <span
-                                                                className={`inline-flex items-center rounded-full px-4 py-1 text-xs font-bold ring-1 ring-inset ${item?.job_status_id?.job_status == "Submitted"
-                                                                    ? "bg-green-100 text-green-600 ring-green-300"
-                                                                    : item?.job_status_id?.job_status == "Shortlisted"
-                                                                        ? "bg-blue-100 text-blue-600 ring-blue-300"
-                                                                        : "bg-red-100 text-red-600 ring-red-300"
-                                                                    }`}
                                                             >
-                                                                {item?.job_status_id?.job_status}
+                                                                {/* {item?.job_status_id?.job_status} */}
+                                                                <select
+                                                                    name="job_type"
+                                                                    onChange={(e) => handleChange(e, item)}
+                                                                    // value={formik.values.job_type}
+                                                                    value={item?.job_status_id?.id}
+                                                                    className="block py-1.5 px-2 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                                >
+                                                                    <option value="">Select</option>
+                                                                    {dropDownValues?.job_status?.map((item) => {
+                                                                        return (
+                                                                            <option key={item.id} value={item?.id}>
+                                                                                {item?.job_status}
+                                                                            </option>
+                                                                        );
+                                                                    })}
+                                                                </select>
                                                             </span>
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm">
-                                                            <div className="flex items-center space-x-2">
-                                                                <EyeIcon className="w-5 h-5 text-black" title="View Participant" />
-                                                                <PencilIcon className="w-5 h-5 text-blue-500" title="Edit Pa" />
-                                                                <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" />
-                                                            </div>
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            <Link to={"view-applicant/" + item?.user_id?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
                                                     </tr>
                                                 ))

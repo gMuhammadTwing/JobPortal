@@ -20,7 +20,7 @@ const variantStyles = {
             "bg-green-600 text-white hover:text-slate-100 hover:bg-green-500 active:bg-green-800 active:text-green-100 focus-visible:outline-green-600",
         white:
             "bg-white text-slate-900 hover:bg-blue-50 active:bg-blue-200 active:text-slate-600 focus-visible:outline-white",
-        gradient: "bg-gradient-to-r from-orange-500 to-pink-600 text-white hover:bg-blue-50 active:bg-blue-200 active:text-slate-600 focus-visible:outline-white",
+        gradient: "bg-[#008604] text-white active:bg-green-200 active:text-green-600 focus-visible:outline-green transition duration-200",
     },
     outline: {
         slate:
@@ -35,7 +35,7 @@ const variantStyles = {
         whitebg:
             "ring-slate-700 text-black hover:text-slate-900 bg-white active:ring-slate-700 focus-visible:outline-blue-600",
         gradient:
-            "ring-orange-500 hover:shadow-lg text-orange-500 hover:text-orange-600 hover:ring-orange-600 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300",
+            "ring-slate-400 hover:shadow-lg text-slate-700 hover:text-slate-900 hover:ring-slate-700 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300",
     },
     disabled: {
         solid: "opacity-50 cursor-not-allowed",

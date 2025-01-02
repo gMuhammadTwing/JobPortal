@@ -146,17 +146,10 @@ export default function EmployerProfile() {
                     <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-center p-4 border-b cursor-pointer bg-white rounded-lg"
+                            className="flex justify-start p-4 border-b cursor-pointer bg-white rounded-lg"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="font-semibold text-3xl text-center">{localStorage.role_id == 3 ? "Employee Profile" : "Company Profile"}</h3>
-                            {/* <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
-                                {profileCollapsed ? (
-                                    <PlusIcon className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
-                                ) : (
-                                    <MinusIcon className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
-                                )}
-                            </button> */}
+                            <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">{localStorage.role_id == 3 ? "Employee Profile" : "Company Profile"}</h3>
                         </div>
 
                         {/* Card Body */}
@@ -194,7 +187,7 @@ export default function EmployerProfile() {
                                                                         : userLogo
                                                                 }
                                                                 alt="User Profile"
-                                                                className="h-32 w-32 sm:h-40 sm:w-40 rounded-full border-2 border-white"
+                                                                className="h-32 w-32 rounded-lg"
                                                             />
                                                         )}
 

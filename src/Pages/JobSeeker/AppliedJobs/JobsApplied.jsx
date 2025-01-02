@@ -36,9 +36,9 @@ export default function JobsApplied() {
     return (
         <div className="mx-auto max-w-5xl h-screen p-4">
             <div className="pb-8">
-                <div className="text-center pb-6 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
-                    My Job Applications
-                </div>
+                {/* <div className="text-center pb-6 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
+                    
+                </div> */}
 
                 {tableLoader ? (
                     <LoaderTable />
@@ -46,6 +46,21 @@ export default function JobsApplied() {
                     <>
                         <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
                             <table className="min-w-full divide-y divide-gray-300">
+                                <thead className="bg-white">
+                                    <tr className="border-b border-gray-300">
+                                        <th
+                                            scope="col"
+                                            className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
+                                        >
+                                            My Job Applications
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
+                                    </tr>
+                                </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                     {data?.data?.length > 0 ? (
                                         data?.data?.map((job, index) => (

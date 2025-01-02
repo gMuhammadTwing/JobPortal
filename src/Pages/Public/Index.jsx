@@ -3,17 +3,23 @@ import RecentlyUpdatedJobs from './RecentlyUpdatedJobs';
 import FeaturedJobs from './FeaturedJobs';
 import FeaturedDevelopers from './FeaturedDevelopers';
 import FeaturedSkills from './FeaturedSkills';
-import Reviews from './Reviews';
+import Reviews from './Components/Reviews';
+import GreatAboutUs from './Components/GreatAboutUs';
+import Testimonials from './Components/Testimonials';
+import FooterHeader from './Components/FooterHeader';
 export default function Index() {
   return (
     <>
-      <div className=" pb-2">
+      <div className="">
         <Company />
         <RecentlyUpdatedJobs />
         <FeaturedJobs />
-        <FeaturedDevelopers />
-        <FeaturedSkills />
-        <Reviews/>
+        <FooterHeader/>
+        {/* <FeaturedDevelopers /> */}
+        {/* <FeaturedSkills /> */}
+        {/* <GreatAboutUs/> */}
+        {/* <Testimonials/> */}
+
       </div>
     </>
   );

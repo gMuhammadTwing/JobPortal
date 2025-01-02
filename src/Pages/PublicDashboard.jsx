@@ -8,6 +8,7 @@ import { toast, Toaster } from 'sonner'
 import auth from '../auth'
 import app_vars from '../config'
 import userLogo from '../assets/user.jpeg'
+import menu_logo from '../assets/menu_logo-1.png'
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -16,21 +17,46 @@ const user = {
 }
 const navigation = [
   { name: 'Home', href: 'home', current: true },
-  // { name: 'Teams', href: 'teams', current: false },
-  // {
-  //   name: 'Projects', href: 'projects', current: false,
-  //   subItems: [
-  //     { name: "Projects", href: 'projects' },
-  //     { name: "Ongoing Projects", href: '' },
-  //   ]
-  // },
   { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
   { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
   // { name: 'Reports', href: '#', current: false },
-  { name: 'Employer', href: 'employer/profile', single: 'employer', current: false },
-  { name: 'Job Seeker', href: 'job-seeker/profile', single: 'job-seeker', current: false },
+  {
+    // href: 'employer/profile'
+    name: 'Employer', single: 'employer', current: false,
+    subItems: [
+      { name: "Post a Job", href: 'post_job' },
+      { name: "Resume Bank", href: 'resume_bank' },
+      { name: "Veritas Shortlisting", href: 'veritas_shortlisting' },
+      { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
+    ]
+  },
+  {
+    name: 'Job Seeker', single: 'job-seeker', current: false,
+    subItems: [
+      { name: "Subscribe", href: 'subscribe' },
+      { name: "Submit your Resume", href: 'submit_resume' },
+      { name: "Why Subscribe?", href: 'why_subscribe' },
+      { name: "Find a job", href: 'jobs', single: 'find', current: false },
+      { name: "Join our Community", href: 'join_community' },
+    ]
+  },
   { name: 'Admin', href: 'admin/employees', single: 'admin', current: false },
-  { name: 'About Us', href: 'about-us', current: false },
+  {
+    name: 'About Us', href: 'about-us', current: false,
+    subItems: [
+      { name: "Our Vision", href: 'vision', single: 'about-us', current: false },
+      { name: "Our Mission", href: 'mission', single: 'about-us', current: false },
+      { name: "Our Values", href: 'our-values', single: 'about-us', current: false },
+      { name: "VeritasKWD Opportunity", href: 'opportunity', single: 'about-us', current: false },
+      { name: "VeritasKWD Projects", href: 'projects', single: 'about-us', current: false },
+      { name: "VeritasKWD Investors", href: 'investors', single: 'about-us', current: false },
+      { name: "VeritasKWD Charities", href: 'charities', single: 'about-us', current: false },
+      { name: "VeritasKWD Idea Incubator", href: 'incubators', single: 'about-us', current: false },
+      { name: "VeritasKWD Volunteer", href: 'volunteers', single: 'about-us', current: false },
+      { name: "Careers at VeritasKWD", href: 'careers', single: 'about-us', current: false },
+      { name: 'About Us', href: 'about-us', current: false, }
+    ]
+  },
   { name: 'Contact Us', href: 'contact-us', current: false },
 
 ]
@@ -52,7 +78,6 @@ export default function PublicDashboard() {
   console.log("role_id: ", role_id);
 
   const payment = localStorage.getItem("payment");
-  console.log("Payment: ", payment);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -60,6 +85,7 @@ export default function PublicDashboard() {
       navigate("/Home");
     }
   }, [])
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   return (
     <>
@@ -77,257 +103,66 @@ export default function PublicDashboard() {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                    className="size-8"
-                  />
+                  <Link to={"/home"}>
+                    <img
+                      alt="Your Company"
+                      src={menu_logo}
+                      className="w-[12rem] h-12"
+                    />
+                  </Link>
                 </div>
-                {/* !((role_id == 1 || role_id == undefined) && item.name == 'Admin') */}
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {(payment == null || payment == "null") && role_id != 3 ?
-                      (
+                    <>
+                      {
                         navigation
-                          .filter(item => !((role_id == 1 || role_id == 2 ||  role_id == undefined) && item.name == 'Employer') &&
-                            !((role_id == 3 || role_id == 1 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
-                            !((role_id != 1) && item.name == 'Admin'))
+                          .filter(item => !((role_id != 1) && item.name == 'Admin'))
                           .map((item) => (
-                            (item?.name == "Employer" || item?.name == 'Job Seeker') ? (
-                              <Link
-                                onClick={() => { toast.info("Please pay first to proceed") }}
-                                key={item.name}
-                                to={'payment-alert'}
-                                // to={item.href}
-                                aria-current={item.current ? 'page' : undefined}
-                                className={classNames(
-                                  location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                    ? 'bg-orange-600 text-white'
-                                    : 'text-black hover:bg-orange-500 hover:text-white',
-                                  'rounded-md px-3 py-2 text-sm font-medium',
-                                )}
-                              >
-                                {item?.subItems ? (
-                                  <div
-                                    className="relative"
-                                    onMouseEnter={() => setShowDropdown(true)}
-                                    onMouseLeave={() => setShowDropdown(false)}
-                                  >
-                                    <div aria-disabled={true}>
-                                      {item?.name}
-                                    </div>
+                            <Link
+                              onMouseEnter={() => setActiveDropdown(item.name)}
+                              onMouseLeave={() => setActiveDropdown(null)}
+                              key={item.name}
+                              to={item.href}
+                              aria-current={item.current ? 'page' : undefined}
+                              className={classNames(
+                                location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                  ? 'bg-[#ff0000] text-white'
+                                  : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                'rounded-md px-3 py-2 text-sm font-medium',
+                              )}
+                            >
+                              {item?.subItems ? (
+                                <div
+                                  className="relative"
 
-                                    {showDropdown && (
-                                      <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                        {item?.subItems.map((item1, index) => (
-                                          <Link
-                                            onClick={() => setShowDropdown(false)}
-                                            key={index}
-                                            to={item1.href}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
-                                          >
-                                            {item1.name}
-                                          </Link>
-                                        ))}
-                                      </div>
-                                    )}
-                                  </div>
-                                ) : (
-                                  item.name
-                                )}
-                              </Link>
-                            ) : (
-                              <Link
-                                key={item.name}
-                                to={item.href}
-                                aria-current={item.current ? 'page' : undefined}
-                                className={classNames(
-                                  location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                    ? 'bg-orange-600 text-white'
-                                    : 'text-black hover:bg-orange-500 hover:text-white',
-                                  'rounded-md px-3 py-2 text-sm font-medium',
-                                )}
-                              >
-                                {item?.subItems ? (
-                                  <div
-                                    className="relative"
-                                    onMouseEnter={() => setShowDropdown(true)}
-                                    onMouseLeave={() => setShowDropdown(false)}
-                                  >
-                                    <div aria-disabled={true}>
-                                      {item?.name}
-                                    </div>
-
-                                    {showDropdown && (
-                                      <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                        {item?.subItems.map((item1, index) => (
-                                          <Link
-                                            onClick={() => setShowDropdown(false)}
-                                            key={index}
-                                            to={item1.href}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
-                                          >
-                                            {item1.name}
-                                          </Link>
-                                        ))}
-                                      </div>
-                                    )}
-                                  </div>
-                                ) : (
-                                  item.name
-                                )}
-                              </Link>
-                            )
-                          ))
-                      )
-                      :
-                      <>
-                        {
-                          (payment == "true" || role_id == 3) ? (
-                            navigation
-                              .filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                                !((role_id != 2) && item.name == 'Job Seeker') &&
-                                !((role_id != 1) && item.name == 'Admin'))
-                              .map((item) => (
-                                <Link
-                                  key={item.name}
-                                  to={item.href}
-                                  aria-current={item.current ? 'page' : undefined}
-                                  className={classNames(
-                                    location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                      ? 'bg-orange-600 text-white'
-                                      : 'text-black hover:bg-orange-500 hover:text-white',
-                                    'rounded-md px-3 py-2 text-sm font-medium',
-                                  )}
                                 >
-                                  {item?.subItems ? (
-                                    <div
-                                      className="relative"
-                                      onMouseEnter={() => setShowDropdown(true)}
-                                      onMouseLeave={() => setShowDropdown(false)}
-                                    >
-                                      <div aria-disabled={true}>
-                                        {item?.name}
-                                      </div>
+                                  <div aria-disabled={true}>
+                                    {item?.name}
+                                  </div>
 
-                                      {showDropdown && (
-                                        <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                          {item?.subItems.map((item1, index) => (
-                                            <Link
-                                              onClick={() => setShowDropdown(false)}
-                                              key={index}
-                                              to={item1.href}
-                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
-                                            >
-                                              {item1.name}
-                                            </Link>
-                                          ))}
-                                        </div>
-                                      )}
+                                  {activeDropdown === item.name && (
+                                    <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                      {item?.subItems.map((item1, index) => (
+                                        <Link
+                                          onClick={() => setActiveDropdown(null)}
+                                          key={index}
+                                          to={item1.href}
+                                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                        >
+                                          {item1.name}
+                                        </Link>
+                                      ))}
                                     </div>
-                                  ) : (
-                                    item.name
                                   )}
-                                </Link>
-                              ))
-                          )
-                            :
-                            (
-                              navigation
-                                .filter(item => !((role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                                  !((role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
-                                  !((role_id != 1) && item.name == 'Admin'))
-                                .map((item) => (
-                                  (item?.name == "Employer" || item?.name == 'Job Seeker') ? (
-                                    <Link
-                                      onClick={() => { toast.info("Payment Approval Pending") }}
-                                      key={item.name}
-                                      // to={'payment-alert'}
-                                      // to={item.href}
-                                      aria-current={item.current ? 'page' : undefined}
-                                      className={classNames(
-                                        location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                          ? 'bg-orange-600 text-white'
-                                          : 'text-black hover:bg-orange-500 hover:text-white',
-                                        'rounded-md px-3 py-2 text-sm font-medium',
-                                      )}
-                                    >
-                                      {item?.subItems ? (
-                                        <div
-                                          className="relative"
-                                          onMouseEnter={() => setShowDropdown(true)}
-                                          onMouseLeave={() => setShowDropdown(false)}
-                                        >
-                                          <div aria-disabled={true}>
-                                            {item?.name}
-                                          </div>
+                                </div>
+                              ) : (
+                                item.name
+                              )}
+                            </Link>
+                          ))
+                      }
 
-                                          {showDropdown && (
-                                            <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                              {item?.subItems.map((item1, index) => (
-                                                <Link
-                                                  onClick={() => setShowDropdown(false)}
-                                                  key={index}
-                                                  to={item1.href}
-                                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
-                                                >
-                                                  {item1.name}
-                                                </Link>
-                                              ))}
-                                            </div>
-                                          )}
-                                        </div>
-                                      ) : (
-                                        item.name
-                                      )}
-                                    </Link>
-                                  ) : (
-                                    <Link
-                                      key={item.name}
-                                      to={item.href}
-                                      aria-current={item.current ? 'page' : undefined}
-                                      className={classNames(
-                                        location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                          ? 'bg-orange-600 text-white'
-                                          : 'text-black hover:bg-orange-500 hover:text-white',
-                                        'rounded-md px-3 py-2 text-sm font-medium',
-                                      )}
-                                    >
-                                      {item?.subItems ? (
-                                        <div
-                                          className="relative"
-                                          onMouseEnter={() => setShowDropdown(true)}
-                                          onMouseLeave={() => setShowDropdown(false)}
-                                        >
-                                          <div aria-disabled={true}>
-                                            {item?.name}
-                                          </div>
-
-                                          {showDropdown && (
-                                            <div className="absolute left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                              {item?.subItems.map((item1, index) => (
-                                                <Link
-                                                  onClick={() => setShowDropdown(false)}
-                                                  key={index}
-                                                  to={item1.href}
-                                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200"
-                                                >
-                                                  {item1.name}
-                                                </Link>
-                                              ))}
-                                            </div>
-                                          )}
-                                        </div>
-                                      ) : (
-                                        item.name
-                                      )}
-                                    </Link>
-                                  )
-                                ))
-                            )
-                        }
-                      </>
-                    }
+                    </>
                   </div>
                 </div>
               </div>
@@ -339,7 +174,7 @@ export default function PublicDashboard() {
                       <>
                         <div
                           className={classNames(
-                            location.pathname.includes("/register") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                            location.pathname.includes("/register") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                             'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                           )}
                         >
@@ -354,7 +189,7 @@ export default function PublicDashboard() {
                         <div className="border-l border-gray-300 h-8"></div>
                         <div
                           className={classNames(
-                            location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                            location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                             'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                           )}
                         >
@@ -372,7 +207,7 @@ export default function PublicDashboard() {
                       <>
                         <div
                           className={classNames(
-                            location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                            location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                             'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                           )}
                         >
@@ -388,23 +223,41 @@ export default function PublicDashboard() {
                           </button>
                         </div>
                         <div className="border-l border-gray-300 h-8"></div>
+                        {(localStorage.token && localStorage.token != 'undefined') && (
+                          <>
+                            <img alt=""
+                              src={
+                                localStorage?.user_image &&
+                                  localStorage.user_image !== 'undefined' &&
+                                  localStorage.user_image !== 'null' &&
+                                  localStorage.user_image.trim() !== ''
+                                  ? `${app_vars?.domain?.fileURL}${localStorage.user_image}`
+                                  : userLogo
+                              }
+                              className="size-8 rounded-full"
+                            />
+                            <Link
+                              to={
+                                role_id == 2
+                                  ? "job-seeker/profile"
+                                  : role_id == 3
+                                    ? "employer/profile"
+                                    : "admin/employees"
+                              }
+                              className="py-1.5 text-sm font-medium text-gray-700 cursor-pointer"
+                            >
+                              {localStorage.getItem("user_name") || "Guest"}
+                            </Link>
+                          </>
+                        )}
                       </>
                     )}
 
                   </div>
 
-                  {/* <button
-                    type="button"
-                    className="relative rounded-full bg-orange-600 p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-600"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon aria-hidden="true" className="w-5 h-5 bg-orange-600 text-white" />
-                  </button> */}
-
-                  <Menu as="div" className="relative ml-3">
-                    <div>
-                      <MenuButton className="p-1 relative flex max-w-xs items-center rounded-full text-sm cursor-default">
+                  {/* <Menu as="div" className="relative ml-3">
+                    <div> */}
+                  {/* <MenuButton className="p-1 relative flex max-w-xs items-center rounded-full text-sm cursor-default">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         {(localStorage.token && localStorage.token != 'undefined') && (
@@ -417,13 +270,20 @@ export default function PublicDashboard() {
                                   localStorage.user_image.trim() !== ''
                                   ? `${app_vars?.domain?.fileURL}${localStorage.user_image}`
                                   : userLogo
-                              } className="size-8 rounded-full" />
-                            <span className='p-1 text-sm font-medium text-gray-700'>{localStorage.getItem("user_name")}</span>
+                              }
+                              className="size-8 rounded-full"
+                            />
+                            <Link
+                              to={role_id === 2 ? "job-seeker/profile" : "employer/profile"}
+                              className="p-1 text-sm font-medium text-gray-700 cursor-pointer"
+                            >
+                              {localStorage.getItem("user_name") || "Guest"}
+                            </Link>
                           </>
                         )}
-                      </MenuButton>
-                    </div>
-                    {/* <MenuItems
+                      </MenuButton> */}
+                  {/* </div> */}
+                  {/* <MenuItems
                       transition
                       className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                     >
@@ -438,7 +298,7 @@ export default function PublicDashboard() {
                         </MenuItem>
                       ))}
                     </MenuItems> */}
-                  </Menu>
+                  {/* </Menu> */}
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden gap-2">
@@ -447,7 +307,7 @@ export default function PublicDashboard() {
                     <>
                       <div
                         className={classNames(
-                          location.pathname.includes("/register") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                          location.pathname.includes("/register") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                           'rounded-md py-2 px-2 text-sm font-medium cursor-pointer mr-2'
                         )}
                       >
@@ -462,7 +322,7 @@ export default function PublicDashboard() {
                       <div className="border-l border-gray-300 h-8"></div>
                       <div
                         className={classNames(
-                          location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                          location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                           'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                         )}
                       >
@@ -480,7 +340,7 @@ export default function PublicDashboard() {
                   {(localStorage.token && localStorage.token != 'undefined') && (
                     <div
                       className={classNames(
-                        location.pathname.includes("/login") ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-500 hover:text-white',
+                        location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                         'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                       )}
                     >
@@ -498,7 +358,7 @@ export default function PublicDashboard() {
                     </div>
                   )}
                 </div>
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-orange-600 p-2 text-white hover:bg-orange-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-600">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-[#ff0000] p-2 text-white hover:bg-[#ff0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#ff0000]">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
@@ -510,24 +370,74 @@ export default function PublicDashboard() {
 
           <DisclosurePanel className="md:hidden bg-gray-100 text-black">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {navigation.filter(item => !((role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                !((role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker'))
-                .map((item) => (
-                  <DisclosureButton
-                    key={item.name}
-                    as={Link}
-                    to={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      item.current ? 'bg-orange-600 text-white' : 'text-black hover:bg-orange-600 hover:text-white',
-                      'block rounded-md px-3 py-2 text-base font-medium',
-                    )}
-                  >
-                    {item.name}
-                  </DisclosureButton>
-                ))}
+              {(payment == null || payment == "null") && (role_id != undefined && role_id != 3) ?
+                (
+                  navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                    !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                    !((role_id != 1) && item.name == 'Admin'))
+                    .map((item) => (
+                      <DisclosureButton
+                        key={item.name}
+                        as={Link}
+                        to={'payment-alert'}
+                        // to={item.href}
+                        aria-current={item.current ? 'page' : undefined}
+                        className={classNames(
+                          item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
+                          'block rounded-md px-3 py-2 text-base font-medium',
+                        )}
+                      >
+                        {item.name}
+                      </DisclosureButton>
+                    ))
+                ) :
+                <>
+                  {
+                    (payment == "true" || role_id == 3) ?
+                      (navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                        !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                        !((role_id != 1) && item.name == 'Admin'))
+                        .map((item) => (
+                          <DisclosureButton
+                            key={item.name}
+                            as={Link}
+                            to={item.href}
+                            aria-current={item.current ? 'page' : undefined}
+                            className={classNames(
+                              item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
+                              'block rounded-md px-3 py-2 text-base font-medium',
+                            )}
+                          >
+                            {item.name}
+                          </DisclosureButton>
+                        ))
+                      )
+                      : (
+                        (navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
+                          !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
+                          !((role_id != 1) && item.name == 'Admin'))
+                          .map((item) => (
+                            <DisclosureButton
+                              key={item.name}
+                              as={Link}
+                              to={'payment-pending'}
+                              // to={item.href}
+                              aria-current={item.current ? 'page' : undefined}
+                              className={classNames(
+                                item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                'block rounded-md px-3 py-2 text-base font-medium',
+                              )}
+                            >
+                              {item.name}
+                            </DisclosureButton>
+                          ))
+                        )
+                      )
+                  }
+                </>
+              }
             </div>
-            <div className="border-t border-orange-500 pb-3 pt-4">
+            <div className="border-t border-[#ff0000] pb-3 pt-4">
               <div className="flex items-center px-5">
                 <div className="shrink-0">
                   {(localStorage.token && localStorage.token != 'undefined') && (

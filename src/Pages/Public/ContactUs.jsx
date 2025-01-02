@@ -6,6 +6,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { toast } from "sonner";
+import GreatAboutUs from "./Components/GreatAboutUs";
+import Testimonials from "./Components/Testimonials";
+import FooterHeader from "./Components/FooterHeader";
 export default function ContactUs() {
     const formik = useFormik({
         initialValues: {
@@ -46,12 +49,12 @@ export default function ContactUs() {
         <div className="bg-white min-h-screen">
             {/* Header Section */}
             <div className=' text-center bg-[#FFF5F3] p-20'>
-                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl">Contact Us</h1>
-                <p>We can’t wait to hear from you.</p>
+                <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Contact Us</h1>
+                <p>We’d love to hear from you! Whether you have questions, feedback, or need assistance</p>
             </div>
 
             {/* Content Section */}
-            <div className="max-w-6xl mx-auto p-6">
+            <div className="max-w-6xl mx-auto p-6 mt-10">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 items-center">
                     {/* Text Section */}
                     <div className="flex flex-col justify-center text-center md:text-left">
@@ -90,21 +93,6 @@ export default function ContactUs() {
                         </div>
                     </div>
 
-                    {/* Image Section */}
-                    <div className="flex justify-center items-center">
-                        <img
-                            src="https://www.hubspot.com/hubfs/Contact%20Us/singapore.jpg"
-                            alt="Singapore Office"
-                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
-                        />
-                    </div>
-                    <div className="flex justify-center items-center">
-                        <img
-                            src="https://www.hubspot.com/hubfs/Contact%20Us/sydney.jpg"
-                            alt="Singapore Office"
-                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
-                        />
-                    </div>
                     <div className="border shadow-1 rounded-lg p-4">
                         <form className="" onSubmit={formik.handleSubmit}>
                             {/* Full Name */}
@@ -165,41 +153,23 @@ export default function ContactUs() {
                             </div>
 
                             {/* Message */}
-                            <div className="mb-2">
+                            <div className="">
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-900">
                                     Message
                                 </label>
-                                <ReactQuill
+                                <textarea
                                     id="message"
-                                    theme="snow"
+                                    rows={4}
+                                    name="message"
+                                    type="text"
+                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     value={formik.values.message}
-                                    onChange={(value) => formik.setFieldValue("message", value)}
-                                    onBlur={() => formik.setFieldTouched("message", true)}
-                                    style={{
-                                        height: "100px",
-                                    }}
-                                    modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                    ]}
-                                    placeholder="Write any message"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                 />
-                                {/* {formik.errors.message && formik.touched.message && (
+                                {formik.errors.message && formik.touched.message && (
                                     <p className="text-sm text-red-500">{formik.errors.message}</p>
-                                )} */}
+                                )}
                             </div>
 
                             {/* Submit Button */}
@@ -213,8 +183,27 @@ export default function ContactUs() {
                             </div>
                         </form>
                     </div>
+
+                    {/* Image Section */}
+                    <div className="flex justify-center items-center">
+                        <img
+                            src="https://www.hubspot.com/hubfs/Contact%20Us/singapore.jpg"
+                            alt="Singapore Office"
+                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
+                        />
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <img
+                            src="https://www.hubspot.com/hubfs/Contact%20Us/sydney.jpg"
+                            alt="Singapore Office"
+                            className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
+                        />
+                    </div>
                 </div>
             </div>
+            <FooterHeader/>
+            {/* <GreatAboutUs/> */}
+            {/* <Testimonials/> */}
         </div>
     );
 }

@@ -40,6 +40,8 @@ export default function Resume() {
             const response = await axiosInstance.get(`api/job_seeker_resume?user_id=${user_id}`);
             if (response) {
                 setData(response?.data)
+                console.log(response?.data);
+
             }
         } catch (error) {
             handleError(error);
@@ -96,7 +98,7 @@ export default function Resume() {
     };
 
     return (
-        <div className="container mx-auto max-w-5xl min-h-screen">
+        <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             <AddResume isOpen={isModalOpen} onClose={closeModal} updateData={updateData} />
             <DeleteModal
                 isOpen={isDelete}
@@ -106,9 +108,9 @@ export default function Resume() {
             />
 
             <div className="pb-15">
-                <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-orange-500 sm:truncate sm:tracking-tight">
+                {/* <div className="sm:flex-auto text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
                     Manage Your CVs
-                </div>
+                </div> */}
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
@@ -120,9 +122,14 @@ export default function Resume() {
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    className="py-3.5 pl-4 pr-3 text-left text-xl font-semibold text-gray-900 sm:pl-6"
+                                                    className="py-5.5 pl-4 pr-3 text-left text-xl font-bold text-[#ff0000] sm:pl-6"
                                                 >
                                                     Manage Your CVs
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >
                                                 </th>
                                                 <th
                                                     scope="col"
@@ -149,17 +156,21 @@ export default function Resume() {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white">
-                                            {data?.length > 0 ? (
-                                                data?.map((item, index) => (
+                                            {data?.data?.length > 0 ? (
+                                                data?.data?.map((item, index) => (
                                                     <tr
                                                         key={index}
                                                         className="flex flex-col sm:table-row sm:flex-row sm:items-center"
                                                     >
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            {item?.resume_file}
+                                                        </td>
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <h1 className="text-blue-600 font-semibold">
                                                                 {item?.is_current ? "Active" : "In-active"}
                                                             </h1>
                                                         </td>
+                                                        
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <Switch
                                                                 checked={item.is_current}
@@ -229,10 +240,9 @@ export default function Resume() {
                             </div>
                         </div>
 
-                        <Pagination
-                            page={pageNumber}
-                            count={Math.ceil(data?.length / 10)}
-                        />
+                        <div className="mt-2">
+                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                        </div>
                     </>
                 }
             </div>

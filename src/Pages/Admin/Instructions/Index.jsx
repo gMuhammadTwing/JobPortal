@@ -99,11 +99,11 @@ export default function Index() {
 
     return (
         <div className="flex justify-center sm:px-0 min-h-screen">
-            <div className="p-4 w-full max-w-5xl">
-                <div className={`border rounded-full shadow-lg ${instructions ? "overflow-hidden" : ""}`}>
+            <div className="p-4 w-full max-w-5xl rounded-lg">
+                <div className={`border rounded-lg shadow-lg ${instructions ? "overflow-hidden" : "rounded-lg"}`}>
                     {/* Header Section */}
                     <div
-                        className="flex justify-between items-center p-4 border-b text-orange-600 bg-white"
+                        className="flex justify-between items-center p-3 border-b text-[#ff0000] bg-white rounded-lg"
                     // onClick={handleInstructions}
                     >
                         <h3 className="font-bold text-xl">Instructions for Payment</h3>
@@ -127,7 +127,7 @@ export default function Index() {
 
                     {/* Card Body */}
                     <div
-                        className={`relative bg-white transition-all duration-300 ease-in-out ${instructions ? "max-h-0 p-0" : "max-h-screen p-4"
+                        className={` rounded-lg relative bg-white transition-all duration-300 ease-in-out ${instructions ? "max-h-0 p-0" : "max-h-screen p-4"
                             }`}
                     >
                         {/* Display Instructions */}

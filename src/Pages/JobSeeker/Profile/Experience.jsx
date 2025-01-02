@@ -133,7 +133,11 @@ export default function Experience() {
                     <div className={`border rounded-md shadow-lg ${exp ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
-                            className="flex justify-between items-center p-4 text-orange-600 bg-white border-b cursor-pointer"
+                            className="flex justify-between items-center p-4 text-[#ff0000] bg-white border-b cursor-pointer"
+                            onClick={() => {
+                                handleExp()
+                                fetchData();
+                            }}
                         >
                             <h3 className="font-bold text-xl">Experience</h3>
                             <button type="button" className="text-gray-500 hover:text-gray-800 focus:outline-none">
@@ -142,12 +146,12 @@ export default function Experience() {
                                         handleExp()
                                         fetchData();
                                     }}
-                                        className="block h-6 w-6 text-blue-500 hover:scale-[160%] duration-300" />
+                                        className="block h-6 w-6 text-[#008604] hover:scale-[160%] duration-300" />
                                 ) : (
                                     <MinusIcon onClick={() => {
                                         handleExp()
                                     }}
-                                        className="block h-6 w-6 text-red hover:scale-[160%] duration-300" />
+                                        className="block h-6 w-6 text-[#ff0000] hover:scale-[160%] duration-300" />
                                 )}
                             </button>
                         </div>
@@ -212,7 +216,7 @@ export default function Experience() {
                                             <button
                                                 type="button"
                                                 onClick={() => setEditExp(true)}
-                                                className="bg-orange-600 hover:bg-orange-600 rounded-full p-1 text-white shadow-md transition-all"
+                                                className="bg-[#ff0000] hover:bg-[#ff0000] rounded-full p-1 text-white shadow-md transition-all"
                                             >
                                                 <PlusIcon className=" h-5 w-5" />
                                             </button>
