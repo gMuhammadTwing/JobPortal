@@ -1,49 +1,23 @@
-import { motion } from "framer-motion";
-
 export default function RecentlyUpdatedJobsSkeleton() {
   return (
-    <motion.div
-      className="mx-auto max-w-[85rem] rounded-lg p-2 sm:p-8 md:p-16 lg:p-20"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-
-      <motion.ul
-        role="list"
-        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { staggerChildren: 0.2 },
-          },
-        }}
-      >
-        {[...Array(3)].map((_, index) => (
-          <motion.li
+    <div className="mx-auto max-w-[85rem] rounded-lg p-4 sm:p-8 md:p-16 lg:p-20">
+      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(6)].map((_, index) => (
+          <li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-gray-100 shadow border border-transparent animate-pulse"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
-            }}
+            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-gray-100 shadow-md border border-gray-300 animate-pulse"
           >
-            <div className="flex w-full items-center justify-between space-x-6 p-6">
-              <div className="flex-1 truncate">
-                <div className="flex items-center space-x-3">
-                  <div className="bg-gray-300 h-6 w-40 rounded">&nbsp;</div>
-                </div>
-                <div className="mt-1 bg-gray-300 h-4 w-24 rounded">&nbsp;</div>
+            <div className="flex w-full items-center justify-between p-6">
+              <div className="flex-1 space-y-4">
+                <div className="h-6 w-40 bg-gray-300 rounded-md"></div>
+                <div className="h-4 w-24 bg-gray-300 rounded-md"></div>
               </div>
-              <div className="bg-gray-300 w-6 h-6 rounded-full">&nbsp;</div>
+              <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
             </div>
-          </motion.li>
+          </li>
         ))}
-      </motion.ul>
-    </motion.div>
+      </ul>
+    </div>
   );
 }
+

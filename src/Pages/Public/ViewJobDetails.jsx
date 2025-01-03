@@ -54,7 +54,7 @@ export default function ViewJobDetails() {
     }
     return (
         <div className="bg-white">
-            <div className=' text-center bg-[#FFF5F3] p-20'>
+            <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Job Details</h1>
                 <p>Find your dream job among these opportunities.</p>
             </div>
@@ -70,11 +70,11 @@ export default function ViewJobDetails() {
                                 <div className="flex flex-wrap justify-end gap-2">
                                     {!data?.has_applied && (
                                         <div className="flex flex-wrap gap-2">
-                                            {(data?.veritas_to_short_list === 0 || data?.veritas_to_short_list === null) && (
+                                            {/* {(data?.veritas_to_short_list === 0 || data?.veritas_to_short_list === null) && (
                                                 <button onClick={() => applyInstructionsHandler(data)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
                                                     Instruction to Apply
                                                 </button>
-                                            )}
+                                            )} */}
                                             {data?.veritas_to_short_list === 1 && (
                                                 (localStorage.token && localStorage.token != 'undefined') ? (
                                                     <>

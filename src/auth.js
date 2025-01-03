@@ -32,6 +32,7 @@ const login = async (credentials) => {
 const logout = async () => {
   //   await logoutApi();
   localStorage.clear();
+  window.location.reload();
 };
 
 var auth = {

@@ -15,10 +15,10 @@ export default function Charities() {
                     {/* <div className="font-medium text-4xl sm:text-4xl md:text-5xl">
                     About We’re on a mission to empowering Jobs worldwide.
                 </div> */}
-                    <div>
+                    <div className="text-justify">
                         Social welfare is at the heart of VeritasKWD hence VeritasKWD Charities. Social welfare refers to the well-being of a society, particularly for those who are disadvantaged or underprivileged. It also refers to the efforts made to protect the security and health of those in need.
                     </div>
-                    <div>
+                    <div className="text-justify">
                         VeritasKWD engages with social purpose organizations including charities, non-profit organizations, and social enterprises not only to explore opportunities for job seekers in their spheres of operations, but also to support their initiatives. VeritasKWD upholds that Kenyans have a common heritage and destiny. VeritasKWD seeks to promote nationhood by championing “No Kenyan Left Behind” irrespective of their race, tribe, creed, religion, age, and gender.
                     </div>
                 </div>

@@ -9,10 +9,10 @@ export default function ProfileIndex() {
         <>
             <div className="mb-5 pb-15">
                 <PersonalInformation />
-                <Experience />
-                <Skills />
-                <Education />
                 <Summary />
+                <Education />
+                <Skills />
+                <Experience />
                 <Projects />
             </div>
         </>

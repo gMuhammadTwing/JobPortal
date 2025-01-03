@@ -18,45 +18,55 @@ const user = {
 const navigation = [
   { name: 'Home', href: 'home', current: true },
   { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
-  { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
-  // { name: 'Reports', href: '#', current: false },
-  {
-    // href: 'employer/profile'
-    name: 'Employer', single: 'employer', current: false,
-    subItems: [
-      { name: "Post a Job", href: 'post_job' },
-      { name: "Resume Bank", href: 'resume_bank' },
-      { name: "Veritas Shortlisting", href: 'veritas_shortlisting' },
-      { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
-    ]
-  },
   {
     name: 'Job Seeker', single: 'job-seeker', current: false,
     subItems: [
+      ...(localStorage.role_id == 2 ? [{ name: "My Profile", href: 'job-seeker/profile' }] : []),
       { name: "Subscribe", href: 'subscribe' },
       { name: "Submit your Resume", href: 'submit_resume' },
       { name: "Why Subscribe?", href: 'why_subscribe' },
       { name: "Find a job", href: 'jobs', single: 'find', current: false },
-      // { name: "Join our Community", href: 'join_community' },
+      { name: "Join our Community", href: 'join_community' },
     ]
   },
+
+  {
+    name: 'Employer',
+    single: 'employer',
+    current: false,
+    subItems: (localStorage.token && (localStorage?.role_id == 3 || localStorage.role_id == 4))
+      ? [
+        { name: "Post a Job", href: 'employer/job_management' },
+        { name: "Resume Bank", href: 'employer/resume_bank' },
+        { name: "Veritas Shortlisting", href: 'employer/veritas_shortlisting' },
+        { name: "Find Candidates", href: 'employer/job_management', single: 'employer/job_management', current: false },
+      ]
+      : [
+        { name: "Post a Job", href: 'post_job' },
+        { name: "Resume Bank", href: 'resume_bank' },
+        { name: "Veritas Shortlisting", href: 'veritas_shortlisting' },
+        { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
+      ],
+  },
+
   { name: 'Admin', href: 'admin/employees', single: 'admin', current: false },
   {
-    name: 'About Us', href: 'about-us', current: false,
+    name: 'About Us', current: false,
     subItems: [
-      { name: "Our Vision", href: 'vision', single: 'about-us', current: false },
-      { name: "Our Mission", href: 'mission', single: 'about-us', current: false },
-      { name: "Our Values", href: 'our-values', single: 'about-us', current: false },
-      { name: "VeritasKWD Opportunity", href: 'opportunity', single: 'about-us', current: false },
+      // { name: "Our Vision", href: 'vision', single: 'about-us', current: false },
+      // { name: "Our Mission", href: 'mission', single: 'about-us', current: false },
+      // { name: "Our Values", href: 'our-values', single: 'about-us', current: false },
+      { name: "VeritasKWD Opportunity Creation Program", href: 'opportunity', single: 'about-us', current: false },
       { name: "VeritasKWD Projects", href: 'projects', single: 'about-us', current: false },
-      { name: "VeritasKWD Investors", href: 'investors', single: 'about-us', current: false },
+      { name: "VeritasKWD for Investors", href: 'investors', single: 'about-us', current: false },
       { name: "VeritasKWD Charities", href: 'charities', single: 'about-us', current: false },
       { name: "VeritasKWD Idea Incubator", href: 'incubators', single: 'about-us', current: false },
-      { name: "VeritasKWD Volunteer", href: 'volunteers', single: 'about-us', current: false },
+      { name: "VeritasKWD Volunteer Opportunities", href: 'volunteers', single: 'about-us', current: false },
       { name: "Careers at VeritasKWD", href: 'careers', single: 'about-us', current: false },
       { name: 'About Us', href: 'about-us', current: false, }
     ]
   },
+  { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
   { name: 'Contact Us', href: 'contact-us', current: false },
 
 ]
@@ -73,7 +83,6 @@ function classNames(...classes) {
 
 export default function PublicDashboard() {
   const location = useLocation();
-  const [showDropdown, setShowDropdown] = useState(false);
   const role_id = localStorage.getItem("role_id");
   console.log("role_id: ", role_id);
 

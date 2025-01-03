@@ -59,10 +59,6 @@ const ProtectedRoutes = ({ children }) => {
 
   const isLoggedIn = localStorage.getItem('token');
   const location = useLocation();
-  // console.log(location);
-  // const cleanedPathname = location.pathname.replace(/\/[^/]+$/, ''); // Removes the last segment after a slash
-  // console.log(cleanedPathname);
-
   const empRequiredPermission = employerPermission[location.pathname];
   const jobseekerRequiredPermission = JobSeekerPermission[location.pathname];
   const adminRequiredPermissions = adminPermission[location.pathname];

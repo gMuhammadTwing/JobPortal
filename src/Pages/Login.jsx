@@ -20,6 +20,7 @@ export default function Login() {
             await auth.login(values)
             if (localStorage.token && localStorage.token != 'undefined') {
                 navigate("/home")
+                window.location.reload();
             }
             else {
                 toast.error("Incorrect username or password")

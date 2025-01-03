@@ -11,6 +11,7 @@ import { useDropdownContext } from "../../../DropdownProvider";
 import { useFormik } from "formik";
 import ApplyInstructionsModal from "./ApplyInstructionsModal";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 export default function ViewJobs() {
     const dropDownValues = useDropdownContext();
     const [tableLoader, setTableLoader] = useState(false);
@@ -92,7 +93,9 @@ export default function ViewJobs() {
             location: "",
             job_status: "",
         })
+        setJobType("")
     }
+    const [jobType, setJobType] = useState("");
     return (
         <div className="container mx-auto max-w-5xl pb-15 min-h-screen mt-3">
             <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
@@ -132,8 +135,17 @@ export default function ViewJobs() {
                                         }))}
                                         isClearable={true}
                                         isSearchable={true}
+                                        value={
+                                            dropDownValues?.job_family
+                                                .filter((value) => value.id == jobType)
+                                                .map((value) => ({
+                                                    value: value.id,
+                                                    label: value.job_family,
+                                                }))[0] || null
+                                        }
                                         className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                         onChange={(selectedOption) => {
+                                            setJobType(selectedOption ? selectedOption.value : "")
                                             formik.setFieldValue(
                                                 "job_type",
                                                 selectedOption ? selectedOption.value : ""
@@ -240,15 +252,16 @@ export default function ViewJobs() {
                                                         </h3>
                                                         {!item?.has_applied ? (
                                                             <div className="flex flex-wrap gap-2">
-                                                                <button
-                                                                    onClick={() => {
-                                                                        setViewDetails(true);
-                                                                        setViewData(item);
-                                                                    }}
+                                                                <Link
+                                                                    // onClick={() => {
+                                                                    //     setViewDetails(true);
+                                                                    //     setViewData(item);
+                                                                    // }}
+                                                                    to={`/view-job-details/${item?.id}`}
                                                                     className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
                                                                 >
                                                                     View Details
-                                                                </button>
+                                                                </Link>
                                                                 {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
                                                                     <button onClick={() => applyInstructionHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
                                                                         Instruction to Apply
@@ -266,15 +279,16 @@ export default function ViewJobs() {
                                                         ) :
                                                             (
                                                                 <div className="flex flex-wrap gap-2">
-                                                                    <button
-                                                                        onClick={() => {
-                                                                            setViewDetails(true);
-                                                                            setViewData(item);
-                                                                        }}
+                                                                    <Link
+                                                                        // onClick={() => {
+                                                                        //     setViewDetails(true);
+                                                                        //     setViewData(item);
+                                                                        // }}
+                                                                        to={`/view-job-details/${item?.id}`}
                                                                         className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
                                                                     >
                                                                         View Details
-                                                                    </button>
+                                                                    </Link>
                                                                     <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
                                                                 </div>
                                                             )}

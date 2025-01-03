@@ -12,11 +12,11 @@ export default function WhySubscribe() {
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Why Subscribe?</h1>
                     {/* <p>If you are unemployed or actively searching for a job, please subscribe and submit your resume.</p> */}
                 </div>
-                <div className="text-start  space-y-4 max-w-6xl mx-auto p-5 mt-10">
+                <div className="text-justify  space-y-4 max-w-6xl mx-auto p-5 mt-10">
                     <div className="">Veritas Jobs is a subscription only employment service that drives prosperous outcomes for job seekers, employers, communities and the nation of Kenya. Our subscription only hiring platform enhances the job seeker’s credibility by hosting only authentic credentials in the resume databases. We are committed to improving the job seeker’s experience by connecting genuine job seekers with genuine employers.  We empower job seekers for success.</div>
                     <div>The actual subscription value for all VeritasKWD services is KES 1000. We are currently offering our services and products at an introductory discounted rate (half price). All Job seekers are encouraged to take advantage of this special offer—it is a limited-time offer!</div>
                 </div>
-                <div className="text-start space-y-4 max-w-6xl mx-auto px-5 py-10">
+                <div className=" space-y-4 max-w-6xl mx-auto px-5 py-10 text-justify">
                     <div className="space-y-6">
                         <div className="font-semibold text-lg sm:text-xl lg:text-2xl">
                             What do you get for KES 500 only subscription fee?

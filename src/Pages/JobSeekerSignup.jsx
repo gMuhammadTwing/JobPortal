@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { InfinitySpin } from "react-loader-spinner";
 import { useState } from "react";
 import { Skeleton } from "../Components/Skeleton";
+import auth from "../auth";
 
 // Validation schema
 const validationSchema = Yup.object({
@@ -49,6 +50,7 @@ export default function JobSeekerSignup() {
                 resetForm();
                 setRegistered(true)
                 getPaymentInstructions();
+                auth.login(values)
             }
         } catch (error) {
             handleError(error);
@@ -82,7 +84,7 @@ export default function JobSeekerSignup() {
             const response = await axiosInstance.post(`api/user_payment_history/store`, json);
             if (response) {
                 toast.success("Payment submitted successfully");
-                localStorage.setItem("payment",false);
+                localStorage.setItem("payment", false);
             }
         } catch (error) {
             handleError(error);
@@ -151,7 +153,7 @@ export default function JobSeekerSignup() {
                                                             variant="solid"
                                                             className="inline-block w-full text-white"
                                                         >
-                                                            Sign Up
+                                                            Next
                                                         </Button>
                                                     )}
                                                 </div>
@@ -177,7 +179,7 @@ export default function JobSeekerSignup() {
                                     </div>
                                 </>
                             ) :
-                                <div className="">
+                                <div className="h-[20rem]">
                                     {tableLoader ? <Skeleton /> :
                                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                             <div className="col-span-full text-gray-600">
@@ -232,10 +234,10 @@ export default function JobSeekerSignup() {
                         <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#008604] to-[#008604]">
                             <div className="px-4 py-8 text-white md:p-12">
                                 <h4 className="mb-6 text-xl font-semibold">
-                                    Welcome to our community
+                                    Veritas Jobs
                                 </h4>
                                 <p className="text-sm">
-                                    Join us and start your journey. Experience a platform where growth and collaboration are at the core of our values.
+                                    Veritas Jobs is your go-to platform for the latest job listings and career opportunities in Kenya. As a trusted job board, we are committed to helping job seekers find their next opportunity.
                                 </p>
                             </div>
                         </div>

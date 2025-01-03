@@ -60,6 +60,12 @@ import FindCandidates from './Pages/Public/FindCandidates';
 import Subscribe from './Pages/Public/Subscribe';
 import SubmitResume from './Pages/Public/SubmitResume';
 import WhySubscribe from './Pages/Public/WhySubscribe';
+import TermsConditions from './Pages/Public/TermsConditions';
+import Disclaimer from './Pages/Public/Disclaimer';
+import PrivacyPolicy from './Pages/Public/PrivacyPolicy';
+import RefundPolicy from './Pages/Public/RefundPolicy';
+import ServiceGuarantee from './Pages/Public/ServiceGuarantee';
+import ForgotPassword from './Pages/ForgotPassword';
 function App() {
   return (
     <DropdownProvider>
@@ -87,6 +93,12 @@ function App() {
             <Route path="subscribe" element={<Subscribe />} />
             <Route path="submit_resume" element={<SubmitResume />} />
             <Route path="why_subscribe" element={<WhySubscribe />} />
+            <Route path="terms" element={<TermsConditions />} />
+            <Route path="disclaimer" element={<Disclaimer />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="refund-policy" element={<RefundPolicy />} />
+            <Route path="service-guarantee" element={<ServiceGuarantee />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
 
             <Route path="teams" element={<Teams />} />
             {/* <Route path="projects" element={<Projects />} /> */}

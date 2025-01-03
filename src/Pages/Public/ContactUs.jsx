@@ -150,11 +150,11 @@ export default function ContactUs() {
                         <div className="font-semibold">Have any questions? </div>
                         <div className="">We’re ready to help! We'd like to hear from you - here's how you can contact us:  </div>
                         <div className="font-semibold">General questions </div>
-                        <div className="">For general queries, please email us at support@veritasjobs.com  </div>
+                        <div className="">For general queries, please email us at <span className="text-[#ff0000]">support@veritasjobs.com</span>  </div>
                     </div>
 
                     {/* Image Section */}
-                    <div className="flex justify-center items-center">
+                    {/* <div className="flex justify-center items-center">
                         <img
                             src="https://www.hubspot.com/hubfs/Contact%20Us/singapore.jpg"
                             alt="Singapore Office"
@@ -167,7 +167,7 @@ export default function ContactUs() {
                             alt="Singapore Office"
                             className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <FooterHeader />

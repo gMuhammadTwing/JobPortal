@@ -52,7 +52,7 @@ export default function PersonalInformation() {
         }),
         onSubmit: async (values) => {
             setLoading(true);
-            if (data) {
+            if (!data?.data?.length==0) {
                 try {
                     const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data[0]?.id}`, values);
                     if (response) {
@@ -245,16 +245,16 @@ export default function PersonalInformation() {
                                         <div className="container mx-auto p-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                                 <div className="">
-                                                    <h3 className="font-bold text-gray-700">Unique Name</h3>
-                                                    <p>{data?.data[0].user_id?.unique_name}</p>
+                                                    <h3 className="font-bold text-gray-700">UIC</h3>
+                                                    <p>{data?.data[0]?.user_id?.unique_name}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Date of Birth</h3>
-                                                    <p>{data?.data[0].dob}</p>
+                                                    <p>{data?.data[0]?.dob}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Gender</h3>
-                                                    <p>{data?.data[0].gender_label}</p>
+                                                    <p>{data?.data[0]?.gender_label}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">National ID</h3>
@@ -262,15 +262,15 @@ export default function PersonalInformation() {
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Occupation</h3>
-                                                    <p>{data?.data[0].occupation.occupation}</p>
+                                                    <p>{data?.data[0]?.occupation.occupation}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Years of Experience</h3>
-                                                    <p>{data?.data[0].years_experience}</p>
+                                                    <p>{data?.data[0]?.years_experience}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Expected Salary</h3>
-                                                    <p>{data?.data[0].expected_salary}</p>
+                                                    <p>{data?.data[0]?.expected_salary}</p>
                                                 </div>
                                             </div>
                                         </div>

@@ -154,7 +154,7 @@ export default function EmployerSignup() {
                                             >
                                                 <option value="">Select</option>
                                                 <option value="3">Employer</option>
-                                                <option value="4">Agency</option>
+                                                <option value="4">Employment Agency</option>
                                             </select>
                                             {formik.touched.role_id && formik.errors.role_id && (
                                                 <p className="mt-1 text-xs text-red-500">{formik.errors.role_id}</p>
@@ -234,7 +234,7 @@ export default function EmployerSignup() {
                                                     variant="solid"
                                                     className="inline-block w-full text-white"
                                                 >
-                                                    Sign Up
+                                                    {formik.values.role_id == 3 ? "Sign Up" : "Next"}
                                                 </Button>
                                             )}
                                         </div>
@@ -307,9 +307,9 @@ export default function EmployerSignup() {
                         {/* Right column */}
                         <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#008604] to-[#008604]">
                             <div className="px-4 py-8 text-white md:p-12">
-                                <h4 className="mb-6 text-xl font-semibold">Welcome to our community</h4>
+                                <h4 className="mb-6 text-xl font-semibold">Veritas Jobs</h4>
                                 <p className="text-sm">
-                                    Join us and start your journey. Experience a platform where growth and collaboration are at the core of our values.
+                                    Veritas Jobs is your go-to platform for the latest job listings and career opportunities in Kenya. As a trusted job board, we are committed to helping job seekers find their next opportunity.
                                 </p>
                             </div>
                         </div>
