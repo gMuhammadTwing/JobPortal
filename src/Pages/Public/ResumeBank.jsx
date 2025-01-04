@@ -108,6 +108,14 @@ export default function ResumeBankPublic() {
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Resume Bank</h1>
                     <p>Need to find candidates fast?  Veritas Jobs for  employers in Kenya.</p>
+                    <div className="mt-10 flex justify-center cursor-pointer">
+                        <Link
+                            to={"/jobs"}
+                        >
+                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                Browse Jobs</span>
+                        </Link>
+                    </div>
                 </div>
 
                 <section className="flex items-center justify-center shadow-lg p-12">

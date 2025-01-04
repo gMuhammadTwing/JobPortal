@@ -1,5 +1,6 @@
 import { CheckBadgeIcon, CheckIcon } from "@heroicons/react/24/outline";
 import FooterHeader from "./Components/FooterHeader";
+import { Link } from "react-router-dom";
 
 export default function Careers() {
     return (
@@ -10,6 +11,14 @@ export default function Careers() {
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Careers</h1>
                     {/* <p>We are dedicated to bridging the gap between talent and opportunity</p> */}
+                    <div className="mt-5 flex justify-center cursor-pointer">
+                        <Link
+                            to={"/subscribe"}
+                        >
+                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                Subscribe</span>
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="text-start p-15 space-y-4 max-w-5xl mx-auto">

@@ -11,24 +11,24 @@ export default function RecentlyUpdatedJobs() {
   const [tableLoader, setTableLoader] = useState(false);
   const dropDownValues = useDropdownContext();
 
-  const fetchData = async (pageNum) => {
-    setTableLoader(true);
-    try {
-      const response = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
-      if (response) {
-        setData(response?.data);
-        console.log("data: ", response?.data);
-      }
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setTableLoader(false);
-    }
-  };
+  // const fetchData = async (pageNum) => {
+  //   setTableLoader(true);
+  //   try {
+  //     const response = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
+  //     if (response) {
+  //       setData(response?.data);
+  //       console.log("data: ", response?.data);
+  //     }
+  //   } catch (error) {
+  //     handleError(error);
+  //   } finally {
+  //     setTableLoader(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchData(1);
-  }, []);
+  // useEffect(() => {
+  //   fetchData(1);
+  // }, []);
 
   return (
     <div className="bg-white">

@@ -166,7 +166,8 @@ export default function ManageJobs() {
               )
               }
             </div>
-            {company_id != "undefined" && (
+            {company_id != "undefined" ? 
+            (
               tableLoader ? <LoaderTable /> :
                 <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1 rounded-lg">
                   {data?.data?.length > 0 ? (
@@ -247,6 +248,9 @@ export default function ManageJobs() {
                     page_size={data?.per_page}
                   />
                 </div>
+            ):
+            (
+              <div className='mt-20 text-[#ff0000] text-center font-semibold'>Please Create the Profile first</div>
             )}
           </div>
         )}

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "./axiosInstance";
 import { handleError } from "./axiosInstance";
 
@@ -26,15 +27,12 @@ const login = async (credentials) => {
   } catch (error) {
     handleError(error)
   }
-
 };
-
 const logout = async () => {
   //   await logoutApi();
   localStorage.clear();
-  window.location.reload();
+  // window.location.reload();
 };
-
 var auth = {
   login,
   logout

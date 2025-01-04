@@ -105,6 +105,14 @@ export default function Jobs() {
             <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Jobs</h1>
                 <p>Ready to get hired?  Search latest Veritas Jobs                </p>
+                <div className="mt-5 flex justify-center cursor-pointer">
+                    <Link
+                        to={"/subscribe"}
+                    >
+                        <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                            Subscribe</span>
+                    </Link>
+                </div>
             </div>
             <div className="container mx-auto max-w-5xl pb-15 mt-5">
                 <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />

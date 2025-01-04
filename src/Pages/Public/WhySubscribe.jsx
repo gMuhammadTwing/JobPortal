@@ -11,6 +11,14 @@ export default function WhySubscribe() {
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Why Subscribe?</h1>
                     {/* <p>If you are unemployed or actively searching for a job, please subscribe and submit your resume.</p> */}
+                    <div className="mt-10 flex justify-center cursor-pointer">
+                        <Link
+                            to={"/subscribe"}
+                        >
+                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                Subscribe</span>
+                        </Link>
+                    </div>
                 </div>
                 <div className="text-justify  space-y-4 max-w-6xl mx-auto p-5 mt-10">
                     <div className="">Veritas Jobs is a subscription only employment service that drives prosperous outcomes for job seekers, employers, communities and the nation of Kenya. Our subscription only hiring platform enhances the job seeker’s credibility by hosting only authentic credentials in the resume databases. We are committed to improving the job seeker’s experience by connecting genuine job seekers with genuine employers.  We empower job seekers for success.</div>
@@ -66,10 +74,11 @@ export default function WhySubscribe() {
                                 </div>
                             ))}
                         </div>
+
                     </div>
                 </div>
 
-                <SubscribeEmail/>
+                <SubscribeEmail />
             </div>
 
         </>

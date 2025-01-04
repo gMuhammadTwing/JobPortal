@@ -192,8 +192,7 @@ export default function EmployerProfile() {
 
 
                                                         {/* Pencil Icon on Hover */}
-                                                        {/* <form onSubmit={imageFormik.handleSubmit}> */}
-                                                        <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                                        {/* <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                                             <PencilSquareIcon className="h-5 w-5 text-blue-500" />
                                                         </div>
                                                         <input
@@ -202,7 +201,7 @@ export default function EmployerProfile() {
                                                             className="hidden"
                                                             accept="image/*"
                                                             onChange={handleFileChange}
-                                                        />
+                                                        /> */}
                                                     </div>
                                                     <div className="text-center sm:text-left">
                                                         <strong className="text-sm text-gray-600">{data?.company_name}</strong>
