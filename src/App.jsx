@@ -66,6 +66,7 @@ import PrivacyPolicy from './Pages/Public/PrivacyPolicy';
 import RefundPolicy from './Pages/Public/RefundPolicy';
 import ServiceGuarantee from './Pages/Public/ServiceGuarantee';
 import ForgotPassword from './Pages/ForgotPassword';
+import JoinCommunity from './Pages/Public/JoinCommunity';
 function App() {
   return (
     <DropdownProvider>
@@ -99,6 +100,7 @@ function App() {
             <Route path="refund-policy" element={<RefundPolicy />} />
             <Route path="service-guarantee" element={<ServiceGuarantee />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="join_community" element={<JoinCommunity />} />
 
             <Route path="teams" element={<Teams />} />
             {/* <Route path="projects" element={<Projects />} /> */}

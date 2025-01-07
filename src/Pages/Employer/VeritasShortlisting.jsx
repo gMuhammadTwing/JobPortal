@@ -26,7 +26,6 @@ export default function VertiasShortlisting() {
             const response = await axiosInstance.get(`/api/employer_veritas_short_listing/job_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);

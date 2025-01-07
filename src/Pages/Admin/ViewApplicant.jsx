@@ -22,8 +22,6 @@ export default function ViewApplicant() {
             const response = await axiosInstance.get(`api/job_seeker_basic_info?user_id=${id?.id}`);
             if (response) {
                 setData(response)
-                console.log(response?.data);
-
             }
         } catch (error) {
             handleError(error);

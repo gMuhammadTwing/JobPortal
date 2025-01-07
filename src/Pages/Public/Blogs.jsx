@@ -20,7 +20,6 @@ export default function Blogs() {
             const response = await axiosInstance.get(`/api/blogs_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);

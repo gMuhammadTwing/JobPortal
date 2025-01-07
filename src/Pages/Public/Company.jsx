@@ -13,13 +13,15 @@ export default function Company() {
                 backgroundImage: `url(${bannerImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
+                paddingBottom:'120px',
+                paddingTop:'120px'
             }}
         >
-            <div className="mx-auto max-w-[85rem]">
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-y-6 lg:gap-y-10 lg:gap-x-8 pt-8 sm:pt-16">
+            <div className="mx-auto max-w-[75rem]">
+                <div className="grid grid-cols-1 lg:grid-cols-5 lg:gap-y-3 lg:gap-x-8">
                     {/* Left Section */}
                     <div className="lg:col-span-2">
-                        <div className="font-medium">
+                        <div className="font-medium text-sm">
                             <span className="inline-block items-center rounded-full bg-white px-4 py-2">
                                 Kenya #1 Jobs Marketplace
                             </span>
@@ -27,16 +29,16 @@ export default function Company() {
                     </div>
 
                     {/* Heading */}
-                    <div className="lg:col-span-5 text-center lg:text-left">
-                        <h1 className="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight">
-                            Your Gateway to Opportunity
-                            <span className="block">and Growth</span>
+                    <div className="lg:col-span-5 text-left max-w-2xl">
+                        <h1 className="font-bold text-3xl sm:text-4xl lg:text-[34px] leading-tight">
+                            Your Gateway to Opportunity and Growth
                         </h1>
                     </div>
 
+
                     {/* Right Section */}
-                    <div className="lg:col-span-2 text-gray-800">
-                        <p className="text-lg">
+                    <div className="lg:col-span-3 text-gray-800 max-w-2xl">
+                        <p className="text-[17px] text-justify">
                             Discover your next career move with Veritas Jobs. Connect with top employers, explore
                             diverse opportunities, and take the next step toward your future. Your journey starts
                             here!
@@ -45,7 +47,7 @@ export default function Company() {
 
                     {/* Search Bar */}
                     <div className="lg:col-span-5 flex justify-center lg:justify-start">
-                        <div className="flex w-full max-w-[28rem] items-center justify-between truncate rounded-l-md bg-white">
+                        <div className="flex w-full max-w-[31rem] items-center justify-between truncate rounded-l-md bg-white">
                             <div className="flex-1 px-4 py-3">
                                 <label htmlFor="search-field" className="sr-only">
                                     Search

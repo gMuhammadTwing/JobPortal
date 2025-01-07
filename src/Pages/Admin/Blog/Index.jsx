@@ -33,7 +33,6 @@ export default function Index() {
             const response = await axiosInstance.get(`/api/blogs?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);

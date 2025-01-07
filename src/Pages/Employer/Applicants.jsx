@@ -23,8 +23,6 @@ export default function Applicants({ job_id }) {
             const response = await axiosInstance.get(`/api/employer_veritas_short_listing/applicant_list?job_id=${job_id}&page=${pageNum}`);
             if (response) {
                 setData(response?.data)
-                console.log("data: ", response?.data);
-
             }
         } catch (error) {
             handleError(error);

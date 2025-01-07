@@ -90,7 +90,6 @@ export default function ManageJobs() {
         const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id}&company_id=${company_id}&page=${page}`);
         if (response) {
           setData(response.data)
-          console.log(response.data);
 
         }
       } catch (error) {

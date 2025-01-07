@@ -26,7 +26,6 @@ export default function Index() {
             const response = await axiosInstance.get(`/api/admin_user_list?role_id=3&page=${page}`);
             if (response) {
                 setData(response?.data)
-                console.log(response);
             }
         } catch (error) {
             handleError(error);
@@ -57,7 +56,7 @@ export default function Index() {
                                                     scope="col"
                                                     className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                                 >
-                                                    List of Employees
+                                                    List of Employer
                                                 </th>
                                                 <th
                                                     scope="col"

@@ -54,7 +54,6 @@ export default function BlogDetails() {
             const response = await axiosInstance.get(`/api/blog/view/${id}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);

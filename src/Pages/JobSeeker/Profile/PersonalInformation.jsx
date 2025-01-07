@@ -91,7 +91,6 @@ export default function PersonalInformation() {
             const response = await axiosInstance.get(`api/job_seeker_basic_info?user_id=${user_id}`);
             if (response) {
                 setData(response)
-                console.log(response?.data[0]);
             }
         } catch (error) {
             handleError(error);

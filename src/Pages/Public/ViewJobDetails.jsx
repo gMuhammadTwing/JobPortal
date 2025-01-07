@@ -19,7 +19,6 @@ export default function ViewJobDetails() {
         try {
             const response = await axiosInstance.get(`api/job/view/${id?.id}`);
             if (response) {
-                console.log(response);
                 setData(response.data[0])
             }
         } catch (error) {

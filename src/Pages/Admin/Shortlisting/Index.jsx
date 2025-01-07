@@ -61,7 +61,6 @@ export default function Index() {
             const response = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);

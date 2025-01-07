@@ -23,8 +23,6 @@ export default function Education() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [id, setId] = useState();
     const openModal = (item) => {
-        console.log(item?.id);
-
         setId(item?.id)
         setIsModalOpen(true);
     }

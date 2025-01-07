@@ -46,7 +46,6 @@ export default function ResumeBank() {
             const response = await axiosInstance.get(`/api/employer_resume_bank?occupation=${filters?.occupation}&year_from=${filters?.year_from}&year_to=${filters?.year_to}&institute=${filters?.institute}&job_status=${filters?.job_status}&page=${page}`);
             if (response) {
                 setData(response?.data)
-                console.log(response?.data);
             }
         } catch (error) {
             handleError(error);

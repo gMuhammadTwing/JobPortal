@@ -23,7 +23,6 @@ export default function Contacts() {
             const response = await axiosInstance.get(`/api/contact_us?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);

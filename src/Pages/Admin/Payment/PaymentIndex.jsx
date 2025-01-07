@@ -13,6 +13,7 @@ import axiosInstance, { handleError } from "../../../axiosInstance";
 import { Switch } from "@headlessui/react";
 import { toast } from "sonner";
 import { LoaderTable } from "../../../Components/LoaderTable";
+import moment from 'moment';
 
 export default function PaymentIndex() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -117,6 +118,11 @@ export default function PaymentIndex() {
                                                     className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                 >
                                                 </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
                                             </tr>
                                             <tr>
                                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
@@ -127,6 +133,9 @@ export default function PaymentIndex() {
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Amount Paid
+                                                </th>
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Payment Date
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Payment Status
@@ -164,6 +173,9 @@ export default function PaymentIndex() {
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {payment?.amount.toFixed(2)}
+                                                        </td>
+                                                        <td className="px-3 py-4 text-sm">
+                                                            {moment(payment?.created_at).format('MM-DD-YYYY HH:mm:ss A') || ""}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {payment?.payment_status ? (

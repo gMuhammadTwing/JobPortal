@@ -44,7 +44,6 @@ const ProtectedRoutes = ({ children }) => {
     const dynamicPath = `${basePath}/${id}`;
     adminPermission[dynamicPath] = permission;
   };
-  console.log(id);
   
   addJobSeekerDynamicRoute("/job-seeker/coursework", id?.id, "view_coursework");
 

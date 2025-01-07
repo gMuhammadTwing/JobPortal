@@ -6,7 +6,6 @@ const login = async (credentials) => {
 
   try {
     const response = await axiosInstance.post("api/auth/login", credentials)
-    console.log(response);
     localStorage.setItem("token", response?.token?.accessToken);
     localStorage.setItem(
       "expires_at",

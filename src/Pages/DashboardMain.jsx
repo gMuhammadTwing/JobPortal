@@ -43,9 +43,9 @@ export default function DashboardMain() {
         // { name: "CMS Section", href: "cms-section", icon: CogIcon, current: false },
     ];
     const adminNav = [
-        { name: "Employees", href: "employees", icon: UserCircleIcon, current: true },
+        { name: "Employer", href: "employees", icon: UserCircleIcon, current: true },
         { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single:'admin_job_seekers', current: true },
-        { name: "Employer Agency List", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
+        { name: "Employment Agency", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
         { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
         { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },

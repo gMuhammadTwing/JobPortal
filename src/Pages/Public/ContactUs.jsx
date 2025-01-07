@@ -30,7 +30,6 @@ export default function ContactUs() {
             // message: Yup.string().required("Message is required"),
         }),
         onSubmit: async (values) => {
-            console.log("Form submitted:", values);
             try {
                 const response = await axiosInstance.post(`/api/contact_us/store`, values);
                 if (response) {

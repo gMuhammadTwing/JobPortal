@@ -39,10 +39,9 @@ export default function Index() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-            console.log(values);
 
             setLoading(true)
-            if (data) {
+            if (data?.data?.length) {
                 try {
                     const response = await axiosInstance.post(`/api/admin_payment_instruction/update/${data?.data[0]?.id}`, values);
                     if (response) {
@@ -71,6 +70,7 @@ export default function Index() {
                 } finally {
                     fetchData(2);
                     setLoading(false)
+                    setEditInstructions(false);
                 }
             }
         },
@@ -81,8 +81,6 @@ export default function Index() {
             const response = await axiosInstance.get(`/api/admin_payment_instruction?role_id=${role_id}`);
             if (response) {
                 setData(response)
-                console.log("res: ", response.data);
-
             }
         } catch (error) {
             setEditInstructions(false);
@@ -99,11 +97,11 @@ export default function Index() {
 
     return (
         <div className="flex justify-center sm:px-0 min-h-screen">
-            <div className="p-4 w-full max-w-5xl rounded-lg">
-                <div className={`border rounded-lg shadow-lg ${instructions ? "overflow-hidden" : "rounded-lg"}`}>
+            <div className="p-4 w-full max-w-5xl">
+                <div className={`border-b rounded-b-lg shadow-lg ${instructions ? "overflow-hidden" : ""}`}>
                     {/* Header Section */}
                     <div
-                        className="flex justify-between items-center p-3 border-b text-[#ff0000] bg-white rounded-lg"
+                        className="flex justify-between items-center p-3 border-b text-[#ff0000] bg-white rounded-t-lg"
                     // onClick={handleInstructions}
                     >
                         <h3 className="font-bold text-xl">Instructions for Payment</h3>
@@ -127,7 +125,7 @@ export default function Index() {
 
                     {/* Card Body */}
                     <div
-                        className={` rounded-lg relative bg-white transition-all duration-300 ease-in-out ${instructions ? "max-h-0 p-0" : "max-h-screen p-4"
+                        className={` rounded-b-lg relative bg-white transition-all duration-300 ease-in-out ${instructions ? "max-h-0 p-0" : "max-h-screen p-4"
                             }`}
                     >
                         {/* Display Instructions */}

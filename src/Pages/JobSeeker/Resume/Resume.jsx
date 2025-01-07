@@ -40,8 +40,6 @@ export default function Resume() {
             const response = await axiosInstance.get(`api/job_seeker_resume?user_id=${user_id}`);
             if (response) {
                 setData(response?.data)
-                console.log(response?.data);
-
             }
         } catch (error) {
             handleError(error);

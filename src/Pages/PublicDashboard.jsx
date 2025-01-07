@@ -3,7 +3,7 @@ import { Bars3Icon, BellIcon, LockClosedIcon, LockOpenIcon, UserCircleIcon, User
 import { CustomScroll } from 'react-custom-scroll'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Footer from './Footer'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import auth from '../auth'
 import app_vars from '../config'
@@ -57,6 +57,7 @@ const navigation = [
       // { name: "Our Vision", href: 'vision', single: 'about-us', current: false },
       // { name: "Our Mission", href: 'mission', single: 'about-us', current: false },
       // { name: "Our Values", href: 'our-values', single: 'about-us', current: false },
+      { name: 'About Us', href: 'about-us', current: false, },
       { name: "VeritasKWD Opportunity Creation Program", href: 'opportunity', single: 'about-us', current: false },
       { name: "VeritasKWD Projects", href: 'projects', single: 'about-us', current: false },
       { name: "VeritasKWD for Investors", href: 'investors', single: 'about-us', current: false },
@@ -64,7 +65,7 @@ const navigation = [
       { name: "VeritasKWD Idea Incubator", href: 'incubators', single: 'about-us', current: false },
       { name: "VeritasKWD Volunteer Opportunities", href: 'volunteers', single: 'about-us', current: false },
       { name: "Careers at VeritasKWD", href: 'careers', single: 'about-us', current: false },
-      { name: 'About Us', href: 'about-us', current: false, }
+
     ]
   },
   { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
@@ -82,10 +83,10 @@ function classNames(...classes) {
 }
 
 
+
 export default function PublicDashboard() {
   const location = useLocation();
   const role_id = localStorage.getItem("role_id");
-  console.log("role_id: ", role_id);
 
   const payment = localStorage.getItem("payment");
 
@@ -96,7 +97,6 @@ export default function PublicDashboard() {
     }
   }, [])
   const [activeDropdown, setActiveDropdown] = useState(null);
-  console.log("Payment: ", localStorage?.payment);
 
   return (
     <>
@@ -133,7 +133,8 @@ export default function PublicDashboard() {
                               onMouseEnter={() => setActiveDropdown(item.name)}
                               onMouseLeave={() => setActiveDropdown(null)}
                               key={item.name}
-                              to={item.href}
+                              // to={item.href}
+                              to={(item.name == 'Jobs' && localStorage?.token) ? item.href : '/login'}
                               aria-current={item.current ? 'page' : undefined}
                               className={classNames(
                                 location.pathname.includes(item.href) || location.pathname.includes(item?.single)
@@ -520,12 +521,14 @@ export default function PublicDashboard() {
         </Disclosure>
 
         <main className="pt-[4rem] h-screen bg-gray-100">
-          <CustomScroll heightRelativeToParent="100%">
+          <CustomScroll
+            heightRelativeToParent="100%"
+          >
             <Toaster richColors />
             <Outlet />
-
             <Footer />
           </CustomScroll>
+
         </main>
       </div>
     </>

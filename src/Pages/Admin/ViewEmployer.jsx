@@ -24,8 +24,6 @@ export default function ViewEmployer() {
             const response = await axiosInstance.get(`api/employer_company_profile?user_id=${id?.id}`);
             if (response) {
                 setData(response?.data[0])
-                console.log(response?.data);
-
             }
         } catch (error) {
             handleError(error);

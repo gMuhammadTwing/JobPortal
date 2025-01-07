@@ -26,7 +26,6 @@ export default function Index() {
             const response = await axiosInstance.get(`/api/admin_user_list?role_id=2&page=${page}`);
             if (response) {
                 setData(response?.data)
-                console.log(response);
             }
         } catch (error) {
             handleError(error);

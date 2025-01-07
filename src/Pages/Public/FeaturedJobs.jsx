@@ -5,6 +5,7 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import Pagination from "../../Components/Pagination";
 import { BlogSkeleton } from "../../Components/BlogSkeleton";
+import { toast } from "sonner";
 
 export default function FeaturedJobs() {
     const [data, setData] = useState();
@@ -16,7 +17,6 @@ export default function FeaturedJobs() {
             const response = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -73,26 +73,38 @@ export default function FeaturedJobs() {
                                     </div>
 
                                     {/* Description Section */}
-                                    <div className=" mt-2 pt-2">
+                                    {/* <div className=" mt-2 pt-2">
                                         <label htmlFor="description" className="block font-semibold mb-2">
                                             Job Description
                                         </label>
                                         <div className="text-sm text-gray-600 line-clamp-3 h-20">
                                             {parser.parseFromString(item?.job_description || "", "text/html").body.textContent.trim()}
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="border-t mt-4 pt-4">
                                         <div className="flex justify-center -mt-px divide-x divide-gray-300">
                                             <div className="flex items-center justify-center w-1/2 space-x-2">
                                                 {/* <ArrowDownOnSquareIcon aria-hidden="true" className="h-5 w-5 text-gray-400" /> */}
-                                                <Link to={`/view-job-details/${item?.id}`}>
-                                                    <button
-                                                        className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                {localStorage?.token ? (
+                                                    <Link to={`/view-job-details/${item?.id}`}>
+                                                        <button
+                                                            className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                        >
+                                                            View Details
+                                                        </button>
+                                                    </Link>
+                                                ) : (
+                                                    <Link to={`/login`}
+                                                        onClick={() => toast.info("Please login first")}
                                                     >
-                                                        View Details
-                                                    </button>
-                                                </Link>
+                                                        <button
+                                                            className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                        >
+                                                            View Details
+                                                        </button>
+                                                    </Link>
+                                                )}
                                             </div>
                                             {/* <div className="flex items-center justify-center w-1/2 space-x-2">
                                             <ArrowDownRightIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
@@ -105,12 +117,23 @@ export default function FeaturedJobs() {
 
                     </ul>
                     <div className="mt-10 flex justify-center cursor-pointer">
-                        <Link
-                            to={"/jobs"}
-                        >
-                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                Show more jobs</span>
-                        </Link></div>
+                        {localStorage?.token ? (
+                            <Link
+                                to={"/jobs"}
+                            >
+                                <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                    Show more jobs</span>
+                            </Link>
+                        ) : (
+                            <Link
+                                onClick={() => toast.info("Please login first")}
+                                to={"/login"}
+                            >
+                                <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                    Show more jobs</span>
+                            </Link>
+                        )}
+                    </div>
                 </>
             }
         </div>
