@@ -135,6 +135,9 @@ export default function PublicDashboard() {
                                 onMouseLeave={() => setActiveDropdown(null)}
                                 key={item.name}
                                 to={localStorage?.token ? item?.href : '/login'}
+                                onClick={()=>{
+                                  !localStorage?.token && toast.info("Please login first")
+                                }}
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(
                                   location.pathname.includes(item.href) || location.pathname.includes(item?.single)
