@@ -5,6 +5,7 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import RecentlyUpdatedJobsSkeleton from "../../Components/RecentlyUpdatedJobsSkeleton";
 import { Link } from "react-router-dom";
 import { useDropdownContext } from "../../DropdownProvider";
+import { toast } from "sonner";
 
 export default function RecentlyUpdatedJobs() {
   const [data, setData] = useState();
@@ -71,7 +72,7 @@ export default function RecentlyUpdatedJobs() {
                       visible: { opacity: 1, y: 0 },
                     }}
                   >
-                    <Link to={`/jobs_type/${job?.id}`}>
+                    <Link to={localStorage?.token ? `/jobs_type/${job?.id}` : '/login'}>
                       <div className="flex w-full items-center justify-between p-6">
                         <div className="flex-1 truncate">
                           <div className="flex items-center space-x-3">
@@ -86,12 +87,22 @@ export default function RecentlyUpdatedJobs() {
                 ))}
               </motion.ul>
               <div className="mt-10 flex justify-center cursor-pointer">
-                <Link
-                  to={"/jobs"}
-                >
-                  <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                    View all Jobs</span>
-                </Link></div>
+                {localStorage?.token ?
+                  <Link
+                    to={"/jobs"}
+                  >
+                    <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                      View all Jobs</span>
+                  </Link>
+                  :
+                  <Link
+                    to={"/login"}
+                    onClick={() => toast.info("Please login first")}
+                  >
+                    <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                      View all Jobs</span>
+                  </Link>}
+              </div>
             </>
           )}
       </motion.div>

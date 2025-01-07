@@ -129,88 +129,166 @@ export default function PublicDashboard() {
                         navigation
                           .filter(item => !((role_id != 1) && item.name == 'Admin'))
                           .map((item) => (
-                            <Link
-                              onMouseEnter={() => setActiveDropdown(item.name)}
-                              onMouseLeave={() => setActiveDropdown(null)}
-                              key={item.name}
-                              // to={item.href}
-                              to={(item.name == 'Jobs' && localStorage?.token) ? item.href : '/login'}
-                              aria-current={item.current ? 'page' : undefined}
-                              className={classNames(
-                                location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                  ? 'bg-[#ff0000] text-white'
-                                  : 'text-black hover:bg-[#ff0000] hover:text-white',
-                                'rounded-md px-3 py-2 text-sm font-medium',
-                              )}
-                            >
-                              {item?.subItems ? (
-                                <div
-                                  className="relative"
+                            item?.name == 'Jobs' ?
+                              <Link
+                                onMouseEnter={() => setActiveDropdown(item.name)}
+                                onMouseLeave={() => setActiveDropdown(null)}
+                                key={item.name}
+                                to={localStorage?.token ? item?.href : '/login'}
+                                aria-current={item.current ? 'page' : undefined}
+                                className={classNames(
+                                  location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                    ? 'bg-[#ff0000] text-white'
+                                    : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                  'rounded-md px-3 py-2 text-sm font-medium',
+                                )}
+                              >
+                                {item?.subItems ? (
+                                  <div
+                                    className="relative"
 
-                                >
-                                  <div aria-disabled={true}>
-                                    {item?.name}
-                                  </div>
-
-                                  {activeDropdown === item.name && (
-                                    <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                      {item?.subItems.map((item1, index) => {
-                                        const paymentStatus = localStorage?.payment;
-                                        const roleId = localStorage?.role_id;
-
-                                        if (item1.name == "My Profile") {
-                                          if (roleId != 3) {
-                                            if (paymentStatus === "null" || paymentStatus == null) {
-                                              // Redirect to payment-alert if payment is null
-                                              return (
-                                                <Link
-                                                  key={index}
-                                                  to="payment-alert"
-                                                  onClick={() => setActiveDropdown(null)}
-                                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
-                                                >
-                                                  {item1.name}
-                                                </Link>
-                                              );
-                                            } else if (paymentStatus === "false") {
-                                              // Show toast if payment is false
-                                              return (
-                                                <div
-                                                  key={index}
-                                                  onClick={() => {
-                                                    setActiveDropdown(null);
-                                                    toast.info("Payment Approval Pending");
-                                                  }}
-                                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
-                                                >
-                                                  {item1.name}
-                                                </div>
-                                              );
-                                            }
-                                          }
-                                        }
-
-                                        // Default case for all other items or when conditions are not met
-                                        return (
-                                          <Link
-                                            key={index}
-                                            to={item1.href}
-                                            onClick={() => setActiveDropdown(null)}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
-                                          >
-                                            {item1.name}
-                                          </Link>
-                                        );
-                                      })}
+                                  >
+                                    <div aria-disabled={true}>
+                                      {item?.name}
                                     </div>
 
+                                    {activeDropdown === item.name && (
+                                      <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                        {item?.subItems.map((item1, index) => {
+                                          const paymentStatus = localStorage?.payment;
+                                          const roleId = localStorage?.role_id;
 
-                                  )}
-                                </div>
-                              ) : (
-                                item.name
-                              )}
-                            </Link>
+                                          if (item1.name == "My Profile") {
+                                            if (roleId != 3) {
+                                              if (paymentStatus === "null" || paymentStatus == null) {
+                                                // Redirect to payment-alert if payment is null
+                                                return (
+                                                  <Link
+                                                    key={index}
+                                                    to="payment-alert"
+                                                    onClick={() => setActiveDropdown(null)}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                                  >
+                                                    {item1.name}
+                                                  </Link>
+                                                );
+                                              } else if (paymentStatus === "false") {
+                                                // Show toast if payment is false
+                                                return (
+                                                  <div
+                                                    key={index}
+                                                    onClick={() => {
+                                                      setActiveDropdown(null);
+                                                      toast.info("Payment Approval Pending");
+                                                    }}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
+                                                  >
+                                                    {item1.name}
+                                                  </div>
+                                                );
+                                              }
+                                            }
+                                          }
+
+                                          // Default case for all other items or when conditions are not met
+                                          return (
+                                            <Link
+                                              key={index}
+                                              to={item1.href}
+                                              onClick={() => setActiveDropdown(null)}
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                            >
+                                              {item1.name}
+                                            </Link>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  item.name
+                                )}
+                              </Link>
+                              :
+                              <Link
+                                onMouseEnter={() => setActiveDropdown(item.name)}
+                                onMouseLeave={() => setActiveDropdown(null)}
+                                key={item.name}
+                                to={item.href}
+                                aria-current={item.current ? 'page' : undefined}
+                                className={classNames(
+                                  location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                    ? 'bg-[#ff0000] text-white'
+                                    : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                  'rounded-md px-3 py-2 text-sm font-medium',
+                                )}
+                              >
+                                {item?.subItems ? (
+                                  <div
+                                    className="relative"
+
+                                  >
+                                    <div aria-disabled={true}>
+                                      {item?.name}
+                                    </div>
+
+                                    {activeDropdown === item.name && (
+                                      <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                        {item?.subItems.map((item1, index) => {
+                                          const paymentStatus = localStorage?.payment;
+                                          const roleId = localStorage?.role_id;
+
+                                          if (item1.name == "My Profile") {
+                                            if (roleId != 3) {
+                                              if (paymentStatus === "null" || paymentStatus == null) {
+                                                // Redirect to payment-alert if payment is null
+                                                return (
+                                                  <Link
+                                                    key={index}
+                                                    to="payment-alert"
+                                                    onClick={() => setActiveDropdown(null)}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                                  >
+                                                    {item1.name}
+                                                  </Link>
+                                                );
+                                              } else if (paymentStatus === "false") {
+                                                // Show toast if payment is false
+                                                return (
+                                                  <div
+                                                    key={index}
+                                                    onClick={() => {
+                                                      setActiveDropdown(null);
+                                                      toast.info("Payment Approval Pending");
+                                                    }}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
+                                                  >
+                                                    {item1.name}
+                                                  </div>
+                                                );
+                                              }
+                                            }
+                                          }
+
+                                          // Default case for all other items or when conditions are not met
+                                          return (
+                                            <Link
+                                              key={index}
+                                              to={item1.href}
+                                              onClick={() => setActiveDropdown(null)}
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                            >
+                                              {item1.name}
+                                            </Link>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  item.name
+                                )}
+                              </Link>
                           ))
                       }
 
