@@ -15,19 +15,20 @@ import { toast } from "sonner";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import moment from 'moment';
 
-export default function PaymentIndex() {
+export default function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const [payments, setPayments] = useState();
+    const [data, setData] = useState();
+    const role_id = localStorage?.role_id;
     const [tableLoader, setTableLoader] = useState(false);
     const fetchData = async (pageNum) => {
         setTableLoader(true);
         try {
-            const { data } = await axiosInstance.get(`api/user_payment_history?page=${pageNum}`);
+            const { data } = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
             if (data) {
-                setPayments(data);
+                setData(data);
             }
         } catch (error) {
             handleError(error);
@@ -46,22 +47,22 @@ export default function PaymentIndex() {
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
-    const handleToggle = async (payment) => {
+    const handleToggle = async (item) => {
         setTableLoader(true)
         var json;
-        if (payment.payment_status === true) {
+        if (item.is_featured == true) {
             var json = {
-                payment_status: false,
+                is_featured: false,
             };
-        } else if (payment.payment_status === false) {
+        } else if (item?.is_featured == null || item.is_featured == false) {
             var json = {
-                payment_status: true,
+                is_featured: true,
             };
         }
         try {
-            const response = await axiosInstance.post(`/api/user_payment_history/update/${payment?.id}`, json);
+            const response = await axiosInstance.post(`/api/employer_company_job_posting/update/${item?.id}`, json);
             if (response) {
-                toast.success("Payment Updated")
+                toast.success("Job Details Updated")
             }
         } catch (error) {
             handleError(error);
@@ -96,7 +97,7 @@ export default function PaymentIndex() {
                                                     scope="col"
                                                     className="pl-4 py-5.5 text-left text-[#ff0000] font-bold text-xl"
                                                 >
-                                                    Manage Payments
+                                                    List of Jobs
                                                 </th>
                                                 <th
                                                     scope="col"
@@ -122,86 +123,59 @@ export default function PaymentIndex() {
                                                     className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                 >
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                                >
-                                                </th>
                                             </tr>
                                             <tr>
                                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
-                                                    User Name
+                                                    Job Title
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    User Role
+                                                    job_type
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Amount Paid
+                                                    Salary
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Reference Number
+                                                    location
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Payment Date
+                                                    Job Status
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Payment Status
-                                                </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Approval
+                                                    Featured
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white">
-                                            {payments?.data?.length > 0 ? (
-                                                payments?.data?.map((payment, index) => (
+                                            {data?.data?.length > 0 ? (
+                                                data?.data?.map((item, index) => (
                                                     <tr key={index}>
                                                         <td className="py-4 pl-4 pr-3 text-sm">
-                                                            {payment?.user_id?.name}
+                                                            {item?.job_title}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            <span>
-                                                                {(() => {
-                                                                    switch (payment?.user_id?.role_id) {
-                                                                        case 1:
-                                                                            return 'Admin';
-                                                                        case 2:
-                                                                            return 'Job Seeker';
-                                                                        case 3:
-                                                                            return 'Employer';
-                                                                        case 4:
-                                                                            return 'Employment Agency';
-                                                                        default:
-                                                                            return 'Unknown Role';
-                                                                    }
-                                                                })()}
-                                                            </span>
-
+                                                            {item?.job_type?.job_family}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            {payment?.amount.toFixed(2)}
+                                                            {item?.expected_salary}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            {payment?.reference_number}
+                                                            {(item?.location)}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            {moment(payment?.created_at).format('MM-DD-YYYY HH:mm:ss A') || ""}
-                                                        </td>
-                                                        <td className="px-3 py-4 text-sm">
-                                                            {payment?.payment_status ? (
-                                                                <span className="bg-green-100 text-green-600 ring-green-300 rounded-lg p-1">Approved</span>
+                                                            {item?.job_status ? (
+                                                                <span className="bg-green-100 text-green-600 ring-green-300 rounded-lg p-1">{item?.job_status}</span>
                                                             ) : (
-                                                                <span className="bg-red-100 text-red-600 rounded-lg p-1">Pending</span>
+                                                                <span className="bg-red-100 text-red-600 rounded-lg p-1">{item?.job_status}</span>
                                                             )}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             <div className="flex items-center space-x-2">
                                                                 {/* <EyeIcon className="w-5 h-5 text-black" title="View Receipt" /> */}
-                                                                {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit Payment" /> */}
+                                                                {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit Item" /> */}
                                                                 <Switch
-                                                                    checked={payment?.payment_status}
+                                                                    checked={item?.item_status}
                                                                     onClick={() => {
-                                                                        handleToggle(payment);
+                                                                        handleToggle(item);
                                                                     }}
                                                                     className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                                                 >
@@ -213,7 +187,7 @@ export default function PaymentIndex() {
                                                                     <span
                                                                         aria-hidden="true"
                                                                         className={classNames(
-                                                                            payment?.payment_status
+                                                                            item?.is_featured
                                                                                 ? "bg-indigo-600"
                                                                                 : "bg-gray-200",
                                                                             "pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out"
@@ -222,7 +196,7 @@ export default function PaymentIndex() {
                                                                     <span
                                                                         aria-hidden="true"
                                                                         className={classNames(
-                                                                            payment?.payment_status
+                                                                            item?.is_featured
                                                                                 ? "translate-x-5"
                                                                                 : "translate-x-0",
                                                                             "pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out"
@@ -237,7 +211,7 @@ export default function PaymentIndex() {
                                                 <tr>
                                                     <td colSpan="5" className="text-center py-4">
                                                         <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                            No Payments Found
+                                                            No Data Found
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -249,8 +223,8 @@ export default function PaymentIndex() {
                         </div>
                         <Pagination
                             page={pageNumber}
-                            total={payments?.total}
-                            page_size={payments?.per_page}
+                            total={data?.total}
+                            page_size={data?.per_page}
                         />
                     </>
                 }

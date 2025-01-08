@@ -30,7 +30,7 @@ export default function DashboardMain() {
         { name: "Search Jobs", href: "view_job_list", icon: ViewfinderCircleIcon, current: false },
         { name: "Applied Jobs", href: "applied_job_list", single: "applied_job_list", icon: BriefcaseIcon, current: false },
         // { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
-        { name: "Coursework", href: "coursework/all", single:'coursework', icon: ClipboardDocumentListIcon, current: false },
+        { name: "Coursework", href: "coursework/all", single: 'coursework', icon: ClipboardDocumentListIcon, current: false },
     ]
     const navigation = [
         { name: "Employer Profile", href: "profile", icon: UserCircleIcon, current: true },
@@ -44,8 +44,9 @@ export default function DashboardMain() {
     ];
     const adminNav = [
         { name: "Employer", href: "employees", icon: UserCircleIcon, current: true },
-        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single:'admin_job_seekers', current: true },
+        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single: 'admin_job_seekers', current: true },
         { name: "Employment Agency", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
+        { name: "Jobs", href: "list_job", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
         { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },

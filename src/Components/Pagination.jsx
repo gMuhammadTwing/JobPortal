@@ -7,16 +7,16 @@ export default function Pagination({ page, total = 0, page_size = 10 }) {
 
     // Handle page click
     const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-        page(pageNumber);
+        setCurrentPage(pageNumber); // Update currentPage internally
+        page(pageNumber); // Notify the parent component of the page change
     };
 
     // Handle Next button click
     const handleNextClick = () => {
         if (currentPage < totalPages) {
             const nextPage = currentPage + 1;
-            setCurrentPage(nextPage);
-            page(nextPage);
+            setCurrentPage(nextPage); // Update currentPage internally
+            page(nextPage); // Notify the parent component of the page change
         }
     };
 
@@ -24,8 +24,8 @@ export default function Pagination({ page, total = 0, page_size = 10 }) {
     const handlePreviousClick = () => {
         if (currentPage > 1) {
             const prevPage = currentPage - 1;
-            setCurrentPage(prevPage);
-            page(prevPage);
+            setCurrentPage(prevPage); // Update currentPage internally
+            page(prevPage); // Notify the parent component of the page change
         }
     };
 

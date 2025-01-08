@@ -50,7 +50,13 @@ export default function EmployerSignup() {
                     localStorage.setItem("user_id", response?.data?.token?.token?.user_id);
                     setUserId(response?.data?.token?.token?.user_id);
                     if (values?.role_id == 4) {
+                        auth.login(values)
                         setRegistered(true)
+                    }
+                    else {
+                        auth.login(values)
+                        navigate("/home")
+                        window.location.reload();
                     }
                     getPaymentInstructions();
                     formik.resetForm();
@@ -78,25 +84,32 @@ export default function EmployerSignup() {
             setTableLoader(false)
         }
     };
+    const [reference_number, setReferenceNumber] = useState(null)
     const submitPayment = async () => {
-        setLoader(true)
-        const json = {
-            user_id: user_id,
-            amount: paymentInstructions?.amount,
+        if (!reference_number) {
+            toast.error("Reference Number is required");
         }
-        try {
-            const response = await axiosInstance.post(`api/user_payment_history/store`, json);
-            if (response) {
-                toast.success("Payment submitted successfully");
-                localStorage.setItem("payment", false);
+        else {
+            setLoader(true)
+            const json = {
+                user_id: user_id,
+                amount: paymentInstructions?.amount,
+                reference_number: reference_number
             }
-        } catch (error) {
-            handleError(error);
-        }
-        finally {
-            setLoader(false)
-            auth.logout();
-            navigate("/login")
+            try {
+                const response = await axiosInstance.post(`api/user_payment_history/store`, json);
+                if (response) {
+                    toast.success("Payment submitted successfully");
+                    localStorage.setItem("payment", false);
+                }
+            } catch (error) {
+                handleError(error);
+            }
+            finally {
+                setLoader(false)
+                navigate("/home")
+                window.location.reload();
+            }
         }
     }
     const parser = new DOMParser();
@@ -259,7 +272,7 @@ export default function EmployerSignup() {
                                             <div className="col-span-full text-gray-600">
                                                 <strong>Payment Instructions:</strong>
                                                 <ul className="list-disc pl-5 space-y-1">
-                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()}</li>
+                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()} - Amount: {paymentInstructions?.amount}</li>
                                                     {/* <li>Bank Details: </li>
                                                     <li>Account No: 03120376631</li>
                                                     <li>Account Title: Joe Joe</li>
@@ -269,13 +282,14 @@ export default function EmployerSignup() {
 
                                             <div className="sm:col-span-4">
                                                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                                                    Amount
+                                                    Add Reference Number
                                                 </label>
                                                 <input
                                                     type="text"
-                                                    name="amount"
-                                                    value={paymentInstructions?.amount}
-                                                    disabled
+                                                    name="reference_number"
+                                                    onChange={(e) => setReferenceNumber(e.target.value)}
+                                                    value={reference_number}
+                                                    required
                                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                                 />
                                             </div>

@@ -179,7 +179,7 @@ export default function Index() {
                                                                     setJobId(item?.id)
                                                                 }}
                                                                 className="w-5 h-5 text-blue-600 cursor-pointer"
-                                                                title="View Participants"
+                                                                title="View Applicants"
                                                             />
                                                         </div>
                                                     </td>

@@ -29,24 +29,31 @@ export default function PaymentAlert() {
             setTableLoader(false);
         }
     };
-
+    const [reference_number, setReferenceNumber] = useState(null)
     const submitPayment = async () => {
-        setLoader(true);
-        const json = {
-            user_id: user_id,
-            amount: paymentInstructions?.amount,
-        };
-        try {
-            const response = await axiosInstance.post(`api/user_payment_history/store`, json);
-            if (response) {
-                toast.success("Payment submitted successfully");
-                localStorage.setItem("payment", false);
+        if (!reference_number) {
+            toast.error("Reference Number is required");
+        }
+        else {
+            setLoader(true);
+            const json = {
+                user_id: user_id,
+                amount: paymentInstructions?.amount,
+                reference_number: reference_number
+            };
+            try {
+                const response = await axiosInstance.post(`api/user_payment_history/store`, json);
+                if (response) {
+                    toast.success("Payment submitted successfully");
+                    localStorage.setItem("payment", false);
+                }
+            } catch (error) {
+                handleError(error);
+            } finally {
+                setLoader(false);
+                navigate("/home");
+                window.location.reload();
             }
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setLoader(false);
-            navigate("/home");
         }
     };
 
@@ -69,17 +76,18 @@ export default function PaymentAlert() {
                     <div className="grid grid-cols-1 gap-y-6">
                         <div className="text-sm font-medium text-gray-900 ">
                             <ul className="list-disc space-y-2">
-                                {parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()}
+                                {parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()} - Amount {paymentInstructions?.amount}
                             </ul>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 mb-2">Amount</label>
+                            <label className="block text-sm font-medium text-gray-900 mb-2">Add Reference Number</label>
                             <input
                                 type="text"
-                                name="amount"
-                                value={paymentInstructions?.amount}
-                                disabled
+                                name="reference_number"
+                                onChange={(e) => setReferenceNumber(e.target.value)}
+                                value={reference_number}
+                                required
                                 className="w-full py-2 px-3 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>

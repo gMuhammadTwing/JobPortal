@@ -67,6 +67,7 @@ import RefundPolicy from './Pages/Public/RefundPolicy';
 import ServiceGuarantee from './Pages/Public/ServiceGuarantee';
 import ForgotPassword from './Pages/ForgotPassword';
 import JoinCommunity from './Pages/Public/JoinCommunity';
+import AdminJobs from './Pages/Admin/Jobs/Index'
 function App() {
   return (
     <DropdownProvider>
@@ -151,6 +152,7 @@ function App() {
               <Route path="job_seekers/view-applicant/:id" element={<ViewApplicant />} />
               <Route path="shortlisting/view-applicant/:id" element={<ViewApplicant />} />
               <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
+              <Route path="list_job" element={<AdminJobs />} />
             </Route>
 
             {/* No Permission Route */}

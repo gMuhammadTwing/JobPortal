@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { InfinitySpin, RotatingLines } from "react-loader-spinner";
 import app_vars from "../../config";
 import { Skeleton } from "../../Components/Skeleton";
+import { useDropdownContext } from "../../DropdownProvider";
 export default function EmployerProfile() {
     const [tableLoader, setTableLoader] = useState(false);
     const [profileCollapsed, setprofileCollapsed] = useState(false);
@@ -29,6 +30,7 @@ export default function EmployerProfile() {
     const handleIconClick = () => {
         fileInputRef.current.click();
     };
+    const dropDownValues = useDropdownContext();
     const formik = useFormik({
         initialValues: {
             company_name: data?.company_name || '',
@@ -294,18 +296,25 @@ export default function EmployerProfile() {
                                             <label htmlFor="company_industry" className="block text-sm font-medium text-gray-900">
                                                 Industry *
                                             </label>
-                                            <input
-                                                id="company_industry"
+                                            <select
                                                 name="company_industry"
-                                                type="text"
+                                                // onChange={(e) => handleChange(e, item)}
+                                                // value={formik.values.job_type}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
                                                 value={formik.values.company_industry}
+                                                // value={item?.job_status_id?.id}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                            />
-                                            {formik.touched.company_industry && formik.errors.company_industry && (
-                                                <div className="text-red-500 text-sm">{formik.errors.company_industry}</div>
-                                            )}
+                                            >
+                                                <option value="">Select</option>
+                                                {dropDownValues?.job_family?.map((item) => {
+                                                    return (
+                                                        <option key={item.id} value={item?.id}>
+                                                            {item?.job_family}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
                                         </div>
                                         <div>
                                             <label htmlFor="location" className="block text-sm font-medium text-gray-900">

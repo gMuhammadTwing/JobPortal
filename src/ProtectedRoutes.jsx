@@ -30,6 +30,7 @@ const ProtectedRoutes = ({ children }) => {
     "/admin/shortlisting": "manage_shortlisting",
     "/admin/payments": "manage_payments",
     "/admin/contacts": "view_contacts",
+    "/admin/list_job": "jobs_list",
   }
   const addJobSeekerDynamicRoute = (basePath, id, permission) => {
     const dynamicPath = `${basePath}/${id}`;

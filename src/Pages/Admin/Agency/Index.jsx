@@ -67,10 +67,10 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
 
                                                 </th>
-                                                <th scope="col"
+                                                {/* <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
 
-                                                </th>
+                                                </th> */}
                                             </tr>
                                             <tr className="border-t">
                                                 <th
@@ -82,10 +82,10 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Email
                                                 </th>
-                                                <th scope="col"
+                                                {/* <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     UIC
-                                                </th>
+                                                </th> */}
                                                 <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Action
@@ -107,9 +107,9 @@ export default function Index() {
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             {item?.email}
                                                         </td>
-                                                        <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                                        {/* <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
                                                             {item?.unique_name}
-                                                        </td>
+                                                        </td> */}
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <Link to={"view-agency/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>

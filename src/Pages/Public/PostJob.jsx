@@ -162,7 +162,7 @@ export default function PostJob() {
                                                     >
                                                         <option value="">Select</option>
                                                         <option value="3">Employer</option>
-                                                        <option value="4">Agency</option>
+                                                        <option value="4">Employment Agency</option>
                                                     </select>
                                                     {formik.touched.role_id && formik.errors.role_id && (
                                                         <p className="mt-1 text-xs text-red-500">{formik.errors.role_id}</p>
