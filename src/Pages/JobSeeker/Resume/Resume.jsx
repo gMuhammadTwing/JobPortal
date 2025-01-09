@@ -168,7 +168,7 @@ export default function Resume() {
                                                                 {item?.is_current ? "Active" : "In-active"}
                                                             </h1>
                                                         </td>
-                                                        
+
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <Switch
                                                                 checked={item.is_current}
@@ -238,11 +238,12 @@ export default function Resume() {
                             </div>
                         </div>
 
-                        <div className="mt-2">
-                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
-                        </div>
+
                     </>
                 }
+                <div className="mt-2">
+                    <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                </div>
             </div>
         </div>
 

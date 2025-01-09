@@ -305,17 +305,18 @@ export default function Jobs() {
                                         ))}
 
                                     </ul>
-                                    <Pagination
-                                        page={pageNumber}
-                                        total={data?.total}
-                                        page_size={data?.per_page}
-                                    />
+
                                 </>
                                 :
                                 <div className="text-center mt-10 font-semibold text-2xl text-[#ff0000]">
                                     No Job Found
                                 </div>
                         )}
+                        <Pagination
+                            page={pageNumber}
+                            total={data?.total}
+                            page_size={data?.per_page}
+                        />
                     </section>
 
                 </div>

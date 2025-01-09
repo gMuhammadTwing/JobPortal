@@ -316,13 +316,14 @@ export default function ViewJobs() {
                                     </table>
 
                                 )}
-                                <Pagination
-                                    page={pageNumber}
-                                    total={data?.total}
-                                    page_size={data?.per_page}
-                                />
+
                             </div>
                         }
+                        <Pagination
+                            page={pageNumber}
+                            total={data?.total}
+                            page_size={data?.per_page}
+                        />
                     </section>
                 </div>
             ) :

@@ -112,11 +112,12 @@ export default function JobsApplied() {
                         </div>
 
                         {/* Pagination Component */}
-                        <div className="mt-2">
-                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
-                        </div>
+
                     </>
                 )}
+                <div className="mt-2">
+                    <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                </div>
             </div>
         </div>
 

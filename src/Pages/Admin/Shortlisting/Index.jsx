@@ -197,12 +197,13 @@ export default function Index() {
                                     </tbody>
                                 </table>
                             </div>
-                            <Pagination
-                                page={pageNumber}
-                                total={data?.total}
-                                page_size={data?.per_page}
-                            />
+
                         </>}
+                    <Pagination
+                        page={pageNumber}
+                        total={data?.total}
+                        page_size={data?.per_page}
+                    />
                 </div>
             ) : (
                 <Applicants job_id={job_id} />

@@ -196,13 +196,14 @@ export default function Applicants({ job_id }) {
                                 </div>
                             </div>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
                     </>
                 }
+                <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                />
             </div>
         </div>
     );

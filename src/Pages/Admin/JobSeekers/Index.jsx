@@ -132,11 +132,12 @@ export default function Index() {
                             </div>
                         </div>
 
-                        <div className="mt-2">
-                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
-                        </div>
+
                     </>
                 }
+                <div className="mt-2">
+                    <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                </div>
             </div>
         </div>
 

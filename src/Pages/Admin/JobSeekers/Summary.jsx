@@ -70,7 +70,8 @@ export default function Summary() {
                                                 ? parser
                                                     .parseFromString(data?.data[0]?.summary, "text/html")
                                                     .body.textContent.trim()
-                                                : "No Summary has been added yet"}
+                                                : 
+                                                <div className="">No Summary has been added yet</div>}
                                         </p>
                                     </div>
                                 )}

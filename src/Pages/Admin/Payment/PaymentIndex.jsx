@@ -247,13 +247,14 @@ export default function PaymentIndex() {
                                 </div>
                             </div>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={payments?.total}
-                            page_size={payments?.per_page}
-                        />
+
                     </>
                 }
+                <Pagination
+                    page={pageNumber}
+                    total={payments?.total}
+                    page_size={payments?.per_page}
+                />
             </div>
         </div>
     );
