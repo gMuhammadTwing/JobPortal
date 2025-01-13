@@ -113,7 +113,7 @@ function App() {
             <Route path="jobs/:title" element={<Jobs />} />
             <Route path="jobs_type/:job_type" element={<Jobs />} />
             <Route path="view-job-details/:id" element={<ViewJobDetails />} />
-            <Route path="blogs_comments" element={<Blogs />} />
+            <Route path="blogs" element={<Blogs />} />
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="create-account" element={<CreateAccount />} />

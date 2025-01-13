@@ -19,16 +19,24 @@ const navigation = [
   { name: 'Home', href: 'home', current: true },
   { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
   {
-    name: 'Job Seeker', single: 'job-seeker', current: false,
+    name: 'Job Seeker',
+    single: 'job-seeker',
+    current: false,
     subItems: [
-      ...((localStorage.role_id == 2) ? [{ name: "My Profile", href: 'job-seeker/profile' }] : []),
+      ...(localStorage.role_id == 2 ? [{ name: "My Profile", href: 'job-seeker/profile' }] : []),
       { name: "Subscribe", href: 'subscribe' },
       { name: "Submit your Resume", href: 'submit_resume' },
       { name: "Why Subscribe?", href: 'why_subscribe' },
-      { name: "Find a job", href: 'jobs', single: 'find', current: false },
+      {
+        name: "Find a job",
+        href: localStorage.token ? 'jobs' : 'login',
+        single: 'find',
+        current: false
+      },
       { name: "Join our Community", href: 'join_community' },
     ]
   },
+  
 
   {
     name: 'Employer',
@@ -68,7 +76,7 @@ const navigation = [
 
     ]
   },
-  { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
+  { name: 'Blogs', href: 'blogs', single: 'blogs', current: false },
   { name: 'Contact Us', href: 'contact-us', current: false },
 
 ]

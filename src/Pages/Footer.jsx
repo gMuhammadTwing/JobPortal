@@ -44,7 +44,7 @@ export default function Footer() {
                         <ul className="space-y-3 text-center lg:text-left">
                             {[
                                 { text: "About Us", href: "/about-us" },
-                                { text: "Blog", href: "/blogs_comments" },
+                                { text: "Blog", href: "/blogs" },
                                 { text: "Login", href: "/login" },
                                 { text: "Register", href: "/create-account" },
                                 { text: "Forgot Password", href: "/forgot-password" }

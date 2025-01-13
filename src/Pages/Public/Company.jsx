@@ -13,8 +13,8 @@ export default function Company() {
                 backgroundImage: `url(${bannerImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                paddingBottom:'120px',
-                paddingTop:'120px'
+                paddingBottom: '120px',
+                paddingTop: '120px'
             }}
         >
             <div className="mx-auto max-w-[75rem]">
@@ -63,12 +63,21 @@ export default function Company() {
                                 />
                             </div>
                         </div>
-                        <Link
-                            to={`/jobs/${search}`}
-                            className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
-                        >
-                            Search
-                        </Link>
+                        {localStorage.token ?
+                            <Link
+                                to={`/jobs/${search}`}
+                                className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                            >
+                                Search
+                            </Link>
+                            :
+                            <Link
+                                to={`/login`}
+                                className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                            >
+                                Search
+                            </Link>
+                        }
                     </div>
 
                 </div>
