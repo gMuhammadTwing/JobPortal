@@ -29,14 +29,14 @@ const navigation = [
       { name: "Why Subscribe?", href: 'why_subscribe' },
       {
         name: "Find a job",
-        href: localStorage.token ? 'jobs' : 'login',
+        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? 'jobs' : 'payment-alert') : 'login',
         single: 'find',
         current: false
       },
       { name: "Join our Community", href: 'join_community' },
     ]
   },
-  
+
 
   {
     name: 'Employer',
@@ -62,9 +62,6 @@ const navigation = [
   {
     name: 'About Us', current: false,
     subItems: [
-      // { name: "Our Vision", href: 'vision', single: 'about-us', current: false },
-      // { name: "Our Mission", href: 'mission', single: 'about-us', current: false },
-      // { name: "Our Values", href: 'our-values', single: 'about-us', current: false },
       { name: 'About Us', href: 'about-us', current: false, },
       { name: "VeritasKWD Opportunity Creation Program", href: 'opportunity', single: 'about-us', current: false },
       { name: "VeritasKWD Projects", href: 'projects', single: 'about-us', current: false },
@@ -80,11 +77,6 @@ const navigation = [
   { name: 'Contact Us', href: 'contact-us', current: false },
 
 ]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: 'login' },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -95,9 +87,6 @@ function classNames(...classes) {
 export default function PublicDashboard() {
   const location = useLocation();
   const role_id = localStorage.getItem("role_id");
-
-  const payment = localStorage.getItem("payment");
-
   const navigate = useNavigate();
   useEffect(() => {
     if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "/" || window.location.hash == "/#/") {
@@ -145,7 +134,7 @@ export default function PublicDashboard() {
                                 // to={(localStorage?.token) ? localStorage.payment == 'true' ? item?.href : '/login'}
                                 to={
                                   localStorage?.token
-                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : '/home')
+                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : '/payment-alert')
                                     : '/login'
                                 }
                                 onClick={() => {
@@ -395,7 +384,7 @@ export default function PublicDashboard() {
                               // }
                               className="py-1.5 text-sm font-medium text-gray-700"
                             >
-                              {localStorage.getItem("user_name") || "Guest"}
+                              {localStorage.getItem("user_name")}
                             </div>
                           </>
                         )}
@@ -503,71 +492,148 @@ export default function PublicDashboard() {
               {navigation
                 .filter(item => !(localStorage.role_id != 1 && item.name === 'Admin'))
                 .map((item) => (
-                  <div key={item.name}>
-                    <Disclosure.Button
-                      as={Link}
-                      to={item.href}
-                      aria-current={item.current ? 'page' : undefined}
-                      className={classNames(
-                        item.current
-                          ? 'bg-[#ff0000] text-white'
-                          : 'text-black hover:bg-[#ff0000] hover:text-white',
-                        'block rounded-md px-3 py-1 text-base font-medium',
-                      )}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
+                  item?.name == 'Jobs' ?
+                    <div key={item.name}>
+                      <Disclosure.Button
+                        as={Link}
+                        // to={item.href}
+                        to={
+                          localStorage?.token
+                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : '/payment-alert')
+                            : '/login'
+                        }
+                        onClick={() => {
+                          localStorage?.token
+                            ? ((localStorage.payment != 'true' && localStorage.role_id != 1) && toast.info("Payment Approval Pending"))
+                            : toast.info("Please login first");
+                        }}
+                        aria-current={item.current ? 'page' : undefined}
+                        className={classNames(
+                          item.current
+                            ? 'bg-[#ff0000] text-white'
+                            : 'text-black hover:bg-[#ff0000] hover:text-white',
+                          'block rounded-md px-3 py-1 text-base font-medium',
+                        )}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
 
-                    {/* Render sub-items with conditional logic */}
-                    {item.subItems && (
-                      <div className="ml-4 space-y-1">
-                        {item.subItems.map((subItem, index) => {
-                          const paymentStatus = localStorage?.payment;
-                          const roleId = localStorage?.role_id;
+                      {/* Render sub-items with conditional logic */}
+                      {item.subItems && (
+                        <div className="ml-4 space-y-1">
+                          {item.subItems.map((subItem, index) => {
+                            const paymentStatus = localStorage?.payment;
+                            const roleId = localStorage?.role_id;
 
-                          if (subItem.name === 'My Profile') {
-                            if (roleId != 3) {
-                              if (!paymentStatus || paymentStatus === 'null') {
-                                return (
-                                  <Disclosure.Button
-                                    key={index}
-                                    as={Link}
-                                    to="payment-alert"
-                                    className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
-                                  >
-                                    {subItem.name}
-                                  </Disclosure.Button>
-                                );
-                              } else if (paymentStatus === 'false') {
-                                return (
-                                  <div
-                                    key={index}
-                                    onClick={() => {
-                                      toast.info('Payment Approval Pending');
-                                    }}
-                                    className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md cursor-pointer"
-                                  >
-                                    {subItem.name}
-                                  </div>
-                                );
+                            if (subItem.name === 'My Profile') {
+                              if (roleId != 3) {
+                                if (!paymentStatus || paymentStatus === 'null') {
+                                  return (
+                                    <Disclosure.Button
+                                      key={index}
+                                      as={Link}
+                                      to="payment-alert"
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                                    >
+                                      {subItem.name}
+                                    </Disclosure.Button>
+                                  );
+                                } else if (paymentStatus === 'false') {
+                                  return (
+                                    <div
+                                      key={index}
+                                      onClick={() => {
+                                        toast.info('Payment Approval Pending');
+                                      }}
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md cursor-pointer"
+                                    >
+                                      {subItem.name}
+                                    </div>
+                                  );
+                                }
                               }
                             }
-                          }
 
-                          return (
-                            <Disclosure.Button
-                              key={index}
-                              as={Link}
-                              to={subItem.href}
-                              className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
-                            >
-                              {subItem.name}
-                            </Disclosure.Button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+                            return (
+                              <Disclosure.Button
+                                key={index}
+                                as={Link}
+                                to={subItem.href}
+                                className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                              >
+                                {subItem.name}
+                              </Disclosure.Button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                    :
+                    <div key={item.name}>
+                      <Disclosure.Button
+                        as={Link}
+                        to={item.href}
+                        aria-current={item.current ? 'page' : undefined}
+                        className={classNames(
+                          item.current
+                            ? 'bg-[#ff0000] text-white'
+                            : 'text-black hover:bg-[#ff0000] hover:text-white',
+                          'block rounded-md px-3 py-1 text-base font-medium',
+                        )}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+
+                      {/* Render sub-items with conditional logic */}
+                      {item.subItems && (
+                        <div className="ml-4 space-y-1">
+                          {item.subItems.map((subItem, index) => {
+                            const paymentStatus = localStorage?.payment;
+                            const roleId = localStorage?.role_id;
+
+                            if (subItem.name === 'My Profile') {
+                              if (roleId != 3) {
+                                if (!paymentStatus || paymentStatus === 'null') {
+                                  return (
+                                    <Disclosure.Button
+                                      key={index}
+                                      as={Link}
+                                      to="payment-alert"
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                                    >
+                                      {subItem.name}
+                                    </Disclosure.Button>
+                                  );
+                                } else if (paymentStatus === 'false') {
+                                  return (
+                                    <div
+                                      key={index}
+                                      onClick={() => {
+                                        toast.info('Payment Approval Pending');
+                                      }}
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md cursor-pointer"
+                                    >
+                                      {subItem.name}
+                                    </div>
+                                  );
+                                }
+                              }
+                            }
+
+                            return (
+                              <Disclosure.Button
+                                key={index}
+                                as={Link}
+                                to={subItem.href}
+                                className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                              >
+                                {subItem.name}
+                              </Disclosure.Button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
                 ))}
 
               <div className="flex gap-2">

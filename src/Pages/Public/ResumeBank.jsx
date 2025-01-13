@@ -108,21 +108,31 @@ export default function ResumeBankPublic() {
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Resume Bank</h1>
                     <p>Need to find candidates fast?  Veritas Jobs for  employers in Kenya.</p>
-                    <div className="mt-10 flex justify-center cursor-pointer">
-                        {localStorage.token ?
+                    <div className="mt-5 flex justify-center cursor-pointer">
+                        {localStorage?.token ? (
+                            (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                                <Link
+                                    to={"/jobs"}
+                                >
+                                    <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                        Browse Jobs</span>
+                                </Link> :
+                                <Link
+                                    onClick={() => toast.info("Payment Approval Pending")}
+                                    to={"/payment-alert"}
+                                >
+                                    <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                        Browse Jobs</span>
+                                </Link>
+                        ) : (
                             <Link
-                                to={"/jobs"}
-                            >
-                                <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                    Browse Jobs</span>
-                            </Link>
-                            :
-                            <Link
+                                onClick={() => toast.info("Please login first")}
                                 to={"/login"}
                             >
                                 <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                     Browse Jobs</span>
-                            </Link>}
+                            </Link>
+                        )}
                     </div>
                 </div>
 

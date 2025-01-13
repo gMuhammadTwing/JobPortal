@@ -95,7 +95,7 @@ export default function FeaturedJobs() {
                                                             </button>
                                                         </Link>
                                                         :
-                                                        <Link to={`/home`}>
+                                                        <Link to={`/payment-alert`}>
                                                             <button
                                                                 onClick={() => toast.info("Payment Approval Pending")}
                                                                 className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
@@ -132,7 +132,7 @@ export default function FeaturedJobs() {
                                 </Link> :
                                 <Link
                                     onClick={() => toast.info("Payment Approval Pending")}
-                                    to={"/home"}
+                                    to={"/payment-alert"}
                                 >
                                     <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                         Show more jobs</span>

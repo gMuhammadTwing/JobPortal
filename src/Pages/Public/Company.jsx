@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../../App.css';
 import bannerImage from './../../assets/banner4.jpeg';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function Company() {
     const [search, setSearch] = useState("");
@@ -63,21 +64,30 @@ export default function Company() {
                                 />
                             </div>
                         </div>
-                        {localStorage.token ?
-                            <Link
-                                to={`/jobs/${search}`}
-                                className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
-                            >
-                                Search
-                            </Link>
-                            :
+                        {localStorage?.token ? (
+                            (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                                <Link
+                                    to={`/jobs/${search}`}
+                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                >
+                                    Search
+                                </Link> :
+                                <Link
+                                    to={`/payment-alert`}
+                                    onClick={() => toast.info("Cannot search untill payment approval pending")}
+                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                >
+                                    Search
+                                </Link>
+                        ) : (
                             <Link
                                 to={`/login`}
+                                onClick={() => toast.info("Please login first")}
                                 className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
                             >
                                 Search
                             </Link>
-                        }
+                        )}
                     </div>
 
                 </div>

@@ -75,7 +75,7 @@ export default function RecentlyUpdatedJobs() {
                     <Link
                       to={
                         localStorage?.token
-                          ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? `/jobs_type/${job?.id}` : '/home')
+                          ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? `/jobs_type/${job?.id}` : '/payment-alert')
                           : '/login'
                       }
                       onClick={() => {
@@ -108,7 +108,7 @@ export default function RecentlyUpdatedJobs() {
                         View all Jobs</span>
                     </Link> :
                     <Link
-                      to={"/home"}
+                      to={"/payment-alert"}
                       onClick={() => toast.info("Payment Approval Pending")}
                     >
                       <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
