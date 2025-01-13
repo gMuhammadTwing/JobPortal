@@ -72,7 +72,19 @@ export default function RecentlyUpdatedJobs() {
                       visible: { opacity: 1, y: 0 },
                     }}
                   >
-                    <Link to={localStorage?.token ? `/jobs_type/${job?.id}` : '/login'}>
+                    <Link
+                      to={
+                        localStorage?.token
+                          ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? `/jobs_type/${job?.id}` : '/home')
+                          : '/login'
+                      }
+                      onClick={() => {
+                        localStorage?.token
+                          ? ((localStorage.payment != 'true' && localStorage.role_id != 1) && toast.info("Payment Approval Pending"))
+                          : toast.info("Please login first");
+                      }}
+                    // to={localStorage?.token ? `/jobs_type/${job?.id}` : '/login'}
+                    >
                       <div className="flex w-full items-center justify-between p-6">
                         <div className="flex-1 truncate">
                           <div className="flex items-center space-x-3">
@@ -88,12 +100,20 @@ export default function RecentlyUpdatedJobs() {
               </motion.ul>
               <div className="mt-10 flex justify-center cursor-pointer">
                 {localStorage?.token ?
-                  <Link
-                    to={"/jobs"}
-                  >
-                    <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                      View all Jobs</span>
-                  </Link>
+                  (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                    <Link
+                      to={"/jobs"}
+                    >
+                      <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                        View all Jobs</span>
+                    </Link> :
+                    <Link
+                      to={"/home"}
+                      onClick={() => toast.info("Payment Approval Pending")}
+                    >
+                      <span className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                        View all Jobs</span>
+                    </Link>
                   :
                   <Link
                     to={"/login"}

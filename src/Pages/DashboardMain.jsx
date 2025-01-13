@@ -46,7 +46,8 @@ export default function DashboardMain() {
         { name: "Employer", href: "employees", icon: UserCircleIcon, current: true },
         { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single: 'admin_job_seekers', current: true },
         { name: "Employment Agency", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
-        { name: "Jobs", href: "list_job", icon: ClipboardDocumentCheckIcon, current: false },
+        // { name: "Manage Jobs", href: "job_management", single: 'job_management', icon: BriefcaseIcon, current: false },
+        { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
         { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
@@ -144,7 +145,7 @@ export default function DashboardMain() {
                         {location.pathname.includes('/admin') && (
 
                             adminNav.map((item) => (
-                                <li key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
+                                <li className="" key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
                                     <Link
                                         to={item.href}
                                         className={classNames(

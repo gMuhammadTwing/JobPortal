@@ -134,9 +134,16 @@ export default function PublicDashboard() {
                                 onMouseEnter={() => setActiveDropdown(item.name)}
                                 onMouseLeave={() => setActiveDropdown(null)}
                                 key={item.name}
-                                to={localStorage?.token ? item?.href : '/login'}
-                                onClick={()=>{
-                                  !localStorage?.token && toast.info("Please login first")
+                                // to={(localStorage?.token) ? localStorage.payment == 'true' ? item?.href : '/login'}
+                                to={
+                                  localStorage?.token
+                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : '/home')
+                                    : '/login'
+                                }
+                                onClick={() => {
+                                  localStorage?.token
+                                    ? ((localStorage.payment != 'true' && localStorage.role_id != 1) && toast.info("Payment Approval Pending"))
+                                    : toast.info("Please login first");
                                 }}
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(

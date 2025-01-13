@@ -68,6 +68,9 @@ import ServiceGuarantee from './Pages/Public/ServiceGuarantee';
 import ForgotPassword from './Pages/ForgotPassword';
 import JoinCommunity from './Pages/Public/JoinCommunity';
 import AdminJobs from './Pages/Admin/Jobs/Index'
+import EditEmployer from './Pages/Admin/EditEmployer';
+import EditApplicant from './Pages/Admin/JobSeekers/EditApplicant/Index';
+import EditAgency from './Pages/EditAgency';
 function App() {
   return (
     <DropdownProvider>
@@ -141,6 +144,7 @@ function App() {
             {/* Admin Routes */}
             <Route path="admin" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="employees" element={<ProtectedRoutes><EmployeesIndex /></ProtectedRoutes>} />
+              {/* <Route path="job_management" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} /> */}
               <Route path="job_seekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
               <Route path="postblog" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
               <Route path="shortlisting" element={<ProtectedRoutes><ShortlistingIndex /></ProtectedRoutes>} />
@@ -149,9 +153,12 @@ function App() {
               <Route path="contacts" element={<ProtectedRoutes><AdminContactUs /></ProtectedRoutes>} />
               <Route path="agencies_list" element={<ProtectedRoutes><EmployerAgencyList /></ProtectedRoutes>} />
               <Route path="employees/view-employer/:id" element={<ViewEmployer />} />
+              <Route path="employees/edit-employer/:id" element={<EditEmployer />} />
               <Route path="job_seekers/view-applicant/:id" element={<ViewApplicant />} />
+              <Route path="job_seekers/edit-applicant/:id" element={<EditApplicant />} />
               <Route path="shortlisting/view-applicant/:id" element={<ViewApplicant />} />
               <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
+              <Route path="agencies_list/edit-agency/:id" element={<EditAgency />} />
               <Route path="list_job" element={<AdminJobs />} />
             </Route>
 

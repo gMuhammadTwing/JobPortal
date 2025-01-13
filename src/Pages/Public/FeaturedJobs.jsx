@@ -85,15 +85,24 @@ export default function FeaturedJobs() {
                                     <div className="border-t mt-4 pt-4">
                                         <div className="flex justify-center -mt-px divide-x divide-gray-300">
                                             <div className="flex items-center justify-center w-1/2 space-x-2">
-                                                {/* <ArrowDownOnSquareIcon aria-hidden="true" className="h-5 w-5 text-gray-400" /> */}
-                                                {localStorage?.token ? (
-                                                    <Link to={`/view-job-details/${item?.id}`}>
-                                                        <button
-                                                            className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
-                                                        >
-                                                            View Details
-                                                        </button>
-                                                    </Link>
+                                                {(localStorage?.token) ? (
+                                                    (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                                                        <Link to={`/view-job-details/${item?.id}`}>
+                                                            <button
+                                                                className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                View Details
+                                                            </button>
+                                                        </Link>
+                                                        :
+                                                        <Link to={`/home`}>
+                                                            <button
+                                                                onClick={() => toast.info("Payment Approval Pending")}
+                                                                className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                View Details
+                                                            </button>
+                                                        </Link>
                                                 ) : (
                                                     <Link to={`/login`}
                                                         onClick={() => toast.info("Please login first")}
@@ -106,10 +115,6 @@ export default function FeaturedJobs() {
                                                     </Link>
                                                 )}
                                             </div>
-                                            {/* <div className="flex items-center justify-center w-1/2 space-x-2">
-                                            <ArrowDownRightIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
-                                            <Link to={"/view-job-details"}><span>Apply</span></Link>
-                                        </div> */}
                                         </div>
                                     </div>
                                 </div>
@@ -118,12 +123,20 @@ export default function FeaturedJobs() {
                     </ul>
                     <div className="mt-10 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
-                            <Link
-                                to={"/jobs"}
-                            >
-                                <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                    Show more jobs</span>
-                            </Link>
+                            (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                                <Link
+                                    to={"/jobs"}
+                                >
+                                    <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                        Show more jobs</span>
+                                </Link> :
+                                <Link
+                                    onClick={() => toast.info("Payment Approval Pending")}
+                                    to={"/home"}
+                                >
+                                    <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                        Show more jobs</span>
+                                </Link>
                         ) : (
                             <Link
                                 onClick={() => toast.info("Please login first")}

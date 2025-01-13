@@ -31,6 +31,7 @@ const ProtectedRoutes = ({ children }) => {
     "/admin/payments": "manage_payments",
     "/admin/contacts": "view_contacts",
     "/admin/list_job": "jobs_list",
+    "/admin/job_management": "manage_jobs"
   }
   const addJobSeekerDynamicRoute = (basePath, id, permission) => {
     const dynamicPath = `${basePath}/${id}`;
@@ -45,17 +46,20 @@ const ProtectedRoutes = ({ children }) => {
     const dynamicPath = `${basePath}/${id}`;
     adminPermission[dynamicPath] = permission;
   };
-  
+
   addJobSeekerDynamicRoute("/job-seeker/coursework", id?.id, "view_coursework");
 
   addEmployerDynamicRoute("/employer/resume_bank/view-applicant", id?.id, "view_applicant");
   addEmployerDynamicRoute("/employer/veritas_shortlisting/view-applicant", id?.id, "view_applicant");
 
   addAdminDynamicRoute("/admin/employees/view-employer", id?.id, "view_employer_profile");
+  addAdminDynamicRoute("/admin/employees/edit-employer", id?.id, "edit_employer_profile");
   addAdminDynamicRoute("/admin/job_seekers/view-applicant", id?.id, "view_applicant_profile");
+  addAdminDynamicRoute("/admin/job_seekers/edit-applicant", id?.id, "edit_applicant_profile");
   addAdminDynamicRoute("/admin/agencies_list/view-agency", id?.id, "view_agency_profile");
+  addAdminDynamicRoute("/admin/agencies_list/edit-agency", id?.id, "edit_agency_profile");
   addAdminDynamicRoute("/admin/shortlisting/view-applicant", id?.id, "view_shortlisted_applicant");
-  
+
 
   const isLoggedIn = localStorage.getItem('token');
   const location = useLocation();
