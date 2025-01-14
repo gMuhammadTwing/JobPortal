@@ -95,14 +95,26 @@ export default function FeaturedJobs() {
                                                             </button>
                                                         </Link>
                                                         :
-                                                        <Link to={`/payment-alert`}>
-                                                            <button
-                                                                onClick={() => toast.info("Payment Approval Pending")}
-                                                                className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
-                                                            >
-                                                                View Details
-                                                            </button>
-                                                        </Link>
+                                                        (
+                                                            localStorage.payment == 'false' ?
+                                                                < Link to={`/home`}>
+                                                                    <button
+                                                                        onClick={() => toast.info("Payment Approval Pending")}
+                                                                        className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        View Details
+                                                                    </button>
+                                                                </Link>
+                                                                :
+                                                                < Link to={`/payment-alert`}>
+                                                                    <button
+                                                                        onClick={() => toast.info("Payment Approval Pending")}
+                                                                        className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        View Details
+                                                                    </button>
+                                                                </Link>
+                                                        )
                                                 ) : (
                                                     <Link to={`/login`}
                                                         onClick={() => toast.info("Please login first")}
@@ -130,13 +142,24 @@ export default function FeaturedJobs() {
                                     <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                         Show more jobs</span>
                                 </Link> :
-                                <Link
-                                    onClick={() => toast.info("Payment Approval Pending")}
-                                    to={"/payment-alert"}
-                                >
-                                    <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                        Show more jobs</span>
-                                </Link>
+                                (
+                                    localStorage.payment == 'false' ?
+                                        <Link
+                                            onClick={() => toast.info("Payment Approval Pending")}
+                                            to={"/home"}
+                                        >
+                                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                                Show more jobs</span>
+                                        </Link>
+                                        :
+                                        <Link
+                                            onClick={() => toast.info("Payment Approval Pending")}
+                                            to={"/payment-alert"}
+                                        >
+                                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                                Show more jobs</span>
+                                        </Link>
+                                )
                         ) : (
                             <Link
                                 onClick={() => toast.info("Please login first")}
@@ -149,6 +172,6 @@ export default function FeaturedJobs() {
                     </div>
                 </>
             }
-        </div>
+        </div >
     )
 }

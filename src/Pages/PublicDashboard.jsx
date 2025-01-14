@@ -134,7 +134,7 @@ export default function PublicDashboard() {
                                 // to={(localStorage?.token) ? localStorage.payment == 'true' ? item?.href : '/login'}
                                 to={
                                   localStorage?.token
-                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : '/payment-alert')
+                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                                     : '/login'
                                 }
                                 onClick={() => {
@@ -499,7 +499,7 @@ export default function PublicDashboard() {
                         // to={item.href}
                         to={
                           localStorage?.token
-                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : '/payment-alert')
+                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                             : '/login'
                         }
                         onClick={() => {

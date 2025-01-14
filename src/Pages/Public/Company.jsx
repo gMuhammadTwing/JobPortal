@@ -72,13 +72,24 @@ export default function Company() {
                                 >
                                     Search
                                 </Link> :
-                                <Link
-                                    to={`/payment-alert`}
-                                    onClick={() => toast.info("Cannot search untill payment approval pending")}
-                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
-                                >
-                                    Search
-                                </Link>
+                                (
+                                    localStorage.payment == 'false' ?
+                                        <Link
+                                            to={`/home`}
+                                            onClick={() => toast.info("Cannot search untill payment approval pending")}
+                                            className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                        >
+                                            Search
+                                        </Link>
+                                        :
+                                        <Link
+                                            to={`/payment-alert`}
+                                            onClick={() => toast.info("Cannot search untill payment approval pending")}
+                                            className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                        >
+                                            Search
+                                        </Link>
+                                )
                         ) : (
                             <Link
                                 to={`/login`}

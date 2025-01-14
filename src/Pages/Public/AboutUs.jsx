@@ -22,13 +22,24 @@ export default function AboutUs() {
                                 <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
                                     Browse Jobs</span>
                             </Link> :
-                            <Link
-                                onClick={() => toast.info("Payment Approval Pending")}
-                                to={"/payment-alert"}
-                            >
-                                <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                    Browse Jobs</span>
-                            </Link>
+                            (
+                                localStorage.payment == 'false' ?
+                                    <Link
+                                        onClick={() => toast.info("Payment Approval Pending")}
+                                        to={"/home"}
+                                    >
+                                        <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                            Browse Jobs</span>
+                                    </Link>
+                                    :
+                                    <Link
+                                        onClick={() => toast.info("Payment Approval Pending")}
+                                        to={"/payment-alert"}
+                                    >
+                                        <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                            Browse Jobs</span>
+                                    </Link>
+                            )
                     ) : (
                         <Link
                             onClick={() => toast.info("Please login first")}
