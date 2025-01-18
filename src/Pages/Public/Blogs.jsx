@@ -74,10 +74,10 @@ export default function Blogs() {
                                                     day: "2-digit",
                                                 })}
                                             </p>
-                                            <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            {/* <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                                 <EyeIcon className="w-5 h-5" />
                                                 15 Views
-                                            </p>
+                                            </p> */}
                                             {/* <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                                 <PencilSquareIcon className="w-5 h-5" />
                                                 {item?.proposals} Proposals

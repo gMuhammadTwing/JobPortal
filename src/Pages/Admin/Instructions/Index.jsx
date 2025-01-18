@@ -252,6 +252,7 @@ export default function Index() {
     const [payments, setPayments] = useState();
     const [tableLoader, setTableLoader] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [updateCheck, setUpdateCheck] = useState(false);
     const formik = useFormik({
         initialValues: {
             instructions: updateData?.instructions || '',
@@ -260,13 +261,17 @@ export default function Index() {
         },
         validationSchema: Yup.object({
             instructions: Yup.string()
-                .required("Instructions is required")
+                .required("Instructions is required"),
             // .min(20, "Instructions must be at least 20 characters long"),
+            role_id: Yup.string()
+                .required("Required"),
+            amount: Yup.string()
+                .required("Required")
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
             setLoading(true)
-            if (payments?.length) {
+            if (updateCheck) {
                 try {
                     const response = await axiosInstance.post(`/api/admin_payment_instruction/update/${updateData?.id}`, values);
                     if (response) {
@@ -321,8 +326,8 @@ export default function Index() {
 
     const parser = new DOMParser();
     const updateHandler = (item) => {
-        console.log(item);
         setUpdateData(item)
+        setUpdateCheck(true);
     }
 
     return (
@@ -356,6 +361,15 @@ export default function Index() {
                                                         scope="col"
                                                         className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                     >
+                                                        <Button
+                                                            color="gradient"
+                                                            variant="solid"
+                                                            onClick={() => {
+                                                                setEditInstructions(!editInstructions);
+                                                                setUpdateData(null)
+                                                                setUpdateCheck(false)
+                                                            }}
+                                                        >Add Instruction</Button>
                                                     </th>
                                                 </tr>
                                                 <tr>
@@ -433,37 +447,64 @@ export default function Index() {
                         :
                         <>
                             <div className="border rounded-lg p-4 bg-white">
-                                <form className="" onSubmit={formik.handleSubmit}>
-                                    <div className="mb-2">
-                                        <label htmlFor="amount" className="block text-sm font-medium text-gray-900">
-                                            Amount
-                                        </label>
-                                        <input
-                                            id="amount"
-                                            name="amount"
-                                            type="amount"
-                                            value={formik.values.amount}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            className={`block py-1.5 px-3 border ${formik.touched.amount && formik.errors.amount ? "border-red-500" : "border-gray-300"
+                                <form onSubmit={formik.handleSubmit}>
+                                    <div className="mb-2 flex items-center gap-4">
+                                        {/* Dropdown for Role */}
+                                        <div className="w-1/2">
+                                            <label htmlFor="role_id" className="block text-sm font-medium text-gray-900">
+                                                Instructions for
+                                            </label>
+                                            <select
+                                                id="role_id"
+                                                name="role_id"
+                                                value={formik.values.role_id}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.role_id && formik.errors.role_id ? "border-red-500" : "border-gray-300"
                                                 } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                        />
-                                        {formik.touched.amount && formik.errors.amount && (
-                                            <p className="mt-1 text-xs text-red-500">{formik.errors.amount}</p>
-                                        )}
+                                                // className="block py-1.5 px-3 border text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                            >
+                                                <option value="">Select</option>
+                                                <option value="2">Job Seeker</option>
+                                                <option value="4">Employer Agency</option>
+                                            </select>
+                                            {formik.touched.role_id && formik.errors.role_id && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.role_id}</p>
+                                            )}
+                                        </div>
+
+                                        {/* Input for Amount */}
+                                        <div className="w-1/2">
+                                            <label htmlFor="amount" className="block text-sm font-medium text-gray-900">
+                                                Amount
+                                            </label>
+                                            <input
+                                                id="amount"
+                                                name="amount"
+                                                type="text"
+                                                value={formik.values.amount}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                                className={`block py-1.5 px-3 border ${formik.touched.amount && formik.errors.amount ? "border-red-500" : "border-gray-300"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            />
+                                            {formik.touched.amount && formik.errors.amount && (
+                                                <p className="mt-1 text-xs text-red-500">{formik.errors.amount}</p>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div className="relative">
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-                                            Instructions
+
+                                    {/* Instructions */}
+                                    <div className="relative mb-4">
+                                        <label htmlFor="instructions" className="block text-sm font-medium text-gray-900">
+                                            Write Instructions
                                         </label>
                                         <ReactQuill
                                             id="instructions-editor"
                                             value={formik.values.instructions}
                                             onChange={(value) => formik.setFieldValue("instructions", value)}
                                             theme="snow"
-                                            style={{
-                                                height: "150px",
-                                            }}
+                                            style={{ height: "150px" }}
                                             modules={{
                                                 toolbar: [
                                                     ["bold", "italic", "underline", "strike"],
@@ -487,15 +528,19 @@ export default function Index() {
                                             <p className="text-red-500 text-sm mt-1">{formik.errors.instructions}</p>
                                         )}
                                     </div>
-                                    {loading ? <div className="flex justify-center mr-5 mt-15"><InfinitySpin width={150} color="green" /></div> :
+
+                                    {/* Buttons */}
+                                    {loading ? (
+                                        <div className="flex justify-center mt-15">
+                                            <InfinitySpin width={150} color="green" />
+                                        </div>
+                                    ) : (
                                         <div className="flex justify-center gap-4 mt-17">
                                             <Button
                                                 type="button"
                                                 color="gradient"
                                                 variant="outline"
-                                                onClick={() => {
-                                                    setEditInstructions(false);
-                                                }}
+                                                onClick={() => setEditInstructions(false)}
                                             >
                                                 Cancel
                                             </Button>
@@ -503,10 +548,11 @@ export default function Index() {
                                                 Save
                                             </Button>
                                         </div>
-                                    }
+                                    )}
                                 </form>
                             </div>
                         </>
+
                 }
             </div>
         </div>
