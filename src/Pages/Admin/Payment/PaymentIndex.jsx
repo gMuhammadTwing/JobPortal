@@ -235,7 +235,7 @@ export default function PaymentIndex() {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan="5" className="text-center py-4">
+                                                    <td colSpan="7" className="text-center py-4">
                                                         <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                                                             No Payments Found
                                                         </span>
