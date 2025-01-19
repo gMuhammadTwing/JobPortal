@@ -282,13 +282,14 @@ export default function Jobs() {
                                                             day: "2-digit",
                                                         })}
                                                     </p>
-                                                    <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                                        <CurrencyDollarIcon className="w-5 h-5" />
-                                                        {item?.expected_salary}
-                                                    </p>
+                                                    
                                                     <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                                         <MapPinIcon className="w-5 h-5" />
                                                         {item?.location}
+                                                    </p>
+                                                    <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                                        Salary: 
+                                                        {item?.expected_salary}
                                                     </p>
                                                 </div>
 

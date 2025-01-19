@@ -35,7 +35,7 @@ export default function Footer() {
                             ))}
                         </div> */}
                         <button className="bg-black text-white rounded py-2 px-4 hover:bg-[#ff0000] transition-all text-sm md:text-base">
-                            <Link to={"contact-us"}>Contact with us</Link>
+                            <Link to={"contact-us"}>Contact us</Link>
                         </button>
                     </div>
 
@@ -97,7 +97,7 @@ export default function Footer() {
             </div>
             {/* Footer Bottom Section */}
             <div className="text-center border-t py-2 mt-20 text-gray-600 text-sm md:text-base">
-                Copyright 2024 © Veritas Jobs. All rights reserved.
+                Copyright 2025 © Veritas Jobs. All rights reserved.
             </div>
         </div>
     );

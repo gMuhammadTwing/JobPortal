@@ -29,7 +29,7 @@ const navigation = [
       { name: "Why Subscribe?", href: 'why_subscribe' },
       {
         name: "Find a job",
-        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? 'jobs' : 'payment-alert') : 'login',
+        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : 'login',
         single: 'find',
         current: false
       },
@@ -134,12 +134,12 @@ export default function PublicDashboard() {
                                 // to={(localStorage?.token) ? localStorage.payment == 'true' ? item?.href : '/login'}
                                 to={
                                   localStorage?.token
-                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                                     : '/login'
                                 }
                                 onClick={() => {
                                   localStorage?.token
-                                    ? ((localStorage.payment != 'true' && localStorage.role_id != 1) && toast.info("Payment Approval Pending"))
+                                    ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
                                     : toast.info("Please login first");
                                 }}
                                 aria-current={item.current ? 'page' : undefined}
@@ -499,12 +499,12 @@ export default function PublicDashboard() {
                         // to={item.href}
                         to={
                           localStorage?.token
-                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                             : '/login'
                         }
                         onClick={() => {
                           localStorage?.token
-                            ? ((localStorage.payment != 'true' && localStorage.role_id != 1) && toast.info("Payment Approval Pending"))
+                            ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
                             : toast.info("Please login first");
                         }}
                         aria-current={item.current ? 'page' : undefined}

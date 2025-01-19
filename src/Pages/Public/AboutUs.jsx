@@ -15,7 +15,7 @@ export default function AboutUs() {
                 <p>We are dedicated to bridging the gap between talent and opportunity</p>
                 <div className="mt-5 flex justify-center cursor-pointer">
                     {localStorage?.token ? (
-                        (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                        (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
                             <Link
                                 to={"/jobs"}
                             >

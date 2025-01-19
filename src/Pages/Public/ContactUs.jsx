@@ -149,7 +149,7 @@ export default function ContactUs() {
                         <div className="font-semibold">Have any questions? </div>
                         <div className="">We’re ready to help! We'd like to hear from you - here's how you can contact us:  </div>
                         <div className="font-semibold">General questions </div>
-                        <div className="">For general queries, please email us at <span className="text-[#ff0000]">support@veritasjobs.com</span>  </div>
+                        <div className="">For general queries, please email us at <span className="text-[#ff0000]">support@veritaskenya.com</span>  </div>
                     </div>
 
                     {/* Image Section */}

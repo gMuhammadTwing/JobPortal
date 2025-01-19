@@ -310,7 +310,7 @@ export default function EmployerProfile() {
                                                 {dropDownValues?.job_family?.map((item) => {
                                                     return (
                                                         <option key={item.id} value={item?.id}>
-                                                            {item?.job_family}
+                                                            {item?.occupation}
                                                         </option>
                                                     );
                                                 })}

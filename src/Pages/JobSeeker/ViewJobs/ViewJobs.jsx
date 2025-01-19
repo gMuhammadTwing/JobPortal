@@ -386,13 +386,14 @@ export default function ViewJobs() {
                                         day: "2-digit",
                                     })}
                                 </p>
-                                <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                    <CurrencyDollarIcon className="w-5 h-5" />
-                                    {viewData?.expected_salary}
-                                </p>
+                                
                                 <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                     <MapPinIcon className="w-5 h-5" />
                                     {viewData?.location}
+                                </p>
+                                <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                    Salary: 
+                                    {viewData?.expected_salary}
                                 </p>
                             </div>
 

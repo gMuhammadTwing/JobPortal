@@ -75,12 +75,12 @@ export default function RecentlyUpdatedJobs() {
                     <Link
                       to={
                         localStorage?.token
-                          ? ((localStorage.payment == 'true' || localStorage.role_id == 1) ? `/jobs_type/${job?.id}` : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                          ? ((localStorage.payment == 'true' || localStorage.role_id == 1|| localStorage.role_id == 3) ? `/jobs_type/${job?.id}` : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                           : '/login'
                       }
                       onClick={() => {
                         localStorage?.token
-                          ? ((localStorage.payment != 'true' && localStorage.role_id != 1) && toast.info("Payment Approval Pending"))
+                          ? ((localStorage.payment != 'true' && localStorage.role_id != 1&& localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
                           : toast.info("Please login first");
                       }}
                     // to={localStorage?.token ? `/jobs_type/${job?.id}` : '/login'}
@@ -100,7 +100,7 @@ export default function RecentlyUpdatedJobs() {
               </motion.ul>
               <div className="mt-10 flex justify-center cursor-pointer">
                 {localStorage?.token ?
-                  (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                  (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
                     <Link
                       to={"/jobs"}
                     >

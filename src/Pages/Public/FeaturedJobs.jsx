@@ -62,13 +62,14 @@ export default function FeaturedJobs() {
                                                 day: "2-digit",
                                             })}
                                         </p>
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                            <CurrencyDollarIcon className="w-5 h-5" />
-                                            {item?.expected_salary}
-                                        </p>
+                                       
                                         <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                             <MapPinIcon className="w-5 h-5" />
                                             {item?.location}
+                                        </p>
+                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            Salary: 
+                                            {item?.expected_salary}
                                         </p>
                                     </div>
 
@@ -86,7 +87,7 @@ export default function FeaturedJobs() {
                                         <div className="flex justify-center -mt-px divide-x divide-gray-300">
                                             <div className="flex items-center justify-center w-1/2 space-x-2">
                                                 {(localStorage?.token) ? (
-                                                    (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                                                    (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
                                                         <Link to={`/view-job-details/${item?.id}`}>
                                                             <button
                                                                 className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
@@ -135,7 +136,7 @@ export default function FeaturedJobs() {
                     </ul>
                     <div className="mt-10 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1) ?
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
                                 <Link
                                     to={"/jobs"}
                                 >
