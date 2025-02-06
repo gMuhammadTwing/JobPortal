@@ -4,16 +4,18 @@ import {
     ChatBubbleLeftRightIcon,
     ClipboardDocumentCheckIcon,
     ClipboardDocumentListIcon,
-    CogIcon,
     CreditCardIcon,
     CurrencyDollarIcon,
     DocumentTextIcon,
-    FlagIcon,
-    HomeModernIcon,
     NewspaperIcon,
     UserCircleIcon,
     UsersIcon,
     ViewfinderCircleIcon,
+    LightBulbIcon,
+    HandRaisedIcon,
+    HeartIcon,
+    GlobeAltIcon,
+    AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -44,16 +46,23 @@ export default function DashboardMain() {
     ];
     const adminNav = [
         { name: "Employer", href: "employees", icon: UserCircleIcon, current: true },
-        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single: 'admin_job_seekers', current: true },
-        { name: "Employment Agency", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
-        // { name: "Manage Jobs", href: "job_management", single: 'job_management', icon: BriefcaseIcon, current: false },
+        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single: "admin_job_seekers", current: true },
+        { name: "Employment Agency", href: "agencies_list", single: "agencies_list", icon: BuildingOfficeIcon, current: false },
         { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
         { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Blogs", href: "postblog", icon: NewspaperIcon, current: false },
-        { name: "Contact Us", href: "contacts", single: 'contacts', icon: ChatBubbleLeftRightIcon, current: false },
-    ]
+        { name: "Contact Us", href: "contacts", single: "contacts", icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "VertiasKWD Idea Incubator Form", href: "idea_incubator_form", single: "idea_incubator_form", icon: LightBulbIcon, current: false },
+        { name: "VertiasKWD Opportunity", href: "admin_opportunity", single: "admin_opportunity", icon: BriefcaseIcon, current: false },
+        { name: "VertiasKWD Projects", href: "admin_projects", single: "admin_projects", icon: GlobeAltIcon, current: false },
+        { name: "VertiasKWD Investors", href: "admin_investors", single: "admin_investors", icon: CurrencyDollarIcon, current: false },
+        { name: "VertiasKWD Charities", href: "admin_charities", single: "admin_charities", icon: HeartIcon, current: false },
+        { name: "VertiasKWD Idea Incubators", href: "admin_idea_incubators", single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
+        { name: "VertiasKWD Volunteers", href: "admin_volunteers", single: "admin_volunteers", icon: HandRaisedIcon, current: false },
+        { name: "VertiasKWD Careers", href: "admin_careers", single: "admin_careers", icon: AcademicCapIcon, current: false },
+    ];
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
@@ -66,7 +75,7 @@ export default function DashboardMain() {
         <div className="container mx-auto flex relative">
 
             {/* Mobile Sidebar Toggle */}
-            <div className="fixed top-12 left-9 md:hidden">
+            <div className="fixed top-12 left-5 md:hidden">
                 <button
                     className="m-4 p-2 text-white bg-[#ff0000] rounded-md"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -77,11 +86,22 @@ export default function DashboardMain() {
 
             {/* Sidebar */}
             <aside
+                // className={classNames(
+                //     "z-10 fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg  overflow-y-auto transform transition-transform",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                //     "md:relative md:translate-x-0 md:w-72"
+                // )}
                 className={classNames(
-                    "z-10 fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg  overflow-y-auto transform transition-transform",
+                    "z-10 fixed inset-y-16 left-0 xl:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-66 bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full",
-                    "md:relative md:translate-x-0 md:w-72"
+                    "md:translate-x-0 md:w-66 md:relative"
                 )}
+                // className={classNames(
+                //     "z-10 fixed inset-y-16 left-0 xl:left-[8rem] lg:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-66 bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                //     "md:translate-x-0 md:w-64 lg:w-72 xl:w-80 md:relative"
+                // )}
+
             >
                 <nav className="p-4">
                     <ul role="list" className="space-y-1">

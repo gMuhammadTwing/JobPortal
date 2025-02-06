@@ -12,10 +12,10 @@ export default function JoinCommunity() {
                     {/* <p>We are dedicated to bridging the gap between talent and opportunity</p> */}
                     <div className="mt-5 flex justify-center cursor-pointer">
                         <Link
-                            to={"/subscribe"}
+                            to={"/create-account"}
                         >
                             <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                Subscribe</span>
+                                Register</span>
                         </Link>
                     </div>
                 </div>

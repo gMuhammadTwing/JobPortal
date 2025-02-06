@@ -41,6 +41,8 @@ export default function EmployerProfile() {
             contact_email: data?.contact_email || "",
             logo: data?.logo || null,
             description: data?.description || "",
+            nea_number: data?.nea_number || "",
+            certified_expiration_date: data?.certified_expiration_date || "",
             user_id: user_id,
         },
         enableReinitialize: true,
@@ -151,7 +153,7 @@ export default function EmployerProfile() {
                             className="flex justify-start p-4 border-b cursor-pointer bg-white rounded-lg"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">{localStorage.role_id == 3 ? "Employee Profile" : "Company Profile"}</h3>
+                            <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">{localStorage.role_id == 3 ? "Employer Profile" : "Company Profile"}</h3>
                         </div>
 
                         {/* Card Body */}
@@ -307,10 +309,10 @@ export default function EmployerProfile() {
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             >
                                                 <option value="">Select</option>
-                                                {dropDownValues?.job_family?.map((item) => {
+                                                {dropDownValues?.industries?.map((item) => {
                                                     return (
                                                         <option key={item.id} value={item?.id}>
-                                                            {item?.occupation}
+                                                            {item?.name}
                                                         </option>
                                                     );
                                                 })}
@@ -384,6 +386,44 @@ export default function EmployerProfile() {
                                                 <div className="text-red-500 text-sm">{formik.errors.contact_email}</div>
                                             )}
                                         </div>
+                                        {localStorage.role_id == 4 &&
+                                            <>
+                                                <div>
+                                                    <label htmlFor="nea_number" className="block text-sm font-medium text-gray-900">
+                                                        NEA Number
+                                                    </label>
+                                                    <input
+                                                        id="nea_number"
+                                                        name="nea_number"
+                                                        type="text"
+                                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.nea_number}
+                                                    />
+                                                    {formik.touched.nea_number && formik.errors.nea_number && (
+                                                        <div className="text-red-500 text-sm">{formik.errors.nea_number}</div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="certified_expiration_date" className="block text-sm font-medium text-gray-900">
+                                                        Employment Agency Certified Expiration Date
+                                                    </label>
+                                                    <input
+                                                        id="certified_expiration_date"
+                                                        name="certified_expiration_date"
+                                                        type="date"
+                                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.certified_expiration_date}
+                                                    />
+                                                    {formik.touched.certified_expiration_date && formik.errors.certified_expiration_date && (
+                                                        <div className="text-red-500 text-sm">{formik.errors.certified_expiration_date}</div>
+                                                    )}
+                                                </div>
+                                            </>
+                                        }
                                         {/* <div>
                                             <label htmlFor="verification_status" className="block text-sm font-medium text-gray-900">
                                                 Verification Status *

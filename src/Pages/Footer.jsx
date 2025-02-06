@@ -97,8 +97,9 @@ export default function Footer() {
             </div>
             {/* Footer Bottom Section */}
             <div className="text-center border-t py-2 mt-20 text-gray-600 text-sm md:text-base">
-                Copyright 2025 © Veritas Jobs. All rights reserved.
+                Copyright {new Date().getFullYear()} © Veritas Jobs. All rights reserved.
             </div>
+
         </div>
     );
 }

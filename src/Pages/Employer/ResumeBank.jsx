@@ -5,6 +5,7 @@ import {
     PencilIcon,
     TrashIcon,
     PlusCircleIcon,
+    ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
@@ -16,6 +17,7 @@ import { useFormik } from "formik";
 import { useDropdownContext } from "../../DropdownProvider";
 import { Link } from "react-router-dom";
 import Select from 'react-select'
+import app_vars from "../../config";
 export default function ResumeBank() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDelete, setIsDelete] = useState(false)
@@ -214,10 +216,16 @@ export default function ResumeBank() {
                                                 >
                                                     Applicant Email
                                                 </th>
-                                                <th scope="col"
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >
+                                                    Resume
+                                                </th>
+                                                {/* <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Action
-                                                </th>
+                                                </th> */}
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white">
@@ -235,10 +243,17 @@ export default function ResumeBank() {
                                                                 {item?.email}
                                                             </h1>
                                                         </td>
-
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
-                                                            <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                        <td className="px-6 py-3 text-xs md:text-sm text-center flex gap-2">
+                                                            {item?.resume?.resume_file &&
+                                                                <a href={`${app_vars?.domain?.fileURL}${item?.resume?.resume_file}`} target="_blank"
+                                                                    rel="noopener noreferrer"><ArrowDownTrayIcon className="w-5 h-5 text-black" title="Download" /></a>
+                                                            }
+                                                             <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
+
+                                                        {/* <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                        </td> */}
                                                     </tr>
                                                 ))
                                             ) : (

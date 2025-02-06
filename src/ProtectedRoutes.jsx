@@ -31,7 +31,15 @@ const ProtectedRoutes = ({ children }) => {
     "/admin/payments": "manage_payments",
     "/admin/contacts": "view_contacts",
     "/admin/list_job": "jobs_list",
-    "/admin/job_management": "manage_jobs"
+    "/admin/job_management": "manage_jobs",
+    "/admin/idea_incubator_form": "idea_incubator_form",
+    "/admin/admin_opportunity": "admin_opportunity",
+    "/admin/admin_projects": "admin_projects",
+    "/admin/admin_investors": "admin_investors",
+    "/admin/admin_charities": "admin_charities",
+    "/admin/admin_idea_incubators": "admin_idea_incubators",
+    "/admin/admin_volunteers": "admin_volunteers",
+    "/admin/admin_careers": "admin_careers"
   }
   const addJobSeekerDynamicRoute = (basePath, id, permission) => {
     const dynamicPath = `${basePath}/${id}`;

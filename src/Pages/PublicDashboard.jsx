@@ -54,7 +54,8 @@ const navigation = [
         { name: "Post a Job", href: 'post_job' },
         { name: "Resume Bank", href: 'resume_bank' },
         { name: "Veritas Shortlisting", href: 'veritas_shortlisting' },
-        { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
+        // { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
+        { name: "Find Candidates", href: 'resume_bank', single: 'find', current: false },
       ],
   },
 
@@ -109,18 +110,18 @@ export default function PublicDashboard() {
         <Disclosure as="nav" className="fixed top-0 left-0 right-0 z-10 bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex xl:items-center">
                 <div className="shrink-0">
                   <Link to={"/home"}>
                     <img
                       alt="Your Company"
                       src={menu_logo}
-                      className="w-[12rem] h-12"
+                      className="xl:w-[12rem] md:w-[8rem] h-10"
                     />
                   </Link>
                 </div>
                 <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-4">
+                  <div className="xl:ml-10 md:ml-0 flex items-baseline lg:space-x-4">
                     <>
                       {
                         navigation
@@ -147,7 +148,7 @@ export default function PublicDashboard() {
                                   location.pathname.includes(item.href) || location.pathname.includes(item?.single)
                                     ? 'bg-[#ff0000] text-white'
                                     : 'text-black hover:bg-[#ff0000] hover:text-white',
-                                  'rounded-md px-3 py-2 text-sm font-medium',
+                                  'rounded-md px-1.5 py-2 text-sm font-medium',
                                 )}
                               >
                                 {item?.subItems ? (
@@ -174,7 +175,7 @@ export default function PublicDashboard() {
                                                     key={index}
                                                     to="payment-alert"
                                                     onClick={() => setActiveDropdown(null)}
-                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                                    className="block px-1.5 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
                                                   >
                                                     {item1.name}
                                                   </Link>
@@ -188,7 +189,7 @@ export default function PublicDashboard() {
                                                       setActiveDropdown(null);
                                                       toast.info("Payment Approval Pending");
                                                     }}
-                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
+                                                    className="block px-1.5 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
                                                   >
                                                     {item1.name}
                                                   </div>
@@ -203,7 +204,7 @@ export default function PublicDashboard() {
                                               key={index}
                                               to={item1.href}
                                               onClick={() => setActiveDropdown(null)}
-                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                              className="block px-1.5 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
                                             >
                                               {item1.name}
                                             </Link>
@@ -227,7 +228,7 @@ export default function PublicDashboard() {
                                   location.pathname.includes(item.href) || location.pathname.includes(item?.single)
                                     ? 'bg-[#ff0000] text-white'
                                     : 'text-black hover:bg-[#ff0000] hover:text-white',
-                                  'rounded-md px-3 py-2 text-sm font-medium',
+                                  'rounded-md px-1.5 py-2 text-sm font-medium',
                                 )}
                               >
                                 {item?.subItems ? (
@@ -466,7 +467,7 @@ export default function PublicDashboard() {
                         <div className="mb-1 ml-2">
                           <img
                             alt=""
-                            src={user.imageUrl}
+                            src={userLogo}
                             className="w-9 h-9 rounded-full"
                           />
                         </div>

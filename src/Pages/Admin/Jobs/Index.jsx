@@ -123,13 +123,21 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                 >
                                                 </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
                                             </tr>
                                             <tr>
                                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                                                     Job Title
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    job_type
+                                                    Job Type
+                                                </th>
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Number of Applicants
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Salary
@@ -154,6 +162,9 @@ export default function Index() {
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.job_type?.job_family}
+                                                        </td>
+                                                        <td className="px-3 py-4 text-sm">
+                                                            {item?.no_of_applicants || ""}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.expected_salary}

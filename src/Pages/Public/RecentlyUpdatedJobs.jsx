@@ -62,7 +62,7 @@ export default function RecentlyUpdatedJobs() {
                   },
                 }}
               >
-                {dropDownValues?.job_family.slice(0, 6).map((job, index) => (
+                {dropDownValues?.industries.slice(0, 3).map((job, index) => (
                   <motion.li
                     key={index}
                     className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow border hover:border-[#ff0000] text-gray-800 hover:text-[#ff0000] transform transition-all duration-300"
@@ -88,9 +88,9 @@ export default function RecentlyUpdatedJobs() {
                       <div className="flex w-full items-center justify-between p-6">
                         <div className="flex-1 truncate">
                           <div className="flex items-center space-x-3">
-                            <h3 className="truncate text-sm font-medium">{job?.job_family}</h3>
+                            <h3 className="truncate text-lg font-medium">{job?.name}</h3>
                           </div>
-                          <p className="mt-1 truncate text-sm text-gray-500">{job?.job_family}</p>
+                          {/* <p className="mt-1 truncate text-sm text-gray-500">{job?.job_family}</p> */}
                         </div>
                         <ArrowRightIcon className="w-4 h-4 text-gray-500" />
                       </div>

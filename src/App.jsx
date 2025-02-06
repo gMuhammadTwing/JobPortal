@@ -71,6 +71,14 @@ import AdminJobs from './Pages/Admin/Jobs/Index'
 import EditEmployer from './Pages/Admin/EditEmployer';
 import EditApplicant from './Pages/Admin/JobSeekers/EditApplicant/Index';
 import EditAgency from './Pages/EditAgency';
+import AdminOpportunity from './Pages/Admin/About Us/Opportunity';
+import AdminCareers from './Pages/Admin/About Us/Careers';
+import AdminVolunteers from './Pages/Admin/About Us/Volunteers';
+import AdminIncubators from './Pages/Admin/About Us/Incubators';
+import AdminProjects from './Pages/Admin/About Us/Projects';
+import AdminInvestors from './Pages/Admin/About Us/Investors';
+import AdminCharities from './Pages/Admin/About Us/Charities';
+import Index from './Pages/Admin/IdeaIncubatorForm/Index';
 function App() {
   return (
     <DropdownProvider>
@@ -160,6 +168,14 @@ function App() {
               <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
               <Route path="agencies_list/edit-agency/:id" element={<EditAgency />} />
               <Route path="list_job" element={<AdminJobs />} />
+              <Route path="admin_opportunity" element={<AdminOpportunity/>} />
+              <Route path="admin_careers" element={<AdminCareers/>} />
+              <Route path="admin_volunteers" element={<AdminVolunteers/>} />
+              <Route path="admin_idea_incubators" element={<AdminIncubators/>} />
+              <Route path="admin_charities" element={<AdminCharities/>} />
+              <Route path="admin_investors" element={<AdminInvestors/>} />
+              <Route path="admin_projects" element={<AdminProjects/>} />
+              <Route path="idea_incubator_form" element={<Index/>} />
             </Route>
 
             {/* No Permission Route */}

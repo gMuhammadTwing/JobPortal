@@ -144,10 +144,10 @@ export default function EditEmployer() {
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     >
                                         <option value="">Select</option>
-                                        {dropDownValues?.job_family?.map((item) => {
+                                        {dropDownValues?.industries?.map((item) => {
                                             return (
                                                 <option key={item.id} value={item?.id}>
-                                                    {item?.job_family}
+                                                    {item?.name}
                                                 </option>
                                             );
                                         })}

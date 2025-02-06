@@ -289,7 +289,7 @@ export default function ViewJobs() {
                                                                     >
                                                                         View Details
                                                                     </Link>
-                                                                    <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
+                                                                    <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Already Applied</div>
                                                                 </div>
                                                             )}
                                                     </div>
@@ -370,7 +370,7 @@ export default function ViewJobs() {
                                     ) :
                                         (
                                             <>
-                                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
+                                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Already Applied</div>
                                             </>
                                         )}
                                 </div>

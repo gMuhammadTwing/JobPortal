@@ -107,10 +107,10 @@ export default function Jobs() {
                 <p>Ready to get hired?  Search latest Veritas Jobs                </p>
                 <div className="mt-5 flex justify-center cursor-pointer">
                     <Link
-                        to={"/subscribe"}
+                        to={"/create-account"}
                     >
                         <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                            Subscribe</span>
+                            Register</span>
                     </Link>
                 </div>
             </div>
@@ -266,7 +266,7 @@ export default function Jobs() {
                                                                 >
                                                                     <Link to={`/view-job-details/${item?.id}`}> View Details </Link>
                                                                 </span>
-                                                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
+                                                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Already Applied</div>
                                                             </div>
                                                         )}
                                                 </div>

@@ -27,7 +27,7 @@ export default function EmployerSignup() {
             name: Yup.string()
                 .min(2, "Must be at least 2 characters")
                 .max(50, "Must be 50 characters or less")
-                .required("Full Name is required"),
+                .required("Company Name is required"),
             role_id: Yup.string()
                 .required("Please select a registration type"),
             email: Yup.string()
@@ -134,7 +134,7 @@ export default function EmployerSignup() {
                                         {/* Full Name input */}
                                         <div className="mb-2">
                                             <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                                                Full Name
+                                                Company Name
                                             </label>
                                             <input
                                                 id="name"
