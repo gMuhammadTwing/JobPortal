@@ -92,7 +92,7 @@ export default function DashboardMain() {
                 //     "md:relative md:translate-x-0 md:w-72"
                 // )}
                 className={classNames(
-                    "z-10 fixed inset-y-16 left-0 xl:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-66 bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                    "z-10 fixed inset-y-16 left-0 xl:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full",
                     "md:translate-x-0 md:w-66 md:relative"
                 )}

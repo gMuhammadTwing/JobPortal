@@ -304,9 +304,9 @@ export default function ManageJobs() {
                   Job Type
                 </label>
                 <Select
-                  options={dropDownValues?.job_family.map((value) => ({
+                  options={dropDownValues?.industries.map((value) => ({
                     value: value.id,
-                    label: value.job_family,
+                    label: value.name,
                   }))}
                   isClearable={true}
                   isDisabled={view}
@@ -320,7 +320,7 @@ export default function ManageJobs() {
                   }}
                   defaultValue={{
                     value: updateData?.job_type?.id,
-                    label: updateData?.job_type?.job_family
+                    label: updateData?.job_type?.name
                   }}
                 />
                 {/* <select

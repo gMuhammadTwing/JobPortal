@@ -38,7 +38,8 @@ export default function Summary() {
         enableReinitialize: true,
         onSubmit: async (values) => {
             setLoading(true)
-            if (data) {
+
+            if (data?.length || data?.data?.length) {
                 try {
                     const response = await axiosInstance.post(`/api/job_seeker_summary/update/${data?.data[0]?.id}`, values);
                     if (response) {
@@ -67,6 +68,7 @@ export default function Summary() {
                 } finally {
                     fetchData();
                     setLoading(false)
+                    editSummary(false)
                 }
             }
         },
@@ -130,21 +132,21 @@ export default function Summary() {
                         ) : (
                             <>
                                 {!editSummary && !summary && (
-                                    <div className="relative">
-                                        <p className=" sm:text-lg">
+                                    <div className="relative p-4 sm:p-6 bg-white">
+                                        <p className="text-base sm:text-lg max-w-full break-words">
                                             {parser.parseFromString(data?.data[0]?.summary ?? '', "text/html").body.textContent.trim() !== ''
                                                 ? parser.parseFromString(data?.data[0]?.summary, "text/html").body.textContent.trim()
                                                 : 'No Summary has been added yet'}
-
                                         </p>
                                         <button
                                             type="button"
                                             onClick={() => setEditSummary(true)}
-                                            className="absolute top-0 right-4 hover:bg-gray-100 rounded-full p-2 transition"
+                                            className="absolute top-2 sm:top-0 right-2 sm:right-4 hover:bg-gray-100 rounded-full p-2 transition"
                                         >
                                             <PencilIcon className="h-5 w-5 text-blue-500" />
                                         </button>
                                     </div>
+
                                 )}
 
                                 {/* Edit Summary Form */}
