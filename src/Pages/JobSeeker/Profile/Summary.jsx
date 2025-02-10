@@ -132,7 +132,7 @@ export default function Summary() {
                         ) : (
                             <>
                                 {!editSummary && !summary && (
-                                    <div className="relative p-4 sm:p-6 bg-white">
+                                    <div className="relative p-4 sm:p-6 md:p-8 bg-white flex flex-col sm:flex-row justify-between items-start">
                                         <p className="text-base sm:text-lg max-w-full break-words">
                                             {parser.parseFromString(data?.data[0]?.summary ?? '', "text/html").body.textContent.trim() !== ''
                                                 ? parser.parseFromString(data?.data[0]?.summary, "text/html").body.textContent.trim()
@@ -141,11 +141,12 @@ export default function Summary() {
                                         <button
                                             type="button"
                                             onClick={() => setEditSummary(true)}
-                                            className="absolute top-2 sm:top-0 right-2 sm:right-4 hover:bg-gray-100 rounded-full p-2 transition"
+                                            className="sm:absolute sm:top-0 sm:right-4 hover:bg-gray-100 rounded-full p-2 transition self-end sm:self-auto"
                                         >
                                             <PencilIcon className="h-5 w-5 text-blue-500" />
                                         </button>
                                     </div>
+
 
                                 )}
 

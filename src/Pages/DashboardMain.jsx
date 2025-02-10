@@ -91,18 +91,31 @@ export default function DashboardMain() {
                 //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
                 //     "md:relative md:translate-x-0 md:w-72"
                 // )}
-                className={classNames(
-                    "z-10 fixed inset-y-16 left-0 xl:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
-                    sidebarOpen ? "translate-x-0" : "-translate-x-full",
-                    "md:translate-x-0 md:w-66 md:relative"
-                )}
+                // className={classNames(
+                //     "z-10 fixed inset-y-16 left-0 xl:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                //     "md:translate-x-0 md:w-66 md:relative"
+                // )}
                 // className={classNames(
                 //     "z-10 fixed inset-y-16 left-0 xl:left-[8rem] lg:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-66 bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
                 //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
                 //     "md:translate-x-0 md:w-64 lg:w-72 xl:w-80 md:relative"
                 // )}
 
-            >
+                    className={classNames(
+                        // Base styles for mobile
+                        "z-10 fixed inset-y-16 left-0 w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                        sidebarOpen ? "translate-x-0" : "-translate-x-full", // Toggle visibility on mobile
+                        // Medium screens (768px and above)
+                        "md:translate-x-0 md:relative md:top-10 md:h-[33rem] md:w-66",
+                        // Large screens (1024px and above)
+                        "lg:left-[0rem] lg:w-66", // Adjusted for 1024px screens
+                        // Extra large screens (1280px and above)
+                        "xl:left-[0rem] xl:w-66", // Adjusted for 1440px screens
+                        // 2XL screens (1536px and above)
+                        "2xl:left-[6rem] 2xl:w-66" // Optional: For even larger screens
+                    )}
+                >
                 <nav className="p-4">
                     <ul role="list" className="space-y-1">
                         {location.pathname.includes('/employer') && (
@@ -194,10 +207,10 @@ export default function DashboardMain() {
                 </nav>
             </aside>
 
-            {/* Main Content */}
-            <main className="flex-1 bg-gray-100 p-6 overflow-hidden">
-                <Outlet />
-            </main>
-        </div>
+            {/* Main Content */ }
+    <main className="flex-1 bg-gray-100 p-6 overflow-hidden">
+        <Outlet />
+    </main>
+        </div >
     );
 }
