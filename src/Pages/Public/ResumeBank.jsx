@@ -107,7 +107,7 @@ export default function ResumeBankPublic() {
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Resume Bank</h1>
-                    <p>Need to find candidates fast?  Veritas Jobs for  employers in Kenya.</p>
+                    <p className="mt-1">Need to find candidates fast?  Veritas Jobs for  employers in Kenya.</p>
                     <div className="mt-5 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
                             (localStorage.payment == 'true' || localStorage.role_id == 1|| localStorage.role_id == 3) ?

@@ -107,7 +107,7 @@ export default function VeritasShortlistingPublic() {
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Veritas Shortlisting</h1>
-                    <p>Looking to save time and money in hiring? Let us do the hard work. Veritas Shortlisting will save you time and tons of money.</p>
+                    <p className="mt-1">Looking to save time and money in hiring? Let us do the hard work. Veritas Shortlisting will save you time and tons of money.</p>
                 </div>
 
                 <section className="flex items-center justify-center shadow-lg p-12">

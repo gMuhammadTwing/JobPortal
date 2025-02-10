@@ -9,8 +9,8 @@ export default function Subscribe() {
                 className='bg-white'
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
-                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Subscribe</h1>
-                    <p>Find your next great opportunity! Subscribe to Veritas Kenya Workforce Database.</p>
+                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Register</h1>
+                    <p className="mt-1">Find your next great opportunity! Register to Veritas Kenya Workforce Database.</p>
                     <div className="mt-5 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
                             (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?

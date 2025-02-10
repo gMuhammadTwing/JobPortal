@@ -9,8 +9,8 @@ export default function WhySubscribe() {
                 className='bg-white'
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
-                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Why Subscribe?</h1>
-                    {/* <p>If you are unemployed or actively searching for a job, please subscribe and submit your resume.</p> */}
+                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Why Register?</h1>
+                    
                     <div className="mt-5 flex justify-center cursor-pointer">
                         <Link
                             to={"/create-account"}

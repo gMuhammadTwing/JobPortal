@@ -178,21 +178,22 @@ export default function ResumeBank() {
                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                             />
                         </div>
-                        <div className="sm:col-span-2 mt-2 flex gap-2">
+                        <div className="sm:col-span-2 mt-2 flex flex-wrap gap-2 sm:gap-4">
                             <button
                                 onClick={clearFilter}
                                 type="button"
-                                className="flex mt-5 border border-gray-300 p-[5px] px-5 rounded-lg hover:bg-[#ff0000] hover:text-white"
+                                className="flex w-full sm:w-auto justify-center items-center border border-gray-300 p-[6px] px-5 rounded-lg hover:bg-[#ff0000] hover:text-white transition-all duration-300"
                             >
                                 Clear Filter
                             </button>
                             <button
                                 type="submit"
-                                className="flex mt-5 border bg-[#ff0000] p-[5px] px-5 rounded-lg hover:border-[#ff0000] text-white"
+                                className="flex w-full sm:w-auto justify-center items-center border bg-[#ff0000] p-[6px] px-5 rounded-lg text-white hover:border-[#ff0000] transition-all duration-300"
                             >
                                 Apply Filter
                             </button>
                         </div>
+
                     </div>
                 </form>
                 {tableLoader ? <LoaderTable /> :
@@ -248,7 +249,7 @@ export default function ResumeBank() {
                                                                 <a href={`${app_vars?.domain?.fileURL}${item?.resume?.resume_file}`} target="_blank"
                                                                     rel="noopener noreferrer"><ArrowDownTrayIcon className="w-5 h-5 text-black" title="Download" /></a>
                                                             }
-                                                             <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                            <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
 
                                                         {/* <td className="py-4 pl-4 pr-3 text-smsm:pl-6">

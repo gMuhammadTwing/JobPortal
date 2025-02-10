@@ -41,7 +41,7 @@ export default function Blogs() {
         <div className="bg-white min-h-screen">
             <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Blogs</h1>
-                <p>Unlock Careers, Hire Talent: Veritas Jobs Connects You</p>
+                <p className="mt-1">Unlock Careers, Hire Talent: Veritas Jobs Connects You</p>
             </div>
             {tableLoader ? <BlogSkeleton /> :
                 <div className=" mx-auto max-w-[75rem] p-4 mt-10">

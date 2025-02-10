@@ -11,7 +11,7 @@ export default function SubmitResume() {
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Submit your resume</h1>
-                    <p>If you are unemployed or actively searching for a job, please subscribe and submit your resume.</p>
+                    <p className="mt-1">If you are unemployed or actively searching for a job, please subscribe and submit your resume.</p>
                     <div className="mt-5 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
                             (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?

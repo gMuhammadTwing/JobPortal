@@ -78,7 +78,7 @@ export default function Index() {
     }, []);
 
     return (
-        <div className="container mx-auto px-4 max-w-5xl h-screen mt-4">
+        <div className="container mx-auto px-4 max-w-5xl min-h-screen mt-4">
             {!jobs ? (
                 <div>
                     {/* <div className="text-center pb-6 text-2xl md:text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
@@ -87,41 +87,12 @@ export default function Index() {
                     <Toaster richColors />
                     {tableLoader ? <LoaderTable /> :
                         <>
-                            <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                            <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white">
+                                <div className="flex flex-col sm:flex-row justify-between items-center p-4 cursor-pointer bg-white rounded-t-lg gap-4">
+                                    <h3 className="text-xl font-bold text-[#ff0000]">Manage Jobs & Applicants</h3>
+                                </div>
                                 <table className="min-w-full divide-y divide-gray-300">
                                     <thead className="bg-white">
-                                        <tr className="border-b border-gray-300">
-                                            <th
-                                                scope="col"
-                                                className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
-                                            >
-                                                Manage Jobs & Applicants
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                            <th scope="col"
-                                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                        </tr>
                                         <tr>
                                             <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                 Job Title

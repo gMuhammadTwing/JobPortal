@@ -67,54 +67,53 @@ export default function Index() {
                                 <div className="bg-white py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]">
                                     List of Employer
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-4 font-normal">
-                                        <div className="sm:col-span-1">
-                                            <label
-                                                htmlFor="name"
-                                                className="block text-sm font-medium text-gray-900"
-                                            >
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4 font-normal">
+                                        {/* Name Field */}
+                                        <div>
+                                            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
                                                 Name
                                             </label>
                                             <input
                                                 id="name"
                                                 name="name"
                                                 type="text"
-                                                placeholder="search"
+                                                placeholder="Search"
                                                 onChange={(e) => searchName(e.target.value)}
-                                                // onBlur={formik.handleBlur}
                                                 value={name}
-                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                className="block w-full py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
-
                                         </div>
-                                        <div className="sm:col-span-1">
-                                            <label
-                                                htmlFor="name"
-                                                className="block text-sm font-medium text-gray-900"
-                                            >
+
+                                        {/* Email Field */}
+                                        <div>
+                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
                                                 Email
                                             </label>
                                             <input
                                                 id="email"
                                                 name="email"
                                                 type="text"
-                                                placeholder="search"
+                                                placeholder="Search"
                                                 onChange={(e) => searchEmail(e.target.value)}
-                                                // onBlur={formik.handleBlur}
                                                 value={email}
-                                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                className="block w-full py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             />
-
                                         </div>
-                                        <div className="sm:col-span-1 mt-7">
+
+                                        {/* Clear Filter Button */}
+                                        <div className="flex items-end">
                                             <Button
                                                 type="button"
                                                 color="gradient"
                                                 variant="outline"
                                                 onClick={() => clearFilter()}
-                                            >Clear Filter</Button>
+                                                className="w-full sm:w-auto"
+                                            >
+                                                Clear Filter
+                                            </Button>
                                         </div>
                                     </div>
+
                                 </div>
                                 {tableLoader ? <LoaderTable /> :
                                     <table className="min-w-full divide-y divide-gray-300">

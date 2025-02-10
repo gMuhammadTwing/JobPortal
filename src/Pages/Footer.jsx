@@ -40,7 +40,7 @@ export default function Footer() {
                     </div>
 
                     {/* Useful Links Section */}
-                    <div>
+                    <div className="col-span-2 sm:col-span-1">
                         <ul className="space-y-3 text-center lg:text-left">
                             {[
                                 { text: "About Us", href: "/about-us" },
@@ -49,7 +49,7 @@ export default function Footer() {
                                 { text: "Register", href: "/create-account" },
                                 { text: "Forgot Password", href: "/forgot-password" }
                             ].map((link, idx) => (
-                                <li key={idx} className="flex justify-center lg:justify-start items-center">
+                                <li key={idx} className="flex lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />
                                     <Link to={link.href} className="hover:underline">{link.text}</Link>
                                 </li>
@@ -84,7 +84,7 @@ export default function Footer() {
                                 { label: "Refund Policy", href: "/refund-policy" },
                                 { label: "Service/Product Guarantee", href: "/service-guarantee" }
                             ].map((item, idx) => (
-                                <li key={idx} className="flex justify-center lg:justify-start items-center">
+                                <li key={idx} className="flex lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />
                                     <Link to={item.href} className="hover:underline">
                                         {item.label}
@@ -97,7 +97,7 @@ export default function Footer() {
             </div>
             {/* Footer Bottom Section */}
             <div className="text-center border-t py-2 mt-20 text-gray-600 text-sm md:text-base">
-                Copyright {new Date().getFullYear()} © Veritas Jobs. All rights reserved.
+                @ Copyright {new Date().getFullYear()} © Veritas Jobs. All rights reserved.
             </div>
 
         </div>

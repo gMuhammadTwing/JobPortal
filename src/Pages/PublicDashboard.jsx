@@ -24,9 +24,9 @@ const navigation = [
     current: false,
     subItems: [
       ...(localStorage.role_id == 2 ? [{ name: "My Profile", href: 'job-seeker/profile' }] : []),
-      { name: "Subscribe", href: 'subscribe' },
+      { name: "Register", href: 'subscribe' },
       { name: "Submit your Resume", href: 'submit_resume' },
-      { name: "Why Subscribe?", href: 'why_subscribe' },
+      { name: "Why Register?", href: 'why_subscribe' },
       {
         name: "Find a job",
         href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : 'login',
@@ -471,7 +471,7 @@ export default function PublicDashboard() {
                             className="w-9 h-9 rounded-full"
                           />
                         </div>
-                        <div className="text-sm font-medium text-gray-700">
+                        <div className="text-sm font-medium text-gray-700 ml-3">
                           {localStorage.getItem("user_name")}
                         </div>
                       </>

@@ -146,28 +146,26 @@ export default function ManageJobs() {
                 (<div className='text-red font-semibold border text-center mt-10 bg-red-100 border-red-100'>Please Update Profile Information First</div>)
               }
             </div> */}
-            <div
-              className="flex justify-between p-4 border-b cursor-pointer bg-white rounded-lg"
-            >
-              <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">Job Management</h3>
-              {company_id != "undefined" && (
-                <div className='mt-2'>
-                  <Button
-                    type="button"
-                    color="gradient"
-                    variant="solid"
-                    className={"mb-4"}
-                    onClick={() => {
-                      setUpdateData(null)
-                      openModal()
-                    }}
-                  >
-                    <PlusCircleIcon className="w-6 h-6 text-white" />
-                    Create New Job</Button>
-                </div>
-              )
-              }
+            <div className="flex flex-col sm:flex-row justify-between items-center p-4 border-b cursor-pointer bg-white rounded-lg gap-4">
+              <h3 className="text-xl font-bold text-[#ff0000]">Job Management</h3>
+
+              {company_id !== "undefined" && (
+                <Button
+                  type="button"
+                  color="gradient"
+                  variant="solid"
+                  className="flex items-center gap-2 px-4 py-2"
+                  onClick={() => {
+                    setUpdateData(null);
+                    openModal();
+                  }}
+                >
+                  <PlusCircleIcon className="w-6 h-6 text-white" />
+                  Create New Job
+                </Button>
+              )}
             </div>
+
             {company_id != "undefined" ?
               (
                 tableLoader ? <LoaderTable /> :
@@ -479,7 +477,7 @@ export default function ManageJobs() {
               </div>
 
               {/* Job_qualification */}
-              <div className="sm:col-span-full mt-7">
+              <div className="sm:col-span-full mt-20 sm:mt-7">
                 <label className="block text-sm font-medium text-gray-900">
                   Job Qualification
                 </label>
@@ -515,7 +513,7 @@ export default function ManageJobs() {
                   <p className="mt-2 text-sm text-red-600">{formik.errors.job_qualification}</p>
                 )}
               </div>
-              <div className="sm:col-span-full mt-7">
+              <div className="sm:col-span-full mt-20 sm:mt-7">
                 <label className="block text-sm font-medium text-gray-900">
                   Job Responsibilities
                 </label>
@@ -553,7 +551,7 @@ export default function ManageJobs() {
               </div>
 
               {/* Instruction to Apply */}
-              <div className="sm:col-span-full mt-7">
+              <div className="sm:col-span-full mt-20 sm:mt-7">
                 <label className="block text-sm font-medium text-gray-900">
                   Instruction to Apply
                 </label>
@@ -595,7 +593,7 @@ export default function ManageJobs() {
             </div>
 
 
-            <div className="mt-15 sm:mt-15 sm:flex sm:flex-row-reverse">
+            <div className="mt-25 sm:mt-15 sm:flex sm:flex-row-reverse">
               {!view && (
                 formik.isSubmitting ? (
                   <InfinitySpin height={120} width={120} color="green" />

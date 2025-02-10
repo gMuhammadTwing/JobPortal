@@ -48,7 +48,7 @@ export default function Company() {
 
                     {/* Search Bar */}
                     <div className="lg:col-span-5 flex justify-center lg:justify-start">
-                        <div className="flex w-full max-w-[31rem] items-center justify-between truncate rounded-l-md bg-white">
+                        <div className="flex w-full max-w-[33rem] items-center justify-between truncate rounded-l-md bg-white">
                             <div className="flex-1 px-4 py-3">
                                 <label htmlFor="search-field" className="sr-only">
                                     Search
@@ -68,7 +68,7 @@ export default function Company() {
                             (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
                                 <Link
                                     to={`/jobs/${search}`}
-                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                    className="px-12 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
                                 >
                                     Search
                                 </Link> :

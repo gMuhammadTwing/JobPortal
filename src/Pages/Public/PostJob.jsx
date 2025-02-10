@@ -107,7 +107,7 @@ export default function PostJob() {
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
                     <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Post a Job</h1>
-                    <p>Looking to post a job opening? It is FREE! To post jobs, organizations have to create a free account here.</p>
+                    <p className="mt-1">Looking to post a job opening? It is FREE! To post jobs, organizations have to create a free account here.</p>
                 </div>
 
                 <section className="flex items-center justify-center shadow-lg p-12">

@@ -42,55 +42,60 @@ export default function Index() {
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
-                        <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg mb-2">
-                            <div className="bg-white py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000] border-b border-gray-300">
+                        <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg mb-2 bg-white">
+                            {/* Header */}
+                            <div className="bg-white py-4 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000] border-gray-300">
                                 VeritasKWD Idea Incubator Form
                             </div>
+
+                            {/* Table */}
                             <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-white">
+                                <thead className="">
                                     <tr>
                                         <th className="px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Name
                                         </th>
-                                        <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Email
                                         </th>
-                                        <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Message
                                         </th>
-                                        <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-4 py-3 text-center text-xs md:text-sm font-semibold text-gray-900">
                                             Attachment
                                         </th>
-                                        {/* <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                            Actions
-                                        </th> */}
                                     </tr>
                                 </thead>
+
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                     {data?.data.length > 0 ? (
                                         data?.data.map((item, index) => (
-                                            <tr key={index}>
-                                                <td className="px-5 py-3 text-xs md:text-sm">
+                                            <tr key={index} className="hover:bg-gray-100">
+                                                <td className="px-4 py-3 text-xs md:text-sm text-gray-700">
                                                     {item?.name || "N/A"}
                                                 </td>
-                                                <td className="px-2 py-3 text-xs md:text-sm">
+                                                <td className="px-4 py-3 text-xs md:text-sm text-gray-700 truncate max-w-xs">
                                                     {item?.email}
                                                 </td>
-                                                <td className="px-2 py-3 text-xs md:text-sm">
+                                                <td className="px-4 py-3 text-xs md:text-sm text-gray-700 max-w-sm truncate">
                                                     {item?.message}
                                                 </td>
-                                                <td className="px-6 py-3 text-xs md:text-sm text-center">
-                                                    {item?.attachment &&
-                                                        <a href={`${app_vars?.domain?.fileURL}${item?.attachment}`} target="_blank"
-                                                            rel="noopener noreferrer"><EyeIcon className="w-5 h-5 text-black" /></a>
-                                                    }
+                                                <td className="px-4 py-3 text-xs md:text-sm text-center">
+                                                    {item?.attachment ? (
+                                                        <a href={`${app_vars?.domain?.fileURL}${item?.attachment}`}
+                                                            target="_blank" rel="noopener noreferrer">
+                                                            <EyeIcon className="w-5 h-5 text-blue-500 hover:text-blue-700" />
+                                                        </a>
+                                                    ) : (
+                                                        "—"
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={6} className="text-center py-4">
-                                                <span className="inline-flex text-lg md:text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                            <td colSpan={4} className="text-center py-4">
+                                                <span className="inline-flex text-lg md:text-xl items-center rounded-md bg-blue-50 px-4 py-2 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                                                     No Record Found
                                                 </span>
                                             </td>
@@ -99,6 +104,7 @@ export default function Index() {
                                 </tbody>
                             </table>
                         </div>
+
 
                     </>}
                 <Pagination

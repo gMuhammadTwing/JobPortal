@@ -72,7 +72,7 @@ export default function PaymentIndex() {
     };
 
     return (
-        <div className="container mx-auto max-w-5xl h-screen mt-4">
+        <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             {/* <AddPayment isOpen={isModalOpen} onClose={closeModal} /> */}
             <div className="pb-15">
                 {/* <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">

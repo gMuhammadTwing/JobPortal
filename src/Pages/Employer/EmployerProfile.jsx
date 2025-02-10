@@ -146,7 +146,7 @@ export default function EmployerProfile() {
     return (
         <>
             <div className="flex justify-center px-4 sm:px-6 lg:px-8 min-h-screen">
-                <div className="p-4 w-full max-w-5xl rounded-lg">
+                <div className="py-4 w-full max-w-5xl rounded-lg">
                     <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
@@ -213,7 +213,7 @@ export default function EmployerProfile() {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-4">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <MapPinIcon className="w-5 h-5" />
                                                         {data?.location}
@@ -231,6 +231,7 @@ export default function EmployerProfile() {
                                                         {data?.contact_number}
                                                     </p>
                                                 </div>
+
 
                                                 <div className="mt-6 border-t pt-4">
                                                     <label className="block font-semibold">Description</label>

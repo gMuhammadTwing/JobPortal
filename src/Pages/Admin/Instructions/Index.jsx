@@ -331,47 +331,28 @@ export default function Index() {
     }
 
     return (
-        <div className="container mx-auto max-w-5xl h-screen mt-4">
+        <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             <div className="pb-15">
                 {tableLoader ? <LoaderTable /> :
                     !editInstructions ?
                         <>
-                            <div className="overflow-x-auto ring-1 ring-black ring-opacity-5 rounded-lg">
+                            <div className="overflow-x-auto ring-1 ring-black ring-opacity-5 rounded-lg bg-white">
+                                <div className="flex flex-col sm:flex-row justify-between items-center p-4 cursor-pointer bg-white rounded-t-lg gap-4">
+                                    <h3 className="text-xl font-bold text-[#ff0000]">Instructions for Payment</h3>
+                                    <Button
+                                        color="gradient"
+                                        variant="solid"
+                                        onClick={() => {
+                                            setEditInstructions(!editInstructions);
+                                            setUpdateData(null)
+                                            setUpdateCheck(false)
+                                        }}
+                                    >Add Instruction</Button>
+                                </div>
                                 <div className="inline-block min-w-full align-middle">
                                     <div className="overflow-hidden">
                                         <table className="min-w-full divide-y divide-gray-300">
                                             <thead className="bg-white">
-                                                <tr className="border-b border-gray-300">
-                                                    <th
-                                                        scope="col"
-                                                        className="pl-4 py-5.5 text-left text-[#ff0000] font-bold text-xl"
-                                                    >
-                                                        Instructions for Payment
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                                    >
-                                                    </th>
-                                                    <th scope="col"
-                                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                                    >
-                                                        <Button
-                                                            color="gradient"
-                                                            variant="solid"
-                                                            onClick={() => {
-                                                                setEditInstructions(!editInstructions);
-                                                                setUpdateData(null)
-                                                                setUpdateCheck(false)
-                                                            }}
-                                                        >Add Instruction</Button>
-                                                    </th>
-                                                </tr>
                                                 <tr>
                                                     <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                                                         Instruction
@@ -461,8 +442,8 @@ export default function Index() {
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
                                                 className={`block py-1.5 px-3 border ${formik.touched.role_id && formik.errors.role_id ? "border-red-500" : "border-gray-300"
-                                                } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
-                                                // className="block py-1.5 px-3 border text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                    } text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2`}
+                                            // className="block py-1.5 px-3 border text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                             >
                                                 <option value="">Select</option>
                                                 <option value="2">Job Seeker</option>
