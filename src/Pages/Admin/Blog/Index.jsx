@@ -108,7 +108,7 @@ export default function Index() {
                                                     <div className="flex items-center space-x-2">
                                                         <Link to={`/blog/blog_details/${item?.id}`}><EyeIcon className=" cursor-pointer w-5 h-5 text-black" title="View Blog" /></Link>
                                                         <PencilIcon onClick={() => blogHandler(item, false)} className="w-5 h-5 text-blue-500 cursor-pointer" title="Edit Blog" />
-                                                        <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Blog" />
+                                                        {/* <TrashIcon className="w-5 h-5 text-red-600 cursor-pointer" title="Delete Blog" /> */}
                                                     </div>
                                                 </td>
                                             </tr>

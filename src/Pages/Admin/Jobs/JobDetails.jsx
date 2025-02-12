@@ -11,8 +11,8 @@ import axiosInstance, { handleError } from '../../../axiosInstance';
 import { useParams } from 'react-router-dom';
 export default function JobDetails() {
     const dropDownValues = useDropdownContext();
-    const user_id = useParams();
-    console.log("user: ", user_id);
+    const id = useParams();
+    console.log("id: ", id);
 
     const company_id = localStorage?.company_id;
     const [tableLoader, setTableLoader] = useState(false);
@@ -25,12 +25,11 @@ export default function JobDetails() {
             job_description: data?.job_description || "",
             job_qualification: data?.job_qualification || "",
             job_responsibilities: data?.job_responsibilities || "",
-            // expected_salary: data?.expected_salary || "",
             location: data?.location || "",
             job_status: data?.job_status === "Open" ? 1 : 2,
             veritas_to_short_list: data?.veritas_to_short_list,
             job_instructions_to_apply: data?.job_instructions_to_apply || "",
-            user_id: user_id?.id,
+            user_id: id?.id,
             company_id: company_id,
             job_end_date: data?.job_end_date || ""
         },
@@ -62,9 +61,9 @@ export default function JobDetails() {
     const fetchData = async (page) => {
         if (company_id != "undefined") {
             try {
-                const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id?.id}&company_id=${company_id}&page=${page}`);
+                const response = await axiosInstance.get(`api/admin_get_job/${id?.id}`);
                 if (response) {
-                    setData(response?.data?.data[0])
+                    setData(response?.data[0])
                 }
             } catch (error) {
                 handleError(error);

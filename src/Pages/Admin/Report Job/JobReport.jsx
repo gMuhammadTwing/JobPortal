@@ -20,10 +20,10 @@ export default function JobReport() {
     const fetchData = async (pageNum) => {
         setTableLoader(true);
         try {
-            // const response = await axiosInstance.get(`/api/contact_us?page=${pageNum}`);
-            // if (response) {
-            //     setData(response?.data);
-            // }
+            const response = await axiosInstance.get(`/api/admin_report_job?page=${pageNum}`);
+            if (response) {
+                setData(response?.data);
+            }
         } catch (error) {
             handleError(error);
         } finally {
@@ -57,7 +57,7 @@ export default function JobReport() {
                                             scope="col"
                                             className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                         >
-                                           Job Reports
+                                            Job Reports
                                         </th>
                                         <th
                                             scope="col"
@@ -73,20 +73,29 @@ export default function JobReport() {
                                             className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                         >
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
                                     </tr>
                                     <tr>
+                                        <th className="px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                            Job Title
+                                        </th>
                                         <th className="px-3 py-5.5 text-left text-sm font-semibold text-gray-900">
                                             Full Name
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                            Phone
+                                            Mobile Number
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Email
                                         </th>
                                         <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
-                                            Message
+                                            Comments
                                         </th>
+
                                         {/* <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Actions
                                         </th> */}
@@ -96,20 +105,24 @@ export default function JobReport() {
                                     {data?.data.length > 0 ? (
                                         data?.data.map((item, index) => (
                                             <tr key={index}>
-                                                <td className="whitespace-nowrap px-2 py-3 text-xs md:text-sm text-gray-500">
+                                                <td className="whitespace-nowrap px-3 py-3 text-xs md:text-sm text-gray-500">
                                                     <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                        {item?.full_name || "N/A"}
+                                                        {item?.job_id?.job_title}
                                                     </span>
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
-                                                    {item?.phone}
+                                                    {item?.full_name}
+                                                </td>
+                                                <td className="px-2 py-3 text-xs md:text-sm">
+                                                    {item?.mobile_number}
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
                                                     {item?.email}
                                                 </td>
                                                 <td className="px-2 py-3 text-xs md:text-sm">
-                                                    {parser.parseFromString(item?.message || "", "text/html").body.textContent.trim()}
+                                                    {parser.parseFromString(item?.comments || "", "text/html").body.textContent.trim()}
                                                 </td>
+
                                             </tr>
                                         ))
                                     ) : (

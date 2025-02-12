@@ -184,8 +184,8 @@ export default function Summary() {
                                                 <p className="text-red-500 text-sm mt-1">{formik.errors.summary}</p>
                                             )}
                                         </div>
-                                        {loading ? <div className="flex justify-center mr-5 mt-15"><InfinitySpin width={150} color="green" /></div> :
-                                            <div className="flex justify-center gap-4 mt-17">
+                                        {loading ? <div className="flex justify-center mr-5 mt:mt-15 mt-25"><InfinitySpin width={150} color="green" /></div> :
+                                            <div className="flex justify-center gap-4 sm:mt-17 mt-25">
                                                 <Button
                                                     type="button"
                                                     color="gradient"

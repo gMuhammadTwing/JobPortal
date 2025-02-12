@@ -293,8 +293,8 @@ export default function EditAgency() {
                                     />
                                 </div>
                             </div>
-                            {loading ? <div className="flex justify-center mr-5 mt-18"><InfinitySpin width={150} color="green" /></div> :
-                                <div className="flex justify-center gap-4 mt-15">
+                            {loading ? <div className="flex justify-center mr-5 sm:mt-18 mt-25"><InfinitySpin width={150} color="green" /></div> :
+                                <div className="flex justify-center gap-4 sm:mt-15 mt-25">
                                     <Button
                                         type="button"
                                         color="gradient"

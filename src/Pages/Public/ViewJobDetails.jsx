@@ -61,7 +61,7 @@ export default function ViewJobDetails() {
     }
     return (
         <div className="bg-white">
-            <JobReport isOpen={openModal} onClose={closeModal} />
+            <JobReport isOpen={openModal} onClose={closeModal} id={id?.id} />
             <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Job Details</h1>
                 <p>Find your dream job among these opportunities.</p>

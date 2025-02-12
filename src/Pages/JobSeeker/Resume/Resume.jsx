@@ -113,45 +113,22 @@ export default function Resume() {
                 {tableLoader ? <LoaderTable /> :
                     <>
                         <div className="overflow-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                            <div className="rounded-t-lg flex flex-col sm:flex-row justify-between items-center p-4 border-b cursor-pointer bg-white gap-4">
+                                <h3 className="text-xl font-bold text-[#ff0000]">Manage Your CVs</h3>
+                                <Button
+                                    type="button"
+                                    color="gradient"
+                                    variant="solid"
+                                    onClick={() => openModal()}
+                                >
+                                    <PlusCircleIcon className="w-6 h-6 text-white" />
+                                    Upload CV</Button>
+                            </div>
                             <div className="inline-block min-w-full align-middle">
                                 <div className="overflow-hidden">
                                     <table className="min-w-full divide-y divide-gray-300">
                                         <thead className="bg-white hidden sm:table-header-group">
-                                            <tr>
-                                                <th
-                                                    scope="col"
-                                                    className="py-5.5 pl-4 pr-3 text-left text-xl font-bold text-[#ff0000] sm:pl-6"
-                                                >
-                                                    Manage Your CVs
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                                >
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                                >
-                                                </th>
-                                                <th scope="col"
-                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                                >
-                                                    <Button
-                                                        type="button"
-                                                        color="gradient"
-                                                        variant="solid"
-                                                        onClick={() => openModal()}
-                                                    >
-                                                        <PlusCircleIcon className="w-6 h-6 text-white" />
-                                                        Upload CV</Button>
-                                                </th>
-                                            </tr>
+                                            
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white">
                                             {data?.data?.length > 0 ? (

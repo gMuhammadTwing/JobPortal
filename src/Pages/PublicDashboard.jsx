@@ -452,9 +452,9 @@ export default function PublicDashboard() {
                       >
                         <Link
                           to="/login"
-                          className='flex gap-1'
+                          className=''
                         >
-                          <LockClosedIcon className='w-5 h-5' />
+                          {/* <LockClosedIcon className='w-5 h-5' /> */}
                           Login
                         </Link>
                       </div>

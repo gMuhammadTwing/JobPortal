@@ -287,6 +287,14 @@ export default function Jobs() {
                                                             Posted At
                                                         </span>
                                                     </p>
+                                                    <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                                        <span>Posted By: {" "}</span>
+                                                        {item?.user_id?.name}
+                                                        {/* Tooltip */}
+                                                        <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                            Posted By
+                                                        </span>
+                                                    </p>
 
                                                     {/* Location */}
                                                     <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">

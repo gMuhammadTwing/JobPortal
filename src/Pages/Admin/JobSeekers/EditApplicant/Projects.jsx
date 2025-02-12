@@ -333,7 +333,7 @@ export default function Projects() {
                                     </div>
 
                                     {/* Action Buttons */}
-                                    {loading ? <div className="flex justify-center mr-5 mt-16"><InfinitySpin width={150} color="green" /></div> :
+                                    {loading ? <div className="flex justify-center mr-5 sm:mt-16 mt-24"><InfinitySpin width={150} color="green" /></div> :
                                         <div className="flex justify-center gap-4 sm:mt-17 mt-24">
                                             <Button
                                                 type="button"
