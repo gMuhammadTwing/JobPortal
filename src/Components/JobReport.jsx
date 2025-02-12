@@ -63,7 +63,6 @@ const JobReport = ({ isOpen, onClose }) => {
                             </DialogTitle>
 
                             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {/* Full Name */}
                                 <div className="sm:col-span-1">
                                     <label className="block text-sm font-medium text-gray-900">Full Name</label>
                                     <input
