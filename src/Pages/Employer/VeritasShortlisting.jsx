@@ -69,6 +69,9 @@ export default function VertiasShortlisting() {
                                                 Location
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                                Deadline
+                                            </th>
+                                            <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                                 Job Status
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
@@ -86,10 +89,15 @@ export default function VertiasShortlisting() {
                                                         </span>
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
-                                                        {item?.job_type?.job_family}
+                                                        {item?.job_type?.name}
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         {item?.location}
+                                                    </td>
+                                                    <td className="px-2 py-3 text-xs md:text-sm">
+                                                        {item?.job_end_date
+                                                            ? new Date(item.job_end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                                                            : ' '}
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         <span

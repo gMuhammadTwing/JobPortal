@@ -24,7 +24,7 @@ export default function Summary() {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
     const [tableLoader, setTableLoader] = useState(false);
-    const id= useParams();
+    const id = useParams();
     const user_id = id?.id;
     const formik = useFormik({
         initialValues: {
@@ -132,22 +132,22 @@ export default function Summary() {
                         ) : (
                             <>
                                 {!editSummary && !summary && (
-                                    <div className="relative">
-                                        <p className=" sm:text-lg">
+                                    <div className="relative flex flex-col sm:flex-row sm:items-center w-full">
+                                        <p className="text-sm sm:text-base md:text-lg lg:text-xl break-words w-full pr-10">
                                             {parser.parseFromString(data?.data[0]?.summary ?? '', "text/html").body.textContent.trim() !== ''
                                                 ? parser.parseFromString(data?.data[0]?.summary, "text/html").body.textContent.trim()
                                                 : 'No Summary has been added yet'}
-
                                         </p>
                                         <button
                                             type="button"
                                             onClick={() => setEditSummary(true)}
-                                            className="absolute top-0 right-4 hover:bg-gray-100 rounded-full p-2 transition"
+                                            className="absolute top-0 right-2 sm:right-2 hover:bg-gray-100 rounded-full p-2 transition"
                                         >
                                             <PencilIcon className="h-5 w-5 text-blue-500" />
                                         </button>
                                     </div>
                                 )}
+
 
                                 {/* Edit Summary Form */}
                                 {editSummary && (

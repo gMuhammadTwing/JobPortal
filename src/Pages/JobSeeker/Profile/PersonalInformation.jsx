@@ -35,7 +35,7 @@ export default function PersonalInformation() {
             gender: data?.data[0]?.gender,
             contact_number: data?.data[0]?.contact_number,
             years_experience: data?.data[0]?.years_experience,
-            expected_salary: data?.data[0]?.expected_salary,
+            // expected_salary: data?.data[0]?.expected_salary,
             address: data?.data[0]?.address,
             occupation: data?.data[0]?.occupation?.id,
             user_id: user_id,
@@ -267,10 +267,10 @@ export default function PersonalInformation() {
                                                     <h3 className="font-bold text-gray-700">Years of Experience</h3>
                                                     <p>{data?.data[0]?.years_experience}</p>
                                                 </div>
-                                                <div className="">
+                                                {/* <div className="">
                                                     <h3 className="font-bold text-gray-700">Expected Salary</h3>
                                                     <p>{data?.data[0]?.expected_salary}</p>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </>
@@ -398,7 +398,7 @@ export default function PersonalInformation() {
                                             })}
                                         </select> */}
                                             </div>
-                                            <div>
+                                            {/* <div>
                                                 <label htmlFor="expected_salary" className="block text-sm font-medium text-gray-900">Expected Salary</label>
                                                 <input
                                                     id="expected_salary"
@@ -412,7 +412,7 @@ export default function PersonalInformation() {
                                                 {formik.touched.expected_salary && formik.errors.expected_salary && (
                                                     <div className="text-red-600 text-sm">{formik.errors.expected_salary}</div>
                                                 )}
-                                            </div>
+                                            </div> */}
                                             <div className='col-span-full'>
                                                 <label htmlFor="address" className="block text-sm font-medium text-gray-900">Postal Address</label>
                                                 <textarea

@@ -248,7 +248,7 @@ export default function ViewJobs() {
                                                 <div className="p-3">
                                                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                                         <h3 className="text-xl font-semibold text-gray-900 sm:mb-0">
-                                                            Job Title: {item?.job_title} ({item?.expected_salary})
+                                                            Job Title: {item?.job_title}
                                                         </h3>
                                                         {!item?.has_applied ? (
                                                             <div className="flex flex-wrap gap-2">
@@ -391,10 +391,10 @@ export default function ViewJobs() {
                                     <MapPinIcon className="w-5 h-5" />
                                     {viewData?.location}
                                 </p>
-                                <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                {/* <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                     Salary: 
                                     {viewData?.expected_salary}
-                                </p>
+                                </p> */}
                             </div>
 
                             {/* Description Section */}

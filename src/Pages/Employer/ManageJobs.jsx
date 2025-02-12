@@ -29,7 +29,7 @@ export default function ManageJobs() {
       job_description: updateData?.job_description || "",
       job_qualification: updateData?.job_qualification || "",
       job_responsibilities: updateData?.job_responsibilities || "",
-      expected_salary: updateData?.expected_salary || "",
+      // expected_salary: updateData?.expected_salary || "",
       location: updateData?.location || "",
       job_status: updateData?.job_status === "Open" ? 1 : 2,
       veritas_to_short_list: updateData?.veritas_to_short_list,
@@ -212,15 +212,21 @@ export default function ManageJobs() {
                             <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm border-t p-2">
                               <div className="text-gray-600">
                                 <span>Job Type</span>
-                                <div className="text-black font-semibold">{item?.job_type?.job_family}</div>
+                                <div className="text-black font-semibold">{item?.job_type?.name}</div>
                               </div>
                               <div className="text-gray-600">
-                                <span>Salary</span>
-                                <div className="text-black font-semibold">{item?.expected_salary}</div>
+                                <span>Deadline</span>
+                                <div className="text-black font-semibold">{item?.job_end_date
+                                  ? new Date(item.job_end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                                  : ' '}</div>
                               </div>
                               <div className="text-gray-600">
                                 <span>Location</span>
                                 <div className="text-black font-semibold">{item?.location}</div>
+                              </div>
+                              <div className="text-gray-600">
+                                <span>Number of Applicants</span>
+                                <div className="text-black font-semibold">{item?.no_of_applicants}</div>
                               </div>
                               {/* <div className="text-gray-600">
                               <span>Expiry</span>
@@ -342,7 +348,7 @@ export default function ManageJobs() {
                 )}
               </div>
               {/* Salary Range */}
-              <div className="sm:col-span-2">
+              {/* <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-gray-900">
                   Salary Range
                 </label>
@@ -357,7 +363,7 @@ export default function ManageJobs() {
                 {formik.errors.expected_salary && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.expected_salary}</p>
                 )}
-              </div>
+              </div> */}
 
               {/* Location */}
               <div className="sm:col-span-2">

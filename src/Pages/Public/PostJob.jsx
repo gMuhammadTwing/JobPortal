@@ -129,7 +129,7 @@ export default function PostJob() {
                                                 {/* Full Name input */}
                                                 <div className="mb-2">
                                                     <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                                                        Full Name
+                                                        Company Name
                                                     </label>
                                                     <input
                                                         id="name"

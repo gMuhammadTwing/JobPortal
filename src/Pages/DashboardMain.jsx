@@ -54,6 +54,7 @@ export default function DashboardMain() {
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Blogs", href: "postblog", icon: NewspaperIcon, current: false },
         { name: "Contact Us", href: "contacts", single: "contacts", icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "Job Reports", href: "job_report", single: "job_report", icon: ChatBubbleLeftRightIcon, current: false },
         { name: "VertiasKWD Idea Incubator Form", href: "idea_incubator_form", single: "idea_incubator_form", icon: LightBulbIcon, current: false },
         { name: "VertiasKWD Opportunity", href: "admin_opportunity", single: "admin_opportunity", icon: BriefcaseIcon, current: false },
         { name: "VertiasKWD Projects", href: "admin_projects", single: "admin_projects", icon: GlobeAltIcon, current: false },

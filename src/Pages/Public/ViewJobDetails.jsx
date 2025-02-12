@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Skeleton } from "../../Components/Skeleton";
 import { ViewJobDetailsSkeleton } from "../../Components/ViewJobDetailsSkeleton";
 import GreatAboutUs from "./Components/GreatAboutUs";
+import JobReport from "../../Components/JobReport";
 
 export default function ViewJobDetails() {
     const [data, setData] = useState(null)
@@ -51,8 +52,16 @@ export default function ViewJobDetails() {
     const closeApplyInstructionsModal = () => {
         setApplyInstructionsModal(false);
     }
+    const [openModal, setOpenModal] = useState(false);
+    const closeModal = () => {
+        setOpenModal(false);
+    }
+    const openModalHandler = () => {
+        setOpenModal(true);
+    }
     return (
         <div className="bg-white">
+            <JobReport isOpen={openModal} onClose={closeModal} />
             <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Job Details</h1>
                 <p>Find your dream job among these opportunities.</p>
@@ -117,22 +126,29 @@ export default function ViewJobDetails() {
                                             <div className="font-semibold text-sm md:text-md">
                                                 {data?.company_id?.company_name}, {data?.location}
                                             </div>
+                                            <div className=" text-sm">
+                                                Deadline: {" "}{new Date(data?.job_end_date).toLocaleDateString("en-US", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "2-digit",
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="px-2">
                                     <div className="space-y-4">
-                                        <div className="flex items-center">
+                                        {/* <div className="flex items-center">
                                             <div>
                                                 <h2 className="text-lg font-semibold">Pay</h2>
                                                 <p className="text-gray-700">From {data?.expected_salary} a month</p>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="flex items-center">
                                             <div>
                                                 <h2 className="text-lg font-semibold">Job Type</h2>
-                                                <p className="text-gray-700">{data?.job_type?.job_family}</p>
+                                                <p className="text-gray-700">{data?.job_type?.name}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -249,6 +265,32 @@ export default function ViewJobDetails() {
                                             />
                                         </div>
                                     )}
+
+
+                                    <div className="px-2 mt-2 pt-2  border-t text-xl">
+                                        {/* <label htmlFor="" className="block font-semibold mb-2">
+                                            Important Safety Tips
+                                        </label>
+                                        <ul className="list-disc list-inside text-gray-700 text-sm">
+                                            <li>
+                                                Do not make any payment without confirming with the BrighterMonday Customer Support Team.
+                                            </li>
+                                            <li>
+                                                If you think this advert is not genuine, please report it via the Report Job link below.
+                                            </li>
+                                        </ul> */}
+                                        <div
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    openModalHandler();
+                                                }}
+                                                className="mt-2 border border-[#ff0000] text-[#ff0000] px-3 py-1 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                            >
+                                                Report Job
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </ul>

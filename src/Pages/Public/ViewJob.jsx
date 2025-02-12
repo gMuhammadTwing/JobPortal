@@ -80,7 +80,7 @@ export default function Jobs() {
                             </select>
                         </div>
                         {/* Salary Range */}
-                        <div className="sm:col-span-2">
+                        {/* <div className="sm:col-span-2">
                             <label className="block text-sm font-medium text-gray-900">
                                 Salary Range
                             </label>
@@ -92,7 +92,7 @@ export default function Jobs() {
                                 disabled={true}
                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                             />
-                        </div>
+                        </div> */}
 
                         {/* Location */}
                         <div className="sm:col-span-2">

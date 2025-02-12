@@ -141,9 +141,9 @@ export default function Jobs() {
                                         Job Type
                                     </label>
                                     <Select
-                                        options={dropDownValues?.job_family.map((value) => ({
+                                        options={dropDownValues?.industries.map((value) => ({
                                             value: value.id,
-                                            label: value.job_family,
+                                            label: value.name,
                                         }))}
                                         isClearable={true}
                                         isSearchable={true}
@@ -155,11 +155,11 @@ export default function Jobs() {
                                             );
                                         }}
                                         value={
-                                            dropDownValues?.job_family
+                                            dropDownValues?.industries
                                                 .filter((value) => value.id == formik.values.job_type)
                                                 .map((value) => ({
                                                     value: value.id,
-                                                    label: value.job_family,
+                                                    label: value.name,
                                                 }))[0] || null
                                         }
                                     // defaultValue={dropDownValues?.job_family
@@ -216,7 +216,7 @@ export default function Jobs() {
                                                     <div className="text-start">
                                                         <h1 className="font-semibold text-lg md:text-xl">{item?.job_title}</h1>
                                                         <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                                            {item?.job_type?.job_family}
+                                                            {item?.job_type?.name}
                                                         </span>
                                                     </div>
                                                     {!item?.has_applied ? (

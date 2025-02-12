@@ -14,6 +14,7 @@ import { Switch } from "@headlessui/react";
 import { toast } from "sonner";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import moment from 'moment';
+import { Link } from "react-router-dom";
 
 export default function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -104,11 +105,14 @@ export default function Index() {
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Job Type
                                                 </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Number of Applicants
-                                                </th>
-                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                </th> */}
+                                                {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Salary
+                                                </th> */}
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Deadline
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     location
@@ -118,6 +122,9 @@ export default function Index() {
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Featured
+                                                </th>
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Action
                                                 </th>
                                             </tr>
                                         </thead>
@@ -129,13 +136,18 @@ export default function Index() {
                                                             {item?.job_title}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            {item?.job_type?.job_family}
+                                                            {item?.job_type?.name}
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm">
+                                                        {/* <td className="px-3 py-4 text-sm">
                                                             {item?.no_of_applicants || ""}
-                                                        </td>
-                                                        <td className="px-3 py-4 text-sm">
+                                                        </td> */}
+                                                        {/* <td className="px-3 py-4 text-sm">
                                                             {item?.expected_salary}
+                                                        </td> */}
+                                                        <td className="px-3 py-4 text-sm">
+                                                            {item?.job_end_date
+                                                                ? new Date(item.job_end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                                                                : ' '}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {(item?.location)}
@@ -183,6 +195,18 @@ export default function Index() {
                                                                     />
                                                                 </Switch>
                                                             </div>
+                                                        </td>
+                                                        <td className="px-3 py-4 text-sm ">
+                                                            <Link
+                                                                onClick={() => {
+                                                                    if (item?.company_id?.id) {
+                                                                        localStorage.setItem("company_id", item.company_id.id);
+                                                                    }
+                                                                }}
+                                                                to={`/admin/list_job/job_details/${item?.user_id?.id}`}
+                                                            >
+                                                                <PencilIcon className="h-5 w-5 text-blue-600 cursor-pointer" />
+                                                            </Link>
                                                         </td>
                                                     </tr>
                                                 ))

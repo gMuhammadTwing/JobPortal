@@ -124,7 +124,7 @@ export default function Index() {
                                                         </span>
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
-                                                        {item?.job_type?.job_family}
+                                                        {item?.job_type?.name}
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         {item?.location}

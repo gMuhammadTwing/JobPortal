@@ -105,10 +105,10 @@ export default function ViewApplicant() {
                                             <h3 className="font-bold text-gray-700">Years of Experience</h3>
                                             <p className="text-sm text-gray-600">{data?.data[0]?.years_experience || "NA"}</p>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <h3 className="font-bold text-gray-700">Expected Salary</h3>
                                             <p className="text-sm text-gray-600">{data?.data[0]?.expected_salary || "NA"}</p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </>

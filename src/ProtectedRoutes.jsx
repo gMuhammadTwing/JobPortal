@@ -39,7 +39,8 @@ const ProtectedRoutes = ({ children }) => {
     "/admin/admin_charities": "admin_charities",
     "/admin/admin_idea_incubators": "admin_idea_incubators",
     "/admin/admin_volunteers": "admin_volunteers",
-    "/admin/admin_careers": "admin_careers"
+    "/admin/admin_careers": "admin_careers",
+    "/admin/job_report": "job_report",
   }
   const addJobSeekerDynamicRoute = (basePath, id, permission) => {
     const dynamicPath = `${basePath}/${id}`;
@@ -67,6 +68,7 @@ const ProtectedRoutes = ({ children }) => {
   addAdminDynamicRoute("/admin/agencies_list/view-agency", id?.id, "view_agency_profile");
   addAdminDynamicRoute("/admin/agencies_list/edit-agency", id?.id, "edit_agency_profile");
   addAdminDynamicRoute("/admin/shortlisting/view-applicant", id?.id, "view_shortlisted_applicant");
+  addAdminDynamicRoute("/admin/list_job/job_details", id?.id, "job_details");
 
 
   const isLoggedIn = localStorage.getItem('token');

@@ -41,6 +41,8 @@ export default function EditAgency() {
     const [loading, setLoading] = useState(false);
     const formik = useFormik({
         initialValues: {
+            certified_expiration_date: data?.certified_expiration_date || '',
+            nea_number: data?.nea_number || '',
             company_name: data?.company_name || '',
             company_industry: data?.company_industry || "",
             location: data?.location || "",
@@ -215,6 +217,40 @@ export default function EditAgency() {
                                     />
                                     {formik.touched.contact_email && formik.errors.contact_email && (
                                         <div className="text-red-500 text-sm">{formik.errors.contact_email}</div>
+                                    )}
+                                </div>
+                                <div>
+                                    <label htmlFor="nea_number" className="block text-sm font-medium text-gray-900">
+                                        NEA Number
+                                    </label>
+                                    <input
+                                        id="nea_number"
+                                        name="nea_number"
+                                        type="text"
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.nea_number}
+                                    />
+                                    {formik.touched.nea_number && formik.errors.nea_number && (
+                                        <div className="text-red-500 text-sm">{formik.errors.nea_number}</div>
+                                    )}
+                                </div>
+                                <div>
+                                    <label htmlFor="certified_expiration_date" className="block text-sm font-medium text-gray-900">
+                                        Employment Agency Certified Expiration Date
+                                    </label>
+                                    <input
+                                        id="certified_expiration_date"
+                                        name="certified_expiration_date"
+                                        type="date"
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.certified_expiration_date}
+                                    />
+                                    {formik.touched.certified_expiration_date && formik.errors.certified_expiration_date && (
+                                        <div className="text-red-500 text-sm">{formik.errors.certified_expiration_date}</div>
                                     )}
                                 </div>
 

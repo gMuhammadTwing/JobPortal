@@ -213,23 +213,34 @@ export default function EmployerProfile() {
                                                     </div>
                                                 </div>
 
-                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6">
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <MapPinIcon className="w-5 h-5" />
-                                                        {data?.location}
+                                                        {data?.location || "NA"}
                                                     </p>
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <UserCircleIcon className="w-5 h-5" />
-                                                        {data?.contact_person_name}
+                                                        {data?.contact_person_name || "N/A"}
+                                                    </p>
+
+                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                        <PhoneIcon className="w-5 h-5" />
+                                                        {data?.contact_number || "N/A"}
                                                     </p>
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <EnvelopeOpenIcon className="w-5 h-5" />
-                                                        {data?.contact_email}
+                                                        {data?.contact_email || "N/A"}
                                                     </p>
-                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                                        <PhoneIcon className="w-5 h-5" />
-                                                        {data?.contact_number}
-                                                    </p>
+                                                    {localStorage.role_id == 4 &&
+                                                        <>
+                                                            <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                                NEA Number: {data?.nea_number || "N/A"}
+                                                            </p>
+                                                            <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                                Employment Agency Certified Expiration Date:{" "}
+                                                                {data?.certified_expiration_date || "N/A"}
+                                                            </p>
+                                                        </>}
                                                 </div>
 
 

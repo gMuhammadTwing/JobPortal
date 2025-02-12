@@ -54,22 +54,42 @@ export default function FeaturedJobs() {
 
                                     {/* Details Section */}
                                     <div className="flex flex-wrap gap-4">
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                            <CalendarDateRangeIcon className="w-5 h-5" />
+                                        <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            <span>Posted At: {" "}</span>
                                             {new Date(item?.created_at).toLocaleDateString("en-US", {
                                                 year: "numeric",
                                                 month: "short",
                                                 day: "2-digit",
                                             })}
+                                            {/* Tooltip */}
+                                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                Posted At
+                                            </span>
                                         </p>
-                                       
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+
+                                        {/* Location */}
+                                        <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                             <MapPinIcon className="w-5 h-5" />
                                             {item?.location}
+                                            {/* Tooltip */}
+                                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                Job location
+                                            </span>
                                         </p>
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                            Salary: 
-                                            {item?.expected_salary}
+
+                                        {/* Deadline */}
+                                        <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            <CalendarDateRangeIcon className="w-5 h-5" />
+                                            <span>Deadline: {" "}</span>
+                                            {new Date(item?.job_end_date).toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "2-digit",
+                                            })}
+                                            {/* Tooltip */}
+                                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                Deadline
+                                            </span>
                                         </p>
                                     </div>
 

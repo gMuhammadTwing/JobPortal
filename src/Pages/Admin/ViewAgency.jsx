@@ -72,7 +72,7 @@ export default function ViewAgency() {
                             </div>
 
                             {/* Contact Information */}
-                            <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6">
                                 <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                     <MapPinIcon className="w-5 h-5" />
                                     {data?.location || "NA"}
@@ -81,15 +81,24 @@ export default function ViewAgency() {
                                     <UserCircleIcon className="w-5 h-5" />
                                     {data?.contact_person_name || "N/A"}
                                 </p>
+                                
+                                <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                    <PhoneIcon className="w-5 h-5" />
+                                    {data?.contact_number || "N/A"}
+                                </p>
                                 <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                     <EnvelopeOpenIcon className="w-5 h-5" />
                                     {data?.contact_email || "N/A"}
                                 </p>
                                 <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                    <PhoneIcon className="w-5 h-5" />
-                                    {data?.contact_number || "N/A"}
+                                    NEA Number: {data?.nea_number || "N/A"}
+                                </p>
+                                <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                    Employment Agency Certified Expiration Date:{" "}
+                                    {data?.certified_expiration_date || "N/A"}
                                 </p>
                             </div>
+
 
                             {/* Description Section */}
                             <div className="mt-6 border-t pt-4">

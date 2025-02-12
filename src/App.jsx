@@ -79,6 +79,8 @@ import AdminProjects from './Pages/Admin/About Us/Projects';
 import AdminInvestors from './Pages/Admin/About Us/Investors';
 import AdminCharities from './Pages/Admin/About Us/Charities';
 import Index from './Pages/Admin/IdeaIncubatorForm/Index';
+import JobReport from './Pages/Admin/Report Job/JobReport';
+import JobDetails from './Pages/Admin/Jobs/JobDetails';
 function App() {
   return (
     <DropdownProvider>
@@ -176,6 +178,8 @@ function App() {
               <Route path="admin_investors" element={<AdminInvestors/>} />
               <Route path="admin_projects" element={<AdminProjects/>} />
               <Route path="idea_incubator_form" element={<Index/>} />
+              <Route path="job_report" element={<JobReport/>} />
+              <Route path="list_job/job_details/:id" element={<JobDetails/>} />
             </Route>
 
             {/* No Permission Route */}
