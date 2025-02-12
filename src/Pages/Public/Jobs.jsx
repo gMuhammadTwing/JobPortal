@@ -10,35 +10,36 @@ import { Skeleton } from "../../Components/Skeleton";
 import ApplyModal from "../JobSeeker/ViewJobs/ApplyModal";
 import ApplyInstructionsModal from "../JobSeeker/ViewJobs/ApplyInstructionsModal";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import GreatAboutUs from "./Components/GreatAboutUs";
 import Testimonials from "./Components/Testimonials";
 import Select from 'react-select'
 import FooterHeader from "./Components/FooterHeader";
 export default function Jobs() {
-    const dropDownValues = useDropdownContext(); 
+    const param = useParams();
+    const dropDownValues = useDropdownContext();
     const [tableLoader, setTableLoader] = useState(false);
     const parser = new DOMParser();
     const [data, setData] = useState();
     const user_id = localStorage?.user_id || "";
     const [applyModal, setApplyModal] = useState(false);
     const [filters, setFilters] = useState({
-        job_title: "",
-        job_type: "",
+        job_title: param?.title || '',
+        job_type: param?.job_type || "",
         location: "",
         job_status: "",
     })
     const formik = useFormik({
         initialValues: {
-            job_title: "",
-            job_type: "",
+            job_title: param?.title || "",
+            job_type: param?.job_type || "",
             location: "",
             job_status: "",
         },
+        enableReinitialize: true,
         onSubmit: async (values) => {
             setFilters(values);
             fetchData(1, values);
-
         },
     });
 
@@ -96,14 +97,24 @@ export default function Jobs() {
             location: "",
             job_status: "",
         })
+        formik.setFieldValue("job_type", "");
+        formik.setFieldValue("job_title", "");
     }
     return (
         <div className="bg-white">
-            <div className=' text-center bg-[#FFF5F3] p-20'>
+            <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Jobs</h1>
                 <p>Ready to get hired?  Search latest Veritas Jobs                </p>
+                <div className="mt-5 flex justify-center cursor-pointer">
+                    <Link
+                        to={"/create-account"}
+                    >
+                        <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                            Register</span>
+                    </Link>
+                </div>
             </div>
-            <div className="container mx-auto max-w-5xl pb-15 min-h-screen mt-5">
+            <div className="container mx-auto max-w-5xl pb-15 mt-5">
                 <ApplyModal data={applyData} onClose={closeApplyModal} isOpen={applyModal} />
                 <ApplyInstructionsModal data={applyInstructionsData} onClose={closeApplyInstructionsModal} isOpen={applyInstructionsModal} />
                 {/* {!viewDetails ? ( */}
@@ -130,9 +141,9 @@ export default function Jobs() {
                                         Job Type
                                     </label>
                                     <Select
-                                        options={dropDownValues?.job_family.map((value) => ({
+                                        options={dropDownValues?.industries.map((value) => ({
                                             value: value.id,
-                                            label: value.job_family,
+                                            label: value.name,
                                         }))}
                                         isClearable={true}
                                         isSearchable={true}
@@ -143,22 +154,21 @@ export default function Jobs() {
                                                 selectedOption ? selectedOption.value : ""
                                             );
                                         }}
+                                        value={
+                                            dropDownValues?.industries
+                                                .filter((value) => value.id == formik.values.job_type)
+                                                .map((value) => ({
+                                                    value: value.id,
+                                                    label: value.name,
+                                                }))[0] || null
+                                        }
+                                    // defaultValue={dropDownValues?.job_family
+                                    //     .filter((value) => value.id == filters?.job_type)
+                                    //     .map((value) => ({
+                                    //         value: value.id,
+                                    //         label: value.job_family,
+                                    //     }))[0]}
                                     />
-                                    {/* <select
-                                        name="job_type"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.job_type}
-                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    >
-                                        <option value="">Select</option>
-                                        {dropDownValues?.job_family?.map((item) => {
-                                            return (
-                                                <option key={item.id} value={item?.id}>
-                                                    {item?.job_family}
-                                                </option>
-                                            );
-                                        })} */}
-                                    {/* </select> */}
                                 </div>
 
                                 {/* Location */}
@@ -192,127 +202,149 @@ export default function Jobs() {
                             </div>
                         </form>
                     </div>
+
                     <section className="lg:col-span-4">
                         {tableLoader ? (
                             <div className="mt-10"><Skeleton /></div>
                         ) : (
-                            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 mt-6 mb-4">
-                                {data && data?.data.map((item) => (
-                                    <div key={item.id} className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
-                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
-                                            <div className="text-start">
-                                                <h1 className="font-semibold text-lg md:text-xl">{item?.job_title}</h1>
-                                                <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                                    {item?.job_type?.job_family}
-                                                </span>
-                                            </div>
-                                            {!item?.has_applied ? (
-                                                <div className="flex flex-wrap gap-2">
-                                                    <span
-                                                        // onClick={() => {
-                                                        //     setViewDetails(true);
-                                                        //     setViewData(item);
-                                                        // }}
-                                                        className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
-                                                    >
-                                                        <Link to={`/view-job-details/${item?.id}`}> View Details </Link>
-                                                    </span>
-                                                    {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
-                                                        <button onClick={() => applyInstructionsHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
-                                                            Instruction to Apply
-                                                        </button>
-                                                    )}
-                                                    {item?.veritas_to_short_list === 1 && (
-                                                        (localStorage.token && localStorage.token != 'undefined') ? (
-                                                            <>
-
-                                                                <button
-                                                                    onClick={() => applyHandler(item)}
-                                                                    className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
-                                                                >
-                                                                    Apply for Job
-                                                                </button>
-                                                            </>
-                                                        ) : (
-                                                            <Link
-                                                                onClick={() => toast.info("Please login first to apply")}
-                                                                to={"/login"}
-                                                                className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
-                                                            >
-                                                                Apply for Job
-                                                            </Link>
-                                                        )
-
-                                                    )}
-                                                </div>
-                                            ) :
-                                                (
-                                                    <div className="flex flex-wrap gap-2">
-                                                        <span
-                                                            // onClick={() => {
-                                                            //     setViewDetails(true);
-                                                            //     setViewData(item);
-                                                            // }}
-                                                            className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
-                                                        >
-                                                            <Link to={`/view-job-details/${item?.id}`}> View Details </Link>
+                            data?.data?.length ?
+                                <>
+                                    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 mt-6 mb-4">
+                                        {data?.data && data?.data.map((item) => (
+                                            <div key={item.id} className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
+                                                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-center mb-4">
+                                                    <div className="text-start">
+                                                        <h1 className="font-semibold text-lg md:text-xl">{item?.job_title}</h1>
+                                                        <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                                            {item?.job_type?.name}
                                                         </span>
-                                                        <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Alreay Applied</div>
                                                     </div>
-                                                )}
-                                        </div>
+                                                    {!item?.has_applied ? (
+                                                        <div className="flex flex-wrap gap-2">
+                                                            <span
+                                                                // onClick={() => {
+                                                                //     setViewDetails(true);
+                                                                //     setViewData(item);
+                                                                // }}
+                                                                className="mt-2 bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                <Link to={`/view-job-details/${item?.id}`}> View Details </Link>
+                                                            </span>
+                                                            {(item?.veritas_to_short_list === 0 || item?.veritas_to_short_list === null) && (
+                                                                <button onClick={() => applyInstructionsHandler(item)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
+                                                                    Instruction to Apply
+                                                                </button>
+                                                            )}
+                                                            {item?.veritas_to_short_list === 1 && (
+                                                                (localStorage.token && localStorage.token != 'undefined') ? (
+                                                                    <>
+
+                                                                        <button
+                                                                            onClick={() => applyHandler(item)}
+                                                                            className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                        >
+                                                                            Apply for Job
+                                                                        </button>
+                                                                    </>
+                                                                ) : (
+                                                                    <Link
+                                                                        onClick={() => toast.info("Please login first to apply")}
+                                                                        to={"/login"}
+                                                                        className="bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        Apply for Job
+                                                                    </Link>
+                                                                )
+
+                                                            )}
+                                                        </div>
+                                                    ) :
+                                                        (
+                                                            <div className="flex flex-wrap gap-2">
+                                                                <span
+                                                                    className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                                                >
+                                                                    <Link to={`/view-job-details/${item?.id}`}> View Details </Link>
+                                                                </span>
+                                                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white">Already Applied</div>
+                                                            </div>
+                                                        )}
+                                                </div>
 
 
-                                        {/* Details Section */}
-                                        <div className="flex flex-wrap gap-4">
-                                            <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                                <CalendarDateRangeIcon className="w-5 h-5" />
-                                                {new Date(item?.created_at).toLocaleDateString("en-US", {
-                                                    year: "numeric",
-                                                    month: "short",
-                                                    day: "2-digit",
-                                                })}
-                                            </p>
-                                            <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                                <CurrencyDollarIcon className="w-5 h-5" />
-                                                {item?.expected_salary}
-                                            </p>
-                                            <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                                <MapPinIcon className="w-5 h-5" />
-                                                {item?.location}
-                                            </p>
-                                        </div>
+                                                {/* Details Section */}
+                                                <div className="flex flex-wrap gap-4">
+                                                    {/* Posted At */}
+                                                    <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                                        <span>Posted At: {" "}</span>
+                                                        {new Date(item?.created_at).toLocaleDateString("en-US", {
+                                                            year: "numeric",
+                                                            month: "short",
+                                                            day: "2-digit",
+                                                        })}
+                                                        {/* Tooltip */}
+                                                        <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                            Posted At
+                                                        </span>
+                                                    </p>
 
-                                        {/* Description Section */}
-                                        <div className=" mt-2 pt-2">
-                                            <label htmlFor="description" className="block font-semibold mb-2">
-                                                Job Description
-                                            </label>
-                                            <div className="text-sm text-gray-600 line-clamp-3">
-                                                {parser.parseFromString(item?.job_description || "", "text/html").body.textContent.trim()}
+                                                    {/* Location */}
+                                                    <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                                        <MapPinIcon className="w-5 h-5" />
+                                                        {item?.location}
+                                                        {/* Tooltip */}
+                                                        <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                            Job location
+                                                        </span>
+                                                    </p>
+
+                                                    {/* Deadline */}
+                                                    <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                                        <CalendarDateRangeIcon className="w-5 h-5" />
+                                                        <span>Deadline: {" "}</span>
+                                                        {new Date(item?.job_end_date).toLocaleDateString("en-US", {
+                                                            year: "numeric",
+                                                            month: "short",
+                                                            day: "2-digit",
+                                                        })}
+                                                        {/* Tooltip */}
+                                                        <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                            Deadline
+                                                        </span>
+                                                    </p>
+                                                </div>
+
+
+                                                {/* Description Section */}
+                                                <div className=" mt-2 pt-2">
+                                                    <label htmlFor="description" className="block font-semibold mb-2">
+                                                        Job Description
+                                                    </label>
+                                                    <div className="text-sm text-gray-600 line-clamp-3">
+                                                        {parser.parseFromString(item?.job_description || "", "text/html").body.textContent.trim()}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                ))}
+                                        ))}
 
-                            </ul>
+                                    </ul>
+
+                                </>
+                                :
+                                <div className="text-center mt-10 font-semibold text-2xl text-[#ff0000]">
+                                    No Job Found
+                                </div>
                         )}
+                        <Pagination
+                            page={pageNumber}
+                            total={data?.total}
+                            page_size={data?.per_page}
+                        />
                     </section>
 
-                    <Pagination
-                        page={pageNumber}
-                        total={data?.total}
-                        page_size={data?.per_page}
-                    />
                 </div>
-                {/* // ) :
-                //     (
-                //         <JobDetails data={viewData} />
-                //     )} */}
             </div>
-            <FooterHeader/>
-            {/* <GreatAboutUs /> */}
-            {/* <Testimonials/> */}
+            <FooterHeader />
         </div>
     );
 }

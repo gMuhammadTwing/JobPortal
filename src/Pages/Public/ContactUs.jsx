@@ -1,4 +1,4 @@
-import { MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { Button } from "../../Components/Button";
 import ReactQuill from "react-quill";
@@ -30,7 +30,6 @@ export default function ContactUs() {
             // message: Yup.string().required("Message is required"),
         }),
         onSubmit: async (values) => {
-            console.log("Form submitted:", values);
             try {
                 const response = await axiosInstance.post(`/api/contact_us/store`, values);
                 if (response) {
@@ -48,53 +47,16 @@ export default function ContactUs() {
     return (
         <div className="bg-white min-h-screen">
             {/* Header Section */}
-            <div className=' text-center bg-[#FFF5F3] p-20'>
+            <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Contact Us</h1>
                 <p>We’d love to hear from you! Whether you have questions, feedback, or need assistance</p>
             </div>
 
             {/* Content Section */}
-            <div className="max-w-6xl mx-auto p-6 mt-10">
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 items-center">
-                    {/* Text Section */}
-                    <div className="flex flex-col justify-center text-center md:text-left">
-                        <h1 className="font-semibold text-2xl mb-4">Singapore (Asia-Pacific HQ)</h1>
-                        <div className="flex items-start gap-3 mb-2">
-                            <MapPinIcon className="w-6 h-6 text-orange-600" />
-                            <div>
-                                <strong>Address:</strong>
-                                <br />
-                                60 Anson Road
-                                <br />
-                                Mapletree Anson, #10-03
-                                <br />
-                                Singapore 079914
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3 mb-4">
-                            <PhoneIcon className="w-6 h-6 text-orange-600" />
-                            <div>
-                                <strong>Phone:</strong>{" "}
-                                <span className="text-blue-700 underline">
-                                    +65 6955 6000
-                                </span>
-                            </div>
-                        </div>
-                        <div className="flex justify-center md:justify-start gap-4">
-                            {/* Social Media Buttons */}
-                            {["facebook-f", "twitter", "instagram", "linkedin"].map((icon) => (
-                                <button
-                                    key={icon}
-                                    className="flex items-center justify-center w-10 h-10 text-orange-600 rounded-full hover:bg-orange-600 hover:text-white transition-all"
-                                >
-                                    <i className={`fa-brands fa-${icon}`} aria-hidden="true"></i>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
+            <div className="max-w-[78rem] mx-auto p-6 mt-20 mb-20">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <div className="border shadow-1 rounded-lg p-4">
-                        <form className="" onSubmit={formik.handleSubmit}>
+                        <form className="grid grid-cols-1 gap-2 md:grid-cols-2" onSubmit={formik.handleSubmit}>
                             {/* Full Name */}
                             <div className="mb-2">
                                 <label htmlFor="full_name" className="block text-sm font-medium text-gray-900">
@@ -153,7 +115,7 @@ export default function ContactUs() {
                             </div>
 
                             {/* Message */}
-                            <div className="">
+                            <div className="col-span-full">
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-900">
                                     Message
                                 </label>
@@ -173,7 +135,7 @@ export default function ContactUs() {
                             </div>
 
                             {/* Submit Button */}
-                            <div className="text-center mt-12">
+                            <div className="col-span-full text-center mt-0">
                                 <Button
                                     type="submit"
                                     color="gradient"
@@ -183,9 +145,15 @@ export default function ContactUs() {
                             </div>
                         </form>
                     </div>
+                    <div className="space-y-4 text-center">
+                        <div className="font-semibold">Have any questions? </div>
+                        <div className="">We’re ready to help! We'd like to hear from you - here's how you can contact us:  </div>
+                        <div className="font-semibold">General questions </div>
+                        <div className="">For general queries, please email us at <span className="text-[#ff0000]">support@veritaskenya.com</span>  </div>
+                    </div>
 
                     {/* Image Section */}
-                    <div className="flex justify-center items-center">
+                    {/* <div className="flex justify-center items-center">
                         <img
                             src="https://www.hubspot.com/hubfs/Contact%20Us/singapore.jpg"
                             alt="Singapore Office"
@@ -198,10 +166,10 @@ export default function ContactUs() {
                             alt="Singapore Office"
                             className="rounded-lg border-white shadow-lg w-full h-auto object-cover"
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            <FooterHeader/>
+            <FooterHeader />
             {/* <GreatAboutUs/> */}
             {/* <Testimonials/> */}
         </div>

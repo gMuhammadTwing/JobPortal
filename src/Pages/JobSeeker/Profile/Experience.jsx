@@ -29,7 +29,7 @@ export default function Experience() {
             job_title: updateData?.job_title || "",
             company: updateData?.company || "",
             industry: updateData?.industry || "",
-            salary: updateData?.salary || "",
+            // salary: updateData?.salary || "",
             location: updateData?.location || "",
             managed_team: updateData?.managed_team || true,
             start_date: updateData?.start_date || "",
@@ -43,7 +43,7 @@ export default function Experience() {
             job_title: Yup.string().required("Job Title is required"),
             company: Yup.string().required("Company is required"),
             industry: Yup.string().required("Industry is required"),
-            salary: Yup.string().required("Salary is required"),
+            // salary: Yup.string().required("Salary is required"),
             location: Yup.string().required("Location is required"),
             start_date: Yup.date().required("Start Date is required"),
             // end_date: Yup.date().when("currently_working_here", {
@@ -276,7 +276,7 @@ export default function Experience() {
                                                 <p className="text-red-500 text-sm">{formik.errors.industry}</p>
                                             )}
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <label htmlFor="salary" className="block text-sm font-medium text-gray-900">Salary *</label>
                                             <input
                                                 type="text"
@@ -290,7 +290,7 @@ export default function Experience() {
                                             {formik.touched.salary && formik.errors.salary && (
                                                 <p className="text-red-500 text-sm">{formik.errors.salary}</p>
                                             )}
-                                        </div>
+                                        </div> */}
 
                                         <div>
                                             <label htmlFor="location" className="block text-sm font-medium text-gray-900">Location *</label>

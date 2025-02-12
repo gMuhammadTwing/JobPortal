@@ -24,8 +24,6 @@ export default function ViewEmployer() {
             const response = await axiosInstance.get(`api/employer_company_profile?user_id=${id?.id}`);
             if (response) {
                 setData(response?.data[0])
-                console.log(response?.data);
-
             }
         } catch (error) {
             handleError(error);
@@ -37,21 +35,22 @@ export default function ViewEmployer() {
         fetchData();
     }, [])
     return (
-        <div className="flex justify-center px-4 sm:px-6 lg:px-8 min-h-screen bg-gray-100 mt-4">
-            <div className="p-6 w-full max-w-5xl bg-white shadow-lg rounded-lg">
+        <div className="flex justify-center px-4 sm:px-6 lg:px-8 min-h-[33rem] bg-gray-100 mt-4">
+            <div className="p-6 w-full max-w-5xl bg-white rounded-lg">
                 <div className="flex items-center justify-between border-b pb-4">
                     <h3 className="font-bold text-xl text-[#ff0000]">View Employer Profile</h3>
                 </div>
                 {loader ? <ViewProfileSkeleton /> :
                     <div className="mt-6">
-                        {data ? (
+                        {/* {data ? ( */}
                             <>
                                 <div className="flex flex-col sm:flex-row items-center gap-6">
                                     {/* Profile Picture */}
                                     <div className="relative group">
                                         <img
                                             src={
-                                                (app_vars?.domain?.fileURL + data?.logo) ||
+                                                data?.logo?
+                                                (app_vars?.domain?.fileURL + data?.logo) :
                                                 userLogo
                                             }
                                             alt="Company Logo"
@@ -102,9 +101,9 @@ export default function ViewEmployer() {
                                     </div>
                                 </div>
                             </>
-                        ) :
+                        {/* ) :
                             <div>No Data Available</div>
-                        }
+                        } */}
                     </div>
                 }
             </div>

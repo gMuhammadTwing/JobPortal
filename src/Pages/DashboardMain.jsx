@@ -4,16 +4,18 @@ import {
     ChatBubbleLeftRightIcon,
     ClipboardDocumentCheckIcon,
     ClipboardDocumentListIcon,
-    CogIcon,
     CreditCardIcon,
     CurrencyDollarIcon,
     DocumentTextIcon,
-    FlagIcon,
-    HomeModernIcon,
     NewspaperIcon,
     UserCircleIcon,
     UsersIcon,
     ViewfinderCircleIcon,
+    LightBulbIcon,
+    HandRaisedIcon,
+    HeartIcon,
+    GlobeAltIcon,
+    AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -30,7 +32,7 @@ export default function DashboardMain() {
         { name: "Search Jobs", href: "view_job_list", icon: ViewfinderCircleIcon, current: false },
         { name: "Applied Jobs", href: "applied_job_list", single: "applied_job_list", icon: BriefcaseIcon, current: false },
         // { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
-        { name: "Coursework", href: "coursework/all", single:'coursework', icon: ClipboardDocumentListIcon, current: false },
+        { name: "Coursework", href: "coursework/all", single: 'coursework', icon: ClipboardDocumentListIcon, current: false },
     ]
     const navigation = [
         { name: "Employer Profile", href: "profile", icon: UserCircleIcon, current: true },
@@ -43,15 +45,25 @@ export default function DashboardMain() {
         // { name: "CMS Section", href: "cms-section", icon: CogIcon, current: false },
     ];
     const adminNav = [
-        { name: "Employees", href: "employees", icon: UserCircleIcon, current: true },
-        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single:'admin_job_seekers', current: true },
-        { name: "Employer Agency List", href: "agencies_list", single: 'agencies_list', icon: BuildingOfficeIcon, current: false },
+        { name: "Employer", href: "employees", icon: UserCircleIcon, current: true },
+        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single: "admin_job_seekers", current: true },
+        { name: "Employment Agency", href: "agencies_list", single: "agencies_list", icon: BuildingOfficeIcon, current: false },
+        { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
         { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
         { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Blogs", href: "postblog", icon: NewspaperIcon, current: false },
-        { name: "Contact Us", href: "contacts", single: 'contacts', icon: ChatBubbleLeftRightIcon, current: false },
-    ]
+        { name: "Contact Us", href: "contacts", single: "contacts", icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "Job Reports", href: "job_report", single: "job_report", icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "VertiasKWD Idea Incubator Form", href: "idea_incubator_form", single: "idea_incubator_form", icon: LightBulbIcon, current: false },
+        { name: "VertiasKWD Opportunity", href: "admin_opportunity", single: "admin_opportunity", icon: BriefcaseIcon, current: false },
+        { name: "VertiasKWD Projects", href: "admin_projects", single: "admin_projects", icon: GlobeAltIcon, current: false },
+        { name: "VertiasKWD Investors", href: "admin_investors", single: "admin_investors", icon: CurrencyDollarIcon, current: false },
+        { name: "VertiasKWD Charities", href: "admin_charities", single: "admin_charities", icon: HeartIcon, current: false },
+        { name: "VertiasKWD Idea Incubators", href: "admin_idea_incubators", single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
+        { name: "VertiasKWD Volunteers", href: "admin_volunteers", single: "admin_volunteers", icon: HandRaisedIcon, current: false },
+        { name: "VertiasKWD Careers", href: "admin_careers", single: "admin_careers", icon: AcademicCapIcon, current: false },
+    ];
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
@@ -64,7 +76,7 @@ export default function DashboardMain() {
         <div className="container mx-auto flex relative">
 
             {/* Mobile Sidebar Toggle */}
-            <div className="fixed top-12 left-9 md:hidden">
+            <div className="fixed top-12 left-5 md:hidden">
                 <button
                     className="m-4 p-2 text-white bg-[#ff0000] rounded-md"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -75,12 +87,36 @@ export default function DashboardMain() {
 
             {/* Sidebar */}
             <aside
-                className={classNames(
-                    "z-10 fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg  overflow-y-auto transform transition-transform",
-                    sidebarOpen ? "translate-x-0" : "-translate-x-full",
-                    "md:relative md:translate-x-0 md:w-72"
-                )}
-            >
+                // className={classNames(
+                //     "z-10 fixed inset-y-16 left-0 md:left-[6rem] md:inset-y-10 md:h-[33rem] w-66 bg-white rounded-lg  overflow-y-auto transform transition-transform",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                //     "md:relative md:translate-x-0 md:w-72"
+                // )}
+                // className={classNames(
+                //     "z-10 fixed inset-y-16 left-0 xl:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                //     "md:translate-x-0 md:w-66 md:relative"
+                // )}
+                // className={classNames(
+                //     "z-10 fixed inset-y-16 left-0 xl:left-[8rem] lg:left-[6rem] md:left-0 md:top-10 md:h-[33rem] w-66 bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                //     sidebarOpen ? "translate-x-0" : "-translate-x-full",
+                //     "md:translate-x-0 md:w-64 lg:w-72 xl:w-80 md:relative"
+                // )}
+
+                    className={classNames(
+                        // Base styles for mobile
+                        "z-10 fixed inset-y-16 left-0 w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                        sidebarOpen ? "translate-x-0" : "-translate-x-full", // Toggle visibility on mobile
+                        // Medium screens (768px and above)
+                        "md:translate-x-0 md:relative md:top-10 md:h-[33rem] md:w-66",
+                        // Large screens (1024px and above)
+                        "lg:left-[0rem] lg:w-66", // Adjusted for 1024px screens
+                        // Extra large screens (1280px and above)
+                        "xl:left-[0rem] xl:w-66", // Adjusted for 1440px screens
+                        // 2XL screens (1536px and above)
+                        "2xl:left-[6rem] 2xl:w-66" // Optional: For even larger screens
+                    )}
+                >
                 <nav className="p-4">
                     <ul role="list" className="space-y-1">
                         {location.pathname.includes('/employer') && (
@@ -143,7 +179,7 @@ export default function DashboardMain() {
                         {location.pathname.includes('/admin') && (
 
                             adminNav.map((item) => (
-                                <li key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
+                                <li className="" key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
                                     <Link
                                         to={item.href}
                                         className={classNames(
@@ -172,10 +208,10 @@ export default function DashboardMain() {
                 </nav>
             </aside>
 
-            {/* Main Content */}
-            <main className="flex-1 bg-gray-100 p-6 overflow-hidden">
-                <Outlet />
-            </main>
-        </div>
+            {/* Main Content */ }
+    <main className="flex-1 bg-gray-100 p-6 overflow-hidden">
+        <Outlet />
+    </main>
+        </div >
     );
 }

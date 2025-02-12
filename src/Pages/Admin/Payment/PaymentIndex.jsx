@@ -13,6 +13,7 @@ import axiosInstance, { handleError } from "../../../axiosInstance";
 import { Switch } from "@headlessui/react";
 import { toast } from "sonner";
 import { LoaderTable } from "../../../Components/LoaderTable";
+import moment from 'moment';
 
 export default function PaymentIndex() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,19 +23,18 @@ export default function PaymentIndex() {
     const [payments, setPayments] = useState();
     const [tableLoader, setTableLoader] = useState(false);
     const fetchData = async (pageNum) => {
-        setTableLoader(true)
+        setTableLoader(true);
         try {
-            const response = await axiosInstance.get(`api/user_payment_history?page=${pageNum}`);
-            if (response) {
-                setPayments(response?.data)
+            const { data } = await axiosInstance.get(`api/user_payment_history?page=${pageNum}`);
+            if (data) {
+                setPayments(data);
             }
         } catch (error) {
             handleError(error);
         } finally {
-            setTableLoader(false)
+            setTableLoader(false);
         }
-    }
-
+    };
     const pageNumber = async (pageNum) => {
         fetchData(pageNum);
     };
@@ -72,7 +72,7 @@ export default function PaymentIndex() {
     };
 
     return (
-        <div className="container mx-auto max-w-5xl h-screen mt-4">
+        <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             {/* <AddPayment isOpen={isModalOpen} onClose={closeModal} /> */}
             <div className="pb-15">
                 {/* <div className="text-center pb-9 text-3xl font-bold leading-7 text-[#ff0000] sm:truncate sm:tracking-tight">
@@ -117,6 +117,16 @@ export default function PaymentIndex() {
                                                     className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                                 >
                                                 </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                                >
+                                                </th>
                                             </tr>
                                             <tr>
                                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
@@ -127,6 +137,12 @@ export default function PaymentIndex() {
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Amount Paid
+                                                </th>
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Reference Number
+                                                </th>
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Payment Date
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Payment Status
@@ -154,7 +170,7 @@ export default function PaymentIndex() {
                                                                         case 3:
                                                                             return 'Employer';
                                                                         case 4:
-                                                                            return 'Employer Agency';
+                                                                            return 'Employment Agency';
                                                                         default:
                                                                             return 'Unknown Role';
                                                                     }
@@ -164,6 +180,12 @@ export default function PaymentIndex() {
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {payment?.amount.toFixed(2)}
+                                                        </td>
+                                                        <td className="px-3 py-4 text-sm">
+                                                            {payment?.reference_number}
+                                                        </td>
+                                                        <td className="px-3 py-4 text-sm">
+                                                            {moment(payment?.created_at).format('MM-DD-YYYY HH:mm:ss A') || ""}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             {payment?.payment_status ? (
@@ -213,7 +235,7 @@ export default function PaymentIndex() {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan="5" className="text-center py-4">
+                                                    <td colSpan="7" className="text-center py-4">
                                                         <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                                                             No Payments Found
                                                         </span>
@@ -225,13 +247,14 @@ export default function PaymentIndex() {
                                 </div>
                             </div>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={payments?.total}
-                            page_size={payments?.per_page}
-                        />
+
                     </>
                 }
+                <Pagination
+                    page={pageNumber}
+                    total={payments?.total}
+                    page_size={payments?.per_page}
+                />
             </div>
         </div>
     );

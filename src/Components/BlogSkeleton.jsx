@@ -2,7 +2,7 @@ import React from 'react';
 
 export const BlogSkeleton = () => {
     return (
-        <div className="min-h-screen p-4">
+        <div className=" p-4">
             {/* <div className="font-medium text-4xl text-center bg-[#FFF5F3] p-10 animate-pulse">
                 <div className="h-10 bg-gray-300 rounded-md w-1/3 mx-auto"></div>
             </div> */}

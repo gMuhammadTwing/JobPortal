@@ -33,7 +33,6 @@ export default function Index() {
             const response = await axiosInstance.get(`/api/blogs?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -66,34 +65,21 @@ export default function Index() {
                 <Toaster richColors />
                 {tableLoader ? <LoaderTable /> :
                     <>
-                        <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                        <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white">
+                            <div className="flex flex-col sm:flex-row justify-between items-center p-4 cursor-pointer bg-white rounded-t-lg gap-4">
+                                <h3 className="text-xl font-bold text-[#ff0000]">Blogs Management</h3>
+                                <Button
+                                    type="button"
+                                    onClick={() => setOpenModal(true)}
+                                    color="gradient"
+                                    variant="solid"
+                                    className="mr-1 mb-2"
+                                >
+                                    Add Blog
+                                </Button>
+                            </div>
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-white">
-                                    <tr className="border-b border-gray-300">
-                                        <th
-                                            scope="col"
-                                            className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
-                                        >
-                                            Blogs Management
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                        >
-                                        </th>
-                                        <th scope="col"
-                                            className="">
-                                            <Button
-                                                type="button"
-                                                onClick={() => setOpenModal(true)}
-                                                color="gradient"
-                                                variant="solid"
-                                                className="mr-1 mb-2"
-                                            >
-                                                Add Blog
-                                            </Button>
-                                        </th>
-                                    </tr>
                                     <tr>
                                         <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Blog Title
@@ -139,12 +125,13 @@ export default function Index() {
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
                     </>}
+                <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                />
             </div>
         </div>
     );

@@ -9,24 +9,22 @@ import {
 import { Link } from "react-router-dom";
 import Pagination from "../../../Components/Pagination";
 import { useEffect, useState } from "react";
-import { DocumentIcon } from "@heroicons/react/24/outline";
 import { Button } from "../../../Components/Button";
 import { toast, Toaster } from "sonner";
 import axiosInstance, { handleError } from "../../../axiosInstance";
-import app_vars from "../../../config";
-import DeleteModal from "../../../Components/DeleteModal";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import { Switch } from "@headlessui/react";
 export default function Index() {
     const [data, setData] = useState([])
     const [tableLoader, setTableLoader] = useState(false);
-    const fetchData = async (page) => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const fetchData = async (page, name, email) => {
         setTableLoader(true)
         try {
-            const response = await axiosInstance.get(`/api/admin_user_list?role_id=4&page=${page}`);
+            const response = await axiosInstance.get(`/api/admin_user_list?role_id=4&page=${page}&name=${name}&email=${email}`);
             if (response) {
                 setData(response?.data)
-                console.log(response);
             }
         } catch (error) {
             handleError(error);
@@ -35,29 +33,93 @@ export default function Index() {
         }
     }
     useEffect(() => {
-        fetchData(1);
+        fetchData(1, name, email);
     }, []);
 
     const pageNumber = async (pageNum) => {
-        fetchData(pageNum);
+        fetchData(pageNum, name, email);
     };
+    const searchEmail = (item) => {
+        setEmail(item)
+        fetchData(1, name, item)
+    }
+    const searchName = (item) => {
+        setName(item)
+        fetchData(1, item, email)
+    }
+    const clearFilter = () => {
+        setName("");
+        setEmail("");
+        fetchData(1, "", "")
+    }
     return (
         <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             <div className="pb-15">
                 <Toaster richColors />
-                {tableLoader ? <LoaderTable /> :
-                    <>
-                        <div className="overflow-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-                            <div className="inline-block min-w-full align-middle">
-                                <div className="overflow-hidden">
+                <>
+                    <div className="overflow-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                        <div className="inline-block min-w-full align-middle">
+                            <div className="overflow-hidden">
+                                <div className="bg-white py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]">
+                                    List of Employment Agency
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4 font-normal">
+                                        {/* Name Field */}
+                                        <div>
+                                            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
+                                                Name
+                                            </label>
+                                            <input
+                                                id="name"
+                                                name="name"
+                                                type="text"
+                                                placeholder="Search"
+                                                onChange={(e) => searchName(e.target.value)}
+                                                value={name}
+                                                className="block w-full py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                            />
+                                        </div>
+
+                                        {/* Email Field */}
+                                        <div>
+                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                                                Email
+                                            </label>
+                                            <input
+                                                id="email"
+                                                name="email"
+                                                type="text"
+                                                placeholder="Search"
+                                                onChange={(e) => searchEmail(e.target.value)}
+                                                value={email}
+                                                className="block w-full py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                            />
+                                        </div>
+
+                                        {/* Clear Filter Button */}
+                                        <div className="flex sm:items-end mt-4 sm:mt-0">
+                                            <Button
+                                                type="button"
+                                                color="gradient"
+                                                variant="outline"
+                                                onClick={() => clearFilter()}
+                                                className="w-full sm:w-auto"
+                                            >
+                                                Clear Filter
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {tableLoader ? <LoaderTable /> :
                                     <table className="min-w-full divide-y divide-gray-300">
                                         <thead className="bg-white hidden sm:table-header-group">
-                                            <tr>
+                                            {/* <tr>
                                                 <th
                                                     scope="col"
                                                     className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                                 >
-                                                    List of Employer Agency
+                                                    List of Employment Agency
                                                 </th>
                                                 <th
                                                     scope="col"
@@ -68,11 +130,11 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
 
                                                 </th>
-                                                <th scope="col"
+                                                {/* <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
 
-                                                </th>
-                                            </tr>
+                                                </th> */}
+                                            {/* </tr> */}
                                             <tr className="border-t">
                                                 <th
                                                     scope="col"
@@ -83,10 +145,10 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Email
                                                 </th>
-                                                <th scope="col"
+                                                {/* <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Unique Name
-                                                </th>
+                                                    UIC
+                                                </th> */}
                                                 <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Action
@@ -108,11 +170,12 @@ export default function Index() {
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             {item?.email}
                                                         </td>
-                                                        <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                                        {/* <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
                                                             {item?.unique_name}
-                                                        </td>
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                        </td> */}
+                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6 flex">
                                                             <Link to={"view-agency/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                            <Link to={"edit-agency/" + item?.id}><PencilIcon className="w-5 h-5 cursor-pointer text-blue-500" title="Edit" /></Link>
                                                         </td>
                                                     </tr>
                                                 ))
@@ -127,17 +190,16 @@ export default function Index() {
                                             )}
                                         </tbody>
                                     </table>
-                                </div>
+                                }
                             </div>
                         </div>
-
-                        <div className="mt-2">
-                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
-                        </div>
-                    </>
-                }
+                    </div>
+                </>
+                <div className="mt-2">
+                    <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                </div>
             </div>
-        </div>
+        </div >
 
     );
 }

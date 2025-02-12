@@ -26,7 +26,6 @@ export default function VertiasShortlisting() {
             const response = await axiosInstance.get(`/api/employer_veritas_short_listing/job_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -46,40 +45,19 @@ export default function VertiasShortlisting() {
     return (
         <div className="container mx-auto px-4 max-w-5xl h-screen mt-4">
             {!jobs ? (
+
                 <div>
+
                     <Toaster richColors />
                     {tableLoader ? <LoaderTable /> :
                         <>
                             <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                                <div className="rounded-t-lg flex flex-col sm:flex-row justify-between items-center p-4 border-b cursor-pointer bg-white gap-4">
+                                    <h3 className="text-xl font-bold text-[#ff0000]">Veritas Shortlisting</h3>
+                                </div>
                                 <table className="min-w-full divide-y divide-gray-300">
                                     <thead className="bg-white">
-                                        <tr className="border-b border-gray-300">
-                                            <th
-                                                scope="col"
-                                                className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
-                                            >
-                                                Veritas Shortlisting
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                            <th scope="col"
-                                                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
 
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
-                                            >
-                                            </th>
-                                        </tr>
                                         <tr>
                                             <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                 Job Title
@@ -89,6 +67,9 @@ export default function VertiasShortlisting() {
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                                 Location
+                                            </th>
+                                            <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                                Deadline
                                             </th>
                                             <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                                 Job Status
@@ -108,10 +89,15 @@ export default function VertiasShortlisting() {
                                                         </span>
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
-                                                        {item?.job_type?.job_family}
+                                                        {item?.job_type?.name}
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         {item?.location}
+                                                    </td>
+                                                    <td className="px-2 py-3 text-xs md:text-sm">
+                                                        {item?.job_end_date
+                                                            ? new Date(item.job_end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                                                            : ' '}
                                                     </td>
                                                     <td className="px-2 py-3 text-xs md:text-sm">
                                                         <span
@@ -149,12 +135,13 @@ export default function VertiasShortlisting() {
                                     </tbody>
                                 </table>
                             </div>
-                            <Pagination
-                                page={pageNumber}
-                                total={data?.total}
-                                page_size={data?.per_page}
-                            />
+
                         </>}
+                    <Pagination
+                        page={pageNumber}
+                        total={data?.total}
+                        page_size={data?.per_page}
+                    />
                 </div>
             ) : (
                 <Applicants job_id={job_id} />

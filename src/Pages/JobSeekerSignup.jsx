@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { InfinitySpin } from "react-loader-spinner";
 import { useState } from "react";
 import { Skeleton } from "../Components/Skeleton";
+import auth from "../auth";
 
 // Validation schema
 const validationSchema = Yup.object({
@@ -49,6 +50,7 @@ export default function JobSeekerSignup() {
                 resetForm();
                 setRegistered(true)
                 getPaymentInstructions();
+                auth.login(values)
             }
         } catch (error) {
             handleError(error);
@@ -57,6 +59,7 @@ export default function JobSeekerSignup() {
         }
     };
     const [paymentInstructions, setPaymentInstructions] = useState()
+    const [reference_number, setReferenceNumber] = useState(null)
     const parser = new DOMParser();
     const navigate = useNavigate();
     const getPaymentInstructions = async () => {
@@ -73,23 +76,30 @@ export default function JobSeekerSignup() {
         }
     };
     const submitPayment = async () => {
-        setLoader(true)
-        const json = {
-            user_id: user_id,
-            amount: paymentInstructions?.amount,
+        if (!reference_number) {
+            toast.error("Reference Number is required");
         }
-        try {
-            const response = await axiosInstance.post(`api/user_payment_history/store`, json);
-            if (response) {
-                toast.success("Payment submitted successfully");
-                localStorage.setItem("payment",false);
+        else {
+            setLoader(true)
+            const json = {
+                user_id: user_id,
+                amount: paymentInstructions?.amount,
+                reference_number: reference_number
             }
-        } catch (error) {
-            handleError(error);
-        }
-        finally {
-            setLoader(false)
-            navigate("/login")
+            try {
+                const response = await axiosInstance.post(`api/user_payment_history/store`, json);
+                if (response) {
+                    toast.success("Payment submitted successfully");
+                    localStorage.setItem("payment", false);
+                }
+            } catch (error) {
+                handleError(error);
+            }
+            finally {
+                setLoader(false)
+                navigate("/home")
+                window.location.reload();
+            }
         }
     }
     return (
@@ -151,7 +161,7 @@ export default function JobSeekerSignup() {
                                                             variant="solid"
                                                             className="inline-block w-full text-white"
                                                         >
-                                                            Sign Up
+                                                            Next
                                                         </Button>
                                                     )}
                                                 </div>
@@ -177,13 +187,13 @@ export default function JobSeekerSignup() {
                                     </div>
                                 </>
                             ) :
-                                <div className="">
+                                <div className="h-[20rem]">
                                     {tableLoader ? <Skeleton /> :
                                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                             <div className="col-span-full text-gray-600">
                                                 <strong>Payment Instructions:</strong>
                                                 <ul className="list-disc pl-5 space-y-1">
-                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()}</li>
+                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()} - Amount: {paymentInstructions?.amount}</li>
                                                     {/* <li>Bank Details: </li>
                                                 <li>Account No: 03120376631</li>
                                                 <li>Account Title: Joe Joe</li>
@@ -193,13 +203,14 @@ export default function JobSeekerSignup() {
 
                                             <div className="sm:col-span-4">
                                                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                                                    Amount
+                                                    Add Reference Number
                                                 </label>
                                                 <input
                                                     type="text"
-                                                    name="amount"
-                                                    value={paymentInstructions?.amount}
-                                                    disabled
+                                                    name="reference_number"
+                                                    onChange={(e) => setReferenceNumber(e.target.value)}
+                                                    value={reference_number}
+                                                    required
                                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                                 />
                                             </div>
@@ -232,10 +243,10 @@ export default function JobSeekerSignup() {
                         <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#008604] to-[#008604]">
                             <div className="px-4 py-8 text-white md:p-12">
                                 <h4 className="mb-6 text-xl font-semibold">
-                                    Welcome to our community
+                                    Veritas Jobs
                                 </h4>
                                 <p className="text-sm">
-                                    Join us and start your journey. Experience a platform where growth and collaboration are at the core of our values.
+                                    Veritas Jobs is your go-to platform for the latest job listings and career opportunities in Kenya. As a trusted job board, we are committed to helping job seekers find their next opportunity.
                                 </p>
                             </div>
                         </div>

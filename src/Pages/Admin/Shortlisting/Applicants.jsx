@@ -24,7 +24,6 @@ export default function Applicants({ job_id }) {
             const response = await axiosInstance.get(`/api/job_application?job_id=${job_id}&page=${pageNum}`);
             if (response) {
                 setData(response?.data)
-                console.log("data: ", response?.data);
 
             }
         } catch (error) {
@@ -197,13 +196,14 @@ export default function Applicants({ job_id }) {
                                 </div>
                             </div>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
                     </>
                 }
+                <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                />
             </div>
         </div>
     );

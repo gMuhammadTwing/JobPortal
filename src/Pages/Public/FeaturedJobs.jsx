@@ -5,6 +5,7 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import Pagination from "../../Components/Pagination";
 import { BlogSkeleton } from "../../Components/BlogSkeleton";
+import { toast } from "sonner";
 
 export default function FeaturedJobs() {
     const [data, setData] = useState();
@@ -16,7 +17,6 @@ export default function FeaturedJobs() {
             const response = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -54,50 +54,100 @@ export default function FeaturedJobs() {
 
                                     {/* Details Section */}
                                     <div className="flex flex-wrap gap-4">
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                            <CalendarDateRangeIcon className="w-5 h-5" />
+                                        <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            <span>Posted At: {" "}</span>
                                             {new Date(item?.created_at).toLocaleDateString("en-US", {
                                                 year: "numeric",
                                                 month: "short",
                                                 day: "2-digit",
                                             })}
+                                            {/* Tooltip */}
+                                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                Posted At
+                                            </span>
                                         </p>
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                            <CurrencyDollarIcon className="w-5 h-5" />
-                                            {item?.expected_salary}
-                                        </p>
-                                        <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+
+                                        {/* Location */}
+                                        <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                             <MapPinIcon className="w-5 h-5" />
                                             {item?.location}
+                                            {/* Tooltip */}
+                                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                Job location
+                                            </span>
+                                        </p>
+
+                                        {/* Deadline */}
+                                        <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            <CalendarDateRangeIcon className="w-5 h-5" />
+                                            <span>Deadline: {" "}</span>
+                                            {new Date(item?.job_end_date).toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "2-digit",
+                                            })}
+                                            {/* Tooltip */}
+                                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
+                                                Deadline
+                                            </span>
                                         </p>
                                     </div>
 
                                     {/* Description Section */}
-                                    <div className=" mt-2 pt-2">
+                                    {/* <div className=" mt-2 pt-2">
                                         <label htmlFor="description" className="block font-semibold mb-2">
                                             Job Description
                                         </label>
                                         <div className="text-sm text-gray-600 line-clamp-3 h-20">
                                             {parser.parseFromString(item?.job_description || "", "text/html").body.textContent.trim()}
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="border-t mt-4 pt-4">
                                         <div className="flex justify-center -mt-px divide-x divide-gray-300">
                                             <div className="flex items-center justify-center w-1/2 space-x-2">
-                                                {/* <ArrowDownOnSquareIcon aria-hidden="true" className="h-5 w-5 text-gray-400" /> */}
-                                                <Link to={`/view-job-details/${item?.id}`}>
-                                                    <button
-                                                        className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                {(localStorage?.token) ? (
+                                                    (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
+                                                        <Link to={`/view-job-details/${item?.id}`}>
+                                                            <button
+                                                                className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                            >
+                                                                View Details
+                                                            </button>
+                                                        </Link>
+                                                        :
+                                                        (
+                                                            localStorage.payment == 'false' ?
+                                                                < Link to={`/home`}>
+                                                                    <button
+                                                                        onClick={() => toast.info("Payment Approval Pending")}
+                                                                        className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        View Details
+                                                                    </button>
+                                                                </Link>
+                                                                :
+                                                                < Link to={`/payment-alert`}>
+                                                                    <button
+                                                                        onClick={() => toast.info("Payment Approval Pending")}
+                                                                        className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                                    >
+                                                                        View Details
+                                                                    </button>
+                                                                </Link>
+                                                        )
+                                                ) : (
+                                                    <Link to={`/login`}
+                                                        onClick={() => toast.info("Please login first")}
                                                     >
-                                                        View Details
-                                                    </button>
-                                                </Link>
+                                                        <button
+                                                            className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
+                                                        >
+                                                            View Details
+                                                        </button>
+                                                    </Link>
+                                                )}
                                             </div>
-                                            {/* <div className="flex items-center justify-center w-1/2 space-x-2">
-                                            <ArrowDownRightIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
-                                            <Link to={"/view-job-details"}><span>Apply</span></Link>
-                                        </div> */}
                                         </div>
                                     </div>
                                 </div>
@@ -105,14 +155,44 @@ export default function FeaturedJobs() {
 
                     </ul>
                     <div className="mt-10 flex justify-center cursor-pointer">
-                        <Link
-                            to={"/jobs"}
-                        >
-                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                Show more jobs</span>
-                        </Link></div>
+                        {localStorage?.token ? (
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
+                                <Link
+                                    to={"/jobs"}
+                                >
+                                    <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                        Show more jobs</span>
+                                </Link> :
+                                (
+                                    localStorage.payment == 'false' ?
+                                        <Link
+                                            onClick={() => toast.info("Payment Approval Pending")}
+                                            to={"/home"}
+                                        >
+                                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                                Show more jobs</span>
+                                        </Link>
+                                        :
+                                        <Link
+                                            onClick={() => toast.info("Payment Approval Pending")}
+                                            to={"/payment-alert"}
+                                        >
+                                            <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                                Show more jobs</span>
+                                        </Link>
+                                )
+                        ) : (
+                            <Link
+                                onClick={() => toast.info("Please login first")}
+                                to={"/login"}
+                            >
+                                <span className="bg-white text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                    Show more jobs</span>
+                            </Link>
+                        )}
+                    </div>
                 </>
             }
-        </div>
+        </div >
     )
 }

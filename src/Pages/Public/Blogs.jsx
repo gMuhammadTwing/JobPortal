@@ -20,7 +20,6 @@ export default function Blogs() {
             const response = await axiosInstance.get(`/api/blogs_list?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -40,9 +39,9 @@ export default function Blogs() {
 
     return (
         <div className="bg-white min-h-screen">
-            <div className=' text-center bg-[#FFF5F3] p-20'>
+            <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Blogs</h1>
-                <p>Discover Insights and Stories that Spark Your Curiosity</p>
+                <p className="mt-1">Unlock Careers, Hire Talent: Veritas Jobs Connects You</p>
             </div>
             {tableLoader ? <BlogSkeleton /> :
                 <div className=" mx-auto max-w-[75rem] p-4 mt-10">
@@ -75,10 +74,10 @@ export default function Blogs() {
                                                     day: "2-digit",
                                                 })}
                                             </p>
-                                            <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
+                                            {/* <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                                 <EyeIcon className="w-5 h-5" />
                                                 15 Views
-                                            </p>
+                                            </p> */}
                                             {/* <p className="flex text-sm md:text-md text-gray-600 items-center gap-x-2">
                                                 <PencilSquareIcon className="w-5 h-5" />
                                                 {item?.proposals} Proposals

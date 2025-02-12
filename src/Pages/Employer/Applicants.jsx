@@ -23,8 +23,6 @@ export default function Applicants({ job_id }) {
             const response = await axiosInstance.get(`/api/employer_veritas_short_listing/applicant_list?job_id=${job_id}&page=${pageNum}`);
             if (response) {
                 setData(response?.data)
-                console.log("data: ", response?.data);
-
             }
         } catch (error) {
             handleError(error);
@@ -98,7 +96,7 @@ export default function Applicants({ job_id }) {
                                             {data?.data.length > 0 ? (
                                                 data?.data.map((item, index) => (
                                                     <tr key={index}>
-                                                       
+
                                                         {/* <td className="px-3 py-4 text-sm">
                                                             {item?.job_id?.job_type?.job_family}
                                                         </td> */}
@@ -122,7 +120,7 @@ export default function Applicants({ job_id }) {
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
                                                             <div className="flex items-center space-x-2">
-                                                                <Link to={"view-applicant/"+item?.user_id?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                                <Link to={"view-applicant/" + item?.user_id?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                                 {/* <PencilIcon className="w-5 h-5 text-blue-500" title="Edit" /> */}
                                                                 {/* <TrashIcon className="w-5 h-5 text-red-600" title="Delete Payment" /> */}
                                                             </div>
@@ -143,13 +141,14 @@ export default function Applicants({ job_id }) {
                                 </div>
                             </div>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
                     </>
                 }
+                <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                />
             </div>
         </div>
     );

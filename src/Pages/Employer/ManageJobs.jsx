@@ -29,19 +29,20 @@ export default function ManageJobs() {
       job_description: updateData?.job_description || "",
       job_qualification: updateData?.job_qualification || "",
       job_responsibilities: updateData?.job_responsibilities || "",
-      expected_salary: updateData?.expected_salary || "",
+      // expected_salary: updateData?.expected_salary || "",
       location: updateData?.location || "",
       job_status: updateData?.job_status === "Open" ? 1 : 2,
       veritas_to_short_list: updateData?.veritas_to_short_list,
       job_instructions_to_apply: updateData?.job_instructions_to_apply || "",
       user_id: user_id,
       company_id: company_id,
+      job_end_date: updateData?.job_end_date || ""
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
       job_title: Yup.string().required("Job title is required"),
       job_type: Yup.string().required("Job type is required"),
-      expected_salary: Yup.string().required("Salary range is required"),
+      // expected_salary: Yup.string().required("Salary range is required"),
       location: Yup.string().required("Location is required"),
       job_status: Yup.string().required("Job status is required"),
       // veritas_to_short_list: Yup.string().required("This field is required"),
@@ -90,7 +91,6 @@ export default function ManageJobs() {
         const response = await axiosInstance.get(`api/employer_company_job_posting?user_id=${user_id}&company_id=${company_id}&page=${page}`);
         if (response) {
           setData(response.data)
-          console.log(response.data);
 
         }
       } catch (error) {
@@ -110,6 +110,8 @@ export default function ManageJobs() {
   }
   const [view, setView] = useState(false);
   const viewDetails = (item) => {
+    console.log(item);
+
     openModal();
     setUpdateData(item)
     setView(true)
@@ -144,110 +146,118 @@ export default function ManageJobs() {
                 (<div className='text-red font-semibold border text-center mt-10 bg-red-100 border-red-100'>Please Update Profile Information First</div>)
               }
             </div> */}
-            <div
-              className="flex justify-between p-4 border-b cursor-pointer bg-white rounded-lg"
-            >
-              <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">Job Management</h3>
-              {company_id != "undefined" && (
-                <div className='mt-2'>
-                  <Button
-                    type="button"
-                    color="gradient"
-                    variant="solid"
-                    className={"mb-4"}
-                    onClick={() => {
-                      setUpdateData(null)
-                      openModal()
-                    }}
-                  >
-                    <PlusCircleIcon className="w-6 h-6 text-white" />
-                    Create New Job</Button>
-                </div>
-              )
-              }
+            <div className="flex flex-col sm:flex-row justify-between items-center p-4 border-b cursor-pointer bg-white rounded-lg gap-4">
+              <h3 className="text-xl font-bold text-[#ff0000]">Job Management</h3>
+
+              {company_id !== "undefined" && (
+                <Button
+                  type="button"
+                  color="gradient"
+                  variant="solid"
+                  className="flex items-center gap-2 px-4 py-2"
+                  onClick={() => {
+                    setUpdateData(null);
+                    openModal();
+                  }}
+                >
+                  <PlusCircleIcon className="w-6 h-6 text-white" />
+                  Create New Job
+                </Button>
+              )}
             </div>
-            {company_id != "undefined" && (
-              tableLoader ? <LoaderTable /> :
-                <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1 rounded-lg">
-                  {data?.data?.length > 0 ? (
-                    data?.data?.map((item) => (
-                      <>
-                        <article className="border rounded-lg p-4 shadow bg-white">
-                          {/* Post Date and Category */}
-                          <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
-                            <span
-                              className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status === "Open"
-                                ? "bg-green-100 text-green-600 hover:bg-green-100"
-                                : "bg-red-100 text-red-600 hover:bg-red-100"
-                                }`}
-                            >
-                              {item?.job_status === "Open" ? "Open" : "Closed"}
-                            </span>
 
-                            <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
-                            <div className="flex flex-wrap sm:flex-row gap-2">
-                              <button onClick={() => viewDetails(item)} className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
-                                View Details
-                              </button>
-                              <button
-                                onClick={() => update(item)}
-                                className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"
+            {company_id != "undefined" ?
+              (
+                tableLoader ? <LoaderTable /> :
+                  <div className="grid grid-cols-1 gap-1 sm:grid-cols-1 lg:grid-cols-1 rounded-lg">
+                    {data?.data?.length > 0 ? (
+                      data?.data?.map((item) => (
+                        <>
+                          <article className="border rounded-lg p-4 shadow bg-white">
+                            {/* Post Date and Category */}
+                            <div className="flex flex-wrap items-center justify-between text-xs sm:gap-x-4">
+                              <span
+                                className={`relative rounded-full px-3 py-1.5 font-medium ${item?.job_status === "Open"
+                                  ? "bg-green-100 text-green-600 hover:bg-green-100"
+                                  : "bg-red-100 text-red-600 hover:bg-red-100"
+                                  }`}
                               >
-                                Update Details
-                              </button>
-                            </div>
-                          </div>
+                                {item?.job_status === "Open" ? "Open" : "Closed"}
+                              </span>
 
-                          {/* Title and Description */}
-                          <div className="mt-3 border-t p-2">
-                            {/* <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3> */}
-                            <p className='mt-2'>Description</p>
-                            <p className="mt-1 text-sm text-gray-600 line-clamp-3">
-                              {parser.parseFromString(item?.job_description, "text/html").body.textContent.trim()}
-                            </p>
-                          </div>
+                              <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3>
+                              <div className="flex flex-wrap sm:flex-row gap-2">
+                                <button onClick={() => viewDetails(item)} className="bg-red-50 text-[#ff0000] px-4 py-2 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out">
+                                  View Details
+                                </button>
+                                <button
+                                  onClick={() => update(item)}
+                                  className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"
+                                >
+                                  Update Details
+                                </button>
+                              </div>
+                            </div>
 
-                          {/* Additional Info */}
-                          <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm border-t p-2">
-                            <div className="text-gray-600">
-                              <span>Job Type</span>
-                              <div className="text-black font-semibold">{item?.job_type?.job_family}</div>
+                            {/* Title and Description */}
+                            <div className="mt-3 border-t p-2">
+                              {/* <h3 className="text-xl font-semibold text-gray-900 items-center text-center">Job Title: {item?.job_title}</h3> */}
+                              <p className='mt-2'>Description</p>
+                              <p className="mt-1 text-sm text-gray-600 line-clamp-3">
+                                {parser.parseFromString(item?.job_description, "text/html").body.textContent.trim()}
+                              </p>
                             </div>
-                            <div className="text-gray-600">
-                              <span>Salary</span>
-                              <div className="text-black font-semibold">{item?.expected_salary}</div>
-                            </div>
-                            <div className="text-gray-600">
-                              <span>Location</span>
-                              <div className="text-black font-semibold">{item?.location}</div>
-                            </div>
-                            {/* <div className="text-gray-600">
+
+                            {/* Additional Info */}
+                            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm border-t p-2">
+                              <div className="text-gray-600">
+                                <span>Job Type</span>
+                                <div className="text-black font-semibold">{item?.job_type?.name}</div>
+                              </div>
+                              <div className="text-gray-600">
+                                <span>Deadline</span>
+                                <div className="text-black font-semibold">{item?.job_end_date
+                                  ? new Date(item.job_end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                                  : ' '}</div>
+                              </div>
+                              <div className="text-gray-600">
+                                <span>Location</span>
+                                <div className="text-black font-semibold">{item?.location}</div>
+                              </div>
+                              <div className="text-gray-600">
+                                <span>Number of Applicants</span>
+                                <div className="text-black font-semibold">{item?.no_of_applicants}</div>
+                              </div>
+                              {/* <div className="text-gray-600">
                               <span>Expiry</span>
                               <div className="text-black font-semibold">4 Days Left</div>
                             </div> */}
-                          </div>
-                        </article>
-                      </>
-                    ))
-                  ) : (
-                    <table className="min-w-full rounded-lg bg-white">
-                      <tr>
-                        <td colSpan="5" className="text-center py-4">
-                          <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                            No Record Found
-                          </span>
-                        </td>
-                      </tr>
-                    </table>
+                            </div>
+                          </article>
+                        </>
+                      ))
+                    ) : (
+                      <table className="min-w-full rounded-lg bg-white">
+                        <tr>
+                          <td colSpan="5" className="text-center py-4">
+                            <span className="inline-flex text-xl items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              No Record Found
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
 
-                  )}
-                  <Pagination
-                    page={pageNumber}
-                    total={data?.total}
-                    page_size={data?.per_page}
-                  />
-                </div>
-            )}
+                    )}
+                    <Pagination
+                      page={pageNumber}
+                      total={data?.total}
+                      page_size={data?.per_page}
+                    />
+                  </div>
+              ) :
+              (
+                <div className='mt-20 text-[#ff0000] text-center font-semibold'>Please Create the Profile first</div>
+              )}
           </div>
         )}
 
@@ -298,11 +308,12 @@ export default function ManageJobs() {
                   Job Type
                 </label>
                 <Select
-                  options={dropDownValues?.job_family.map((value) => ({
+                  options={dropDownValues?.industries.map((value) => ({
                     value: value.id,
-                    label: value.job_family,
+                    label: value.name,
                   }))}
                   isClearable={true}
+                  isDisabled={view}
                   isSearchable={true}
                   className=" text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                   onChange={(selectedOption) => {
@@ -310,6 +321,10 @@ export default function ManageJobs() {
                       "job_type",
                       selectedOption ? selectedOption.value : ""
                     );
+                  }}
+                  defaultValue={{
+                    value: updateData?.job_type?.id,
+                    label: updateData?.job_type?.name
                   }}
                 />
                 {/* <select
@@ -333,7 +348,7 @@ export default function ManageJobs() {
                 )}
               </div>
               {/* Salary Range */}
-              <div className="sm:col-span-2">
+              {/* <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-gray-900">
                   Salary Range
                 </label>
@@ -348,7 +363,7 @@ export default function ManageJobs() {
                 {formik.errors.expected_salary && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.expected_salary}</p>
                 )}
-              </div>
+              </div> */}
 
               {/* Location */}
               <div className="sm:col-span-2">
@@ -365,6 +380,23 @@ export default function ManageJobs() {
                 />
                 {formik.errors.location && (
                   <p className="mt-2 text-sm text-red-600">{formik.errors.location}</p>
+                )}
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium text-gray-900">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  name="job_end_date"
+                  onChange={formik.handleChange}
+                  value={formik.values.job_end_date}
+                  disabled={view}
+                  className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                />
+                {formik.errors.job_end_date && (
+                  <p className="mt-2 text-sm text-red-600">{formik.errors.job_end_date}</p>
                 )}
               </div>
 
@@ -451,7 +483,7 @@ export default function ManageJobs() {
               </div>
 
               {/* Job_qualification */}
-              <div className="sm:col-span-full mt-7">
+              <div className="sm:col-span-full mt-20 sm:mt-7">
                 <label className="block text-sm font-medium text-gray-900">
                   Job Qualification
                 </label>
@@ -487,7 +519,7 @@ export default function ManageJobs() {
                   <p className="mt-2 text-sm text-red-600">{formik.errors.job_qualification}</p>
                 )}
               </div>
-              <div className="sm:col-span-full mt-7">
+              <div className="sm:col-span-full mt-20 sm:mt-7">
                 <label className="block text-sm font-medium text-gray-900">
                   Job Responsibilities
                 </label>
@@ -525,7 +557,7 @@ export default function ManageJobs() {
               </div>
 
               {/* Instruction to Apply */}
-              <div className="sm:col-span-full mt-7">
+              <div className="sm:col-span-full mt-20 sm:mt-7">
                 <label className="block text-sm font-medium text-gray-900">
                   Instruction to Apply
                 </label>
@@ -567,7 +599,7 @@ export default function ManageJobs() {
             </div>
 
 
-            <div className="mt-15 sm:mt-15 sm:flex sm:flex-row-reverse">
+            <div className="mt-25 sm:mt-15 sm:flex sm:flex-row-reverse">
               {!view && (
                 formik.isSubmitting ? (
                   <InfinitySpin height={120} width={120} color="green" />

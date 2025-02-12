@@ -30,6 +30,17 @@ const ProtectedRoutes = ({ children }) => {
     "/admin/shortlisting": "manage_shortlisting",
     "/admin/payments": "manage_payments",
     "/admin/contacts": "view_contacts",
+    "/admin/list_job": "jobs_list",
+    "/admin/job_management": "manage_jobs",
+    "/admin/idea_incubator_form": "idea_incubator_form",
+    "/admin/admin_opportunity": "admin_opportunity",
+    "/admin/admin_projects": "admin_projects",
+    "/admin/admin_investors": "admin_investors",
+    "/admin/admin_charities": "admin_charities",
+    "/admin/admin_idea_incubators": "admin_idea_incubators",
+    "/admin/admin_volunteers": "admin_volunteers",
+    "/admin/admin_careers": "admin_careers",
+    "/admin/job_report": "job_report",
   }
   const addJobSeekerDynamicRoute = (basePath, id, permission) => {
     const dynamicPath = `${basePath}/${id}`;
@@ -44,25 +55,24 @@ const ProtectedRoutes = ({ children }) => {
     const dynamicPath = `${basePath}/${id}`;
     adminPermission[dynamicPath] = permission;
   };
-  console.log(id);
-  
+
   addJobSeekerDynamicRoute("/job-seeker/coursework", id?.id, "view_coursework");
 
   addEmployerDynamicRoute("/employer/resume_bank/view-applicant", id?.id, "view_applicant");
   addEmployerDynamicRoute("/employer/veritas_shortlisting/view-applicant", id?.id, "view_applicant");
 
   addAdminDynamicRoute("/admin/employees/view-employer", id?.id, "view_employer_profile");
+  addAdminDynamicRoute("/admin/employees/edit-employer", id?.id, "edit_employer_profile");
   addAdminDynamicRoute("/admin/job_seekers/view-applicant", id?.id, "view_applicant_profile");
+  addAdminDynamicRoute("/admin/job_seekers/edit-applicant", id?.id, "edit_applicant_profile");
   addAdminDynamicRoute("/admin/agencies_list/view-agency", id?.id, "view_agency_profile");
+  addAdminDynamicRoute("/admin/agencies_list/edit-agency", id?.id, "edit_agency_profile");
   addAdminDynamicRoute("/admin/shortlisting/view-applicant", id?.id, "view_shortlisted_applicant");
-  
+  addAdminDynamicRoute("/admin/list_job/job_details", id?.id, "job_details");
+
 
   const isLoggedIn = localStorage.getItem('token');
   const location = useLocation();
-  // console.log(location);
-  // const cleanedPathname = location.pathname.replace(/\/[^/]+$/, ''); // Removes the last segment after a slash
-  // console.log(cleanedPathname);
-
   const empRequiredPermission = employerPermission[location.pathname];
   const jobseekerRequiredPermission = JobSeekerPermission[location.pathname];
   const adminRequiredPermissions = adminPermission[location.pathname];

@@ -11,7 +11,6 @@ import DeleteModal from "../../../Components/DeleteModal";
 
 export default function Index() {
     const param = useParams();
-    console.log("Param: ", param);
 
     const institute_id = param?.id != "all" ? param?.id : "";
 
@@ -31,8 +30,6 @@ export default function Index() {
             const response = await axiosInstance.get(`api/job_seeker_course_work?institute_id=${institute_id}&page=${page}`);
             if (response) {
                 setData(response?.data)
-                console.log(response?.data);
-
             }
         } catch (error) {
             handleError(error);
@@ -155,13 +152,14 @@ export default function Index() {
                                 </div>
                             </div>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
                     </>
                 }
+                <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                />
             </div>
         </div>
     );

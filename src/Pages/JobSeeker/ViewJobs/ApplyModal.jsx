@@ -27,7 +27,8 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
-
+            cover_letter: Yup.string()
+                .required('Cover letter is required')
         }),
         onSubmit: async (values) => {
             setLoader(true);
@@ -72,7 +73,7 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
                                     className="text-base font-semibold leading-6 text-gray-900"
                                 >
                                     <div className="col-span-full">
-                                        <h3 className="text-xl font-semibold text-gray-900 items-start text-start">{data?.job_title} ({data?.expected_salary})</h3>
+                                        <h3 className="text-xl font-semibold text-gray-900 items-start text-start">{data?.job_title} </h3>
                                         <p className=''> {data?.company_id?.company_name} , {data?.location}</p>
                                     </div>
                                 </DialogTitle>

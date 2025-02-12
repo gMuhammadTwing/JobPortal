@@ -3,7 +3,7 @@ import { Bars3Icon, BellIcon, LockClosedIcon, LockOpenIcon, UserCircleIcon, User
 import { CustomScroll } from 'react-custom-scroll'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Footer from './Footer'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import auth from '../auth'
 import app_vars from '../config'
@@ -18,52 +18,65 @@ const user = {
 const navigation = [
   { name: 'Home', href: 'home', current: true },
   { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
-  { name: 'Blogs', href: 'blogs_comments', single: 'blogs_comments', current: false },
-  // { name: 'Reports', href: '#', current: false },
   {
-    // href: 'employer/profile'
-    name: 'Employer', single: 'employer', current: false,
+    name: 'Job Seeker',
+    single: 'job-seeker',
+    current: false,
     subItems: [
-      { name: "Post a Job", href: 'post_job' },
-      { name: "Resume Bank", href: 'resume_bank' },
-      { name: "Veritas Shortlisting", href: 'veritas_shortlisting' },
-      { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
-    ]
-  },
-  {
-    name: 'Job Seeker', single: 'job-seeker', current: false,
-    subItems: [
-      { name: "Subscribe", href: 'subscribe' },
+      ...(localStorage.role_id == 2 ? [{ name: "My Profile", href: 'job-seeker/profile' }] : []),
+      { name: "Register", href: 'subscribe' },
       { name: "Submit your Resume", href: 'submit_resume' },
-      { name: "Why Subscribe?", href: 'why_subscribe' },
-      { name: "Find a job", href: 'jobs', single: 'find', current: false },
+      { name: "Why Register?", href: 'why_subscribe' },
+      {
+        name: "Find a job",
+        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : 'login',
+        single: 'find',
+        current: false
+      },
       { name: "Join our Community", href: 'join_community' },
     ]
   },
+
+
+  {
+    name: 'Employer',
+    single: 'employer',
+    current: false,
+    subItems: (localStorage.token && (localStorage?.role_id == 3 || localStorage.role_id == 4))
+      ?
+      [{ name: "My Profile", href: 'employer/profile' },
+      { name: "Post a Job", href: 'employer/job_management' },
+      { name: "Resume Bank", href: 'employer/resume_bank' },
+      { name: "Veritas Shortlisting", href: 'employer/veritas_shortlisting' },
+      { name: "Find Candidates", href: 'employer/job_management', single: 'employer/job_management', current: false },
+      ]
+      : [
+        { name: "Post a Job", href: 'post_job' },
+        { name: "Resume Bank", href: 'resume_bank' },
+        { name: "Veritas Shortlisting", href: 'veritas_shortlisting' },
+        // { name: "Find Candidates", href: 'find_candidates', single: 'find', current: false },
+        { name: "Find Candidates", href: 'resume_bank', single: 'find', current: false },
+      ],
+  },
+
   { name: 'Admin', href: 'admin/employees', single: 'admin', current: false },
   {
-    name: 'About Us', href: 'about-us', current: false,
+    name: 'About Us', current: false,
     subItems: [
-      { name: "Our Vision", href: 'vision', single: 'about-us', current: false },
-      { name: "Our Mission", href: 'mission', single: 'about-us', current: false },
-      { name: "Our Values", href: 'our-values', single: 'about-us', current: false },
-      { name: "VeritasKWD Opportunity", href: 'opportunity', single: 'about-us', current: false },
+      { name: 'About Us', href: 'about-us', current: false, },
+      { name: "VeritasKWD Opportunity Creation Program", href: 'opportunity', single: 'about-us', current: false },
       { name: "VeritasKWD Projects", href: 'projects', single: 'about-us', current: false },
-      { name: "VeritasKWD Investors", href: 'investors', single: 'about-us', current: false },
+      { name: "VeritasKWD for Investors", href: 'investors', single: 'about-us', current: false },
       { name: "VeritasKWD Charities", href: 'charities', single: 'about-us', current: false },
       { name: "VeritasKWD Idea Incubator", href: 'incubators', single: 'about-us', current: false },
-      { name: "VeritasKWD Volunteer", href: 'volunteers', single: 'about-us', current: false },
+      { name: "VeritasKWD Volunteer Opportunities", href: 'volunteers', single: 'about-us', current: false },
       { name: "Careers at VeritasKWD", href: 'careers', single: 'about-us', current: false },
-      { name: 'About Us', href: 'about-us', current: false, }
+
     ]
   },
+  { name: 'Blogs', href: 'blogs', single: 'blogs', current: false },
   { name: 'Contact Us', href: 'contact-us', current: false },
 
-]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: 'login' },
 ]
 
 function classNames(...classes) {
@@ -71,14 +84,10 @@ function classNames(...classes) {
 }
 
 
+
 export default function PublicDashboard() {
   const location = useLocation();
-  const [showDropdown, setShowDropdown] = useState(false);
   const role_id = localStorage.getItem("role_id");
-  console.log("role_id: ", role_id);
-
-  const payment = localStorage.getItem("payment");
-
   const navigate = useNavigate();
   useEffect(() => {
     if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "/" || window.location.hash == "/#/") {
@@ -101,64 +110,193 @@ export default function PublicDashboard() {
         <Disclosure as="nav" className="fixed top-0 left-0 right-0 z-10 bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex xl:items-center">
                 <div className="shrink-0">
                   <Link to={"/home"}>
                     <img
                       alt="Your Company"
                       src={menu_logo}
-                      className="w-[12rem] h-12"
+                      className="xl:w-[12rem] md:w-[8rem] h-10"
                     />
                   </Link>
                 </div>
                 <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-4">
+                  <div className="xl:ml-10 md:ml-0 flex items-baseline lg:space-x-4">
                     <>
                       {
                         navigation
                           .filter(item => !((role_id != 1) && item.name == 'Admin'))
                           .map((item) => (
-                            <Link
-                              onMouseEnter={() => setActiveDropdown(item.name)}
-                              onMouseLeave={() => setActiveDropdown(null)}
-                              key={item.name}
-                              to={item.href}
-                              aria-current={item.current ? 'page' : undefined}
-                              className={classNames(
-                                location.pathname.includes(item.href) || location.pathname.includes(item?.single)
-                                  ? 'bg-[#ff0000] text-white'
-                                  : 'text-black hover:bg-[#ff0000] hover:text-white',
-                                'rounded-md px-3 py-2 text-sm font-medium',
-                              )}
-                            >
-                              {item?.subItems ? (
-                                <div
-                                  className="relative"
+                            item?.name == 'Jobs' ?
+                              <Link
+                                onMouseEnter={() => setActiveDropdown(item.name)}
+                                onMouseLeave={() => setActiveDropdown(null)}
+                                key={item.name}
+                                // to={(localStorage?.token) ? localStorage.payment == 'true' ? item?.href : '/login'}
+                                to={
+                                  localStorage?.token
+                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                                    : '/login'
+                                }
+                                onClick={() => {
+                                  localStorage?.token
+                                    ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
+                                    : toast.info("Please login first");
+                                }}
+                                aria-current={item.current ? 'page' : undefined}
+                                className={classNames(
+                                  location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                    ? 'bg-[#ff0000] text-white'
+                                    : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                  'rounded-md px-1.5 py-2 text-sm font-medium',
+                                )}
+                              >
+                                {item?.subItems ? (
+                                  <div
+                                    className="relative"
 
-                                >
-                                  <div aria-disabled={true}>
-                                    {item?.name}
-                                  </div>
-
-                                  {activeDropdown === item.name && (
-                                    <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                      {item?.subItems.map((item1, index) => (
-                                        <Link
-                                          onClick={() => setActiveDropdown(null)}
-                                          key={index}
-                                          to={item1.href}
-                                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
-                                        >
-                                          {item1.name}
-                                        </Link>
-                                      ))}
+                                  >
+                                    <div aria-disabled={true}>
+                                      {item?.name}
                                     </div>
-                                  )}
-                                </div>
-                              ) : (
-                                item.name
-                              )}
-                            </Link>
+
+                                    {activeDropdown === item.name && (
+                                      <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                        {item?.subItems.map((item1, index) => {
+                                          const paymentStatus = localStorage?.payment;
+                                          const roleId = localStorage?.role_id;
+
+                                          if (item1.name == "My Profile") {
+                                            if (roleId != 3) {
+                                              if (paymentStatus === "null" || paymentStatus == null) {
+                                                // Redirect to payment-alert if payment is null
+                                                return (
+                                                  <Link
+                                                    key={index}
+                                                    to="payment-alert"
+                                                    onClick={() => setActiveDropdown(null)}
+                                                    className="block px-1.5 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                                  >
+                                                    {item1.name}
+                                                  </Link>
+                                                );
+                                              } else if (paymentStatus === "false") {
+                                                // Show toast if payment is false
+                                                return (
+                                                  <div
+                                                    key={index}
+                                                    onClick={() => {
+                                                      setActiveDropdown(null);
+                                                      toast.info("Payment Approval Pending");
+                                                    }}
+                                                    className="block px-1.5 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
+                                                  >
+                                                    {item1.name}
+                                                  </div>
+                                                );
+                                              }
+                                            }
+                                          }
+
+                                          // Default case for all other items or when conditions are not met
+                                          return (
+                                            <Link
+                                              key={index}
+                                              to={item1.href}
+                                              onClick={() => setActiveDropdown(null)}
+                                              className="block px-1.5 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                            >
+                                              {item1.name}
+                                            </Link>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  item.name
+                                )}
+                              </Link>
+                              :
+                              <Link
+                                onMouseEnter={() => setActiveDropdown(item.name)}
+                                onMouseLeave={() => setActiveDropdown(null)}
+                                key={item.name}
+                                to={item.href}
+                                aria-current={item.current ? 'page' : undefined}
+                                className={classNames(
+                                  location.pathname.includes(item.href) || location.pathname.includes(item?.single)
+                                    ? 'bg-[#ff0000] text-white'
+                                    : 'text-black hover:bg-[#ff0000] hover:text-white',
+                                  'rounded-md px-1.5 py-2 text-sm font-medium',
+                                )}
+                              >
+                                {item?.subItems ? (
+                                  <div
+                                    className="relative"
+
+                                  >
+                                    <div aria-disabled={true}>
+                                      {item?.name}
+                                    </div>
+
+                                    {activeDropdown === item.name && (
+                                      <div className="absolute top-[25px] left-0 w-[13rem] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                        {item?.subItems.map((item1, index) => {
+                                          const paymentStatus = localStorage?.payment;
+                                          const roleId = localStorage?.role_id;
+
+                                          if (item1.name == "My Profile") {
+                                            if (roleId != 3) {
+                                              if (paymentStatus === "null" || paymentStatus == null) {
+                                                // Redirect to payment-alert if payment is null
+                                                return (
+                                                  <Link
+                                                    key={index}
+                                                    to="payment-alert"
+                                                    onClick={() => setActiveDropdown(null)}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                                  >
+                                                    {item1.name}
+                                                  </Link>
+                                                );
+                                              } else if (paymentStatus === "false") {
+                                                // Show toast if payment is false
+                                                return (
+                                                  <div
+                                                    key={index}
+                                                    onClick={() => {
+                                                      setActiveDropdown(null);
+                                                      toast.info("Payment Approval Pending");
+                                                    }}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white cursor-pointer"
+                                                  >
+                                                    {item1.name}
+                                                  </div>
+                                                );
+                                              }
+                                            }
+                                          }
+
+                                          // Default case for all other items or when conditions are not met
+                                          return (
+                                            <Link
+                                              key={index}
+                                              to={item1.href}
+                                              onClick={() => setActiveDropdown(null)}
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white"
+                                            >
+                                              {item1.name}
+                                            </Link>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  item.name
+                                )}
+                              </Link>
                           ))
                       }
 
@@ -215,6 +353,7 @@ export default function PublicDashboard() {
                             onClick={async () => {
                               await auth.logout();
                               navigate("/login");
+                              window.location.reload();
                             }}
                             className='flex gap-1'
                           >
@@ -236,18 +375,18 @@ export default function PublicDashboard() {
                               }
                               className="size-8 rounded-full"
                             />
-                            <Link
-                              to={
-                                role_id == 2
-                                  ? "job-seeker/profile"
-                                  : role_id == 3
-                                    ? "employer/profile"
-                                    : "admin/employees"
-                              }
-                              className="py-1.5 text-sm font-medium text-gray-700 cursor-pointer"
+                            <div
+                              // to={
+                              //   role_id == 2
+                              //     ? "job-seeker/profile"
+                              //     : role_id == 3
+                              //       ? "employer/profile"
+                              //       : "admin/employees"
+                              // }
+                              className="py-1.5 text-sm font-medium text-gray-700"
                             >
-                              {localStorage.getItem("user_name") || "Guest"}
-                            </Link>
+                              {localStorage.getItem("user_name")}
+                            </div>
                           </>
                         )}
                       </>
@@ -307,21 +446,6 @@ export default function PublicDashboard() {
                     <>
                       <div
                         className={classNames(
-                          location.pathname.includes("/register") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
-                          'rounded-md py-2 px-2 text-sm font-medium cursor-pointer mr-2'
-                        )}
-                      >
-                        <Link
-                          to="/create-account"
-                          className='flex gap-1'
-                        >
-                          <UserIcon className='w-5 h-5' />
-                          Register
-                        </Link>
-                      </div>
-                      <div className="border-l border-gray-300 h-8"></div>
-                      <div
-                        className={classNames(
                           location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
                           'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
                         )}
@@ -337,26 +461,22 @@ export default function PublicDashboard() {
 
                     </>
                   )}
-                  {(localStorage.token && localStorage.token != 'undefined') && (
-                    <div
-                      className={classNames(
-                        location.pathname.includes("/login") ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
-                        'rounded-md py-2 px-2 text-sm font-medium cursor-pointer'
-                      )}
-                    >
-                      <button
-                        onClick={async () => {
-                          await auth.logout();
-
-                          navigate("/login");
-                        }}
-                        className='flex gap-1'
-                      >
-                        <LockOpenIcon className='w-5 h-5' />
-                        Sign out
-                      </button>
-                    </div>
-                  )}
+                  <div className="">
+                    {localStorage.token && localStorage.token !== "undefined" && (
+                      <>
+                        <div className="mb-1 ml-2">
+                          <img
+                            alt=""
+                            src={userLogo}
+                            className="w-9 h-9 rounded-full"
+                          />
+                        </div>
+                        <div className="text-sm font-medium text-gray-700 ml-3">
+                          {localStorage.getItem("user_name")}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
                 <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-[#ff0000] p-2 text-white hover:bg-[#ff0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#ff0000]">
                   <span className="absolute -inset-0.5" />
@@ -368,97 +488,210 @@ export default function PublicDashboard() {
             </div>
           </div>
 
-          <DisclosurePanel className="md:hidden bg-gray-100 text-black">
-            <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {(payment == null || payment == "null") && (role_id != undefined && role_id != 3) ?
-                (
-                  navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                    !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
-                    !((role_id != 1) && item.name == 'Admin'))
-                    .map((item) => (
-                      <DisclosureButton
-                        key={item.name}
+          <Disclosure.Panel className="md:hidden text-black">
+            <div className="space-y-0 px-2 sm:px-3">
+              {navigation
+                .filter(item => !(localStorage.role_id != 1 && item.name === 'Admin'))
+                .map((item) => (
+                  item?.name == 'Jobs' ?
+                    <div key={item.name}>
+                      <Disclosure.Button
                         as={Link}
-                        to={'payment-alert'}
                         // to={item.href}
+                        to={
+                          localStorage?.token
+                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                            : '/login'
+                        }
+                        onClick={() => {
+                          localStorage?.token
+                            ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
+                            : toast.info("Please login first");
+                        }}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
-                          'block rounded-md px-3 py-2 text-base font-medium',
+                          item.current
+                            ? 'bg-[#ff0000] text-white'
+                            : 'text-black hover:bg-[#ff0000] hover:text-white',
+                          'block rounded-md px-3 py-1 text-base font-medium',
                         )}
                       >
                         {item.name}
-                      </DisclosureButton>
-                    ))
-                ) :
-                <>
-                  {
-                    (payment == "true" || role_id == 3) ?
-                      (navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                        !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
-                        !((role_id != 1) && item.name == 'Admin'))
-                        .map((item) => (
-                          <DisclosureButton
-                            key={item.name}
-                            as={Link}
-                            to={item.href}
-                            aria-current={item.current ? 'page' : undefined}
-                            className={classNames(
-                              item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
-                              'block rounded-md px-3 py-2 text-base font-medium',
-                            )}
-                          >
-                            {item.name}
-                          </DisclosureButton>
-                        ))
-                      )
-                      : (
-                        (navigation.filter(item => !((role_id == 1 || role_id == 2 || role_id == undefined) && item.name == 'Employer') &&
-                          !((role_id == 1 || role_id == 3 || role_id == 4 || role_id == undefined) && item.name == 'Job Seeker') &&
-                          !((role_id != 1) && item.name == 'Admin'))
-                          .map((item) => (
-                            <DisclosureButton
-                              key={item.name}
-                              as={Link}
-                              to={'payment-pending'}
-                              // to={item.href}
-                              aria-current={item.current ? 'page' : undefined}
-                              className={classNames(
-                                item.current ? 'bg-[#ff0000] text-white' : 'text-black hover:bg-[#ff0000] hover:text-white',
-                                'block rounded-md px-3 py-2 text-base font-medium',
-                              )}
-                            >
-                              {item.name}
-                            </DisclosureButton>
-                          ))
-                        )
-                      )
-                  }
-                </>
-              }
-            </div>
-            <div className="border-t border-[#ff0000] pb-3 pt-4">
-              <div className="flex items-center px-5">
-                <div className="shrink-0">
-                  {(localStorage.token && localStorage.token != 'undefined') && (
-                    <>
-                      <img alt="" src={user.imageUrl} className="size-10 rounded-full" />
-                      <span className='p-1 text-sm font-medium text-gray-700'>{localStorage.getItem("user_name")}</span>
-                    </>
-                  )}
-                </div>
+                      </Disclosure.Button>
+
+                      {/* Render sub-items with conditional logic */}
+                      {item.subItems && (
+                        <div className="ml-4 space-y-1">
+                          {item.subItems.map((subItem, index) => {
+                            const paymentStatus = localStorage?.payment;
+                            const roleId = localStorage?.role_id;
+
+                            if (subItem.name === 'My Profile') {
+                              if (roleId != 3) {
+                                if (!paymentStatus || paymentStatus === 'null') {
+                                  return (
+                                    <Disclosure.Button
+                                      key={index}
+                                      as={Link}
+                                      to="payment-alert"
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                                    >
+                                      {subItem.name}
+                                    </Disclosure.Button>
+                                  );
+                                } else if (paymentStatus === 'false') {
+                                  return (
+                                    <div
+                                      key={index}
+                                      onClick={() => {
+                                        toast.info('Payment Approval Pending');
+                                      }}
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md cursor-pointer"
+                                    >
+                                      {subItem.name}
+                                    </div>
+                                  );
+                                }
+                              }
+                            }
+
+                            return (
+                              <Disclosure.Button
+                                key={index}
+                                as={Link}
+                                to={subItem.href}
+                                className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                              >
+                                {subItem.name}
+                              </Disclosure.Button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                    :
+                    <div key={item.name}>
+                      <Disclosure.Button
+                        as={Link}
+                        to={item.href}
+                        aria-current={item.current ? 'page' : undefined}
+                        className={classNames(
+                          item.current
+                            ? 'bg-[#ff0000] text-white'
+                            : 'text-black hover:bg-[#ff0000] hover:text-white',
+                          'block rounded-md px-3 py-1 text-base font-medium',
+                        )}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+
+                      {/* Render sub-items with conditional logic */}
+                      {item.subItems && (
+                        <div className="ml-4 space-y-1">
+                          {item.subItems.map((subItem, index) => {
+                            const paymentStatus = localStorage?.payment;
+                            const roleId = localStorage?.role_id;
+
+                            if (subItem.name === 'My Profile') {
+                              if (roleId != 3) {
+                                if (!paymentStatus || paymentStatus === 'null') {
+                                  return (
+                                    <Disclosure.Button
+                                      key={index}
+                                      as={Link}
+                                      to="payment-alert"
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                                    >
+                                      {subItem.name}
+                                    </Disclosure.Button>
+                                  );
+                                } else if (paymentStatus === 'false') {
+                                  return (
+                                    <div
+                                      key={index}
+                                      onClick={() => {
+                                        toast.info('Payment Approval Pending');
+                                      }}
+                                      className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md cursor-pointer"
+                                    >
+                                      {subItem.name}
+                                    </div>
+                                  );
+                                }
+                              }
+                            }
+
+                            return (
+                              <Disclosure.Button
+                                key={index}
+                                as={Link}
+                                to={subItem.href}
+                                className="block text-sm text-gray-700 hover:bg-[#ff0000] hover:text-white px-3 rounded-md"
+                              >
+                                {subItem.name}
+                              </Disclosure.Button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                ))}
+
+              <div className="flex gap-2">
+                {(!localStorage.token || localStorage.token === 'undefined') && (
+                  <Disclosure.Button
+                    className={classNames(
+                      location.pathname.includes('/register')
+                        ? 'bg-[#ff0000] text-white'
+                        : 'text-black hover:bg-[#ff0000] hover:text-white',
+                      'rounded-md py-2 px-2 text-sm font-medium cursor-pointer mr-2',
+                    )}
+                  >
+                    <Link
+                      to="/create-account"
+                      className="-ml-2 block rounded-md px-3 py-1 text-base font-medium"
+                    >
+                      Register
+                    </Link>
+                  </Disclosure.Button>
+                )}
+                {localStorage.token && localStorage.token !== 'undefined' && (
+                  <Disclosure.Button
+                    className={classNames(
+                      location.pathname.includes('/login')
+                        ? 'bg-[#ff0000] text-white'
+                        : 'text-black hover:bg-[#ff0000] hover:text-white',
+                      'rounded-md py-2 px-2 text-sm font-medium cursor-pointer',
+                    )}
+                  >
+                    <button
+                      onClick={async () => {
+                        await auth.logout();
+                        navigate('/login');
+                        window.location.reload();
+                      }}
+                      className="-ml-2 block rounded-md px-3 py-1 text-base font-medium"
+                    >
+                      Sign out
+                    </button>
+                  </Disclosure.Button>
+                )}
               </div>
             </div>
-          </DisclosurePanel>
+          </Disclosure.Panel>
+
+
         </Disclosure>
 
         <main className="pt-[4rem] h-screen bg-gray-100">
-          <CustomScroll heightRelativeToParent="100%">
+          <CustomScroll
+            heightRelativeToParent="100%"
+          >
             <Toaster richColors />
             <Outlet />
-
             <Footer />
           </CustomScroll>
+
         </main>
       </div>
     </>

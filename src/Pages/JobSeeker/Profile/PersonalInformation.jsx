@@ -35,7 +35,7 @@ export default function PersonalInformation() {
             gender: data?.data[0]?.gender,
             contact_number: data?.data[0]?.contact_number,
             years_experience: data?.data[0]?.years_experience,
-            expected_salary: data?.data[0]?.expected_salary,
+            // expected_salary: data?.data[0]?.expected_salary,
             address: data?.data[0]?.address,
             occupation: data?.data[0]?.occupation?.id,
             user_id: user_id,
@@ -52,7 +52,7 @@ export default function PersonalInformation() {
         }),
         onSubmit: async (values) => {
             setLoading(true);
-            if (data) {
+            if (!data?.data?.length==0) {
                 try {
                     const response = await axiosInstance.post(`api/job_seeker_basic_info/update/${data?.data[0]?.id}`, values);
                     if (response) {
@@ -91,7 +91,6 @@ export default function PersonalInformation() {
             const response = await axiosInstance.get(`api/job_seeker_basic_info?user_id=${user_id}`);
             if (response) {
                 setData(response)
-                console.log(response?.data[0]);
             }
         } catch (error) {
             handleError(error);
@@ -209,7 +208,7 @@ export default function PersonalInformation() {
                                                                 : userLogo
                                                         }
                                                         alt="User Profile"
-                                                        className="h-30 w-30 rounded-lg border-2 border-white"
+                                                        className="h-28 w-28 rounded-full border-2 border-white"
                                                     />
                                                 )}
 
@@ -245,16 +244,16 @@ export default function PersonalInformation() {
                                         <div className="container mx-auto p-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                                 <div className="">
-                                                    <h3 className="font-bold text-gray-700">Unique Name</h3>
-                                                    <p>{data?.data[0].user_id?.unique_name}</p>
+                                                    <h3 className="font-bold text-gray-700">UIC</h3>
+                                                    <p>{data?.data[0]?.user_id?.unique_name}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Date of Birth</h3>
-                                                    <p>{data?.data[0].dob}</p>
+                                                    <p>{data?.data[0]?.dob}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Gender</h3>
-                                                    <p>{data?.data[0].gender_label}</p>
+                                                    <p>{data?.data[0]?.gender_label}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">National ID</h3>
@@ -262,16 +261,16 @@ export default function PersonalInformation() {
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Occupation</h3>
-                                                    <p>{data?.data[0].occupation.occupation}</p>
+                                                    <p>{data?.data[0]?.occupation.occupation}</p>
                                                 </div>
                                                 <div className="">
                                                     <h3 className="font-bold text-gray-700">Years of Experience</h3>
-                                                    <p>{data?.data[0].years_experience}</p>
+                                                    <p>{data?.data[0]?.years_experience}</p>
                                                 </div>
-                                                <div className="">
+                                                {/* <div className="">
                                                     <h3 className="font-bold text-gray-700">Expected Salary</h3>
-                                                    <p>{data?.data[0].expected_salary}</p>
-                                                </div>
+                                                    <p>{data?.data[0]?.expected_salary}</p>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </>
@@ -399,7 +398,7 @@ export default function PersonalInformation() {
                                             })}
                                         </select> */}
                                             </div>
-                                            <div>
+                                            {/* <div>
                                                 <label htmlFor="expected_salary" className="block text-sm font-medium text-gray-900">Expected Salary</label>
                                                 <input
                                                     id="expected_salary"
@@ -413,7 +412,7 @@ export default function PersonalInformation() {
                                                 {formik.touched.expected_salary && formik.errors.expected_salary && (
                                                     <div className="text-red-600 text-sm">{formik.errors.expected_salary}</div>
                                                 )}
-                                            </div>
+                                            </div> */}
                                             <div className='col-span-full'>
                                                 <label htmlFor="address" className="block text-sm font-medium text-gray-900">Postal Address</label>
                                                 <textarea

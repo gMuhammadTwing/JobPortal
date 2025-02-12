@@ -53,6 +53,34 @@ import Charities from './Pages/Public/Charities';
 import Incubators from './Pages/Public/Incubators';
 import Volunteers from './Pages/Public/Volunteers';
 import Careers from './Pages/Public/Careers';
+import PostJob from './Pages/Public/PostJob';
+import ResumeBankPublic from './Pages/Public/ResumeBank';
+import VeritasShortlistingPublic from './Pages/Public/VeritasShortlisting';
+import FindCandidates from './Pages/Public/FindCandidates';
+import Subscribe from './Pages/Public/Subscribe';
+import SubmitResume from './Pages/Public/SubmitResume';
+import WhySubscribe from './Pages/Public/WhySubscribe';
+import TermsConditions from './Pages/Public/TermsConditions';
+import Disclaimer from './Pages/Public/Disclaimer';
+import PrivacyPolicy from './Pages/Public/PrivacyPolicy';
+import RefundPolicy from './Pages/Public/RefundPolicy';
+import ServiceGuarantee from './Pages/Public/ServiceGuarantee';
+import ForgotPassword from './Pages/ForgotPassword';
+import JoinCommunity from './Pages/Public/JoinCommunity';
+import AdminJobs from './Pages/Admin/Jobs/Index'
+import EditEmployer from './Pages/Admin/EditEmployer';
+import EditApplicant from './Pages/Admin/JobSeekers/EditApplicant/Index';
+import EditAgency from './Pages/EditAgency';
+import AdminOpportunity from './Pages/Admin/About Us/Opportunity';
+import AdminCareers from './Pages/Admin/About Us/Careers';
+import AdminVolunteers from './Pages/Admin/About Us/Volunteers';
+import AdminIncubators from './Pages/Admin/About Us/Incubators';
+import AdminProjects from './Pages/Admin/About Us/Projects';
+import AdminInvestors from './Pages/Admin/About Us/Investors';
+import AdminCharities from './Pages/Admin/About Us/Charities';
+import Index from './Pages/Admin/IdeaIncubatorForm/Index';
+import JobReport from './Pages/Admin/Report Job/JobReport';
+import JobDetails from './Pages/Admin/Jobs/JobDetails';
 function App() {
   return (
     <DropdownProvider>
@@ -73,13 +101,29 @@ function App() {
             <Route path="incubators" element={<Incubators />} />
             <Route path="volunteers" element={<Volunteers />} />
             <Route path="careers" element={<Careers />} />
+            <Route path="post_job" element={<PostJob />} />
+            <Route path="resume_bank" element={<ResumeBankPublic />} />
+            <Route path="veritas_shortlisting" element={<VeritasShortlistingPublic />} />
+            <Route path="find_candidates" element={<FindCandidates />} />
+            <Route path="subscribe" element={<Subscribe />} />
+            <Route path="submit_resume" element={<SubmitResume />} />
+            <Route path="why_subscribe" element={<WhySubscribe />} />
+            <Route path="terms" element={<TermsConditions />} />
+            <Route path="disclaimer" element={<Disclaimer />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="refund-policy" element={<RefundPolicy />} />
+            <Route path="service-guarantee" element={<ServiceGuarantee />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="join_community" element={<JoinCommunity />} />
 
             <Route path="teams" element={<Teams />} />
             {/* <Route path="projects" element={<Projects />} /> */}
             <Route path="contact-us" element={<ContactUs />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="jobs/:title" element={<Jobs />} />
+            <Route path="jobs_type/:job_type" element={<Jobs />} />
             <Route path="view-job-details/:id" element={<ViewJobDetails />} />
-            <Route path="blogs_comments" element={<Blogs />} />
+            <Route path="blogs" element={<Blogs />} />
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="create-account" element={<CreateAccount />} />
@@ -110,6 +154,7 @@ function App() {
             {/* Admin Routes */}
             <Route path="admin" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
               <Route path="employees" element={<ProtectedRoutes><EmployeesIndex /></ProtectedRoutes>} />
+              {/* <Route path="job_management" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} /> */}
               <Route path="job_seekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
               <Route path="postblog" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
               <Route path="shortlisting" element={<ProtectedRoutes><ShortlistingIndex /></ProtectedRoutes>} />
@@ -118,9 +163,23 @@ function App() {
               <Route path="contacts" element={<ProtectedRoutes><AdminContactUs /></ProtectedRoutes>} />
               <Route path="agencies_list" element={<ProtectedRoutes><EmployerAgencyList /></ProtectedRoutes>} />
               <Route path="employees/view-employer/:id" element={<ViewEmployer />} />
+              <Route path="employees/edit-employer/:id" element={<EditEmployer />} />
               <Route path="job_seekers/view-applicant/:id" element={<ViewApplicant />} />
+              <Route path="job_seekers/edit-applicant/:id" element={<EditApplicant />} />
               <Route path="shortlisting/view-applicant/:id" element={<ViewApplicant />} />
               <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
+              <Route path="agencies_list/edit-agency/:id" element={<EditAgency />} />
+              <Route path="list_job" element={<AdminJobs />} />
+              <Route path="admin_opportunity" element={<AdminOpportunity/>} />
+              <Route path="admin_careers" element={<AdminCareers/>} />
+              <Route path="admin_volunteers" element={<AdminVolunteers/>} />
+              <Route path="admin_idea_incubators" element={<AdminIncubators/>} />
+              <Route path="admin_charities" element={<AdminCharities/>} />
+              <Route path="admin_investors" element={<AdminInvestors/>} />
+              <Route path="admin_projects" element={<AdminProjects/>} />
+              <Route path="idea_incubator_form" element={<Index/>} />
+              <Route path="job_report" element={<JobReport/>} />
+              <Route path="list_job/job_details/:id" element={<JobDetails/>} />
             </Route>
 
             {/* No Permission Route */}

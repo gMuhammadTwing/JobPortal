@@ -27,7 +27,7 @@ export default function EmployerSignup() {
             name: Yup.string()
                 .min(2, "Must be at least 2 characters")
                 .max(50, "Must be 50 characters or less")
-                .required("Full Name is required"),
+                .required("Company Name is required"),
             role_id: Yup.string()
                 .required("Please select a registration type"),
             email: Yup.string()
@@ -50,7 +50,13 @@ export default function EmployerSignup() {
                     localStorage.setItem("user_id", response?.data?.token?.token?.user_id);
                     setUserId(response?.data?.token?.token?.user_id);
                     if (values?.role_id == 4) {
+                        auth.login(values)
                         setRegistered(true)
+                    }
+                    else {
+                        auth.login(values)
+                        navigate("/home")
+                        window.location.reload();
                     }
                     getPaymentInstructions();
                     formik.resetForm();
@@ -78,25 +84,32 @@ export default function EmployerSignup() {
             setTableLoader(false)
         }
     };
+    const [reference_number, setReferenceNumber] = useState(null)
     const submitPayment = async () => {
-        setLoader(true)
-        const json = {
-            user_id: user_id,
-            amount: paymentInstructions?.amount,
+        if (!reference_number) {
+            toast.error("Reference Number is required");
         }
-        try {
-            const response = await axiosInstance.post(`api/user_payment_history/store`, json);
-            if (response) {
-                toast.success("Payment submitted successfully");
-                localStorage.setItem("payment", false);
+        else {
+            setLoader(true)
+            const json = {
+                user_id: user_id,
+                amount: paymentInstructions?.amount,
+                reference_number: reference_number
             }
-        } catch (error) {
-            handleError(error);
-        }
-        finally {
-            setLoader(false)
-            auth.logout();
-            navigate("/login")
+            try {
+                const response = await axiosInstance.post(`api/user_payment_history/store`, json);
+                if (response) {
+                    toast.success("Payment submitted successfully");
+                    localStorage.setItem("payment", false);
+                }
+            } catch (error) {
+                handleError(error);
+            }
+            finally {
+                setLoader(false)
+                navigate("/home")
+                window.location.reload();
+            }
         }
     }
     const parser = new DOMParser();
@@ -121,7 +134,7 @@ export default function EmployerSignup() {
                                         {/* Full Name input */}
                                         <div className="mb-2">
                                             <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                                                Full Name
+                                                Company Name
                                             </label>
                                             <input
                                                 id="name"
@@ -154,7 +167,7 @@ export default function EmployerSignup() {
                                             >
                                                 <option value="">Select</option>
                                                 <option value="3">Employer</option>
-                                                <option value="4">Agency</option>
+                                                <option value="4">Employment Agency</option>
                                             </select>
                                             {formik.touched.role_id && formik.errors.role_id && (
                                                 <p className="mt-1 text-xs text-red-500">{formik.errors.role_id}</p>
@@ -234,7 +247,7 @@ export default function EmployerSignup() {
                                                     variant="solid"
                                                     className="inline-block w-full text-white"
                                                 >
-                                                    Sign Up
+                                                    {formik.values.role_id == 3 ? "Sign Up" : "Next"}
                                                 </Button>
                                             )}
                                         </div>
@@ -259,7 +272,7 @@ export default function EmployerSignup() {
                                             <div className="col-span-full text-gray-600">
                                                 <strong>Payment Instructions:</strong>
                                                 <ul className="list-disc pl-5 space-y-1">
-                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()}</li>
+                                                    <li>{parser.parseFromString(paymentInstructions?.instructions || '', "text/html").body.textContent.trim()} - Amount: {paymentInstructions?.amount}</li>
                                                     {/* <li>Bank Details: </li>
                                                     <li>Account No: 03120376631</li>
                                                     <li>Account Title: Joe Joe</li>
@@ -269,13 +282,14 @@ export default function EmployerSignup() {
 
                                             <div className="sm:col-span-4">
                                                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                                                    Amount
+                                                    Add Reference Number
                                                 </label>
                                                 <input
                                                     type="text"
-                                                    name="amount"
-                                                    value={paymentInstructions?.amount}
-                                                    disabled
+                                                    name="reference_number"
+                                                    onChange={(e) => setReferenceNumber(e.target.value)}
+                                                    value={reference_number}
+                                                    required
                                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                                 />
                                             </div>
@@ -307,9 +321,9 @@ export default function EmployerSignup() {
                         {/* Right column */}
                         <div className="hidden lg:flex lg:w-6/12 items-center justify-center rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none bg-gradient-to-r from-[#008604] to-[#008604]">
                             <div className="px-4 py-8 text-white md:p-12">
-                                <h4 className="mb-6 text-xl font-semibold">Welcome to our community</h4>
+                                <h4 className="mb-6 text-xl font-semibold">Veritas Jobs</h4>
                                 <p className="text-sm">
-                                    Join us and start your journey. Experience a platform where growth and collaboration are at the core of our values.
+                                    Veritas Jobs is your go-to platform for the latest job listings and career opportunities in Kenya. As a trusted job board, we are committed to helping job seekers find their next opportunity.
                                 </p>
                             </div>
                         </div>

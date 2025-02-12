@@ -5,6 +5,7 @@ import {
     PencilIcon,
     TrashIcon,
     PlusCircleIcon,
+    ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
@@ -16,6 +17,7 @@ import { useFormik } from "formik";
 import { useDropdownContext } from "../../DropdownProvider";
 import { Link } from "react-router-dom";
 import Select from 'react-select'
+import app_vars from "../../config";
 export default function ResumeBank() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDelete, setIsDelete] = useState(false)
@@ -35,17 +37,17 @@ export default function ResumeBank() {
     const [tableLoader, setTableLoader] = useState(false);
     const [filters, setFilters] = useState({
         occupation: "",
-        graduation_year: "",
+        year_from: "",
+        year_to: "",
         institute: "",
         job_status: "",
     })
     const fetchData = async (page, filters) => {
         setTableLoader(true)
         try {
-            const response = await axiosInstance.get(`/api/employer_resume_bank?occupation=${filters?.occupation}&graduation_year=${filters?.graduation_year}&institute=${filters?.institute}&job_status=${filters?.job_status}&page=${page}`);
+            const response = await axiosInstance.get(`/api/employer_resume_bank?occupation=${filters?.occupation}&year_from=${filters?.year_from}&year_to=${filters?.year_to}&institute=${filters?.institute}&job_status=${filters?.job_status}&page=${page}`);
             if (response) {
                 setData(response?.data)
-                console.log(response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -64,7 +66,8 @@ export default function ResumeBank() {
     const formik = useFormik({
         initialValues: {
             occupation: "",
-            graduation_year: "",
+            year_from: "",
+            year_to: "",
             institute: "",
             job_status: "",
         },
@@ -79,13 +82,15 @@ export default function ResumeBank() {
         formik.resetForm();
         setFilters({
             occupation: "",
-            graduation_year: "",
+            year_from: "",
+            year_to: "",
             institute: "",
             job_status: "",
         })
         fetchData(1, {
             occupation: "",
-            graduation_year: "",
+            year_from: "",
+            year_to: "",
             institute: "",
             job_status: "",
         })
@@ -99,13 +104,27 @@ export default function ResumeBank() {
                         <div className="col-span-full text-[#ff0000] mb-5 font-bold text-xl">Manage Resume Bank</div>
                         <div className="sm:col-span-3">
                             <label className="block text-sm font-medium text-gray-900">
-                                Graduation Year
+                                Year From
                             </label>
                             <input
-                                type="text"
-                                name="graduation_year"
+                                type="number"
+                                name="year_from"
+                                id="year_from"
                                 onChange={formik.handleChange}
-                                value={formik.values.graduation_year}
+                                value={formik.values.year_from}
+                                className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                            />
+                        </div>
+                        <div className="sm:col-span-3">
+                            <label className="block text-sm font-medium text-gray-900">
+                                Year To
+                            </label>
+                            <input
+                                type="number"
+                                name="year_to"
+                                id="year_to"
+                                onChange={formik.handleChange}
+                                value={formik.values.year_to}
                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                             />
                         </div>
@@ -159,21 +178,22 @@ export default function ResumeBank() {
                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                             />
                         </div>
-                        <div className="sm:col-span-2 mt-2 flex gap-2">
+                        <div className="sm:col-span-2 mt-2 flex flex-wrap gap-2 sm:gap-4">
                             <button
                                 onClick={clearFilter}
                                 type="button"
-                                className="flex mt-5 border border-gray-300 p-[5px] px-5 rounded-lg hover:bg-[#ff0000] hover:text-white"
+                                className="flex w-full sm:w-auto justify-center items-center border border-gray-300 p-[6px] px-5 rounded-lg hover:bg-[#ff0000] hover:text-white transition-all duration-300"
                             >
                                 Clear Filter
                             </button>
                             <button
                                 type="submit"
-                                className="flex mt-5 border bg-[#ff0000] p-[5px] px-5 rounded-lg hover:border-[#ff0000] text-white"
+                                className="flex w-full sm:w-auto justify-center items-center border bg-[#ff0000] p-[6px] px-5 rounded-lg text-white hover:border-[#ff0000] transition-all duration-300"
                             >
                                 Apply Filter
                             </button>
                         </div>
+
                     </div>
                 </form>
                 {tableLoader ? <LoaderTable /> :
@@ -197,10 +217,16 @@ export default function ResumeBank() {
                                                 >
                                                     Applicant Email
                                                 </th>
-                                                <th scope="col"
+                                                <th
+                                                    scope="col"
+                                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                >
+                                                    Resume
+                                                </th>
+                                                {/* <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Action
-                                                </th>
+                                                </th> */}
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white">
@@ -218,10 +244,17 @@ export default function ResumeBank() {
                                                                 {item?.email}
                                                             </h1>
                                                         </td>
-
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                        <td className="px-6 py-3 text-xs md:text-sm text-center flex gap-2">
+                                                            {item?.resume?.resume_file &&
+                                                                <a href={`${app_vars?.domain?.fileURL}${item?.resume?.resume_file}`} target="_blank"
+                                                                    rel="noopener noreferrer"><ArrowDownTrayIcon className="w-5 h-5 text-black" title="Download" /></a>
+                                                            }
                                                             <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>
+
+                                                        {/* <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
+                                                            <Link to={"view-applicant/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
+                                                        </td> */}
                                                     </tr>
                                                 ))
                                             ) : (
@@ -239,11 +272,12 @@ export default function ResumeBank() {
                             </div>
                         </div>
 
-                        <div className="mt-2">
-                            <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
-                        </div>
+
                     </>
                 }
+                <div className="mt-2">
+                    <Pagination page={pageNumber} total={data?.total} page_size={data?.per_page} />
+                </div>
             </div>
         </div>
 

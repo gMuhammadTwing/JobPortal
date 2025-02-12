@@ -7,6 +7,7 @@ import Reviews from './Components/Reviews';
 import GreatAboutUs from './Components/GreatAboutUs';
 import Testimonials from './Components/Testimonials';
 import FooterHeader from './Components/FooterHeader';
+import SubscribeEmail from './Components/SubscribeEmail';
 export default function Index() {
   return (
     <>
@@ -14,6 +15,7 @@ export default function Index() {
         <Company />
         <RecentlyUpdatedJobs />
         <FeaturedJobs />
+        {/* <SubscribeEmail/> */}
         <FooterHeader/>
         {/* <FeaturedDevelopers /> */}
         {/* <FeaturedSkills /> */}

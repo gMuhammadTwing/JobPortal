@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { InfinitySpin, RotatingLines } from "react-loader-spinner";
 import app_vars from "../../config";
 import { Skeleton } from "../../Components/Skeleton";
+import { useDropdownContext } from "../../DropdownProvider";
 export default function EmployerProfile() {
     const [tableLoader, setTableLoader] = useState(false);
     const [profileCollapsed, setprofileCollapsed] = useState(false);
@@ -29,6 +30,7 @@ export default function EmployerProfile() {
     const handleIconClick = () => {
         fileInputRef.current.click();
     };
+    const dropDownValues = useDropdownContext();
     const formik = useFormik({
         initialValues: {
             company_name: data?.company_name || '',
@@ -39,6 +41,8 @@ export default function EmployerProfile() {
             contact_email: data?.contact_email || "",
             logo: data?.logo || null,
             description: data?.description || "",
+            nea_number: data?.nea_number || "",
+            certified_expiration_date: data?.certified_expiration_date || "",
             user_id: user_id,
         },
         enableReinitialize: true,
@@ -142,14 +146,14 @@ export default function EmployerProfile() {
     return (
         <>
             <div className="flex justify-center px-4 sm:px-6 lg:px-8 min-h-screen">
-                <div className="p-4 w-full max-w-5xl rounded-lg">
+                <div className="py-4 w-full max-w-5xl rounded-lg">
                     <div className={`border rounded-lg shadow-lg ${profileCollapsed ? "overflow-hidden" : ""}`}>
                         {/* Header Section */}
                         <div
                             className="flex justify-start p-4 border-b cursor-pointer bg-white rounded-lg"
                             onClick={handleCollapseToggle}
                         >
-                            <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">{localStorage.role_id == 3 ? "Employee Profile" : "Company Profile"}</h3>
+                            <h3 className="py-2.5 font-bold text-xl text-[#ff0000]">{localStorage.role_id == 3 ? "Employer Profile" : "Company Profile"}</h3>
                         </div>
 
                         {/* Card Body */}
@@ -179,22 +183,20 @@ export default function EmployerProfile() {
                                                         ) : (
                                                             <img
                                                                 src={
-                                                                    localStorage?.user_image &&
-                                                                        localStorage.user_image !== 'undefined' &&
-                                                                        localStorage.user_image !== 'null' &&
-                                                                        localStorage.user_image.trim() !== ''
-                                                                        ? `${app_vars?.domain?.fileURL}${image}`
+                                                                    data?.logo &&
+                                                                        data?.logo !== 'undefined' &&
+                                                                        data?.logo !== 'null'
+                                                                        ? `${app_vars?.domain?.fileURL}${data?.logo}`
                                                                         : userLogo
                                                                 }
                                                                 alt="User Profile"
-                                                                className="h-32 w-32 rounded-lg"
+                                                                className="h-28 w-28 rounded-full"
                                                             />
                                                         )}
 
 
                                                         {/* Pencil Icon on Hover */}
-                                                        {/* <form onSubmit={imageFormik.handleSubmit}> */}
-                                                        <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                                        {/* <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                                             <PencilSquareIcon className="h-5 w-5 text-blue-500" />
                                                         </div>
                                                         <input
@@ -203,7 +205,7 @@ export default function EmployerProfile() {
                                                             className="hidden"
                                                             accept="image/*"
                                                             onChange={handleFileChange}
-                                                        />
+                                                        /> */}
                                                     </div>
                                                     <div className="text-center sm:text-left">
                                                         <strong className="text-sm text-gray-600">{data?.company_name}</strong>
@@ -211,24 +213,36 @@ export default function EmployerProfile() {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-10 mt-4">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6">
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <MapPinIcon className="w-5 h-5" />
-                                                        {data?.location}
+                                                        {data?.location || "NA"}
                                                     </p>
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <UserCircleIcon className="w-5 h-5" />
-                                                        {data?.contact_person_name}
+                                                        {data?.contact_person_name || "N/A"}
+                                                    </p>
+
+                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                        <PhoneIcon className="w-5 h-5" />
+                                                        {data?.contact_number || "N/A"}
                                                     </p>
                                                     <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
                                                         <EnvelopeOpenIcon className="w-5 h-5" />
-                                                        {data?.contact_email}
+                                                        {data?.contact_email || "N/A"}
                                                     </p>
-                                                    <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
-                                                        <PhoneIcon className="w-5 h-5" />
-                                                        {data?.contact_number}
-                                                    </p>
+                                                    {localStorage.role_id == 4 &&
+                                                        <>
+                                                            <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                                NEA Number: {data?.nea_number || "N/A"}
+                                                            </p>
+                                                            <p className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                                                                Employment Agency Certified Expiration Date:{" "}
+                                                                {data?.certified_expiration_date || "N/A"}
+                                                            </p>
+                                                        </>}
                                                 </div>
+
 
                                                 <div className="mt-6 border-t pt-4">
                                                     <label className="block font-semibold">Description</label>
@@ -296,18 +310,25 @@ export default function EmployerProfile() {
                                             <label htmlFor="company_industry" className="block text-sm font-medium text-gray-900">
                                                 Industry *
                                             </label>
-                                            <input
-                                                id="company_industry"
+                                            <select
                                                 name="company_industry"
-                                                type="text"
+                                                // onChange={(e) => handleChange(e, item)}
+                                                // value={formik.values.job_type}
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
                                                 value={formik.values.company_industry}
+                                                // value={item?.job_status_id?.id}
                                                 className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                            />
-                                            {formik.touched.company_industry && formik.errors.company_industry && (
-                                                <div className="text-red-500 text-sm">{formik.errors.company_industry}</div>
-                                            )}
+                                            >
+                                                <option value="">Select</option>
+                                                {dropDownValues?.industries?.map((item) => {
+                                                    return (
+                                                        <option key={item.id} value={item?.id}>
+                                                            {item?.name}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
                                         </div>
                                         <div>
                                             <label htmlFor="location" className="block text-sm font-medium text-gray-900">
@@ -377,6 +398,44 @@ export default function EmployerProfile() {
                                                 <div className="text-red-500 text-sm">{formik.errors.contact_email}</div>
                                             )}
                                         </div>
+                                        {localStorage.role_id == 4 &&
+                                            <>
+                                                <div>
+                                                    <label htmlFor="nea_number" className="block text-sm font-medium text-gray-900">
+                                                        NEA Number
+                                                    </label>
+                                                    <input
+                                                        id="nea_number"
+                                                        name="nea_number"
+                                                        type="text"
+                                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.nea_number}
+                                                    />
+                                                    {formik.touched.nea_number && formik.errors.nea_number && (
+                                                        <div className="text-red-500 text-sm">{formik.errors.nea_number}</div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="certified_expiration_date" className="block text-sm font-medium text-gray-900">
+                                                        Employment Agency Certified Expiration Date
+                                                    </label>
+                                                    <input
+                                                        id="certified_expiration_date"
+                                                        name="certified_expiration_date"
+                                                        type="date"
+                                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.certified_expiration_date}
+                                                    />
+                                                    {formik.touched.certified_expiration_date && formik.errors.certified_expiration_date && (
+                                                        <div className="text-red-500 text-sm">{formik.errors.certified_expiration_date}</div>
+                                                    )}
+                                                </div>
+                                            </>
+                                        }
                                         {/* <div>
                                             <label htmlFor="verification_status" className="block text-sm font-medium text-gray-900">
                                                 Verification Status *

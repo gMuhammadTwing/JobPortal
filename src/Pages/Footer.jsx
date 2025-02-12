@@ -35,24 +35,28 @@ export default function Footer() {
                             ))}
                         </div> */}
                         <button className="bg-black text-white rounded py-2 px-4 hover:bg-[#ff0000] transition-all text-sm md:text-base">
-                            <Link to={"contact-us"}>Contact with us</Link>
+                            <Link to={"contact-us"}>Contact us</Link>
                         </button>
                     </div>
 
                     {/* Useful Links Section */}
-                    <div>
+                    <div className="col-span-2 sm:col-span-1">
                         <ul className="space-y-3 text-center lg:text-left">
-                            <li className="text-black font-semibold text-lg mb-5">
-                                <span className="underline decoration-[#ff0000] decoration-2 underline-offset-8">Useful</span> Links
-                            </li>
-                            {["About Us", "Blog", "Login", "Register", "Forgot Password"].map((link, idx) => (
-                                <li key={idx} className="flex justify-center lg:justify-start items-center">
+                            {[
+                                { text: "About Us", href: "/about-us" },
+                                { text: "Blog", href: "/blogs" },
+                                { text: "Login", href: "/login" },
+                                { text: "Register", href: "/create-account" },
+                                { text: "Forgot Password", href: "/forgot-password" }
+                            ].map((link, idx) => (
+                                <li key={idx} className="flex lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />
-                                    {link}
+                                    <Link to={link.href} className="hover:underline">{link.text}</Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
+
 
                     {/* Help & Support Section */}
                     {/* <div>
@@ -72,25 +76,30 @@ export default function Footer() {
                     {/* Connect With Us Section */}
                     <div>
                         <ul className="space-y-3 text-center lg:text-left">
-                            <li className="text-black font-semibold text-lg mb-5">
-                                <span className="underline decoration-[#ff0000] decoration-2 underline-offset-8">Connect</span> With Us
-                            </li>
-                            {["Terms & Conditions", "Disclaimer", "Privacy Policy", "Refund Policy", "Service/Product Guarantee"].map((item, idx) => (
-                                <li key={idx} className="flex justify-center lg:justify-start items-center">
+                            {/* List of objects with both item text and href */}
+                            {[
+                                { label: "Terms & Conditions", href: "/terms" },
+                                { label: "Disclaimer", href: "/disclaimer" },
+                                { label: "Privacy Policy", href: "/privacy-policy" },
+                                { label: "Refund Policy", href: "/refund-policy" },
+                                { label: "Service/Product Guarantee", href: "/service-guarantee" }
+                            ].map((item, idx) => (
+                                <li key={idx} className="flex lg:justify-start items-center">
                                     <ChevronRightIcon className="w-5 h-5 mt-1" />
-                                    {item}
+                                    <Link to={item.href} className="hover:underline">
+                                        {item.label}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
                 </div>
-
-
             </div>
             {/* Footer Bottom Section */}
             <div className="text-center border-t py-2 mt-20 text-gray-600 text-sm md:text-base">
-                Copyright 2024 © JobPortal. All rights reserved.
+                @ Copyright {new Date().getFullYear()} © Veritas Jobs. All rights reserved.
             </div>
+
         </div>
     );
 }

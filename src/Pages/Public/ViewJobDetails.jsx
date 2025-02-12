@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Skeleton } from "../../Components/Skeleton";
 import { ViewJobDetailsSkeleton } from "../../Components/ViewJobDetailsSkeleton";
 import GreatAboutUs from "./Components/GreatAboutUs";
+import JobReport from "../../Components/JobReport";
 
 export default function ViewJobDetails() {
     const [data, setData] = useState(null)
@@ -19,7 +20,6 @@ export default function ViewJobDetails() {
         try {
             const response = await axiosInstance.get(`api/job/view/${id?.id}`);
             if (response) {
-                console.log(response);
                 setData(response.data[0])
             }
         } catch (error) {
@@ -52,9 +52,17 @@ export default function ViewJobDetails() {
     const closeApplyInstructionsModal = () => {
         setApplyInstructionsModal(false);
     }
+    const [openModal, setOpenModal] = useState(false);
+    const closeModal = () => {
+        setOpenModal(false);
+    }
+    const openModalHandler = () => {
+        setOpenModal(true);
+    }
     return (
         <div className="bg-white">
-            <div className=' text-center bg-[#FFF5F3] p-20'>
+            <JobReport isOpen={openModal} onClose={closeModal} />
+            <div className=' text-center bg-[#FFF5F3] p-12'>
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Job Details</h1>
                 <p>Find your dream job among these opportunities.</p>
             </div>
@@ -70,11 +78,11 @@ export default function ViewJobDetails() {
                                 <div className="flex flex-wrap justify-end gap-2">
                                     {!data?.has_applied && (
                                         <div className="flex flex-wrap gap-2">
-                                            {(data?.veritas_to_short_list === 0 || data?.veritas_to_short_list === null) && (
+                                            {/* {(data?.veritas_to_short_list === 0 || data?.veritas_to_short_list === null) && (
                                                 <button onClick={() => applyInstructionsHandler(data)} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out">
                                                     Instruction to Apply
                                                 </button>
-                                            )}
+                                            )} */}
                                             {data?.veritas_to_short_list === 1 && (
                                                 (localStorage.token && localStorage.token != 'undefined') ? (
                                                     <>
@@ -111,12 +119,19 @@ export default function ViewJobDetails() {
                                                 app_vars?.domain?.fileURL + data?.company_id?.logo
                                             }
                                             alt="User Profile"
-                                            className="h-32 w-32 rounded-lg border-2 border-white"
+                                            className="h-28 w-28 rounded-full border-2 border-white"
                                         />
                                         <div className="text-start ml-4">
                                             <h1 className="font-semibold text-lg md:text-2xl">{data?.job_title}</h1>
                                             <div className="font-semibold text-sm md:text-md">
                                                 {data?.company_id?.company_name}, {data?.location}
+                                            </div>
+                                            <div className=" text-sm">
+                                                Deadline: {" "}{new Date(data?.job_end_date).toLocaleDateString("en-US", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "2-digit",
+                                                })}
                                             </div>
                                         </div>
                                     </div>
@@ -124,16 +139,16 @@ export default function ViewJobDetails() {
 
                                 <div className="px-2">
                                     <div className="space-y-4">
-                                        <div className="flex items-center">
+                                        {/* <div className="flex items-center">
                                             <div>
                                                 <h2 className="text-lg font-semibold">Pay</h2>
                                                 <p className="text-gray-700">From {data?.expected_salary} a month</p>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="flex items-center">
                                             <div>
                                                 <h2 className="text-lg font-semibold">Job Type</h2>
-                                                <p className="text-gray-700">{data?.job_type?.job_family}</p>
+                                                <p className="text-gray-700">{data?.job_type?.name}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -221,32 +236,60 @@ export default function ViewJobDetails() {
                                             ]}
                                         />
                                     </div>
+                                    {(data?.veritas_to_short_list === 0 || data?.veritas_to_short_list === null) && (
+                                        <div className="px-2 mt-2 pt-2  border-t text-xl">
+                                            <label htmlFor="" className="block font-semibold mb-2">
+                                                Instruction to Apply
+                                            </label>
+                                            <ReactQuill
+                                                id="job_instructions_to_apply"
+                                                theme="bubble"
+                                                value={data?.job_instructions_to_apply}
+                                                readOnly={true}
+                                                style={{
+                                                    minHeight: "50px",
+                                                    overflow: "auto",
+                                                }}
+                                                modules={{
+                                                    toolbar: false,
+                                                }}
+                                                formats={[
+                                                    "header",
+                                                    "bold",
+                                                    "italic",
+                                                    "underline",
+                                                    "strike",
+                                                    "list",
+                                                    "bullet",
+                                                ]}
+                                            />
+                                        </div>
+                                    )}
+
+
                                     <div className="px-2 mt-2 pt-2  border-t text-xl">
-                                        <label htmlFor="" className="block font-semibold mb-2">
-                                            Instruction to Apply
+                                        {/* <label htmlFor="" className="block font-semibold mb-2">
+                                            Important Safety Tips
                                         </label>
-                                        <ReactQuill
-                                            id="job_instructions_to_apply"
-                                            theme="bubble"
-                                            value={data?.job_instructions_to_apply}
-                                            readOnly={true}
-                                            style={{
-                                                minHeight: "50px",
-                                                overflow: "auto",
-                                            }}
-                                            modules={{
-                                                toolbar: false,
-                                            }}
-                                            formats={[
-                                                "header",
-                                                "bold",
-                                                "italic",
-                                                "underline",
-                                                "strike",
-                                                "list",
-                                                "bullet",
-                                            ]}
-                                        />
+                                        <ul className="list-disc list-inside text-gray-700 text-sm">
+                                            <li>
+                                                Do not make any payment without confirming with the BrighterMonday Customer Support Team.
+                                            </li>
+                                            <li>
+                                                If you think this advert is not genuine, please report it via the Report Job link below.
+                                            </li>
+                                        </ul> */}
+                                        <div
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    openModalHandler();
+                                                }}
+                                                className="mt-2 border border-[#ff0000] text-[#ff0000] px-3 py-1 rounded-lg hover:bg-[#ff0000] hover:text-white transition duration-200 ease-in-out"
+                                            >
+                                                Report Job
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

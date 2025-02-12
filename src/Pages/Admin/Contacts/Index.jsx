@@ -23,7 +23,6 @@ export default function Contacts() {
             const response = await axiosInstance.get(`/api/contact_us?page=${pageNum}`);
             if (response) {
                 setData(response?.data);
-                console.log("data: ", response?.data);
             }
         } catch (error) {
             handleError(error);
@@ -58,7 +57,7 @@ export default function Contacts() {
                                             scope="col"
                                             className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                         >
-                                           Contact Us
+                                            Contact Us
                                         </th>
                                         <th
                                             scope="col"
@@ -125,12 +124,13 @@ export default function Contacts() {
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination
-                            page={pageNumber}
-                            total={data?.total}
-                            page_size={data?.per_page}
-                        />
+
                     </>}
+                <Pagination
+                    page={pageNumber}
+                    total={data?.total}
+                    page_size={data?.per_page}
+                />
             </div>
         </div>
     );
