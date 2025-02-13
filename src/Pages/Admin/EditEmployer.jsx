@@ -57,7 +57,7 @@ export default function EditEmployer() {
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
-            company_name: Yup.string().required("Company name is required"),
+            // company_name: Yup.string().required("Company name is required"),
             company_industry: Yup.string().required("Company_industry is required"),
             location: Yup.string().required("Location is required"),
             contact_person_name: Yup.string().required("Contact person name is required"),

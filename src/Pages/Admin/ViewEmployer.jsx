@@ -64,9 +64,9 @@ export default function ViewEmployer() {
                                     {/* Employer Details */}
                                     <div className="text-center sm:text-left">
                                         <strong className="text-sm text-gray-600 block">
-                                            {data?.company_name}
+                                            {data?.user_id?.name}
                                         </strong>
-                                        <h1 className="font-semibold text-2xl">{data?.company_name}</h1>
+                                        <h1 className="font-semibold text-2xl">{data?.user_id?.name}</h1>
                                     </div>
                                 </div>
 

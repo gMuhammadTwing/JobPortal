@@ -40,7 +40,7 @@ export default function ViewAgency() {
         <div className="flex justify-center px-4 sm:px-6 lg:px-8 min-h-[33rem] bg-gray-100 mt-4">
             <div className="p-6 w-full max-w-5xl bg-white rounded-lg">
                 <div className="flex items-center justify-between border-b pb-4">
-                    <h3 className="font-bold text-xl text-[#ff0000]">View Employer Profile</h3>
+                    <h3 className="font-bold text-xl text-[#ff0000]">View Employment Agency</h3>
                 </div>
                 {loader ? <ViewProfileSkeleton /> :
                     <div className="mt-6">
