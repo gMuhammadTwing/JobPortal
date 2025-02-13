@@ -27,7 +27,7 @@ export default function Index() {
     const fetchData = async (pageNum) => {
         setTableLoader(true);
         try {
-            const { data } = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
+            const { data } = await axiosInstance.get(`/api/admin_job_list?page=${pageNum}`);
             if (data) {
                 setData(data);
             }
@@ -141,7 +141,7 @@ export default function Index() {
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.job_type?.name}
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm text-center">
+                                                        <td className="px-3 py-4 text-sm">
                                                             {item?.no_of_applicants || ""}
                                                         </td>
 
@@ -157,7 +157,7 @@ export default function Index() {
                                                             {(item?.location)}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            {item?.job_status ? (
+                                                            {item?.job_status == "Open" ? (
                                                                 <span className="bg-green-100 text-green-600 ring-green-300 rounded-lg p-1">{item?.job_status}</span>
                                                             ) : (
                                                                 <span className="bg-red-100 text-red-600 rounded-lg p-1">{item?.job_status}</span>
