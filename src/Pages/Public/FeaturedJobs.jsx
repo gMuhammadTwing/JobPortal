@@ -14,7 +14,7 @@ export default function FeaturedJobs() {
     const fetchData = async (pageNum) => {
         setTableLoader(true);
         try {
-            const response = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
+            const response = await axiosInstance.get(`/api/job_list?is_featured=1&page=${pageNum}`);
             if (response) {
                 setData(response?.data);
             }
@@ -55,7 +55,7 @@ export default function FeaturedJobs() {
                                     {/* Details Section */}
                                     <div className="flex flex-wrap gap-4">
                                         <p className="group relative flex text-sm md:text-md text-gray-600 items-center gap-x-2">
-                                            <span>Posted At: {" "}</span>
+                                            <span>Posted on: {" "}</span>
                                             {new Date(item?.created_at).toLocaleDateString("en-US", {
                                                 year: "numeric",
                                                 month: "short",
@@ -63,7 +63,7 @@ export default function FeaturedJobs() {
                                             })}
                                             {/* Tooltip */}
                                             <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded-md py-1 px-2 transition-opacity duration-300">
-                                                Posted At
+                                                Posted on
                                             </span>
                                         </p>
 

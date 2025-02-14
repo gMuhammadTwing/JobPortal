@@ -69,6 +69,7 @@ const ProtectedRoutes = ({ children }) => {
   addAdminDynamicRoute("/admin/agencies_list/edit-agency", id?.id, "edit_agency_profile");
   addAdminDynamicRoute("/admin/shortlisting/view-applicant", id?.id, "view_shortlisted_applicant");
   addAdminDynamicRoute("/admin/list_job/job_details", id?.id, "job_details");
+  addAdminDynamicRoute("/admin/job_report/view_job", id?.id, "view_job");
 
 
   const isLoggedIn = localStorage.getItem('token');

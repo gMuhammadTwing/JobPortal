@@ -12,6 +12,7 @@ import { toast, Toaster } from "sonner";
 import Pagination from "../../../Components/Pagination";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import { LoaderTable } from "../../../Components/LoaderTable";
+import { Link } from "react-router-dom";
 
 export default function JobReport() {
     const [data, setData] = useState();
@@ -78,6 +79,11 @@ export default function JobReport() {
                                             className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
                                         >
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+                                        >
+                                        </th>
                                     </tr>
                                     <tr>
                                         <th className="px-4 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
@@ -96,9 +102,9 @@ export default function JobReport() {
                                             Comments
                                         </th>
 
-                                        {/* <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
+                                        <th className="px-2 py-3 text-left text-xs md:text-sm font-semibold text-gray-900">
                                             Actions
-                                        </th> */}
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
@@ -122,7 +128,18 @@ export default function JobReport() {
                                                 <td className="px-2 py-3 text-xs md:text-sm">
                                                     {parser.parseFromString(item?.comments || "", "text/html").body.textContent.trim()}
                                                 </td>
-
+                                                <td className="px-3 py-4 text-sm ">
+                                                    <Link
+                                                        // onClick={() => {
+                                                        //     if (item?.company_id?.id) {
+                                                        //         localStorage.setItem("company_id", item.company_id.id);
+                                                        //     }
+                                                        // }}
+                                                        to={`/admin/job_report/view_job/${item?.job_id.id}`}
+                                                    >
+                                                        <EyeIcon className="h-5 w-5 cursor-pointer" />
+                                                    </Link>
+                                                </td>
                                             </tr>
                                         ))
                                     ) : (

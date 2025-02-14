@@ -81,6 +81,8 @@ import AdminCharities from './Pages/Admin/About Us/Charities';
 import Index from './Pages/Admin/IdeaIncubatorForm/Index';
 import JobReport from './Pages/Admin/Report Job/JobReport';
 import JobDetails from './Pages/Admin/Jobs/JobDetails';
+import ViewJob from './Pages/Admin/Report Job/ViewJob';
+import ResetPassword from './Pages/Public/ResetPassword';
 function App() {
   return (
     <DropdownProvider>
@@ -126,6 +128,9 @@ function App() {
             <Route path="blogs" element={<Blogs />} />
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />
+            <Route path="forgot_password" element={<ForgotPassword />} />
+            <Route path="reset_password" element={<ResetPassword />} />
+            <Route path="reset_password/:params" element={<ResetPassword />} />
             <Route path="create-account" element={<CreateAccount />} />
             <Route path="create-account/signup_job_seeker" element={<JobSeekerSignup />} />
             <Route path="create-account/signup-employee" element={<EmployerSignup />} />
@@ -180,6 +185,7 @@ function App() {
               <Route path="idea_incubator_form" element={<Index/>} />
               <Route path="job_report" element={<JobReport/>} />
               <Route path="list_job/job_details/:id" element={<JobDetails/>} />
+              <Route path="job_report/view_job/:id" element={<ViewJob/>} />
             </Route>
 
             {/* No Permission Route */}
