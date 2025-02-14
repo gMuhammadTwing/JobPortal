@@ -18,16 +18,18 @@ export default function ForgotPassword() {
             console.log(values);
             openModal();
             try {
-                const response = await axiosInstance.post(`/api/forgot_password`, values);
-                if (response) {
-                    openModal();
-                    // toast.success("Password reset link sent to your email. Please check your email");
-                    formik.resetForm();
-                }
+                await axiosInstance.post(`/api/forgot_password`, values);
+                // if (response) {
+                //     openModal();
+                //     // toast.success("Password reset link sent to your email. Please check your email");
+                //     formik.resetForm();
+                // }
             } catch (error) {
                 handleError(error);
             } finally {
                 setLoading(false)
+                openModal();
+                formik.resetForm();
             }
         },
     });
