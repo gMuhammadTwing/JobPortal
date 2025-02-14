@@ -15,23 +15,19 @@ export default function ForgotPassword() {
         },
         onSubmit: async (values) => {
             setLoading(true);
-            console.log(values);
-            openModal();
             try {
-                await axiosInstance.post(`/api/forgot_password`, values);
-                // if (response) {
-                //     openModal();
-                //     // toast.success("Password reset link sent to your email. Please check your email");
-                //     formik.resetForm();
-                // }
+                const response = await axiosInstance.post(`/api/forgot_password`, values);
+                if (response) {
+                    openModal(); // Open the modal only if the request is successful
+                    formik.resetForm();
+                }
             } catch (error) {
                 handleError(error);
             } finally {
-                setLoading(false)
-                openModal();
-                formik.resetForm();
+                setLoading(false);
             }
         },
+
     });
 
     const [modal, setModal] = useState(false);
@@ -48,7 +44,7 @@ export default function ForgotPassword() {
                 <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Forgot Password</h1>
                 
             </div> */}
-            <MessageModal isOpen={modal} onClose={closeModal} message={`Password reset link sent to your email. Please check your email`}/>
+            <MessageModal isOpen={modal} onClose={closeModal} message={`Password reset link sent to your email. Please check your email`} />
             <Toaster richColors />
             <section className="flex items-center justify-center bg-white">
 
