@@ -391,6 +391,8 @@ export default function Index() {
                                                                                 return 'Employer';
                                                                             case 4:
                                                                                 return 'Employment Agency';
+                                                                            case 5:
+                                                                                return 'Admin';
                                                                             default:
                                                                                 return 'Unknown Role';
                                                                         }

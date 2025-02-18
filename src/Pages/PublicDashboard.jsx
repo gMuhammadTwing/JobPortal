@@ -9,12 +9,55 @@ import auth from '../auth'
 import app_vars from '../config'
 import userLogo from '../assets/user.jpeg'
 import menu_logo from '../assets/menu_logo-1.png'
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
+// const user = {
+//   name: 'Tom Cook',
+//   email: 'tom@example.com',
+//   imageUrl:
+//     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+// }
+const adminNav = [
+  { permissions: 'user_management', href: "admin/user_management" },
+  { permissions: 'employer', href: "admin/employees" },
+  { permissions: 'job_seeker', href: "admin/job_seekers" },
+  { permissions: 'employment_agency', href: "admin/agencies_list" },
+  { permissions: 'jobs_list', href: "admin/list_job" },
+  { permissions: 'payment', href: "admin/payments" },
+  { permissions: 'instructions_for_payment', href: "admin/instructions" },
+  { permissions: 'jobs_&_applicants', href: "admin/shortlisting" },
+  { permissions: 'blogs', href: "admin/postblog" },
+  { permissions: 'contact_us', href: "admin/contacts" },
+  { permissions: 'job_reports', href: "admin/job_report" },
+  { permissions: 'veritasKWD_idea_incubator_form', href: "admin/idea_incubator_form" },
+  { permissions: 'veritasKWD_opportunity', href: "admin/admin_opportunity" },
+  { permissions: 'veritasKWD_projects', href: "admin/admin_projects" },
+  { permissions: 'veritasKWD_investors', href: "admin/admin_investors" },
+  { permissions: 'veritasKWD_charities', href: "admin/admin_charities" },
+  { permissions: 'veritasKWD_idea_incubators', href: "admin/admin_idea_incubators" },
+  { permissions: 'veritasKWD_volunteers', href: "admin/admin_volunteers" },
+  { permissions: 'veritasKWD_careers', href: "admin/admin_careers" },
+];
+
+// const getHrefByPermission = (permission) => {
+//   const navItem = adminNav.find(item => item.permissions == permission);
+//   return navItem ? (navItem.href) : null;
+// };
+const permissions = JSON.parse(localStorage.getItem("permissions") || "[]");
+
+const getHrefByPermission = (permission) => {
+
+  // Check if 'employer' permission exists
+  const hasEmployerPermission = permissions.some(p => p.permission_name == "employer");
+
+  if (hasEmployerPermission) {
+    const employerNavItem = adminNav.find(item => item.permissions == "employer");
+    return employerNavItem ? employerNavItem.href : null;
+  }
+
+  // Otherwise, return href of the given permission
+  const navItem = adminNav.find(item => item.permissions === permission);
+  return navItem ? navItem.href : null;
+};
+
 const navigation = [
   { name: 'Home', href: 'home', current: true },
   { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
@@ -29,15 +72,13 @@ const navigation = [
       { name: "Why Register?", href: 'why_subscribe' },
       {
         name: "Find a job",
-        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : 'login',
+        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : 'login',
         single: 'find',
         current: false
       },
       { name: "Join our Community", href: 'join_community' },
     ]
   },
-
-
   {
     name: 'Employer',
     single: 'employer',
@@ -58,8 +99,13 @@ const navigation = [
         { name: "Find Candidates", href: 'resume_bank', single: 'find', current: false },
       ],
   },
-
-  { name: 'Admin', href: 'admin/employees', single: 'admin', current: false },
+  {
+    name: 'Admin',
+    // href: 'admin/employees',
+    href: permissions.length ? getHrefByPermission(permissions[0].permission_name) : 'admin/employees',
+    single: 'admin',
+    current: false
+  },
   {
     name: 'About Us', current: false,
     subItems: [
@@ -88,6 +134,7 @@ function classNames(...classes) {
 export default function PublicDashboard() {
   const location = useLocation();
   const role_id = localStorage.getItem("role_id");
+
   const navigate = useNavigate();
   useEffect(() => {
     if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "/" || window.location.hash == "/#/") {
@@ -125,7 +172,7 @@ export default function PublicDashboard() {
                     <>
                       {
                         navigation
-                          .filter(item => !((role_id != 1) && item.name == 'Admin'))
+                          .filter(item => !(role_id != 1 && role_id != 5 && item.name == 'Admin'))
                           .map((item) => (
                             item?.name == 'Jobs' ?
                               <Link
@@ -135,12 +182,12 @@ export default function PublicDashboard() {
                                 // to={(localStorage?.token) ? localStorage.payment == 'true' ? item?.href : '/login'}
                                 to={
                                   localStorage?.token
-                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                                    ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                                     : '/login'
                                 }
                                 onClick={() => {
                                   localStorage?.token
-                                    ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
+                                    ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 5 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
                                     : toast.info("Please login first");
                                 }}
                                 aria-current={item.current ? 'page' : undefined}
@@ -491,7 +538,7 @@ export default function PublicDashboard() {
           <Disclosure.Panel className="md:hidden text-black">
             <div className="space-y-0 px-2 sm:px-3">
               {navigation
-                .filter(item => !(localStorage.role_id != 1 && item.name === 'Admin'))
+                .filter(item => !(localStorage.role_id != 1 && localStorage.role_id != 5 && item.name == 'Admin'))
                 .map((item) => (
                   item?.name == 'Jobs' ?
                     <div key={item.name}>
@@ -500,12 +547,12 @@ export default function PublicDashboard() {
                         // to={item.href}
                         to={
                           localStorage?.token
-                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
+                            ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? item?.href : (localStorage.payment == 'false' ? '/home' : '/payment-alert'))
                             : '/login'
                         }
                         onClick={() => {
                           localStorage?.token
-                            ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
+                            ? ((localStorage.payment != 'true' && localStorage.role_id != 1 && localStorage.role_id != 5 && localStorage.role_id != 3) && toast.info("Payment Approval Pending"))
                             : toast.info("Please login first");
                         }}
                         aria-current={item.current ? 'page' : undefined}

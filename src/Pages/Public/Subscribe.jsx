@@ -13,7 +13,7 @@ export default function Subscribe() {
                     <p className="mt-1">Find your next great opportunity! Register to Veritas Kenya Workforce Database.</p>
                     <div className="mt-5 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                 <Link
                                     to={"/jobs"}
                                 >
