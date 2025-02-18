@@ -28,7 +28,7 @@ const permissionsList = [
     { name: "VertiasKWD Careers", permissions: "veritasKWD_careers" },
 ];
 
-const ManagePermissions = ({ userId, isOpen, onClose }) => {
+const ViewPermissions = ({ userId, isOpen, onClose }) => {
     const [selectedPermissions, setSelectedPermissions] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -50,57 +50,8 @@ const ManagePermissions = ({ userId, isOpen, onClose }) => {
         }
     };
 
-    const handleCheckboxChange = async (e, permission) => {
-        const isChecked = e.target.checked;
-        const endpoint = isChecked ? "/api/user_permission/store" : "/api/user_permission/destroy";
-
-        try {
-            await axiosInstance.post(endpoint, { user_id: userId?.id, permission_name: permission });
-            setSelectedPermissions((prev) =>
-                isChecked ? [...prev, permission] : prev.filter((p) => p !== permission)
-            );
-            toast.success(`Permission ${isChecked ? "granted" : "revoked"} successfully`);
-        } catch (error) {
-            handleError(error);
-        }
-    };
-
-    const handleIconClick = () => {
-        fileInputRef.current.click();
-    };
-    const fileInputRef = useRef(null);
     const [imageLoader, setImageLoader] = useState(false);
-    const handleFileChange = async (event) => {
-        setImageLoader(true);
-        const file = event.currentTarget.files[0];
-        const formData = new FormData();
-        formData.append("row_id", userId?.id);
-        formData.append("user_image", file);
-        try {
-            const response = await axiosInstance.post(`/api/job_seeker_basic_info/upload_user_image`, formData);
-            if (response) {
-                toast.success("Profile Picture Saved")
-                getProfilePic();
-            }
-        } catch (error) {
-            handleError(error);
-        }
-        //  finally {
-        //     setEditProfile(false);
-        //     fetchData()
-        //     setLoading(false);
-        // }
-    };
-    const getProfilePic = async () => {
-        try {
-            await axiosInstance.get(`/api/get_user_image`);
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setImageLoader(false);
-            window.location?.reload();
-        }
-    };
+    
 
     return (
         <Dialog open={isOpen} onClose={() => onClose(false)} className="relative z-10">
@@ -114,7 +65,9 @@ const ManagePermissions = ({ userId, isOpen, onClose }) => {
                     >
                         <XMarkIcon className="h-6 w-6" />
                     </button>
-                    <DialogTitle className="text-lg font-semibold text-gray-900">User Profile</DialogTitle>
+                    <DialogTitle className="text-lg font-semibold text-gray-900">
+                        User Profile
+                    </DialogTitle>
 
                     {loading ? (
                         <div className="flex justify-center mt-5">
@@ -144,16 +97,16 @@ const ManagePermissions = ({ userId, isOpen, onClose }) => {
 
                                     {/* Pencil Icon on Hover */}
                                     {/* <form onSubmit={imageFormik.handleSubmit}> */}
-                                    <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                    {/* <div onClick={handleIconClick} className="absolute bottom-5 right-8 translate-x-1/2 translate-y-1/2 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                         <PencilSquareIcon className="h-5 w-5 text-blue-500" />
-                                    </div>
-                                    <input
+                                    </div> */}
+                                    {/* <input
                                         type="file"
                                         ref={fileInputRef}
                                         className="hidden"
                                         accept="image/*"
                                         onChange={handleFileChange}
-                                    />
+                                    /> */}
                                 </div>
 
                                 <div className="text-center sm:text-left">
@@ -166,24 +119,18 @@ const ManagePermissions = ({ userId, isOpen, onClose }) => {
                                     </p>
                                 </div>
                             </div>
-
                             <div className="mt-6">
                                 <span className="font-semibold text-lg">Manage Permissions</span>
                                 <div className="mt-5 grid grid-cols-2 gap-4">
-                                    {permissionsList.map(({ name, permissions }) => (
-                                        <label key={permissions} className="flex items-center space-x-3">
-                                            <input
-                                                type="checkbox"
-                                                checked={selectedPermissions.includes(permissions)}
-                                                onChange={(e) => handleCheckboxChange(e, permissions)}
-                                                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                            />
-                                            <span className="text-sm text-gray-700">{name}</span>
-                                        </label>
-                                    ))}
+                                    {permissionsList
+                                        .filter(({ permissions }) => selectedPermissions.includes(permissions))
+                                        .map(({ name }) => (
+                                            <div key={name} className="bg-gray-100 p-2 rounded-md text-center">
+                                                {name}
+                                            </div>
+                                        ))}
                                 </div>
                             </div>
-
                         </>
                     )}
                 </DialogPanel>
@@ -192,4 +139,4 @@ const ManagePermissions = ({ userId, isOpen, onClose }) => {
     );
 };
 
-export default ManagePermissions;
+export default ViewPermissions;
