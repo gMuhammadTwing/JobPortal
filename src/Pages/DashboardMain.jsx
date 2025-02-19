@@ -63,14 +63,14 @@ export default function DashboardMain() {
         { name: "Blogs", href: "postblog", icon: NewspaperIcon, permissions: 'blogs', current: false },
         { name: "Contact Us", href: "contacts", single: "contacts", permissions: 'contact_us', icon: ChatBubbleLeftRightIcon, current: false },
         { name: "Reported Jobs", href: "job_report", single: "job_report", permissions: 'job_reports', icon: ChatBubbleLeftRightIcon, current: false },
-        { name: "VertiasKWD Idea Incubator Form", href: "idea_incubator_form", permissions: 'veritasKWD_idea_incubator_form', single: "idea_incubator_form", icon: LightBulbIcon, current: false },
-        { name: "VertiasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
-        { name: "VertiasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
-        { name: "VertiasKWD Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },
-        { name: "VertiasKWD Charities", href: "admin_charities", permissions: 'veritasKWD_charities', single: "admin_charities", icon: HeartIcon, current: false },
-        { name: "VertiasKWD Idea Incubators", href: "admin_idea_incubators", permissions: 'veritasKWD_idea_incubators', single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
-        { name: "VertiasKWD Volunteers", href: "admin_volunteers", permissions: 'veritasKWD_volunteers', single: "admin_volunteers", icon: HandRaisedIcon, current: false },
-        { name: "VertiasKWD Careers", href: "admin_careers", permissions: 'veritasKWD_careers', single: "admin_careers", icon: AcademicCapIcon, current: false },
+        { name: "VeritasKWD Idea Incubator Form", href: "idea_incubator_form", permissions: 'veritasKWD_idea_incubator_form', single: "idea_incubator_form", icon: LightBulbIcon, current: false },
+        { name: "VeritasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
+        { name: "VeritasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
+        { name: "VeritasKWD Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },
+        { name: "VeritasKWD Charities", href: "admin_charities", permissions: 'veritasKWD_charities', single: "admin_charities", icon: HeartIcon, current: false },
+        { name: "VeritasKWD Idea Incubators", href: "admin_idea_incubators", permissions: 'veritasKWD_idea_incubators', single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
+        { name: "VeritasKWD Volunteers", href: "admin_volunteers", permissions: 'veritasKWD_volunteers', single: "admin_volunteers", icon: HandRaisedIcon, current: false },
+        { name: "VeritasKWD Careers", href: "admin_careers", permissions: 'veritasKWD_careers', single: "admin_careers", icon: AcademicCapIcon, current: false },
 
     ];
     // const getUserPermissions = () => {

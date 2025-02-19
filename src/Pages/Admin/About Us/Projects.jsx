@@ -59,7 +59,7 @@ export default function Projects() {
             <div className="pb-15">
                 <>
                     <div className="border rounded-lg p-4 bg-white">
-                        <div className="text-center p-4 font-semibold">VertiasKWD Projects</div>
+                        <div className="text-center p-4 font-semibold">VeritasKWD Projects</div>
                         <form onSubmit={formik.handleSubmit}>
                             <div className="relative mb-4">
                                 {/* <label htmlFor="description" className="block text-sm font-medium text-gray-900">

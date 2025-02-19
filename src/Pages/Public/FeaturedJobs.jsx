@@ -46,7 +46,13 @@ export default function FeaturedJobs() {
                             data.data.slice(0, 4).map((item) => (
                                 <div key={item.id} className="border shadow-lg p-4 rounded-lg flex flex-col bg-white">
                                     <div className="flex flex-col items-start text-center mb-4">
-                                        <h1 className="font-semibold text-lg md:text-xl">{item?.job_title}</h1>
+                                        <h1 className="font-semibold text-lg md:text-xl">
+                                            <span className="block md:hidden">{item?.job_title}</span>
+                                            <span className="hidden md:block">
+                                                {item?.job_title?.length > 20 ? item.job_title.slice(0, 20) + "..." : item?.job_title}
+                                            </span>
+                                        </h1>
+
                                         {/* <span className="inline-flex items-center rounded-lg bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"> */}
                                         {item?.company_id?.company_name}
                                         {/* </span> */}
@@ -107,7 +113,7 @@ export default function FeaturedJobs() {
                                         <div className="flex justify-center -mt-px divide-x divide-gray-300">
                                             <div className="flex items-center justify-center w-1/2 space-x-2">
                                                 {(localStorage?.token) ? (
-                                                    (localStorage.payment == 'true' || localStorage.role_id == 1|| localStorage.role_id == 5 || localStorage.role_id == 3) ?
+                                                    (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                                         <Link to={`/view-job-details/${item?.id}`}>
                                                             <button
                                                                 className="bg-green-50 text-[#008600] px-4 py-2 rounded-lg hover:bg-[#008600] hover:text-white transition duration-200 ease-in-out"
@@ -156,7 +162,7 @@ export default function FeaturedJobs() {
                     </ul>
                     <div className="mt-10 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1 ||localStorage.role_id == 5 || localStorage.role_id == 3) ?
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                 <Link
                                     to={"/jobs"}
                                 >

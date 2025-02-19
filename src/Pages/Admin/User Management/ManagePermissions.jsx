@@ -18,14 +18,14 @@ const permissionsList = [
     { name: "Blogs", permissions: "blogs" },
     { name: "Contact Us", permissions: "contact_us" },
     { name: "Reported Jobs", permissions: "job_reports" },
-    { name: "VertiasKWD Idea Incubator Form", permissions: "veritasKWD_idea_incubator_form" },
-    { name: "VertiasKWD Opportunity", permissions: "veritasKWD_opportunity" },
-    { name: "VertiasKWD Projects", permissions: "veritasKWD_projects" },
-    { name: "VertiasKWD Investors", permissions: "veritasKWD_investors" },
-    { name: "VertiasKWD Charities", permissions: "veritasKWD_charities" },
-    { name: "VertiasKWD Idea Incubators", permissions: "veritasKWD_idea_incubators" },
-    { name: "VertiasKWD Volunteers", permissions: "veritasKWD_volunteers" },
-    { name: "VertiasKWD Careers", permissions: "veritasKWD_careers" },
+    { name: "VeritasKWD Idea Incubator Form", permissions: "veritasKWD_idea_incubator_form" },
+    { name: "VeritasKWD Opportunity", permissions: "veritasKWD_opportunity" },
+    { name: "VeritasKWD Projects", permissions: "veritasKWD_projects" },
+    { name: "VeritasKWD Investors", permissions: "veritasKWD_investors" },
+    { name: "VeritasKWD Charities", permissions: "veritasKWD_charities" },
+    { name: "VeritasKWD Idea Incubators", permissions: "veritasKWD_idea_incubators" },
+    { name: "VeritasKWD Volunteers", permissions: "veritasKWD_volunteers" },
+    { name: "VeritasKWD Careers", permissions: "veritasKWD_careers" },
 ];
 
 const ManagePermissions = ({ userId, isOpen, onClose }) => {
