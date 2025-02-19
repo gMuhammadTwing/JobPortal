@@ -17,6 +17,7 @@ import {
     GlobeAltIcon,
     AcademicCapIcon,
     UserGroupIcon,
+    UserIcon,
 } from "@heroicons/react/24/outline";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -53,7 +54,7 @@ export default function DashboardMain() {
     const adminNav = [
 
         { name: "Employer", href: "employees", icon: UserCircleIcon, permissions: 'employer', current: true },
-        { name: "User Management", href: "user_management", permissions: 'user_management', single: "user_management", icon: UserGroupIcon, current: false },
+        { name: "Manager Management", href: "user_management", permissions: 'user_management', single: "user_management", icon: UserGroupIcon, current: false },
         { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, permissions: 'job_seeker', single: "admin_job_seekers", current: true },
         { name: "Employment Agency", href: "agencies_list", permissions: 'employment_agency', single: "agencies_list", icon: BuildingOfficeIcon, current: false },
         { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, permissions: 'jobs_list', current: false },
@@ -64,7 +65,7 @@ export default function DashboardMain() {
         { name: "Contact Us", href: "contacts", single: "contacts", permissions: 'contact_us', icon: ChatBubbleLeftRightIcon, current: false },
         { name: "Reported Jobs", href: "job_report", single: "job_report", permissions: 'job_reports', icon: ChatBubbleLeftRightIcon, current: false },
         { name: "VeritasKWD Idea Incubator Form", href: "idea_incubator_form", permissions: 'veritasKWD_idea_incubator_form', single: "idea_incubator_form", icon: LightBulbIcon, current: false },
-        { name: "About Us", href: "about", permissions: 'about_us', single: "about", icon: BriefcaseIcon, current: false },
+        { name: "About Us", href: "about", permissions: 'about_us', single: "about", icon: UserIcon, current: false },
         { name: "VeritasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
         { name: "VeritasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
         { name: "Veritas Endless Possibities for Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },
@@ -233,7 +234,7 @@ export default function DashboardMain() {
                                                 location.pathname.includes(item.href) || location.pathname.includes(item?.single)
                                                     ? "text-white"
                                                     : "text-black group-hover:text-white",
-                                                "h-6 w-6"
+                                                "h-6 w-6 flex-shrink-0 min-w-[1.5rem]"
                                             )}
                                         />
                                         {item.name}
