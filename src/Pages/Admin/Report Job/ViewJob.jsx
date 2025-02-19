@@ -12,11 +12,8 @@ import { useParams } from 'react-router-dom';
 export default function ViewJob() {
     const dropDownValues = useDropdownContext();
     const id = useParams();
-    console.log("id: ", id);
-
     const company_id = localStorage?.company_id;
     const [tableLoader, setTableLoader] = useState(false);
-    const parser = new DOMParser();
     const [data, setData] = useState();
     const formik = useFormik({
         initialValues: {

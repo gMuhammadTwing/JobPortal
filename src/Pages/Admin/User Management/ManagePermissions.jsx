@@ -17,7 +17,7 @@ const permissionsList = [
     { name: "Jobs & Applicants", permissions: "jobs_&_applicants" },
     { name: "Blogs", permissions: "blogs" },
     { name: "Contact Us", permissions: "contact_us" },
-    { name: "Job Reports", permissions: "job_reports" },
+    { name: "Reported Jobs", permissions: "job_reports" },
     { name: "VertiasKWD Idea Incubator Form", permissions: "veritasKWD_idea_incubator_form" },
     { name: "VertiasKWD Opportunity", permissions: "veritasKWD_opportunity" },
     { name: "VertiasKWD Projects", permissions: "veritasKWD_projects" },

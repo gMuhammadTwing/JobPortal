@@ -12,8 +12,6 @@ export default function Charities() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_charities`);
             if (response) {
-                console.log(response);
-
                 setData(response?.data);
             }
         } catch (error) {

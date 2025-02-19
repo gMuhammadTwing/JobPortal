@@ -58,7 +58,7 @@ export default function JobReport() {
                                             scope="col"
                                             className="py-5.5 pl-4 pr-3 text-left font-bold text-xl text-[#ff0000]"
                                         >
-                                            Job Reports
+                                            Reported Jobs
                                         </th>
                                         <th
                                             scope="col"

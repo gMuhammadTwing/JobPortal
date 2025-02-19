@@ -13,10 +13,7 @@ export default function Careers() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_careers`);
             if (response) {
-                console.log(response);
-
                 setData(response.data)
-
             }
         } catch (error) {
             handleError(error);

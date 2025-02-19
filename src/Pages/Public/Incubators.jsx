@@ -16,8 +16,6 @@ export default function Incubators() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_idea_incubators`);
             if (response) {
-                console.log(response);
-
                 setData(response?.data);
             }
         } catch (error) {

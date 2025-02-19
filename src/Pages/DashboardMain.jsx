@@ -62,7 +62,7 @@ export default function DashboardMain() {
         { name: "Jobs & Applicants", href: "shortlisting", permissions: 'jobs_&_applicants', icon: ClipboardDocumentCheckIcon, current: false },
         { name: "Blogs", href: "postblog", icon: NewspaperIcon, permissions: 'blogs', current: false },
         { name: "Contact Us", href: "contacts", single: "contacts", permissions: 'contact_us', icon: ChatBubbleLeftRightIcon, current: false },
-        { name: "Job Reports", href: "job_report", single: "job_report", permissions: 'job_reports', icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "Reported Jobs", href: "job_report", single: "job_report", permissions: 'job_reports', icon: ChatBubbleLeftRightIcon, current: false },
         { name: "VertiasKWD Idea Incubator Form", href: "idea_incubator_form", permissions: 'veritasKWD_idea_incubator_form', single: "idea_incubator_form", icon: LightBulbIcon, current: false },
         { name: "VertiasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
         { name: "VertiasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
@@ -86,8 +86,13 @@ export default function DashboardMain() {
     //     }
     // };
     const getUserPermissions = () => {
-        const permissions = JSON.parse(localStorage.getItem("permissions"));
-        console.log("permissions: ", permissions);
+        // const permissions = JSON.parse(localStorage.getItem("permissions"));
+        // console.log("permissions: ", permissions);
+        const storedPermissions = localStorage.getItem("permissions");
+
+        const permissions = (storedPermissions && storedPermissions !== "undefined")
+            ? JSON.parse(storedPermissions)
+            : [];
 
         return permissions ? permissions.map(p => p.permission_name) : [];
     };

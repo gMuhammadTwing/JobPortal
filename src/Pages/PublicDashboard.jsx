@@ -41,15 +41,34 @@ const adminNav = [
 //   const navItem = adminNav.find(item => item.permissions == permission);
 //   return navItem ? (navItem.href) : null;
 // };
-const permissions = JSON.parse(localStorage.getItem("permissions") || "[]");
+const storedPermissions = localStorage.getItem("permissions");
+
+const permissions = (storedPermissions && storedPermissions !== "undefined")
+  ? JSON.parse(storedPermissions)
+  : [];
+
+// const getHrefByPermission = (permission) => {
+
+//   // Check if 'employer' permission exists
+//   const hasEmployerPermission = permissions && permissions.some(p => p.permission_name == "employer");
+
+//   if (hasEmployerPermission) {
+//     const employerNavItem = adminNav.find(item => item.permissions == "employer");
+//     return employerNavItem ? employerNavItem.href : null;
+//   }
+
+//   // Otherwise, return href of the given permission
+//   const navItem = adminNav.find(item => item.permissions === permission);
+//   return navItem ? navItem.href : null;
+// };
+
 
 const getHrefByPermission = (permission) => {
-
   // Check if 'employer' permission exists
-  const hasEmployerPermission = permissions.some(p => p.permission_name == "employer");
+  const hasEmployerPermission = permissions.some(p => p.permission_name === "employer");
 
   if (hasEmployerPermission) {
-    const employerNavItem = adminNav.find(item => item.permissions == "employer");
+    const employerNavItem = adminNav.find(item => item.permissions === "employer");
     return employerNavItem ? employerNavItem.href : null;
   }
 

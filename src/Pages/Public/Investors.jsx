@@ -12,8 +12,6 @@ export default function Investors() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_investors`);
             if (response) {
-                console.log(response);
-
                 setData(response?.data);
             }
         } catch (error) {

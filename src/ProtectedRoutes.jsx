@@ -75,7 +75,12 @@ const ProtectedRoutes = ({ children }) => {
 
 
   const isLoggedIn = localStorage.getItem('token');
-  const permissions = JSON.parse(localStorage.getItem('permissions') || "[]");
+  const storedPermissions = localStorage.getItem("permissions");
+
+  const permissions = (storedPermissions && storedPermissions !== "undefined")
+    ? JSON.parse(storedPermissions)
+    : [];
+  // const permissions = JSON.parse(localStorage.getItem('permissions') || "[]");
   const location = useLocation();
   const empRequiredPermission = employerPermission[location.pathname];
   const jobseekerRequiredPermission = JobSeekerPermission[location.pathname];
@@ -83,10 +88,7 @@ const ProtectedRoutes = ({ children }) => {
   const hasPermission = permissions.some(
     (perm) => perm.permission_name == adminRequiredPermissions
   );
-  console.log("hasPermission: ",hasPermission);
-  console.log("adminPer: ",adminRequiredPermissions);
-  
-  
+
   if (!isLoggedIn) {
     return <Navigate to="/home" replace />;
   }

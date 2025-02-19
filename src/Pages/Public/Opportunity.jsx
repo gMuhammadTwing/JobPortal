@@ -13,7 +13,6 @@ export default function Opportunity() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_opportunity`);
             if (response) {
-                console.log(response);
                 setData(response?.data);
             }
         } catch (error) {

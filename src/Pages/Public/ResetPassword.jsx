@@ -8,9 +8,7 @@ import axiosInstance, { handleError } from "../../axiosInstance";
 import { useParams } from "react-router-dom";
 export default function ResetPassword() {
     const [loading, setLoading] = useState(false);
-    const params = useParams();
-    console.log(params);
-    
+    const params = useParams();    
     const formik = useFormik({
         initialValues: {
             email: params?.email,
@@ -20,7 +18,6 @@ export default function ResetPassword() {
         },
         onSubmit: async (values) => {
             setLoading(true);
-            console.log(values);
             try {
                 const response = await axiosInstance.post(`/api/forgot_password`, values);
                 if (response) {

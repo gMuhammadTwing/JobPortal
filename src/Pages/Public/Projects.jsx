@@ -13,8 +13,6 @@ export default function Projects() {
         try {
             const response = await axiosInstance.get(`api/veritas_kwd_projects`);
             if (response) {
-                console.log(response);
-
                 setData(response?.data);
             }
         } catch (error) {
