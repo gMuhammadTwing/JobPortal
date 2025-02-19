@@ -88,7 +88,7 @@ export default function Incubators() {
                 className='bg-white'
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
-                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">VeritasKWD Idea Incubators</h1>
+                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">VeritasKWD Idea Incubator</h1>
                     {/* <p>We are dedicated to bridging the gap between talent and opportunity</p> */}
                     <div className="mt-5 flex justify-center cursor-pointer">
                         <Link
@@ -109,9 +109,17 @@ export default function Incubators() {
                             <div className="flex justify-center items-center h-full">
                                 <Hourglass />
                             </div>
-                        ) : data && data[0]?.description ? (
-                            ReactHtmlParser(data[0]?.description)
-                        ) : null}
+                        ) : localStorage.token ? (
+                            data && data[0]?.description_private ? (
+                                ReactHtmlParser(data[0]?.description_private)
+                            )
+                                : null
+                        ) :
+                            data && data[0]?.description_public ? (
+                                ReactHtmlParser(data[0]?.description_public)
+                            )
+                                : null
+                        }
                         {/* VeritasKWD idea incubator is a program that helps Kenyan opportunity seekers and creators submit ideas/business proposals that are aligned with their passions and are viable in the real world. VeritasKWD idea incubators help new businesses and ideas grow. We subject ideas/business proposals to in-depth and extensive research, stress testing, feasibility testing, viability, and concept evaluation among other measures. We source external funding for ideas/business proposals that are innovative and have the greatest job creation potential. Veritas finances ideas/proposals that are cool and useful and meet VeritasKWD’s funding threshold. Veritas would finance the idea/business proposal in exchange for an agreeable equity. To submit an idea/business proposal, one must be unemployed for at least 3 years after subscription to VeritasKWD and 3 years after graduation. Job seekers who are degree holders and have never been employed or are misemployed for 6+ years (after graduation) may submit business ideas or Business proposals immediately after subscription for consideration. */}
                     </div>
                     {/* <div>
@@ -119,104 +127,105 @@ export default function Incubators() {
                     </div> */}
                 </div>
 
-                <div className="max-w-[78rem] mx-auto p-6 mt-0 flex justify-center items-center">
-                    <div className="border shadow-1 rounded-lg p-4 w-full max-w-2xl">
-                        <form className="grid grid-cols-1 gap-2" onSubmit={formik.handleSubmit}>
-                            {/* Name */}
-                            <div className="mb-2">
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                                    Name
-                                </label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    value={formik.values.name}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {formik.errors.name && formik.touched.name && (
-                                    <p className="text-sm text-red-500">{formik.errors.name}</p>
-                                )}
-                            </div>
+                {localStorage?.token &&
 
-                            {/* Email */}
-                            <div className="mb-2">
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-                                    Email
-                                </label>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    value={formik.values.email}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {formik.errors.email && formik.touched.email && (
-                                    <p className="text-sm text-red-500">{formik.errors.email}</p>
-                                )}
-                            </div>
-
-                            {/* Message */}
-                            <div className="mb-2">
-                                <label htmlFor="message" className="block text-sm font-medium text-gray-900">
-                                    Message
-                                </label>
-                                <textarea
-                                    id="message"
-                                    rows={4}
-                                    name="message"
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    value={formik.values.message}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {formik.errors.message && formik.touched.message && (
-                                    <p className="text-sm text-red-500">{formik.errors.message}</p>
-                                )}
-                            </div>
-
-                            {/* Attachment */}
-                            <div className="mb-2">
-                                <label htmlFor="attachment" className="block text-sm font-medium text-gray-900">
-                                    Attachment (PDF only)
-                                </label>
-                                <input
-                                    id="attachment"
-                                    name="attachment"
-                                    type="file"
-                                    accept=".jpg, .jpeg, .png, .pdf"
-                                    className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
-                                    onChange={(event) => {
-                                        formik.setFieldValue("attachment", event.currentTarget.files[0]);
-                                    }}
-                                />
-                                {formik.errors.attachment && formik.touched.attachment && (
-                                    <p className="text-sm text-red-500">{formik.errors.attachment}</p>
-                                )}
-                            </div>
-
-                            {/* Submit Button */}
-                            {isLoading ? (
-                                <div className="flex justify-center">
-                                    <InfinitySpin width={150} color="green" />
+                    <div className="max-w-[78rem] mx-auto p-6 mt-0 flex justify-center items-center">
+                        <div className="border shadow-1 rounded-lg p-4 w-full max-w-2xl">
+                            <form className="grid grid-cols-1 gap-2" onSubmit={formik.handleSubmit}>
+                                {/* Name */}
+                                <div className="mb-2">
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-900">
+                                        Name
+                                    </label>
+                                    <input
+                                        id="name"
+                                        name="name"
+                                        type="text"
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        value={formik.values.name}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    {formik.errors.name && formik.touched.name && (
+                                        <p className="text-sm text-red-500">{formik.errors.name}</p>
+                                    )}
                                 </div>
-                            ) : (
-                                <div className="text-center mt-0">
-                                    <Button type="submit" color="gradient" variant="solid" className="inline-block text-white">
-                                        Submit
-                                    </Button>
-                                </div>
-                            )}
 
-                        </form>
+                                {/* Email */}
+                                <div className="mb-2">
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                                        Email
+                                    </label>
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    {formik.errors.email && formik.touched.email && (
+                                        <p className="text-sm text-red-500">{formik.errors.email}</p>
+                                    )}
+                                </div>
+
+                                {/* Message */}
+                                <div className="mb-2">
+                                    <label htmlFor="message" className="block text-sm font-medium text-gray-900">
+                                        Message
+                                    </label>
+                                    <textarea
+                                        id="message"
+                                        rows={4}
+                                        name="message"
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        value={formik.values.message}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    {formik.errors.message && formik.touched.message && (
+                                        <p className="text-sm text-red-500">{formik.errors.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Attachment */}
+                                <div className="mb-2">
+                                    <label htmlFor="attachment" className="block text-sm font-medium text-gray-900">
+                                        Attachment (PDF only)
+                                    </label>
+                                    <input
+                                        id="attachment"
+                                        name="attachment"
+                                        type="file"
+                                        accept=".jpg, .jpeg, .png, .pdf"
+                                        className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                        onChange={(event) => {
+                                            formik.setFieldValue("attachment", event.currentTarget.files[0]);
+                                        }}
+                                    />
+                                    {formik.errors.attachment && formik.touched.attachment && (
+                                        <p className="text-sm text-red-500">{formik.errors.attachment}</p>
+                                    )}
+                                </div>
+
+                                {/* Submit Button */}
+                                {isLoading ? (
+                                    <div className="flex justify-center">
+                                        <InfinitySpin width={150} color="green" />
+                                    </div>
+                                ) : (
+                                    <div className="text-center mt-0">
+                                        <Button type="submit" color="gradient" variant="solid" className="inline-block text-white">
+                                            Submit
+                                        </Button>
+                                    </div>
+                                )}
+
+                            </form>
+                        </div>
                     </div>
-                </div>
-
-
+                }
             </div>
             <FooterHeader />
         </>

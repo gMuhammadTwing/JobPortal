@@ -46,15 +46,23 @@ export default function Volunteers() {
 
                 <div className="text-start p-15 space-y-4 max-w-5xl mx-auto">
                     <div className="space-y-4">
-                        {!loader && <div className="font-bold text-2xl">Why volunteer?</div> }
+                        {!loader && <div className="font-bold text-2xl">Why volunteer?</div>}
                         <div className="text-justify">
                             {loader ? (
                                 <div className="flex justify-center items-center h-full">
                                     <Hourglass />
                                 </div>
-                            ) : data && data[0]?.description ? (
-                                ReactHtmlParser(data[0]?.description)
-                            ) : null}
+                            ) : localStorage.token ? (
+                                data && data[0]?.description_private ? (
+                                    ReactHtmlParser(data[0]?.description_private)
+                                )
+                                    : null
+                            ) :
+                                data && data[0]?.description_public ? (
+                                    ReactHtmlParser(data[0]?.description_public)
+                                )
+                                    : null
+                            }
                         </div>
                         {/* <div className="flex">Developing new skills: Volunteering can help you develop new skills and gain valuable work experience. </div>
                         <div className="flex">Career advancement: Volunteering can help you improve your resume, create business relationships, and explore different industries.</div>

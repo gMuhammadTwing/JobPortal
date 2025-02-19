@@ -34,6 +34,7 @@ const ProtectedRoutes = ({ children }) => {
     "/admin/job_management": "manage_jobs",
     "/admin/idea_incubator_form": "veritasKWD_idea_incubator_form",
     "/admin/admin_opportunity": "veritasKWD_opportunity",
+    "/admin/about": "about_us",
     "/admin/admin_projects": "veritasKWD_projects",
     "/admin/admin_investors": "veritasKWD_investors",
     "/admin/admin_charities": "veritasKWD_charities",

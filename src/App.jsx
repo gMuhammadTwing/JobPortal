@@ -85,6 +85,7 @@ import ViewJob from './Pages/Admin/Report Job/ViewJob';
 import ResetPassword from './Pages/Public/ResetPassword';
 import ManageUser from './Pages/Admin/User Management/Index';
 import CreateUser from './Pages/Admin/User Management/CreateUser';
+import About from './Pages/Admin/About Us/About';
 function App() {
   return (
     <DropdownProvider>
@@ -178,6 +179,7 @@ function App() {
               <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
               <Route path="agencies_list/edit-agency/:id" element={<EditAgency />} />
               <Route path="list_job" element={<AdminJobs />} />
+              <Route path="about" element={<About />} />
               <Route path="admin_opportunity" element={<AdminOpportunity />} />
               <Route path="admin_careers" element={<AdminCareers />} />
               <Route path="admin_volunteers" element={<AdminVolunteers />} />

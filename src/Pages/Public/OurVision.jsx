@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import FooterHeader from "./Components/FooterHeader";
-
-export default function OurVision() {
+import ReactHtmlParser from "html-react-parser";
+export default function OurVision({ data }) {
     return (
         <>
             <div
@@ -17,11 +17,16 @@ export default function OurVision() {
                     About We’re on a mission to empowering Jobs worldwide.
                 </div> */}
                     <div className="text-center">
-                        VeritasKWD is the ultimate Unemployment Solution—
+                        {
+                            data ? (
+                                ReactHtmlParser(data)
+                            ) : null
+                        }
+                        {/* VeritasKWD is the ultimate Unemployment Solution— */}
                     </div>
-                    <div className="text-center">
+                    {/* <div className="text-center">
                         Moving Kenya to Full Employment rate and onwards to a Workforce Superpower.
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

@@ -58,7 +58,7 @@ export default function ForgotPassword() {
                                 alt="logo"
                             />
                             <h4 className="mb-12 mt-4 text-xl font-semibold">
-                                We are The Veritas Jobs
+                                Veritas Jobs -  NOW HIRING
                             </h4>
                         </div>
                         <div className="text-start">
