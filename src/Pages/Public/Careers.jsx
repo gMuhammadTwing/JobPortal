@@ -13,10 +13,7 @@ export default function Careers() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_careers`);
             if (response) {
-                console.log(response);
-
                 setData(response.data)
-
             }
         } catch (error) {
             handleError(error);
@@ -49,11 +46,21 @@ export default function Careers() {
                     <div className="space-y-4">
                         {loader ? (
                             <div className="flex justify-center items-center h-full">
-                                <Hourglass/>
+                                <Hourglass />
                             </div>
-                        ) : data && data[0]?.description ? (
-                            ReactHtmlParser(data[0]?.description)
-                        ) : null}
+                        )
+                            :
+                            localStorage.token ? (
+                                data && data[0]?.description_private ? (
+                                    ReactHtmlParser(data[0]?.description_private)
+                                )
+                                    : null
+                            ) :
+                                data && data[0]?.description_public ? (
+                                    ReactHtmlParser(data[0]?.description_public)
+                                )
+                                    : null
+                        }
 
                         {/* <div className="">VeritasKWD strives to be the very BEST company to work for. Some practices we have adopted to be the greatest company to work for include, but are not limited to:</div>
                         <div className="flex"><CheckIcon className="w-6 h-6 text-white bg-green-500 rounded-full p-1 mr-5 mt-1" />Competitive compensation: We pay our employees well and offer benefits that are competitive with other companies in the industry. </div>

@@ -14,7 +14,7 @@ export default function SubmitResume() {
                     <p className="mt-1">If you are unemployed or actively searching for a job, please subscribe and submit your resume.</p>
                     <div className="mt-5 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                 <Link
                                     to={"/jobs"}
                                 >

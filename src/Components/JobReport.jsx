@@ -11,25 +11,24 @@ import { toast } from "sonner";
 import axiosInstance, { handleError } from "../axiosInstance";
 import { Button } from "./Button";
 
-const JobReport = ({ isOpen, onClose }) => {
+const JobReport = ({ isOpen, onClose, id }) => {
     const formik = useFormik({
         initialValues: {
-            fullName: "",
+            job_id: id,
+            full_name: "",
             email: "",
-            mobileNumber: "",
-            reason: "",
+            mobile_number: "",
             comments: "",
         },
         validationSchema: Yup.object({
-            fullName: Yup.string().required("Full Name is required"),
+            full_name: Yup.string().required("Full Name is required"),
             email: Yup.string().email("Invalid email").required("Email is required"),
-            mobileNumber: Yup.string().required("Mobile Number is required"),
-            reason: Yup.string().required("Reason is required"),
+            mobile_number: Yup.string().required("Mobile Number is required"),
             comments: Yup.string().required("Comments are required"),
         }),
         onSubmit: async (values) => {
             try {
-                const response = await axiosInstance.post("/api/job-reports", values);
+                const response = await axiosInstance.post("/api/report_job/store", values);
                 if (response) {
                     toast.success("Job report submitted successfully");
                     onClose(false);
@@ -63,17 +62,16 @@ const JobReport = ({ isOpen, onClose }) => {
                             </DialogTitle>
 
                             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {/* Full Name */}
                                 <div className="sm:col-span-1">
                                     <label className="block text-sm font-medium text-gray-900">Full Name</label>
                                     <input
                                         type="text"
-                                        name="fullName"
+                                        name="full_name"
                                         onChange={formik.handleChange}
-                                        value={formik.values.fullName}
+                                        value={formik.values.full_name}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.fullName && <p className="text-red-600 text-sm mt-1">{formik.errors.fullName}</p>}
+                                    {formik.errors.full_name && <p className="text-red-600 text-sm mt-1">{formik.errors.full_name}</p>}
                                 </div>
 
                                 {/* Email */}
@@ -94,12 +92,12 @@ const JobReport = ({ isOpen, onClose }) => {
                                     <label className="block text-sm font-medium text-gray-900">Mobile Number</label>
                                     <input
                                         type="text"
-                                        name="mobileNumber"
+                                        name="mobile_number"
                                         onChange={formik.handleChange}
-                                        value={formik.values.mobileNumber}
+                                        value={formik.values.mobile_number}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.errors.mobileNumber && <p className="text-red-600 text-sm mt-1">{formik.errors.mobileNumber}</p>}
+                                    {formik.errors.mobile_number && <p className="text-red-600 text-sm mt-1">{formik.errors.mobile_number}</p>}
                                 </div>
 
                                 {/* Reason */}

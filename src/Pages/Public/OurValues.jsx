@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import FooterHeader from "./Components/FooterHeader";
-
-export default function OurValues() {
+import ReactHtmlParser from "html-react-parser";
+export default function OurValues({ data }) {
     return (
         <>
             <div
@@ -14,7 +14,12 @@ export default function OurValues() {
 
                 <div className="text-center p-2 max-w-7xl mx-auto">
                     <div className="text-center">
-                    We believe an opportunity exists for everyone. To the extent possible, we assist job seekers realize their full potential, find jobs, discover opportunities, and/or create endless possibilities for all Kenyans.
+                        {
+                            data ? (
+                                ReactHtmlParser(data)
+                            ) : null
+                        }
+                        {/* We believe an opportunity exists for everyone. To the extent possible, we assist job seekers realize their full potential, find jobs, discover opportunities, and/or create endless possibilities for all Kenyans. */}
                     </div>
                     {/* <div className="">
                         VeritasKWD is driven by the maxim that “opportunities are deliberately created.”  Opportunities are not created in isolation and Veritas Kenya Workforce Database will partner with the national government, County governments, private organizations and private investors to create opportunities for all Kenyans.

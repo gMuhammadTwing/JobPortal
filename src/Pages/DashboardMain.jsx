@@ -16,6 +16,7 @@ import {
     HeartIcon,
     GlobeAltIcon,
     AcademicCapIcon,
+    UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -23,6 +24,11 @@ import Footer from "./Footer";
 import { CustomScroll } from "react-custom-scroll";
 
 export default function DashboardMain() {
+    const getHrefByPermission = (permission) => {
+        const navItem = adminNav.find(item => item.permissions == permission);
+        return navItem ? (navItem.href) : null;
+    };
+
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -31,7 +37,6 @@ export default function DashboardMain() {
         { name: "Resume/CV", href: "resume", icon: DocumentTextIcon, current: false },
         { name: "Search Jobs", href: "view_job_list", icon: ViewfinderCircleIcon, current: false },
         { name: "Applied Jobs", href: "applied_job_list", single: "applied_job_list", icon: BriefcaseIcon, current: false },
-        // { name: "Subscription & Payment", href: "subscription", icon: CreditCardIcon, current: false },
         { name: "Coursework", href: "coursework/all", single: 'coursework', icon: ClipboardDocumentListIcon, current: false },
     ]
     const navigation = [
@@ -44,26 +49,59 @@ export default function DashboardMain() {
         // { name: "CMS Pages", href: "cms-pages", icon: CogIcon, current: false },
         // { name: "CMS Section", href: "cms-section", icon: CogIcon, current: false },
     ];
+
     const adminNav = [
-        { name: "Employer", href: "employees", icon: UserCircleIcon, current: true },
-        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, single: "admin_job_seekers", current: true },
-        { name: "Employment Agency", href: "agencies_list", single: "agencies_list", icon: BuildingOfficeIcon, current: false },
-        { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, current: false },
-        { name: "Payment", href: "payments", icon: CurrencyDollarIcon, current: false },
-        { name: "Instructions for payment", href: "instructions", icon: ClipboardDocumentListIcon, current: false },
-        { name: "Jobs & Applicants", href: "shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
-        { name: "Blogs", href: "postblog", icon: NewspaperIcon, current: false },
-        { name: "Contact Us", href: "contacts", single: "contacts", icon: ChatBubbleLeftRightIcon, current: false },
-        { name: "Job Reports", href: "job_report", single: "job_report", icon: ChatBubbleLeftRightIcon, current: false },
-        { name: "VertiasKWD Idea Incubator Form", href: "idea_incubator_form", single: "idea_incubator_form", icon: LightBulbIcon, current: false },
-        { name: "VertiasKWD Opportunity", href: "admin_opportunity", single: "admin_opportunity", icon: BriefcaseIcon, current: false },
-        { name: "VertiasKWD Projects", href: "admin_projects", single: "admin_projects", icon: GlobeAltIcon, current: false },
-        { name: "VertiasKWD Investors", href: "admin_investors", single: "admin_investors", icon: CurrencyDollarIcon, current: false },
-        { name: "VertiasKWD Charities", href: "admin_charities", single: "admin_charities", icon: HeartIcon, current: false },
-        { name: "VertiasKWD Idea Incubators", href: "admin_idea_incubators", single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
-        { name: "VertiasKWD Volunteers", href: "admin_volunteers", single: "admin_volunteers", icon: HandRaisedIcon, current: false },
-        { name: "VertiasKWD Careers", href: "admin_careers", single: "admin_careers", icon: AcademicCapIcon, current: false },
+
+        { name: "Employer", href: "employees", icon: UserCircleIcon, permissions: 'employer', current: true },
+        { name: "User Management", href: "user_management", permissions: 'user_management', single: "user_management", icon: UserGroupIcon, current: false },
+        { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, permissions: 'job_seeker', single: "admin_job_seekers", current: true },
+        { name: "Employment Agency", href: "agencies_list", permissions: 'employment_agency', single: "agencies_list", icon: BuildingOfficeIcon, current: false },
+        { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, permissions: 'jobs_list', current: false },
+        { name: "Payment", href: "payments", icon: CurrencyDollarIcon, permissions: 'payment', current: false },
+        { name: "Instructions for payment", href: "instructions", permissions: 'instructions_for_payment', icon: ClipboardDocumentListIcon, current: false },
+        { name: "Jobs & Applicants", href: "shortlisting", permissions: 'jobs_&_applicants', icon: ClipboardDocumentCheckIcon, current: false },
+        { name: "Blogs", href: "postblog", icon: NewspaperIcon, permissions: 'blogs', current: false },
+        { name: "Contact Us", href: "contacts", single: "contacts", permissions: 'contact_us', icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "Reported Jobs", href: "job_report", single: "job_report", permissions: 'job_reports', icon: ChatBubbleLeftRightIcon, current: false },
+        { name: "VeritasKWD Idea Incubator Form", href: "idea_incubator_form", permissions: 'veritasKWD_idea_incubator_form', single: "idea_incubator_form", icon: LightBulbIcon, current: false },
+        { name: "About Us", href: "about", permissions: 'about_us', single: "about", icon: BriefcaseIcon, current: false },
+        { name: "VeritasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
+        { name: "VeritasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
+        { name: "Veritas Endless Possibities for Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },
+        { name: "VeritasKWD Charities", href: "admin_charities", permissions: 'veritasKWD_charities', single: "admin_charities", icon: HeartIcon, current: false },
+        { name: "VeritasKWD Idea Incubator", href: "admin_idea_incubators", permissions: 'veritasKWD_idea_incubators', single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
+        { name: "VeritasKWD Volunteers", href: "admin_volunteers", permissions: 'veritasKWD_volunteers', single: "admin_volunteers", icon: HandRaisedIcon, current: false },
+        { name: "VeritasKWD Careers", href: "admin_careers", permissions: 'veritasKWD_careers', single: "admin_careers", icon: AcademicCapIcon, current: false },
+
     ];
+    // const getUserPermissions = () => {
+    //     const storedPermissions = localStorage.getItem("permissions");
+    //     if (!storedPermissions) return []; // Return an empty array if no permissions exist
+
+    //     try {
+    //         const permissions = JSON.parse(storedPermissions);
+    //         return Array.isArray(permissions) ? permissions.map(p => p.permission_name) : [];
+    //     } catch (error) {
+    //         console.error("Error parsing user permissions:", error);
+    //         return [];
+    //     }
+    // };
+    const getUserPermissions = () => {
+        // const permissions = JSON.parse(localStorage.getItem("permissions"));
+        // console.log("permissions: ", permissions);
+        const storedPermissions = localStorage.getItem("permissions");
+
+        const permissions = (storedPermissions && storedPermissions !== "undefined")
+            ? JSON.parse(storedPermissions)
+            : [];
+
+        return permissions ? permissions.map(p => p.permission_name) : [];
+    };
+    const userPermissions = getUserPermissions() || [];
+    const filteredNavigation = adminNav.filter(item =>
+        item.permissions ? userPermissions.includes(item.permissions) : false
+    );
+
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
@@ -103,20 +141,20 @@ export default function DashboardMain() {
                 //     "md:translate-x-0 md:w-64 lg:w-72 xl:w-80 md:relative"
                 // )}
 
-                    className={classNames(
-                        // Base styles for mobile
-                        "z-10 fixed inset-y-16 left-0 w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
-                        sidebarOpen ? "translate-x-0" : "-translate-x-full", // Toggle visibility on mobile
-                        // Medium screens (768px and above)
-                        "md:translate-x-0 md:relative md:top-10 md:h-[33rem] md:w-66",
-                        // Large screens (1024px and above)
-                        "lg:left-[0rem] lg:w-66", // Adjusted for 1024px screens
-                        // Extra large screens (1280px and above)
-                        "xl:left-[0rem] xl:w-66", // Adjusted for 1440px screens
-                        // 2XL screens (1536px and above)
-                        "2xl:left-[6rem] 2xl:w-66" // Optional: For even larger screens
-                    )}
-                >
+                className={classNames(
+                    // Base styles for mobile
+                    "z-10 fixed inset-y-16 left-0 w-[16.5rem] bg-white rounded-lg shadow-lg overflow-y-auto transform transition-transform",
+                    sidebarOpen ? "translate-x-0" : "-translate-x-full", // Toggle visibility on mobile
+                    // Medium screens (768px and above)
+                    "md:translate-x-0 md:relative md:top-10 md:h-[33rem] md:w-66",
+                    // Large screens (1024px and above)
+                    "lg:left-[0rem] lg:w-66", // Adjusted for 1024px screens
+                    // Extra large screens (1280px and above)
+                    "xl:left-[0rem] xl:w-66", // Adjusted for 1440px screens
+                    // 2XL screens (1536px and above)
+                    "2xl:left-[6rem] 2xl:w-66" // Optional: For even larger screens
+                )}
+            >
                 <nav className="p-4">
                     <ul role="list" className="space-y-1">
                         {location.pathname.includes('/employer') && (
@@ -178,7 +216,7 @@ export default function DashboardMain() {
 
                         {location.pathname.includes('/admin') && (
 
-                            adminNav.map((item) => (
+                            filteredNavigation.map((item) => (
                                 <li className="" key={item.name} onClick={() => setSidebarOpen(!sidebarOpen)}>
                                     <Link
                                         to={item.href}
@@ -208,10 +246,10 @@ export default function DashboardMain() {
                 </nav>
             </aside>
 
-            {/* Main Content */ }
-    <main className="flex-1 bg-gray-100 p-6 overflow-hidden">
-        <Outlet />
-    </main>
+            {/* Main Content */}
+            <main className="flex-1 bg-gray-100 p-6 overflow-hidden">
+                <Outlet />
+            </main>
         </div >
     );
 }

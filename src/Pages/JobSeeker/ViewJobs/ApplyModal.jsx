@@ -120,7 +120,7 @@ const ApplyModal = ({ isOpen, onClose, data }) => {
                                 </div>
                             </div>
 
-                            <div className="mt-15 sm:flex sm:flex-row-reverse">
+                            <div className="sm:mt-15 mt-24 sm:flex sm:flex-row-reverse">
                                 {loader ? (
                                     <InfinitySpin height={120} width={120} color="green" />
                                 ) : (

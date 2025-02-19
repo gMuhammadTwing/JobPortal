@@ -22,25 +22,28 @@ const ProtectedRoutes = ({ children }) => {
   };
 
   const adminPermission = {
-    "/admin/employees": "list_employees_profile",
-    "/admin/job_seekers": "list_jobseekers_profile",
-    "/admin/agencies_list": "list_employer_agency",
-    "/admin/postblog": "manage_blogs",
-    "/admin/instructions": "manage_instructions",
-    "/admin/shortlisting": "manage_shortlisting",
-    "/admin/payments": "manage_payments",
-    "/admin/contacts": "view_contacts",
+    "/admin/employees": "employer",
+    "/admin/job_seekers": "job_seeker",
+    "/admin/agencies_list": "employment_agency",
+    "/admin/postblog": "blogs",
+    "/admin/instructions": "instructions_for_payment",
+    "/admin/shortlisting": "jobs_&_applicants",
+    "/admin/payments": "payment",
+    "/admin/contacts": "contact_us",
     "/admin/list_job": "jobs_list",
     "/admin/job_management": "manage_jobs",
-    "/admin/idea_incubator_form": "idea_incubator_form",
-    "/admin/admin_opportunity": "admin_opportunity",
-    "/admin/admin_projects": "admin_projects",
-    "/admin/admin_investors": "admin_investors",
-    "/admin/admin_charities": "admin_charities",
-    "/admin/admin_idea_incubators": "admin_idea_incubators",
-    "/admin/admin_volunteers": "admin_volunteers",
-    "/admin/admin_careers": "admin_careers",
-    "/admin/job_report": "job_report",
+    "/admin/idea_incubator_form": "veritasKWD_idea_incubator_form",
+    "/admin/admin_opportunity": "veritasKWD_opportunity",
+    "/admin/about": "about_us",
+    "/admin/admin_projects": "veritasKWD_projects",
+    "/admin/admin_investors": "veritasKWD_investors",
+    "/admin/admin_charities": "veritasKWD_charities",
+    "/admin/admin_idea_incubators": "veritasKWD_idea_incubators",
+    "/admin/admin_volunteers": "veritasKWD_volunteers",
+    "/admin/admin_careers": "veritasKWD_careers",
+    "/admin/job_report": "job_reports",
+    "/admin/user_management": "user_management",
+    "/admin/user_management/create_user": "user_management",
   }
   const addJobSeekerDynamicRoute = (basePath, id, permission) => {
     const dynamicPath = `${basePath}/${id}`;
@@ -61,21 +64,32 @@ const ProtectedRoutes = ({ children }) => {
   addEmployerDynamicRoute("/employer/resume_bank/view-applicant", id?.id, "view_applicant");
   addEmployerDynamicRoute("/employer/veritas_shortlisting/view-applicant", id?.id, "view_applicant");
 
-  addAdminDynamicRoute("/admin/employees/view-employer", id?.id, "view_employer_profile");
-  addAdminDynamicRoute("/admin/employees/edit-employer", id?.id, "edit_employer_profile");
-  addAdminDynamicRoute("/admin/job_seekers/view-applicant", id?.id, "view_applicant_profile");
-  addAdminDynamicRoute("/admin/job_seekers/edit-applicant", id?.id, "edit_applicant_profile");
-  addAdminDynamicRoute("/admin/agencies_list/view-agency", id?.id, "view_agency_profile");
-  addAdminDynamicRoute("/admin/agencies_list/edit-agency", id?.id, "edit_agency_profile");
-  addAdminDynamicRoute("/admin/shortlisting/view-applicant", id?.id, "view_shortlisted_applicant");
-  addAdminDynamicRoute("/admin/list_job/job_details", id?.id, "job_details");
+  addAdminDynamicRoute("/admin/employees/view-employer", id?.id, "employer");
+  addAdminDynamicRoute("/admin/employees/edit-employer", id?.id, "employer");
+  addAdminDynamicRoute("/admin/job_seekers/view-applicant", id?.id, "job_seeker");
+  addAdminDynamicRoute("/admin/job_seekers/edit-applicant", id?.id, "job_seeker");
+  addAdminDynamicRoute("/admin/agencies_list/view-agency", id?.id, "employment_agency");
+  addAdminDynamicRoute("/admin/agencies_list/edit-agency", id?.id, "employment_agency");
+  addAdminDynamicRoute("/admin/shortlisting/view-applicant", id?.id, "jobs_&_applicants");
+  addAdminDynamicRoute("/admin/list_job/job_details", id?.id, "jobs_list");
+  addAdminDynamicRoute("/admin/job_report/view_job", id?.id, "job_reports");
 
 
   const isLoggedIn = localStorage.getItem('token');
+  const storedPermissions = localStorage.getItem("permissions");
+
+  const permissions = (storedPermissions && storedPermissions !== "undefined")
+    ? JSON.parse(storedPermissions)
+    : [];
+  // const permissions = JSON.parse(localStorage.getItem('permissions') || "[]");
   const location = useLocation();
   const empRequiredPermission = employerPermission[location.pathname];
   const jobseekerRequiredPermission = JobSeekerPermission[location.pathname];
   const adminRequiredPermissions = adminPermission[location.pathname];
+  const hasPermission = permissions.some(
+    (perm) => perm.permission_name == adminRequiredPermissions
+  );
+
   if (!isLoggedIn) {
     return <Navigate to="/home" replace />;
   }
@@ -89,8 +103,8 @@ const ProtectedRoutes = ({ children }) => {
       return <Navigate to="/no-permission" replace />;
     }
   }
-  if (localStorage.role_id == 1) {
-    if (!adminRequiredPermissions) {
+  if (localStorage.role_id == 1 || localStorage.role_id == 5) {
+    if (!hasPermission) {
       return <Navigate to="/no-permission" replace />;
     }
   }

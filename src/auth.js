@@ -5,7 +5,15 @@ import { handleError } from "./axiosInstance";
 const login = async (credentials) => {
 
   try {
+    const p = [
+      { "permission_name": "veritasKWD_careers" },
+      { "permission_name": "job_seeker" },
+      { "permission_name": "employer" },
+      { "permission_name": "user_management" },
+    ]
     const response = await axiosInstance.post("api/auth/login", credentials)
+    // console.log(response);
+
     localStorage.setItem("token", response?.token?.accessToken);
     localStorage.setItem(
       "expires_at",
@@ -16,7 +24,12 @@ const login = async (credentials) => {
     // localStorage.setItem("payment", null)
     localStorage.setItem("user_name", response?.user?.name);
     localStorage.setItem("role_id", response?.user?.role_id);
-    localStorage.setItem("permissions", JSON.stringify(response?.data?.permissions));
+    // localStorage.setItem("permissions", JSON.stringify(response?.user?.user_permissions)  || [] );
+    const userPermissions = response?.user?.user_permissions;
+    localStorage.setItem("permissions", JSON.stringify(Array.isArray(userPermissions) ? userPermissions : []));
+
+
+    // localStorage.setItem("permissions",JSON.stringify(p));
     localStorage.setItem("user_id", response?.user?.id);
     localStorage.setItem("login_time", Date.now());
     localStorage.setItem("user_image", response?.user?.user_image);

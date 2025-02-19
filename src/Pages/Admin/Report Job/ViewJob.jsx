@@ -9,14 +9,11 @@ import { Button } from '../../../Components/Button';
 import { useDropdownContext } from '../../../DropdownProvider';
 import axiosInstance, { handleError } from '../../../axiosInstance';
 import { useParams } from 'react-router-dom';
-export default function JobDetails() {
+export default function ViewJob() {
     const dropDownValues = useDropdownContext();
     const id = useParams();
-    console.log("id: ", id);
-
     const company_id = localStorage?.company_id;
     const [tableLoader, setTableLoader] = useState(false);
-    const parser = new DOMParser();
     const [data, setData] = useState();
     const formik = useFormik({
         initialValues: {
@@ -43,18 +40,18 @@ export default function JobDetails() {
             // veritas_to_short_list: Yup.string().required("This field is required"),
         }),
         onSubmit: async (values) => {
-            setTableLoader(true);
-            try {
-                const response = await axiosInstance.post(`api/employer_company_job_posting/update/${data?.id}`, values);
-                if (response) {
-                    toast.success("Job Record updated")
-                }
-            } catch (error) {
-                handleError(error);
-            } finally {
-                fetchData(1)
-                formik.resetForm();
-            }
+            // setTableLoader(true);
+            // try {
+            //     const response = await axiosInstance.post(`api/employer_company_job_posting/update/${data?.id}`, values);
+            //     if (response) {
+            //         toast.success("Job Record updated")
+            //     }
+            // } catch (error) {
+            //     handleError(error);
+            // } finally {
+            //     fetchData(1)
+            //     formik.resetForm();
+            // }
         },
     });
 
@@ -85,7 +82,7 @@ export default function JobDetails() {
                     <h1
                         className=" font-semibold leading-6 text-gray-900 text-center text-2xl pb-5 mt-5"
                     >
-                        Update Job
+                        View Job Details
                     </h1>
                     {tableLoader && <>
                         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
@@ -99,7 +96,7 @@ export default function JobDetails() {
                                     name="job_title"
                                     onChange={formik.handleChange}
                                     value={formik.values.job_title}
-
+                                    disabled="true"
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                 />
                                 {formik.errors.job_title && (
@@ -117,6 +114,7 @@ export default function JobDetails() {
                                         value: value.id,
                                         label: value.name,
                                     }))}
+                                    isDisabled={true}
                                     isClearable={true}
 
                                     isSearchable={true}
@@ -161,6 +159,7 @@ export default function JobDetails() {
                                     Location
                                 </label>
                                 <input
+                                    disabled="true"
                                     type="text"
                                     name="location"
                                     onChange={formik.handleChange}
@@ -182,7 +181,7 @@ export default function JobDetails() {
                                     name="job_end_date"
                                     onChange={formik.handleChange}
                                     value={formik.values.job_end_date}
-
+                                    disabled="true"
                                     className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                 />
                                 {formik.errors.job_end_date && (
@@ -196,6 +195,7 @@ export default function JobDetails() {
                                     Job Status
                                 </label>
                                 <select
+                                    disabled="true"
                                     name="job_status"
                                     onChange={formik.handleChange}
                                     value={formik.values.job_status}
@@ -218,6 +218,7 @@ export default function JobDetails() {
                                     Veritas To Shortlist
                                 </label>
                                 <select
+                                    disabled="true"
                                     name="veritas_to_short_list"
                                     onChange={formik.handleChange}
 
@@ -241,35 +242,35 @@ export default function JobDetails() {
                                 </label>
                                 <ReactQuill
                                     id="job_description"
-                                    theme="snow"
+                                    theme="bubble"
                                     value={formik.values.job_description}
-
+                                    readOnly={true}
                                     onChange={(value) => formik.setFieldValue("job_description", value)}
                                     style={{
                                         height: "150px",
                                     }}
-                                    modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                    ]}
-                                    placeholder="Write something"
+                                // modules={{
+                                //     toolbar: [
+                                //         ["bold", "italic", "underline", "strike"],
+                                //         [{ header: [1, 2, 3, false] }],
+                                //         [{ list: "ordered" }, { list: "bullet" }],
+                                //         ["clean"],
+                                //     ],
+                                // }}
+                                // formats={[
+                                //     "header",
+                                //     "bold",
+                                //     "italic",
+                                //     "underline",
+                                //     "strike",
+                                //     "list",
+                                //     "bullet",
+                                // ]}
+                                // placeholder="Write something"
                                 />
-                                {formik.errors.job_description && (
+                                {/* {formik.errors.job_description && (
                                     <p className="mt-2 text-sm text-red-600">{formik.errors.job_description}</p>
-                                )}
+                                )} */}
                             </div>
 
                             {/* Job_qualification */}
@@ -280,34 +281,35 @@ export default function JobDetails() {
                                 <ReactQuill
                                     id="job_qualification"
 
-                                    theme="snow"
+                                    theme="bubble"
                                     value={formik.values.job_qualification}
                                     onChange={(value) => formik.setFieldValue("job_qualification", value)}
                                     style={{
                                         height: "150px",
                                     }}
-                                    modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                    ]}
-                                    placeholder="Write something"
+                                    readOnly={true}
+                                    // modules={{
+                                    //     toolbar: [
+                                    //         ["bold", "italic", "underline", "strike"],
+                                    //         [{ header: [1, 2, 3, false] }],
+                                    //         [{ list: "ordered" }, { list: "bullet" }],
+                                    //         ["clean"],
+                                    //     ],
+                                    // }}
+                                    // formats={[
+                                    //     "header",
+                                    //     "bold",
+                                    //     "italic",
+                                    //     "underline",
+                                    //     "strike",
+                                    //     "list",
+                                    //     "bullet",
+                                    // ]}
+                                    // placeholder="Write something"
                                 />
-                                {formik.errors.job_qualification && (
+                                {/* {formik.errors.job_qualification && (
                                     <p className="mt-2 text-sm text-red-600">{formik.errors.job_qualification}</p>
-                                )}
+                                )} */}
                             </div>
                             <div className="sm:col-span-full mt-20 sm:mt-7">
                                 <label className="block text-sm font-medium text-gray-900">
@@ -315,35 +317,35 @@ export default function JobDetails() {
                                 </label>
                                 <ReactQuill
                                     id="job_responsibilities"
-                                    theme="snow"
-
+                                    theme="bubble"
+                                    readOnly={true}
                                     value={formik.values.job_responsibilities}
                                     onChange={(value) => formik.setFieldValue("job_responsibilities", value)}
                                     style={{
                                         height: "150px",
                                     }}
-                                    modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                    ]}
-                                    placeholder="Write something"
+                                    // modules={{
+                                    //     toolbar: [
+                                    //         ["bold", "italic", "underline", "strike"],
+                                    //         [{ header: [1, 2, 3, false] }],
+                                    //         [{ list: "ordered" }, { list: "bullet" }],
+                                    //         ["clean"],
+                                    //     ],
+                                    // }}
+                                    // formats={[
+                                    //     "header",
+                                    //     "bold",
+                                    //     "italic",
+                                    //     "underline",
+                                    //     "strike",
+                                    //     "list",
+                                    //     "bullet",
+                                    // ]}
+                                    // placeholder="Write something"
                                 />
-                                {formik.errors.job_responsibilities && (
+                                {/* {formik.errors.job_responsibilities && (
                                     <p className="mt-2 text-sm text-red-600">{formik.errors.job_responsibilities}</p>
-                                )}
+                                )} */}
                             </div>
 
                             {/* Instruction to Apply */}
@@ -353,44 +355,44 @@ export default function JobDetails() {
                                 </label>
                                 <ReactQuill
                                     id="job_instructions_to_apply"
-                                    theme="snow"
-
+                                    theme="bubble"
+                                    readOnly={true}
                                     value={formik.values.job_instructions_to_apply}
                                     onChange={(value) => formik.setFieldValue("job_instructions_to_apply", value)}
                                     style={{
                                         height: "150px",
                                     }}
-                                    modules={{
-                                        toolbar: [
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["clean"],
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                    ]}
-                                    placeholder="Write something"
+                                    // modules={{
+                                    //     toolbar: [
+                                    //         ["bold", "italic", "underline", "strike"],
+                                    //         [{ header: [1, 2, 3, false] }],
+                                    //         [{ list: "ordered" }, { list: "bullet" }],
+                                    //         ["clean"],
+                                    //     ],
+                                    // }}
+                                    // formats={[
+                                    //     "header",
+                                    //     "bold",
+                                    //     "italic",
+                                    //     "underline",
+                                    //     "strike",
+                                    //     "list",
+                                    //     "bullet",
+                                    // ]}
+                                    // placeholder="Write something"
                                 />
-                                {formik.errors.job_instructions_to_apply && (
+                                {/* {formik.errors.job_instructions_to_apply && (
                                     <p className="mt-2 text-sm text-red-600">
                                         {formik.errors.job_instructions_to_apply}
                                     </p>
-                                )}
+                                )} */}
                             </div>
 
                         </div>
 
 
                         <div className="mt-25 sm:mt-15 sm:flex sm:flex-row-reverse">
-                            {
+                            {/* {
                                 formik.isSubmitting ? (
                                     <InfinitySpin height={120} width={120} color="green" />
                                 ) : (
@@ -401,7 +403,7 @@ export default function JobDetails() {
 
                                     </>
                                 )
-                            }
+                            } */}
                         </div>
                     </>}
 

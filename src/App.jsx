@@ -81,6 +81,11 @@ import AdminCharities from './Pages/Admin/About Us/Charities';
 import Index from './Pages/Admin/IdeaIncubatorForm/Index';
 import JobReport from './Pages/Admin/Report Job/JobReport';
 import JobDetails from './Pages/Admin/Jobs/JobDetails';
+import ViewJob from './Pages/Admin/Report Job/ViewJob';
+import ResetPassword from './Pages/Public/ResetPassword';
+import ManageUser from './Pages/Admin/User Management/Index';
+import CreateUser from './Pages/Admin/User Management/CreateUser';
+import About from './Pages/Admin/About Us/About';
 function App() {
   return (
     <DropdownProvider>
@@ -126,6 +131,9 @@ function App() {
             <Route path="blogs" element={<Blogs />} />
             <Route path="blog/blog_details/:id" element={<BlogDetails />} />
             <Route path="login" element={<Login />} />
+            <Route path="forgot_password" element={<ForgotPassword />} />
+            <Route path="reset_password" element={<ResetPassword />} />
+            <Route path="reset_password/:params" element={<ResetPassword />} />
             <Route path="create-account" element={<CreateAccount />} />
             <Route path="create-account/signup_job_seeker" element={<JobSeekerSignup />} />
             <Route path="create-account/signup-employee" element={<EmployerSignup />} />
@@ -153,8 +161,9 @@ function App() {
 
             {/* Admin Routes */}
             <Route path="admin" element={<ProtectedRoutes><DashboardMain /></ProtectedRoutes>}>
+              <Route path="user_management" element={<ProtectedRoutes><ManageUser /></ProtectedRoutes>} />
+              <Route path="user_management/create_user" element={<ProtectedRoutes><CreateUser /></ProtectedRoutes>} />
               <Route path="employees" element={<ProtectedRoutes><EmployeesIndex /></ProtectedRoutes>} />
-              {/* <Route path="job_management" element={<ProtectedRoutes><ManageJobs /></ProtectedRoutes>} /> */}
               <Route path="job_seekers" element={<ProtectedRoutes><JobSeekersIndex /></ProtectedRoutes>} />
               <Route path="postblog" element={<ProtectedRoutes><BlogIndex /></ProtectedRoutes>} />
               <Route path="shortlisting" element={<ProtectedRoutes><ShortlistingIndex /></ProtectedRoutes>} />
@@ -170,16 +179,18 @@ function App() {
               <Route path="agencies_list/view-agency/:id" element={<ViewAgency />} />
               <Route path="agencies_list/edit-agency/:id" element={<EditAgency />} />
               <Route path="list_job" element={<AdminJobs />} />
-              <Route path="admin_opportunity" element={<AdminOpportunity/>} />
-              <Route path="admin_careers" element={<AdminCareers/>} />
-              <Route path="admin_volunteers" element={<AdminVolunteers/>} />
-              <Route path="admin_idea_incubators" element={<AdminIncubators/>} />
-              <Route path="admin_charities" element={<AdminCharities/>} />
-              <Route path="admin_investors" element={<AdminInvestors/>} />
-              <Route path="admin_projects" element={<AdminProjects/>} />
-              <Route path="idea_incubator_form" element={<Index/>} />
-              <Route path="job_report" element={<JobReport/>} />
-              <Route path="list_job/job_details/:id" element={<JobDetails/>} />
+              <Route path="about" element={<About />} />
+              <Route path="admin_opportunity" element={<AdminOpportunity />} />
+              <Route path="admin_careers" element={<AdminCareers />} />
+              <Route path="admin_volunteers" element={<AdminVolunteers />} />
+              <Route path="admin_idea_incubators" element={<AdminIncubators />} />
+              <Route path="admin_charities" element={<AdminCharities />} />
+              <Route path="admin_investors" element={<AdminInvestors />} />
+              <Route path="admin_projects" element={<AdminProjects />} />
+              <Route path="idea_incubator_form" element={<Index />} />
+              <Route path="job_report" element={<JobReport />} />
+              <Route path="list_job/job_details/:id" element={<JobDetails />} />
+              <Route path="job_report/view_job/:id" element={<ViewJob />} />
             </Route>
 
             {/* No Permission Route */}

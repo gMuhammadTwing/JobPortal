@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import FooterHeader from "./Components/FooterHeader";
-
-export default function OurMission() {
+import ReactHtmlParser from "html-react-parser";
+export default function OurMission({ data }) {
     return (
         <>
             <div
@@ -17,11 +17,16 @@ export default function OurMission() {
                     About We’re on a mission to empowering Jobs worldwide.
                 </div> */}
                     <div className="text-center">
-                        To connect all job seekers in Kenya to opportunities locally, nationally, and globally.
+                        {
+                            data ? (
+                                ReactHtmlParser(data)
+                            ) : null
+                        }
+                        {/* To connect all job seekers in Kenya to opportunities locally, nationally, and globally. */}
                     </div >
-                    <div className="text-justify">
+                    {/* <div className="text-justify">
                         VeritasKWD is driven by the maxim that “opportunities are deliberately created.”  Opportunities are not created in isolation and Veritas Kenya Workforce Database will partner with the national government, County governments, private organizations and private investors to create opportunities for all Kenyans.
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

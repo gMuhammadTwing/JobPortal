@@ -43,7 +43,7 @@ export default function EditAgency() {
         initialValues: {
             certified_expiration_date: data?.certified_expiration_date || '',
             nea_number: data?.nea_number || '',
-            company_name: data?.company_name || '',
+            // company_name: data?.company_name || '',
             company_industry: data?.company_industry || "",
             location: data?.location || "",
             contact_person_name: data?.contact_person_name || "",
@@ -55,7 +55,7 @@ export default function EditAgency() {
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
-            company_name: Yup.string().required("Company name is required"),
+            // company_name: Yup.string().required("Company name is required"),
             company_industry: Yup.string().required("Company_industry is required"),
             location: Yup.string().required("Location is required"),
             contact_person_name: Yup.string().required("Contact person name is required"),
@@ -118,14 +118,16 @@ export default function EditAgency() {
                                         id="company_name"
                                         name="company_name"
                                         type="text"
+                                        disabled="true"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.company_name}
+                                        // value={formik.values.company_name}
+                                        value={data?.user_id?.name}
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     />
-                                    {formik.touched.company_name && formik.errors.company_name && (
+                                    {/* {formik.touched.company_name && formik.errors.company_name && (
                                         <div className="text-red-500 text-sm">{formik.errors.company_name}</div>
-                                    )}
+                                    )} */}
                                 </div>
                                 <div>
                                     <label htmlFor="company_industry" className="block text-sm font-medium text-gray-900">
@@ -142,10 +144,10 @@ export default function EditAgency() {
                                         className="block py-1.5 px-3 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                     >
                                         <option value="">Select</option>
-                                        {dropDownValues?.job_family?.map((item) => {
+                                        {dropDownValues?.industries?.map((item) => {
                                             return (
                                                 <option key={item.id} value={item?.id}>
-                                                    {item?.job_family}
+                                                    {item?.name}
                                                 </option>
                                             );
                                         })}
@@ -293,8 +295,8 @@ export default function EditAgency() {
                                     />
                                 </div>
                             </div>
-                            {loading ? <div className="flex justify-center mr-5 mt-18"><InfinitySpin width={150} color="green" /></div> :
-                                <div className="flex justify-center gap-4 mt-15">
+                            {loading ? <div className="flex justify-center mr-5 sm:mt-18 mt-25"><InfinitySpin width={150} color="green" /></div> :
+                                <div className="flex justify-center gap-4 sm:mt-15 mt-25">
                                     <Button
                                         type="button"
                                         color="gradient"

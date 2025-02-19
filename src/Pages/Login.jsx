@@ -43,7 +43,7 @@ export default function Login() {
                                     alt="logo"
                                 />
                                 <h4 className="mb-12 mt-4 text-xl font-semibold">
-                                    We are The Veritas Jobs
+                                    Veritas Jobs -  NOW HIRING
                                 </h4>
                             </div>
 
@@ -73,9 +73,9 @@ export default function Login() {
                                         <label htmlFor="password" className="block text-sm font-medium text-gray-900">
                                             Password
                                         </label>
-                                        <a href="#" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                                        <Link to={"/forgot-password"} className="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
                                             Forgot password?
-                                        </a>
+                                        </Link>
                                     </div>
                                     <input
                                         id="password"

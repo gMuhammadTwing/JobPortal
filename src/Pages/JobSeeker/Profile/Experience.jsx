@@ -422,7 +422,7 @@ export default function Experience() {
                                         </div> */}
                                     </div>
 
-                                    <div className="flex justify-center gap-4 mt-20">
+                                    <div className="flex justify-center gap-4 sm:mt-20 mt-25">
                                         {loading ? <div className="flex justify-center mr-5"><InfinitySpin width={150} color="green" /></div> :
                                             <>
                                                 <Button

@@ -27,7 +27,7 @@ export default function ResumeBankPublic() {
             name: Yup.string()
                 .min(2, "Must be at least 2 characters")
                 .max(50, "Must be 50 characters or less")
-                .required("Full Name is required"),
+                .required("Company Name is required"),
             role_id: Yup.string()
                 .required("Please select a registration type"),
             email: Yup.string()
@@ -110,7 +110,7 @@ export default function ResumeBankPublic() {
                     <p className="mt-1">Need to find candidates fast?  Veritas Jobs for  employers in Kenya.</p>
                     <div className="mt-5 flex justify-center cursor-pointer">
                         {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1|| localStorage.role_id == 3) ?
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                 <Link
                                     to={"/jobs"}
                                 >
@@ -162,8 +162,6 @@ export default function ResumeBankPublic() {
                                         <>
                                             <form onSubmit={formik.handleSubmit}>
                                                 <p className="mb-2 text-center lg:text-left">Create a new account</p>
-
-                                                {/* Full Name input */}
                                                 <div className="mb-2">
                                                     <label htmlFor="name" className="block text-sm font-medium text-gray-900">
                                                         Company Name

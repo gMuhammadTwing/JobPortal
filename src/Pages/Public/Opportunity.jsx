@@ -13,7 +13,6 @@ export default function Opportunity() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_opportunity`);
             if (response) {
-                console.log(response);
                 setData(response?.data);
             }
         } catch (error) {
@@ -49,9 +48,17 @@ export default function Opportunity() {
                             <div className="flex justify-center items-center h-full">
                                 <Hourglass />
                             </div>
-                        ) : data && data[0]?.description ? (
-                            ReactHtmlParser(data[0]?.description)
-                        ) : null}
+                        ) : localStorage.token ? (
+                            data && data[0]?.description_private ? (
+                                ReactHtmlParser(data[0]?.description_private)
+                            )
+                                : null
+                        ) :
+                            data && data[0]?.description_public ? (
+                                ReactHtmlParser(data[0]?.description_public)
+                            )
+                                : null
+                        }
                     </div>
                 </div>
             </div>

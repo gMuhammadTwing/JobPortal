@@ -57,7 +57,6 @@ export default function ContactUs() {
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <div className="border shadow-1 rounded-lg p-4">
                         <form className="grid grid-cols-1 gap-2 md:grid-cols-2" onSubmit={formik.handleSubmit}>
-                            {/* Full Name */}
                             <div className="mb-2">
                                 <label htmlFor="full_name" className="block text-sm font-medium text-gray-900">
                                     Full Name

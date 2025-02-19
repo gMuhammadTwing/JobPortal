@@ -27,7 +27,7 @@ export default function Index() {
     const fetchData = async (pageNum) => {
         setTableLoader(true);
         try {
-            const { data } = await axiosInstance.get(`/api/job_list?page=${pageNum}`);
+            const { data } = await axiosInstance.get(`/api/admin_job_list?page=${pageNum}`);
             if (data) {
                 setData(data);
             }
@@ -105,9 +105,9 @@ export default function Index() {
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Job Type
                                                 </th>
-                                                {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Number of Applicants
-                                                </th> */}
+                                                </th>
                                                 {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Salary
                                                 </th> */}
@@ -124,6 +124,9 @@ export default function Index() {
                                                     Featured
                                                 </th>
                                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Posted By
+                                                </th>
+                                                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Action
                                                 </th>
                                             </tr>
@@ -138,9 +141,10 @@ export default function Index() {
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.job_type?.name}
                                                         </td>
-                                                        {/* <td className="px-3 py-4 text-sm">
+                                                        <td className="px-3 py-4 text-sm">
                                                             {item?.no_of_applicants || ""}
-                                                        </td> */}
+                                                        </td>
+
                                                         {/* <td className="px-3 py-4 text-sm">
                                                             {item?.expected_salary}
                                                         </td> */}
@@ -153,12 +157,13 @@ export default function Index() {
                                                             {(item?.location)}
                                                         </td>
                                                         <td className="px-3 py-4 text-sm">
-                                                            {item?.job_status ? (
+                                                            {item?.job_status == "Open" ? (
                                                                 <span className="bg-green-100 text-green-600 ring-green-300 rounded-lg p-1">{item?.job_status}</span>
                                                             ) : (
                                                                 <span className="bg-red-100 text-red-600 rounded-lg p-1">{item?.job_status}</span>
                                                             )}
                                                         </td>
+                                                        
                                                         <td className="px-3 py-4 text-sm">
                                                             <div className="flex items-center space-x-2">
                                                                 {/* <EyeIcon className="w-5 h-5 text-black" title="View Receipt" /> */}
@@ -196,6 +201,9 @@ export default function Index() {
                                                                 </Switch>
                                                             </div>
                                                         </td>
+                                                        <td className="px-3 py-4 text-sm">
+                                                            {item?.user_id?.name}
+                                                        </td>
                                                         <td className="px-3 py-4 text-sm ">
                                                             <Link
                                                                 onClick={() => {
@@ -203,7 +211,7 @@ export default function Index() {
                                                                         localStorage.setItem("company_id", item.company_id.id);
                                                                     }
                                                                 }}
-                                                                to={`/admin/list_job/job_details/${item?.user_id?.id}`}
+                                                                to={`/admin/list_job/job_details/${item?.id}`}
                                                             >
                                                                 <PencilIcon className="h-5 w-5 text-blue-600 cursor-pointer" />
                                                             </Link>

@@ -65,7 +65,7 @@ export default function Company() {
                             </div>
                         </div>
                         {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 3) ?
+                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                 <Link
                                     to={`/jobs/${search}`}
                                     className="px-12 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"

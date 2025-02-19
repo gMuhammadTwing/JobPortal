@@ -155,28 +155,24 @@ export default function Applicants({ job_id }) {
                                                         <td className="px-3 py-4 text-sm">
                                                             {item?.user_id?.email}
                                                         </td>
-                                                        <td className="px-3 py-4 text-sm">
-                                                            <span
-                                                            >
-                                                                {/* {item?.job_status_id?.job_status} */}
+                                                        <td className="px-3 py-4 text-sm min-w-[150px] max-w-xs sm:max-w-sm">
+                                                            <span className="block">
                                                                 <select
                                                                     name="job_type"
                                                                     onChange={(e) => handleChange(e, item)}
-                                                                    // value={formik.values.job_type}
                                                                     value={item?.job_status_id?.id}
-                                                                    className="block py-1.5 px-2 border border-gray-300 text-gray-900 text-sm rounded-md w-full focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                                    className="block w-full sm:w-auto py-1.5 px-2 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
                                                                 >
                                                                     <option value="">Select</option>
-                                                                    {dropDownValues?.job_status?.map((item) => {
-                                                                        return (
-                                                                            <option key={item.id} value={item?.id}>
-                                                                                {item?.job_status}
-                                                                            </option>
-                                                                        );
-                                                                    })}
+                                                                    {dropDownValues?.job_status?.map((status) => (
+                                                                        <option key={status.id} value={status.id}>
+                                                                            {status.job_status}
+                                                                        </option>
+                                                                    ))}
                                                                 </select>
                                                             </span>
                                                         </td>
+
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             <Link to={"view-applicant/" + item?.user_id?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                         </td>

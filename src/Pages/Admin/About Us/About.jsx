@@ -6,14 +6,15 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { toast } from "sonner";
-export default function Projects() {
+export default function About() {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
-    const [loader, setLoader] = useState(false);
     const formik = useFormik({
         initialValues: {
-            description_public: data?.description_public || '',
-            description_private: data?.description_private || '',
+            description: data?.description || '',
+            our_mission: data?.our_mission || '',
+            our_vision: data?.our_vision || '',
+            our_values: data?.our_values || '',
         },
         validationSchema: Yup.object({
             // description: Yup.string()
@@ -21,18 +22,18 @@ export default function Projects() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-            setLoader(true)
+            
             try {
-                const response = await axiosInstance.post(`/api/veritas_kwd_projects/store`, values);
+                const response = await axiosInstance.post(`/api/about_us/store`, values);
                 if (response) {
-                    toast.success("Projects Data saved successfully");
+                    toast.success("Career Data saved successfully");
                 }
             } catch (error) {
                 console.error(error);
                 toast.error("An error occurred while saving the description");
             } finally {
                 fetchData(2);
-                setLoader(false)
+                
                 formik.resetForm();
             }
         },
@@ -40,15 +41,14 @@ export default function Projects() {
     const fetchData = async () => {
         setLoading(true)
         try {
-            const { data } = await axiosInstance.get(`/api/veritas_kwd_projects`);
-
-            setData(data[0]);
-
+            const { data } = await axiosInstance.get(`/api/about_us`);
+            if (data) {
+                setData(data[0]);
+            }
         } catch (error) {
             handleError(error);
         } finally {
             setLoading(false)
-            // setTableLoader(false);
         }
     };
 
@@ -61,17 +61,17 @@ export default function Projects() {
             <div className="pb-15">
                 <>
                     <div className="border rounded-lg p-4 bg-white">
-                        <div className="text-center p-4 font-semibold">VeritasKWD Projects</div>
+                        <div className="text-center p-4 font-semibold">About Us</div>
                         {!loading &&
                             <form onSubmit={formik.handleSubmit}>
                                 <div className="relative mb-4">
-                                    <label htmlFor="description_public" className="block text-sm font-medium text-gray-900">
-                                        Write Description for Public
+                                    <label htmlFor="description" className="block text-sm font-medium text-gray-900">
+                                        Write Description
                                     </label>
                                     <ReactQuill
-                                        id="description_public"
-                                        value={formik.values.description_public}
-                                        onChange={(value) => formik.setFieldValue("description_public", value)}
+                                        id="description"
+                                        value={formik.values.description}
+                                        onChange={(value) => formik.setFieldValue("description", value)}
                                         theme="snow"
                                         style={{ height: "250px" }}
                                         modules={{
@@ -79,10 +79,8 @@ export default function Projects() {
                                                 ["bold", "italic", "underline", "strike"],
                                                 [{ header: [1, 2, 3, false] }],
                                                 [{ list: "ordered" }, { list: "bullet" }],
-                                                ["link", "image"],
                                                 ["clean"],
                                             ],
-                                            // table: true,
                                         }}
                                         formats={[
                                             "header",
@@ -92,21 +90,19 @@ export default function Projects() {
                                             "strike",
                                             "list",
                                             "bullet",
-                                            "link",
-                                            "image",
                                         ]}
                                         placeholder="Write here..."
                                     />
                                 </div>
 
-                                <div className="relative mb-4 sm:mt-20 mt-25">
-                                    <label htmlFor="description_private" className="block text-sm font-medium text-gray-900">
-                                        Write Description for Private
+                                <div className="relative mb-4 mt-25">
+                                    <label htmlFor="our_mission" className="block text-sm font-medium text-gray-900">
+                                        Write Our Mission
                                     </label>
                                     <ReactQuill
-                                        id="description_private"
-                                        value={formik.values.description_private}
-                                        onChange={(value) => formik.setFieldValue("description_private", value)}
+                                        id="our_mission"
+                                        value={formik.values.our_mission}
+                                        onChange={(value) => formik.setFieldValue("our_mission", value)}
                                         theme="snow"
                                         style={{ height: "250px" }}
                                         modules={{
@@ -114,10 +110,8 @@ export default function Projects() {
                                                 ["bold", "italic", "underline", "strike"],
                                                 [{ header: [1, 2, 3, false] }],
                                                 [{ list: "ordered" }, { list: "bullet" }],
-                                                ["link", "image"],
                                                 ["clean"],
                                             ],
-                                            // table: true,
                                         }}
                                         formats={[
                                             "header",
@@ -127,15 +121,75 @@ export default function Projects() {
                                             "strike",
                                             "list",
                                             "bullet",
-                                            "link",
-                                            "image",
+                                        ]}
+                                        placeholder="Write here..."
+                                    />
+                                </div>
+
+                                <div className="relative mb-4 mt-25">
+                                    <label htmlFor="our_vision" className="block text-sm font-medium text-gray-900">
+                                        Write Our Vision
+                                    </label>
+                                    <ReactQuill
+                                        id="our_vision"
+                                        value={formik.values.our_vision}
+                                        onChange={(value) => formik.setFieldValue("our_vision", value)}
+                                        theme="snow"
+                                        style={{ height: "250px" }}
+                                        modules={{
+                                            toolbar: [
+                                                ["bold", "italic", "underline", "strike"],
+                                                [{ header: [1, 2, 3, false] }],
+                                                [{ list: "ordered" }, { list: "bullet" }],
+                                                ["clean"],
+                                            ],
+                                        }}
+                                        formats={[
+                                            "header",
+                                            "bold",
+                                            "italic",
+                                            "underline",
+                                            "strike",
+                                            "list",
+                                            "bullet",
+                                        ]}
+                                        placeholder="Write here..."
+                                    />
+                                </div>
+
+                                <div className="relative mb-4 mt-25">
+                                    <label htmlFor="our_values" className="block text-sm font-medium text-gray-900">
+                                        Write Our Values
+                                    </label>
+                                    <ReactQuill
+                                        id="our_values"
+                                        value={formik.values.our_values}
+                                        onChange={(value) => formik.setFieldValue("our_values", value)}
+                                        theme="snow"
+                                        style={{ height: "250px" }}
+                                        modules={{
+                                            toolbar: [
+                                                ["bold", "italic", "underline", "strike"],
+                                                [{ header: [1, 2, 3, false] }],
+                                                [{ list: "ordered" }, { list: "bullet" }],
+                                                ["clean"],
+                                            ],
+                                        }}
+                                        formats={[
+                                            "header",
+                                            "bold",
+                                            "italic",
+                                            "underline",
+                                            "strike",
+                                            "list",
+                                            "bullet",
                                         ]}
                                         placeholder="Write here..."
                                     />
                                 </div>
 
                                 {/* Buttons */}
-                                {loader ? (
+                                {loading ? (
                                     <div className="flex justify-center sm:mt-15 mt-25">
                                         <InfinitySpin width={150} color="green" />
                                     </div>

@@ -196,7 +196,7 @@ const AddBlogPost = ({ isOpen, onClose, data, view }) => {
                                 </div>
                             </div>
 
-                            <div className="mt-15 sm:flex sm:flex-row-reverse">
+                            <div className="sm:mt-15 mt-20 sm:flex sm:flex-row-reverse">
                                 {formik.isSubmitting ? (
                                     <InfinitySpin height={100} width={100} color="green" />
                                 ) : (

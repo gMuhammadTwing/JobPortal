@@ -43,17 +43,13 @@ const navigation = [
   { name: 'Search Jobs', href: '/view-jobs', icon: ViewfinderCircleIcon, current: false },
   { name: 'Applied Jobs', href: '/applied-jobs', single: 'applied-jobs', icon: BriefcaseIcon, current: false },
   { name: 'Subscription & Payment', href: '/subscription', icon: CreditCardIcon, current: false },
-
   { name: 'Employer Profile', href: '/employer-profile', icon: UserCircleIcon, current: true },
   { name: 'Employer Job Management', href: '/manage-jobs', icon: BriefcaseIcon, current: false },
   { name: 'Employer Payment', href: '/employer-payment', icon: CreditCardIcon, current: false },
   { name: 'Shortlisting Requests', href: '/shortlisting', icon: ClipboardIcon, current: false },
   { name: 'Search Coursework', href: '/coursework', icon: HomeModernIcon, current: false },
   { name: 'Blog/Comments', href: '/blog', icon: NewspaperIcon, current: false },
-
   { name: 'Reports', href: '/reports', icon: FlagIcon, current: false },
-  // { name: 'View Employer Logs', href: '/view-employer-logs', icon: UserCircleIcon, current: true },
-  // { name: 'Admin Panel', href: '/admin-panel', icon: CogIcon, current: false },
   { name: 'CMS Pages', href: '/cms-pages', icon: CogIcon, current: false },
   { name: 'CMS Section', href: '/cms-section', icon: CogIcon, current: false },
 ];

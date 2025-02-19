@@ -130,8 +130,6 @@ export default function EmployerSignup() {
                                 <>
                                     <form onSubmit={formik.handleSubmit}>
                                         <p className="mb-2 text-center lg:text-left">Create a new account</p>
-
-                                        {/* Full Name input */}
                                         <div className="mb-2">
                                             <label htmlFor="name" className="block text-sm font-medium text-gray-900">
                                                 Company Name

@@ -391,6 +391,8 @@ export default function Index() {
                                                                                 return 'Employer';
                                                                             case 4:
                                                                                 return 'Employment Agency';
+                                                                            case 5:
+                                                                                return 'Admin';
                                                                             default:
                                                                                 return 'Unknown Role';
                                                                         }
@@ -512,11 +514,11 @@ export default function Index() {
 
                                     {/* Buttons */}
                                     {loading ? (
-                                        <div className="flex justify-center mt-15">
+                                        <div className="flex justify-center sm:mt-15 mt-25">
                                             <InfinitySpin width={150} color="green" />
                                         </div>
                                     ) : (
-                                        <div className="flex justify-center gap-4 mt-17">
+                                        <div className="flex justify-center gap-4 sm:mt-17 mt-25">
                                             <Button
                                                 type="button"
                                                 color="gradient"

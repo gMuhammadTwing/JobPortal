@@ -12,8 +12,6 @@ export default function Charities() {
         try {
             const response = await axiosInstance.get(`/api/veritas_kwd_charities`);
             if (response) {
-                console.log(response);
-
                 setData(response?.data);
             }
         } catch (error) {
@@ -53,9 +51,18 @@ export default function Charities() {
                             <div className="flex justify-center items-center h-full">
                                 <Hourglass />
                             </div>
-                        ) : data && data[0]?.description ? (
-                            ReactHtmlParser(data[0]?.description)
-                        ) : null}
+                        ) :
+                            localStorage.token ? (
+                                data && data[0]?.description_private ? (
+                                    ReactHtmlParser(data[0]?.description_private)
+                                )
+                                    : null
+                            ) :
+                                data && data[0]?.description_public ? (
+                                    ReactHtmlParser(data[0]?.description_public)
+                                )
+                                    : null
+                        }
                         {/* Social welfare is at the heart of VeritasKWD hence VeritasKWD Charities. Social welfare refers to the well-being of a society, particularly for those who are disadvantaged or underprivileged. It also refers to the efforts made to protect the security and health of those in need. */}
                     </div>
                     {/* <div className="text-justify">
