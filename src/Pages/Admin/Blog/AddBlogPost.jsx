@@ -12,8 +12,10 @@ import { Button } from "../../../Components/Button";
 import ReactQuill from "react-quill";
 import { toast } from "sonner";
 import axiosInstance, { handleError } from "../../../axiosInstance";
-
+import JoditEditor from "jodit-react";
+import { useRef } from "react";
 const AddBlogPost = ({ isOpen, onClose, data, view }) => {
+    const editor = useRef(null)
     const formik = useFormik({
         initialValues: {
             title: data?.title || "",
@@ -80,7 +82,7 @@ const AddBlogPost = ({ isOpen, onClose, data, view }) => {
             <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75" />
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <DialogPanel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl sm:my-8 sm:w-full sm:max-w-[40rem] sm:p-6">
+                    <DialogPanel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl sm:my-8 sm:w-full sm:max-w-[50rem] sm:p-6">
                         <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
                             <button
                                 type="button"
@@ -170,23 +172,14 @@ const AddBlogPost = ({ isOpen, onClose, data, view }) => {
                                     <label className="block text-sm font-medium text-gray-900">
                                         Content
                                     </label>
-                                    <ReactQuill
-                                        id="content"
-                                        theme="snow"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.content}
-                                        onChange={(value) => formik.setFieldValue("content", value)}
-                                        style={{ height: "250px" }}
-                                        readOnly={view}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={["header", "bold", "italic", "underline", "strike", "list", "bullet"]}
-                                        placeholder="Write something..."
+                                        onBlur={(value) => formik.setFieldValue("content", value)}
                                     />
                                     {formik.errors.content && (
                                         <p className="mt-2 text-sm text-red-600">

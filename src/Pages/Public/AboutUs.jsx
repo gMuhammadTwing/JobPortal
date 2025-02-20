@@ -82,7 +82,7 @@ export default function AboutUs() {
             </div>
 
             {loader ?
-                <div className="flex justify-center items-center h-screen">
+                <div className="flex justify-center items-center h-full p-10">
                     <Hourglass />
                 </div>
                 :

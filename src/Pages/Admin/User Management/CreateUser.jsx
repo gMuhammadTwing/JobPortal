@@ -56,7 +56,7 @@ export default function CreateUser() {
                     <div className="w-full px-4 py-4 md:px-8">
                         <div className="text-center">
                             <h4 className="mb-4 text-xl font-semibold">
-                                Create New User
+                                Create New Manager
                             </h4>
                         </div>
                         <>

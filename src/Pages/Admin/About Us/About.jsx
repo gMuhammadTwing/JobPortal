@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import ReactQuill from "react-quill";
 import { Button } from "../../../Components/Button";
@@ -6,7 +6,9 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { toast } from "sonner";
+import JoditEditor from "jodit-react";
 export default function About() {
+    const editor = useRef(null);
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
     const formik = useFormik({
@@ -22,7 +24,7 @@ export default function About() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-            
+
             try {
                 const response = await axiosInstance.post(`/api/about_us/store`, values);
                 if (response) {
@@ -33,7 +35,7 @@ export default function About() {
                 toast.error("An error occurred while saving the description");
             } finally {
                 fetchData(2);
-                
+
                 formik.resetForm();
             }
         },
@@ -68,133 +70,69 @@ export default function About() {
                                     <label htmlFor="description" className="block text-sm font-medium text-gray-900">
                                         Write Description
                                     </label>
-                                    <ReactQuill
-                                        id="description"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.description}
-                                        onChange={(value) => formik.setFieldValue("description", value)}
-                                        theme="snow"
-                                        style={{ height: "250px" }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write here..."
+                                        onBlur={(value) => formik.setFieldValue("description", value)}
                                     />
                                 </div>
 
-                                <div className="relative mb-4 mt-25">
+                                <div className="relative mb-4">
                                     <label htmlFor="our_mission" className="block text-sm font-medium text-gray-900">
                                         Write Our Mission
                                     </label>
-                                    <ReactQuill
-                                        id="our_mission"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.our_mission}
-                                        onChange={(value) => formik.setFieldValue("our_mission", value)}
-                                        theme="snow"
-                                        style={{ height: "250px" }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write here..."
+                                        onBlur={(value) => formik.setFieldValue("our_mission", value)}
                                     />
                                 </div>
 
-                                <div className="relative mb-4 mt-25">
+                                <div className="relative mb-4">
                                     <label htmlFor="our_vision" className="block text-sm font-medium text-gray-900">
                                         Write Our Vision
                                     </label>
-                                    <ReactQuill
-                                        id="our_vision"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.our_vision}
-                                        onChange={(value) => formik.setFieldValue("our_vision", value)}
-                                        theme="snow"
-                                        style={{ height: "250px" }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write here..."
+                                        onBlur={(value) => formik.setFieldValue("our_vision", value)}
                                     />
                                 </div>
 
-                                <div className="relative mb-4 mt-25">
+                                <div className="relative mb-4">
                                     <label htmlFor="our_values" className="block text-sm font-medium text-gray-900">
                                         Write Our Values
                                     </label>
-                                    <ReactQuill
-                                        id="our_values"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.our_values}
-                                        onChange={(value) => formik.setFieldValue("our_values", value)}
-                                        theme="snow"
-                                        style={{ height: "250px" }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["clean"],
-                                            ],
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                        ]}
-                                        placeholder="Write here..."
+                                        onBlur={(value) => formik.setFieldValue("our_values", value)}
                                     />
                                 </div>
 
                                 {/* Buttons */}
                                 {loading ? (
-                                    <div className="flex justify-center sm:mt-15 mt-25">
+                                    <div className="flex justify-center ">
                                         <InfinitySpin width={150} color="green" />
                                     </div>
                                 ) : (
-                                    <div className="flex justify-center gap-4 sm:mt-17 mt-25">
+                                    <div className="flex justify-center gap-4">
                                         {/* <Button
                                             type="button"
                                             color="gradient"

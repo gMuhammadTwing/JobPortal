@@ -52,7 +52,7 @@ const ViewPermissions = ({ userId, isOpen, onClose }) => {
     };
 
     const [imageLoader, setImageLoader] = useState(false);
-    
+
 
     return (
         <Dialog open={isOpen} onClose={() => onClose(false)} className="relative z-10">
@@ -121,7 +121,7 @@ const ViewPermissions = ({ userId, isOpen, onClose }) => {
                                 </div>
                             </div>
                             <div className="mt-6">
-                                <span className="font-semibold text-lg">Manage Permissions</span>
+                                <span className="font-semibold text-lg">Permissions</span>
                                 <div className="mt-5 grid grid-cols-2 gap-4">
                                     {permissionsList
                                         .filter(({ permissions }) => selectedPermissions.includes(permissions))

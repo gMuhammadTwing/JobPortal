@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import ReactQuill from "react-quill";
 import { Button } from "../../../Components/Button";
@@ -6,7 +6,9 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { toast } from "sonner";
+import JoditEditor from "jodit-react";
 export default function Index() {
+    const editor = useRef(null);
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -69,34 +71,14 @@ export default function Index() {
                                     <label htmlFor="description_public" className="block text-sm font-medium text-gray-900">
                                         Write Description for Public
                                     </label>
-                                    <ReactQuill
-                                        id="description_public"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.description_public}
-                                        onChange={(value) => formik.setFieldValue("description_public", value)}
-                                        theme="snow"
-                                        style={{ height: "250px" }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["link", "image"],
-                                                ["clean"],
-                                            ],
-                                            // table: true,
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                            "link",
-                                            "image",
-                                        ]}
-                                        placeholder="Write here..."
+                                        onBlur={(value) => formik.setFieldValue("description_public", value)}
                                     />
                                 </div>
 
@@ -104,34 +86,14 @@ export default function Index() {
                                     <label htmlFor="description_private" className="block text-sm font-medium text-gray-900">
                                         Write Description for Private
                                     </label>
-                                    <ReactQuill
-                                        id="description_private"
+                                    <JoditEditor
+                                        ref={editor}
                                         value={formik.values.description_private}
-                                        onChange={(value) => formik.setFieldValue("description_private", value)}
-                                        theme="snow"
-                                        style={{ height: "250px" }}
-                                        modules={{
-                                            toolbar: [
-                                                ["bold", "italic", "underline", "strike"],
-                                                [{ header: [1, 2, 3, false] }],
-                                                [{ list: "ordered" }, { list: "bullet" }],
-                                                ["link", "image"],
-                                                ["clean"],
-                                            ],
-                                            // table: true,
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
                                         }}
-                                        formats={[
-                                            "header",
-                                            "bold",
-                                            "italic",
-                                            "underline",
-                                            "strike",
-                                            "list",
-                                            "bullet",
-                                            "link",
-                                            "image",
-                                        ]}
-                                        placeholder="Write here..."
+                                        onBlur={(value) => formik.setFieldValue("description_private", value)}
                                     />
                                 </div>
 

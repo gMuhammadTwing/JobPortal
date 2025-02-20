@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -7,8 +7,11 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { toast } from "sonner";
+import { Editor } from "@tinymce/tinymce-react";
+import JoditEditor from "jodit-react";
 
 export default function Opportunity() {
+    const editor = useRef(null);
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -70,7 +73,36 @@ export default function Opportunity() {
                                     <label htmlFor="description_public" className="block text-sm font-medium text-gray-900">
                                         Write Description for Public
                                     </label>
-                                    <ReactQuill
+                                    {/* <Editor
+                                        apiKey="your-tinymce-api-key" // Optional, required for cloud features
+                                        value={content}
+                                        init={{
+                                            height: 400,
+                                            menubar: false,
+                                            plugins: [
+                                                "advlist autolink lists link image charmap print preview anchor",
+                                                "searchreplace visualblocks code fullscreen",
+                                                "insertdatetime media table paste code help wordcount"
+                                            ],
+                                            toolbar:
+                                                "undo redo | formatselect | bold italic backcolor | \
+                                                 alignleft aligncenter alignright alignjustify | \
+                                                 bullist numlist outdent indent | removeformat | help | table",
+                                            table_toolbar: "tableprops cell row column"
+                                        }}
+                                        onEditorChange={(newContent) => setContent(newContent)}
+                                    /> */}
+
+                                    <JoditEditor
+                                        ref={editor}
+                                        value={formik.values.description_public}
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
+                                        }}
+                                        onBlur={(value) => formik.setFieldValue("description_public", value)}
+                                    />
+                                    {/* <ReactQuill
                                         id="description_public"
                                         value={formik.values.description_public}
                                         onChange={(value) => formik.setFieldValue("description_public", value)}
@@ -82,9 +114,10 @@ export default function Opportunity() {
                                                 [{ header: [1, 2, 3, false] }],
                                                 [{ list: "ordered" }, { list: "bullet" }],
                                                 ["link", "image"],
+                                                ["table"],
                                                 ["clean"],
                                             ],
-                                            // table: true,
+                                            // table: false,
                                         }}
                                         formats={[
                                             "header",
@@ -96,16 +129,26 @@ export default function Opportunity() {
                                             "bullet",
                                             "link",
                                             "image",
+                                            "table"
                                         ]}
                                         placeholder="Write here..."
-                                    />
+                                    /> */}
                                 </div>
 
-                                <div className="relative mb-4 sm:mt-20 mt-25">
+                                <div className="relative sm:mt-10 mt-15">
                                     <label htmlFor="description_private" className="block text-sm font-medium text-gray-900">
                                         Write Description for Private
                                     </label>
-                                    <ReactQuill
+                                    <JoditEditor
+                                        ref={editor}
+                                        value={formik.values.description_private}
+                                        config={{
+                                            toolbarSticky: false,
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
+                                        }}
+                                        onBlur={(value) => formik.setFieldValue("description_private", value)}
+                                    />
+                                    {/* <ReactQuill
                                         id="description_private"
                                         value={formik.values.description_private}
                                         onChange={(value) => formik.setFieldValue("description_private", value)}
@@ -133,12 +176,12 @@ export default function Opportunity() {
                                             "image",
                                         ]}
                                         placeholder="Write here..."
-                                    />
+                                    /> */}
                                 </div>
 
                                 {/* Buttons */}
                                 {loader ? (
-                                    <div className="flex justify-center sm:mt-15 mt-25">
+                                    <div className="flex justify-center">
                                         <InfinitySpin width={150} color="green" />
                                     </div>
                                 ) : (
