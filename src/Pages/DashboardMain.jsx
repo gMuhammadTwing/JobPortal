@@ -54,7 +54,7 @@ export default function DashboardMain() {
     const adminNav = [
 
         { name: "Employer", href: "employees", icon: UserCircleIcon, permissions: 'employer', current: true },
-        { name: "Manager Management", href: "user_management", permissions: 'user_management', single: "user_management", icon: UserGroupIcon, current: false },
+        { name: "Admin Users", href: "user_management", permissions: 'user_management', single: "user_management", icon: UserGroupIcon, current: false },
         { name: "Job Seekers", href: "job_seekers", icon: UsersIcon, permissions: 'job_seeker', single: "admin_job_seekers", current: true },
         { name: "Employment Agency", href: "agencies_list", permissions: 'employment_agency', single: "agencies_list", icon: BuildingOfficeIcon, current: false },
         { name: "Jobs List", href: "list_job", icon: ClipboardDocumentCheckIcon, permissions: 'jobs_list', current: false },

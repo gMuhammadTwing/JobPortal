@@ -8,7 +8,7 @@ export default function OurValues({ data }) {
                 className='p-10'
             >
                 <div className=' text-center p-2'>
-                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-black">Our Values</h1>
+                    {/* <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-black">Our Values</h1> */}
                     {/* <p>We are dedicated to bridging the gap between talent and opportunity</p> */}
                 </div>
 

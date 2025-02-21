@@ -7,7 +7,7 @@ import { Hourglass, RotatingLines } from "react-loader-spinner";
 import app_vars from "../../../config";
 import userLogo from '../../../assets/user.jpeg'
 const permissionsList = [
-    { name: "Manager Management", permissions: "user_management" },
+    { name: "Admin Users", permissions: "user_management" },
     { name: "Employer", permissions: "employer" },
     { name: "Job Seekers", permissions: "job_seeker" },
     { name: "Employment Agency", permissions: "employment_agency" },

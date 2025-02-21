@@ -64,7 +64,7 @@ export default function Index() {
                 <>
                     <div className="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white">
                         <div className="flex flex-col md:flex-row justify-between items-center p-4 bg-white rounded-t-lg gap-4">
-                            <h3 className="text-lg md:text-xl font-bold text-red-500">Manager Management</h3>
+                            <h3 className="text-lg md:text-xl font-bold text-red-500">Admin Users</h3>
                             <Button type="button" color="gradient" variant="solid">
                                 <Link to="create_user">Add New User</Link>
                             </Button>
