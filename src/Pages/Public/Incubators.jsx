@@ -107,7 +107,7 @@ export default function Incubators() {
                     <div className="text-justify">
                         {loader ? (
                             <div className="flex justify-center items-center h-full">
-                                <Hourglass />
+                                <InfinitySpin width={150} height={150} />
                             </div>
                         ) : localStorage.token ? (
                             data && data[0]?.description_private ? (

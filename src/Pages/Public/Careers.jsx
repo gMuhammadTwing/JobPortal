@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import ReactHtmlParser from "html-react-parser";
-import { Hourglass } from "react-loader-spinner";
+import { Hourglass, InfinitySpin } from "react-loader-spinner";
 export default function Careers() {
     const [data, setData] = useState();
     const [loader, setLoader] = useState(false)
@@ -46,7 +46,7 @@ export default function Careers() {
                     <div className="space-y-4">
                         {loader ? (
                             <div className="flex justify-center items-center h-full">
-                                <Hourglass />
+                                <InfinitySpin width={150} height={150} />
                             </div>
                         )
                             :

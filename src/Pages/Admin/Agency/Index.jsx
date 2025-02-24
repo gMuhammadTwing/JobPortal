@@ -14,6 +14,7 @@ import { toast, Toaster } from "sonner";
 import axiosInstance, { handleError } from "../../../axiosInstance";
 import { LoaderTable } from "../../../Components/LoaderTable";
 import { Switch } from "@headlessui/react";
+import { useDropdownContext } from "../../../DropdownProvider";
 export default function Index() {
     const [data, setData] = useState([])
     const [tableLoader, setTableLoader] = useState(false);
@@ -52,6 +53,25 @@ export default function Index() {
         setEmail("");
         fetchData(1, "", "")
     }
+
+    const dropDownValues = useDropdownContext();
+    const handleChange = async (event, item) => {
+        setTableLoader(true);
+        const json = {
+            is_status: event.target.value
+        }
+        try {
+            const response = await axiosInstance.post(`/api/auth/update_password/${item?.id}`, json);
+            if (response) {
+                toast.success("Status updated")
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
+            fetchData(1, "", "");
+        }
+    };
     return (
         <div className="container mx-auto max-w-5xl min-h-screen mt-4">
             <div className="pb-15">
@@ -145,10 +165,10 @@ export default function Index() {
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Email
                                                 </th>
-                                                {/* <th scope="col"
+                                                <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    UIC
-                                                </th> */}
+                                                    Status
+                                                </th>
                                                 <th scope="col"
                                                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Action
@@ -170,9 +190,23 @@ export default function Index() {
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6">
                                                             {item?.email}
                                                         </td>
-                                                        {/* <td className="py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                                            {item?.unique_name}
-                                                        </td> */}
+                                                        <td className="px-3 py-4 text-sm min-w-[150px] max-w-xs sm:max-w-sm">
+                                                            <span className="block">
+                                                                <select
+                                                                    name="job_type"
+                                                                    onChange={(e) => handleChange(e, item)}
+                                                                    value={item?.is_status}
+                                                                    className="block w-full sm:w-auto py-1.5 px-2 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                                >
+                                                                    <option value="">Select</option>
+                                                                    {dropDownValues?.user_status?.map((status) => (
+                                                                        <option key={status.id} value={status.id}>
+                                                                            {status.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+                                                            </span>
+                                                        </td>
                                                         <td className="py-4 pl-4 pr-3 text-smsm:pl-6 flex">
                                                             <Link to={"view-agency/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                             <Link to={"edit-agency/" + item?.id}><PencilIcon className="w-5 h-5 cursor-pointer text-blue-500" title="Edit" /></Link>

@@ -76,7 +76,10 @@ export default function Index() {
                                         value={formik.values.description_public}
                                         config={{
                                             toolbarSticky: false,
-                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,fontsize,undo,redo",
+                                            style: {
+                                                fontSize: ["10px", "12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px", "36px"],
+                                            },
                                         }}
                                         onBlur={(value) => formik.setFieldValue("description_public", value)}
                                     />
@@ -91,7 +94,10 @@ export default function Index() {
                                         value={formik.values.description_private}
                                         config={{
                                             toolbarSticky: false,
-                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,fontsize,undo,redo",
+                                            style: {
+                                                fontSize: ["10px", "12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px", "36px"],
+                                            },
                                         }}
                                         onBlur={(value) => formik.setFieldValue("description_private", value)}
                                     />

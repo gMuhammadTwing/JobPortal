@@ -18,6 +18,7 @@ import {
     AcademicCapIcon,
     UserGroupIcon,
     UserIcon,
+    Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -32,17 +33,21 @@ export default function DashboardMain() {
 
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
-    const jobSeekerNav = [
+    const status = localStorage.status;
+    let jobSeekerNav = [
         { name: "Job Profile", href: "profile", icon: UserCircleIcon, current: true },
         { name: "Resume/CV", href: "resume", icon: DocumentTextIcon, current: false },
         { name: "Search Jobs", href: "view_job_list", icon: ViewfinderCircleIcon, current: false },
         { name: "Applied Jobs", href: "applied_job_list", single: "applied_job_list", icon: BriefcaseIcon, current: false },
         { name: "Coursework", href: "coursework/all", single: 'coursework', icon: ClipboardDocumentListIcon, current: false },
     ]
-    const navigation = [
+    if (status == 3) {
+        jobSeekerNav = jobSeekerNav.filter(item => item.href === "profile");
+    }
+
+    let navigation = [
         { name: "Employer Profile", href: "profile", icon: UserCircleIcon, current: true },
-        { name: "Employer Job Management", href: "job_management", single: 'job_management', icon: BriefcaseIcon, current: false },
+        { name: "Employer Job Management", href: "job_management", single: "job_management", icon: BriefcaseIcon, current: false },
         { name: "Resume Bank", href: "resume_bank", icon: CreditCardIcon, current: false },
         { name: "Veritas Shortlisting", href: "veritas_shortlisting", icon: ClipboardDocumentCheckIcon, current: false },
         // { name: "Blog/Comments", href: "blog", icon: NewspaperIcon, current: false },
@@ -50,6 +55,11 @@ export default function DashboardMain() {
         // { name: "CMS Pages", href: "cms-pages", icon: CogIcon, current: false },
         // { name: "CMS Section", href: "cms-section", icon: CogIcon, current: false },
     ];
+
+    // If status is 3, keep only "Employer Job Management"
+    if (status == 3) {
+        navigation = navigation.filter(item => item.href === "profile");
+    }
 
     const adminNav = [
 
@@ -65,7 +75,7 @@ export default function DashboardMain() {
         { name: "Contact Us", href: "contacts", single: "contacts", permissions: 'contact_us', icon: ChatBubbleLeftRightIcon, current: false },
         { name: "Reported Jobs", href: "job_report", single: "job_report", permissions: 'job_reports', icon: ChatBubbleLeftRightIcon, current: false },
         { name: "VeritasKWD Idea Incubator Form", href: "idea_incubator_form", permissions: 'veritasKWD_idea_incubator_form', single: "idea_incubator_form", icon: LightBulbIcon, current: false },
-        { name: "About Us", href: "about", permissions: 'about_us', single: "about", icon: UserIcon, current: false },
+        { name: "About Us", href: "about", permissions: 'about_us', single: "about", icon: Bars3Icon, current: false },
         { name: "VeritasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
         { name: "VeritasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
         { name: "Veritas Endless Possibities for Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },

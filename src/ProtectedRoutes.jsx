@@ -3,16 +3,20 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 
 const ProtectedRoutes = ({ children }) => {
   const id = useParams();
-
-  const employerPermission = {
+  const status = localStorage.status;
+  let employerPermission = {
     "/employer/job_management": "view_employer_jobs",
     "/employer/profile": "view_employer_profile",
     "/employer/veritas_shortlisting": "view_veritas_shortlisting",
     "/employer/resume_bank": "view_resume_bank",
-    // "/employer/resume_bank/view-applicant":"view_applicant",
   };
+  if (status == 3) {
+    employerPermission = {
+      "/employer/profile": "view_employer_profile",
+    };
+  }
 
-  const JobSeekerPermission = {
+  let JobSeekerPermission = {
     "/job-seeker/resume": "view-job-seeker",
     "/job-seeker/view_job_list": "view_jobs",
     "/job-seeker/applied_job_list": "view_applied_jobs",
@@ -20,6 +24,12 @@ const ProtectedRoutes = ({ children }) => {
     "/job-seeker/coursework/all": "view_coursework_all",
     "/job-seeker/profile": "view_job_seeker_profile"
   };
+
+  if (status == 3) {
+    JobSeekerPermission = {
+      "/job-seeker/profile": "view_job_seeker_profile"
+    };
+  }
 
   const adminPermission = {
     "/admin/employees": "employer",

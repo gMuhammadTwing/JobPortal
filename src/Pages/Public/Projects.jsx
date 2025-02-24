@@ -3,7 +3,7 @@ import FooterHeader from "./Components/FooterHeader";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import ReactHtmlParser from "html-react-parser";
-import { Hourglass } from "react-loader-spinner";
+import { Hourglass, InfinitySpin } from "react-loader-spinner";
 
 export default function Projects() {
     const [data, setData] = useState();
@@ -51,7 +51,7 @@ export default function Projects() {
                         {/* VeritasKWD Projects are timed opportunities for job seekers. They come in all manner and shape— brand promoters, survey/research assignments, drafting legislation, writing assignments, social media influencers, digital space promoters, event promoters, etc. Candidates who are passionate and hardworking stand better chances for repeat engagements and possible permanent employment. */}
                         {loader ? (
                             <div className="flex justify-center items-center h-full">
-                                <Hourglass />
+                                <InfinitySpin width={150} height={150} />
                             </div>
                         ) : localStorage.token ? (
                             data && data[0]?.description_private ? (

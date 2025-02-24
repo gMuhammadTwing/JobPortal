@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import { useEffect, useState } from "react";
 import ReactHtmlParser from "html-react-parser";
-import { Hourglass } from "react-loader-spinner";
+import { Hourglass, InfinitySpin } from "react-loader-spinner";
 export default function Volunteers() {
     const [data, setData] = useState();
     const [loader, setLoader] = useState(false)
@@ -50,7 +50,7 @@ export default function Volunteers() {
                         <div className="text-justify">
                             {loader ? (
                                 <div className="flex justify-center items-center h-full">
-                                    <Hourglass />
+                                    <InfinitySpin width={150} height={150} />
                                 </div>
                             ) : localStorage.token ? (
                                 data && data[0]?.description_private ? (

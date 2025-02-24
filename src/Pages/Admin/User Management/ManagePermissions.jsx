@@ -3,7 +3,7 @@ import { PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import axiosInstance, { handleError } from "../../../axiosInstance";
-import { Hourglass, RotatingLines } from "react-loader-spinner";
+import { Hourglass, InfinitySpin, RotatingLines } from "react-loader-spinner";
 import app_vars from "../../../config";
 import userLogo from '../../../assets/user.jpeg'
 const permissionsList = [
@@ -119,7 +119,7 @@ const ManagePermissions = ({ userId, isOpen, onClose }) => {
 
                     {loading ? (
                         <div className="flex justify-center mt-5">
-                            <Hourglass width={50} height={50} />
+                            <InfinitySpin width={150} height={150} />
                         </div>
                     ) : (
                         <>

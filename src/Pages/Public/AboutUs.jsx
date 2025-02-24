@@ -6,7 +6,7 @@ import OurVision from "./OurVision";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import axiosInstance, { handleError } from "../../axiosInstance";
-import { Hourglass } from "react-loader-spinner";
+import { Hourglass, InfinitySpin } from "react-loader-spinner";
 import ReactHtmlParser from "html-react-parser";
 export default function AboutUs() {
     const [data, setData] = useState();
@@ -83,7 +83,7 @@ export default function AboutUs() {
 
             {loader ?
                 <div className="flex justify-center items-center h-full p-10">
-                    <Hourglass />
+                    <InfinitySpin width={150} height={150} />
                 </div>
                 :
                 <>
@@ -100,11 +100,11 @@ export default function AboutUs() {
                             {/* Veritas Kenya Workforce Database (VeritasKWD/Veritas Jobs) is a hiring and an opportunity marketplace. Veritas Jobs is one of its kind, subscription-based job search and candidate search employment service that seamlessly connects available Kenyan talent to available opportunities locally and internationally. Our subscription only hiring platform enhances the job seeker’s credibility by hosting only authentic credentials in the resume database. We are committed to improving the job seeker’s experience by connecting job seekers with employers, offering unmatched convenience via new job notifications, giving maximum exposure to job seekers’ profiles, and providing accurate information.  VeritasKWD is the only hiring platform in the world to adopt competency-based hiring where a candidate's coursework is given prominence. A job seeker's actual potential and value can be discerned from the field of study (program), coursework and grades scored. */}
                         </div>
                     </div>
-                    <div className="pb-5">
+                    {/* <div className="pb-5">
                         <OurVision data={vision} />
                         <OurMission data={mission} />
                         <OurValues data={values} />
-                    </div>
+                    </div> */}
                 </>
             }
             <FooterHeader />

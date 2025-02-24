@@ -3,7 +3,7 @@ import FooterHeader from "./Components/FooterHeader";
 import { useEffect, useState } from "react";
 import axiosInstance, { handleError } from "../../axiosInstance";
 import ReactHtmlParser from "html-react-parser"; // Import the parser
-import { Hourglass } from "react-loader-spinner";
+import { Hourglass, InfinitySpin } from "react-loader-spinner";
 
 export default function Opportunity() {
     const [data, setData] = useState();
@@ -46,7 +46,7 @@ export default function Opportunity() {
                         {/* Render parsed HTML content */}
                         {loader ? (
                             <div className="flex justify-center items-center h-full">
-                                <Hourglass />
+                                <InfinitySpin width={150} height={150} />
                             </div>
                         ) : localStorage.token ? (
                             data && data[0]?.description_private ? (

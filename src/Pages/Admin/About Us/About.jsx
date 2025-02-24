@@ -11,6 +11,7 @@ export default function About() {
     const editor = useRef(null);
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
+    const [loader, setLoader] = useState(false);
     const formik = useFormik({
         initialValues: {
             description: data?.description || '',
@@ -24,7 +25,7 @@ export default function About() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-
+            setLoader(true)
             try {
                 const response = await axiosInstance.post(`/api/about_us/store`, values);
                 if (response) {
@@ -35,7 +36,7 @@ export default function About() {
                 toast.error("An error occurred while saving the description");
             } finally {
                 fetchData(2);
-
+                setLoader(false)
                 formik.resetForm();
             }
         },
@@ -75,13 +76,17 @@ export default function About() {
                                         value={formik.values.description}
                                         config={{
                                             toolbarSticky: false,
-                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,undo,redo",
+                                            buttons: "bold,italic,underline,|,ul,ol,|,table,link,|,align,fontsize,undo,redo",
+                                            style: {
+                                                fontSize: ["10px", "12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px", "36px"],
+                                            },
                                         }}
                                         onBlur={(value) => formik.setFieldValue("description", value)}
                                     />
+
                                 </div>
 
-                                <div className="relative mb-4">
+                                {/* <div className="relative mb-4">
                                     <label htmlFor="our_mission" className="block text-sm font-medium text-gray-900">
                                         Write Our Mission
                                     </label>
@@ -124,10 +129,10 @@ export default function About() {
                                         }}
                                         onBlur={(value) => formik.setFieldValue("our_values", value)}
                                     />
-                                </div>
+                                </div> */}
 
                                 {/* Buttons */}
-                                {loading ? (
+                                {loader ? (
                                     <div className="flex justify-center ">
                                         <InfinitySpin width={150} color="green" />
                                     </div>

@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../../../Components/Button";
 import ManagePermissions from "./ManagePermissions";
 import ViewPermissions from "./ViewPermissions";
+import { useDropdownContext } from "../../../DropdownProvider";
 
 export default function Index() {
     const [data, setData] = useState();
@@ -54,11 +55,28 @@ export default function Index() {
     const closeViewModal = () => {
         setViewModal(false);
     }
-
+    const dropDownValues = useDropdownContext();
+    const handleChange = async (event, item) => {
+        setTableLoader(true);
+        const json = {
+            is_status: event.target.value
+        }
+        try {
+            const response = await axiosInstance.post(`/api/auth/update_password/${item?.id}`, json);
+            if (response) {
+                toast.success("Status updated")
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setTableLoader(false)
+            fetchData(1, "", "");
+        }
+    };
     return (
         <div className="container mx-auto px-4 max-w-5xl h-screen mt-4">
             <ManagePermissions userId={userId} isOpen={permissionModal} onClose={closeModal} />
-            <ViewPermissions userId={userId} isOpen={viewModal} onClose={closeViewModal}/>
+            <ViewPermissions userId={userId} isOpen={viewModal} onClose={closeViewModal} />
             <Toaster richColors />
             {tableLoader ? <LoaderTable /> : (
                 <>
@@ -75,6 +93,7 @@ export default function Index() {
                                     <th className="px-3 py-3 text-left font-semibold text-gray-900">User Name</th>
                                     <th className="px-2 py-3 text-left font-semibold text-gray-900">User Email</th>
                                     <th className="px-2 py-3 text-left font-semibold text-gray-900">Role</th>
+                                    <th className="px-2 py-3 text-left font-semibold text-gray-900">Status</th>
                                     <th className="px-2 py-3 text-left font-semibold text-gray-900">Actions</th>
                                 </tr>
                             </thead>
@@ -85,6 +104,24 @@ export default function Index() {
                                             <td className="px-4 py-3">{item?.name || "N/A"}</td>
                                             <td className="px-2 py-3">{item?.email}</td>
                                             <td className="px-2 py-3">Manager</td>
+                                            <td className="px-3 py-4 text-sm min-w-[150px] max-w-xs sm:max-w-sm">
+                                                <span className="block">
+                                                    <select
+                                                        name="job_type"
+                                                        onChange={(e) => handleChange(e, item)}
+                                                        value={item?.is_status}
+                                                        className="block w-full sm:w-auto py-1.5 px-2 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none hover:border-blue-500 mt-2"
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option key={1} value={1}>
+                                                            Active
+                                                        </option>
+                                                        <option key={2} value={2}>
+                                                            Block
+                                                        </option>
+                                                    </select>
+                                                </span>
+                                            </td>
                                             <td className="px-2 py-3">
                                                 <div className="flex items-center space-x-2">
                                                     <EyeIcon onClick={() => {

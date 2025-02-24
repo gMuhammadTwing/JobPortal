@@ -24,6 +24,7 @@ const login = async (credentials) => {
     // localStorage.setItem("payment", null)
     localStorage.setItem("user_name", response?.user?.name);
     localStorage.setItem("role_id", response?.user?.role_id);
+    localStorage.setItem("status", response?.user?.is_status);
     // localStorage.setItem("permissions", JSON.stringify(response?.user?.user_permissions)  || [] );
     const userPermissions = response?.user?.user_permissions;
     localStorage.setItem("permissions", JSON.stringify(Array.isArray(userPermissions) ? userPermissions : []));
