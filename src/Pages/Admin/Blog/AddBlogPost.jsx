@@ -181,6 +181,8 @@ const AddBlogPost = ({ isOpen, onClose, data, view }) => {
                                             style: {
                                                 fontSize: ["10px", "12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px", "36px"],
                                             },
+                                            pastePlain: false, // Allows pasting with formatting
+                                            disablePlugins: ["paste"], // Ensures paste functionality works properly
                                         }}
                                         onBlur={(value) => formik.setFieldValue("content", value)}
                                     />
