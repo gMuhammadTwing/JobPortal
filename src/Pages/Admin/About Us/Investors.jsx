@@ -65,7 +65,7 @@ export default function Index() {
             <div className="pb-15">
                 <>
                     <div className="border rounded-lg p-4 bg-white">
-                        <div className="text-center p-4 font-semibold">Veritas Endless Possibities for Investors</div>
+                        <div className="text-center p-4 font-semibold">Veritas Endless Possibilities for Investors</div>
                         {!loading &&
                             <form onSubmit={formik.handleSubmit}>
                                 <div className="relative mb-4">

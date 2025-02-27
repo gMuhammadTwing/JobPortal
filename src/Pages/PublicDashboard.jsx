@@ -78,9 +78,13 @@ const getHrefByPermission = (permission) => {
   return navItem ? navItem.href : null;
 };
 
+
 const navigation = [
   { name: 'Home', href: 'home', current: true },
-  { name: 'Jobs', href: 'jobs', single: 'jobs', current: false },
+  {
+    name: 'Jobs',
+    href: localStorage.status == 3 ? '#' : 'jobs', single: 'jobs', current: false
+  },
   {
     name: 'Job Seeker',
     single: 'job-seeker',
@@ -132,7 +136,7 @@ const navigation = [
       { name: 'About Us', href: 'about-us', current: false, },
       { name: "VeritasKWD Opportunity Creation Program", href: 'opportunity', single: 'about-us', current: false },
       { name: "VeritasKWD Projects", href: 'projects', single: 'about-us', current: false },
-      { name: "Veritas Endless Possibities for Investors", href: 'investors', single: 'about-us', current: false },
+      { name: "Veritas Endless Possibilities for Investors", href: 'investors', single: 'about-us', current: false },
       { name: "VeritasKWD Charities", href: 'charities', single: 'about-us', current: false },
       { name: "VeritasKWD Idea Incubator", href: 'incubators', single: 'about-us', current: false },
       { name: "VeritasKWD Volunteer Opportunities", href: 'volunteers', single: 'about-us', current: false },

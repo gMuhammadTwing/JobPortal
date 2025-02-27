@@ -64,41 +64,49 @@ export default function Company() {
                                 />
                             </div>
                         </div>
-                        {localStorage?.token ? (
-                            (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
+                        {localStorage?.token ?
+                            localStorage.status == 3 ?
                                 <Link
-                                    to={`/jobs/${search}`}
+                                    
                                     className="px-12 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
                                 >
                                     Search
                                 </Link> :
                                 (
-                                    localStorage.payment == 'false' ?
+                                    (localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ?
                                         <Link
-                                            to={`/home`}
-                                            onClick={() => toast.info("Cannot search untill payment approval pending")}
-                                            className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                            to={`/jobs/${search}`}
+                                            className="px-12 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
                                         >
                                             Search
-                                        </Link>
-                                        :
-                                        <Link
-                                            to={`/payment-alert`}
-                                            onClick={() => toast.info("Cannot search untill payment approval pending")}
-                                            className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
-                                        >
-                                            Search
-                                        </Link>
-                                )
-                        ) : (
-                            <Link
-                                to={`/login`}
-                                onClick={() => toast.info("Please login first")}
-                                className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
-                            >
-                                Search
-                            </Link>
-                        )}
+                                        </Link> :
+                                        (
+                                            localStorage.payment == 'false' ?
+                                                <Link
+                                                    to={`/home`}
+                                                    onClick={() => toast.info("Cannot search untill payment approval pending")}
+                                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                                >
+                                                    Search
+                                                </Link>
+                                                :
+                                                <Link
+                                                    to={`/payment-alert`}
+                                                    onClick={() => toast.info("Cannot search untill payment approval pending")}
+                                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                                >
+                                                    Search
+                                                </Link>
+                                        )
+                                ) : (
+                                <Link
+                                    to={`/login`}
+                                    onClick={() => toast.info("Please login first")}
+                                    className="px-16 bg-[#ff0000] flex shrink-0 items-center justify-center rounded-r-md text-md font-medium text-white"
+                                >
+                                    Search
+                                </Link>
+                            )}
                     </div>
 
                 </div>

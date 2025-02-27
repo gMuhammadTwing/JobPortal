@@ -22,7 +22,7 @@ const permissionsList = [
     { name: "About Us", permissions: "about_us" },
     { name: "VeritasKWD Opportunity", permissions: "veritasKWD_opportunity" },
     { name: "VeritasKWD Projects", permissions: "veritasKWD_projects" },
-    { name: "Veritas Endless Possibities for Investors", permissions: "veritasKWD_investors" },
+    { name: "Veritas Endless Possibilities for Investors", permissions: "veritasKWD_investors" },
     { name: "VeritasKWD Charities", permissions: "veritasKWD_charities" },
     { name: "VeritasKWD Idea Incubator", permissions: "veritasKWD_idea_incubators" },
     { name: "VeritasKWD Volunteers", permissions: "veritasKWD_volunteers" },

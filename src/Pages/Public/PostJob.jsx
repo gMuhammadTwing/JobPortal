@@ -22,6 +22,7 @@ export default function PostJob() {
             email: "",
             password: "",
             c_password: "",
+            is_status: 3,
         },
         validationSchema: Yup.object({
             name: Yup.string()

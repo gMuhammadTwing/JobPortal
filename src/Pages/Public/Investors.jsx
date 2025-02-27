@@ -30,7 +30,7 @@ export default function Investors() {
                 className='bg-white'
             >
                 <div className=' text-center bg-[#FFF5F3] p-12'>
-                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Veritas Endless Possibities for Investors</h1>
+                    <h1 className="font-medium text-4xl sm:text-4xl md:text-5xl text-[#ff0000]">Veritas Endless Possibilities for Investors</h1>
                     {/* <p>We are dedicated to bridging the gap between talent and opportunity</p> */}
                     <div className="mt-5 flex justify-center cursor-pointer">
                         <Link

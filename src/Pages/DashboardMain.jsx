@@ -78,7 +78,7 @@ export default function DashboardMain() {
         { name: "About Us", href: "about", permissions: 'about_us', single: "about", icon: Bars3Icon, current: false },
         { name: "VeritasKWD Opportunity", href: "admin_opportunity", permissions: 'veritasKWD_opportunity', single: "admin_opportunity", icon: BriefcaseIcon, current: false },
         { name: "VeritasKWD Projects", href: "admin_projects", permissions: 'veritasKWD_projects', single: "admin_projects", icon: GlobeAltIcon, current: false },
-        { name: "Veritas Endless Possibities for Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },
+        { name: "Veritas Endless Possibilities for Investors", href: "admin_investors", permissions: 'veritasKWD_investors', single: "admin_investors", icon: CurrencyDollarIcon, current: false },
         { name: "VeritasKWD Charities", href: "admin_charities", permissions: 'veritasKWD_charities', single: "admin_charities", icon: HeartIcon, current: false },
         { name: "VeritasKWD Idea Incubator", href: "admin_idea_incubators", permissions: 'veritasKWD_idea_incubators', single: "admin_idea_incubators", icon: LightBulbIcon, current: false },
         { name: "VeritasKWD Volunteers", href: "admin_volunteers", permissions: 'veritasKWD_volunteers', single: "admin_volunteers", icon: HandRaisedIcon, current: false },

@@ -37,6 +37,7 @@ export default function JobSeekerSignup() {
         password: "",
         c_password: "",
         role_id: 2,
+        is_status: 3,
     };
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
