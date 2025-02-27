@@ -37,7 +37,7 @@ export default function JobSeekerSignup() {
         password: "",
         c_password: "",
         role_id: 2,
-        is_status: 3,
+        is_status: 1,
     };
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -47,6 +47,7 @@ export default function JobSeekerSignup() {
                 toast.success(response.message || "Account created successfully!");
                 localStorage.setItem("token", response?.data?.token?.accessToken);
                 localStorage.setItem("user_id", response?.data?.token?.token?.user_id);
+                localStorage.setItem("status", values?.is_status);
                 setUserId(response?.data?.token?.token?.user_id);
                 resetForm();
                 setRegistered(true)

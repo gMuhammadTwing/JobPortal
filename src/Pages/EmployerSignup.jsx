@@ -22,7 +22,6 @@ export default function EmployerSignup() {
             email: "",
             password: "",
             c_password: "",
-            is_status: 3,
         },
         validationSchema: Yup.object({
             name: Yup.string()
@@ -44,18 +43,23 @@ export default function EmployerSignup() {
         onSubmit: async (values) => {
             setLoading(true);
             try {
-                const response = await axiosInstance.post("api/auth/register", values);
+                const updatedValues = {
+                    ...values,
+                    is_status: values.role_id == 3 ? 3 : 1
+                };
+                const response = await axiosInstance.post("api/auth/register", updatedValues);
                 if (response) {
                     toast.success(response.message || "Account created successfully!");
                     localStorage.setItem("token", response?.data?.token?.accessToken);
                     localStorage.setItem("user_id", response?.data?.token?.token?.user_id);
+                    localStorage.setItem("status", response?.user?.is_status);
                     setUserId(response?.data?.token?.token?.user_id);
                     if (values?.role_id == 4) {
-                        auth.login(values)
+                        auth.login(updatedValues)
                         setRegistered(true)
                     }
                     else {
-                        auth.login(values)
+                        auth.login(updatedValues)
                         navigate("/home")
                         window.location.reload();
                     }
