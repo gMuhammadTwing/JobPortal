@@ -39,7 +39,7 @@ export default function EmployerProfile() {
             contact_person_name: data?.contact_person_name || "",
             contact_number: data?.contact_number || "",
             contact_email: data?.contact_email || "",
-            logo: data?.logo || null,
+            // logo: data?.logo || null,
             description: data?.description || "",
             nea_number: data?.nea_number || "",
             certified_expiration_date: data?.certified_expiration_date || "",
@@ -55,7 +55,7 @@ export default function EmployerProfile() {
             //     .required("Phone number is required")
             //     .matches(/^[0-9]{11}$/, "Phone number must be 11 digits"),
             contact_email: Yup.string().email("Invalid email format").required("Email is required"),
-            logo: Yup.mixed().nullable(),
+            // logo: Yup.mixed().nullable(),
         }),
         onSubmit: async (values) => {
             const formData = new FormData();
