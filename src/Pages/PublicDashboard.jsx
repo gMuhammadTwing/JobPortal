@@ -96,7 +96,7 @@ const navigation = [
       { name: "Why Register?", href: 'why_subscribe' },
       {
         name: "Find a job",
-        href: localStorage?.token ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : 'login',
+        href: localStorage.token ? (localStorage.payment == 'false' ? '#' : (localStorage?.status != 3 ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : '#')) : 'login',
         single: 'find',
         current: false
       },
