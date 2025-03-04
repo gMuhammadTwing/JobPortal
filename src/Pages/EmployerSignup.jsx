@@ -51,17 +51,21 @@ export default function EmployerSignup() {
                 if (response) {
                     toast.success(response.message || "Account created successfully!");
                     localStorage.setItem("token", response?.data?.token?.accessToken);
+                    localStorage.setItem("user_name", values.name);
                     localStorage.setItem("user_id", response?.data?.token?.token?.user_id);
-                    localStorage.setItem("status", response?.user?.is_status);
+                    localStorage.setItem("status", updatedValues?.is_status);
+                    localStorage.setItem("role_id", values?.role_id);
                     setUserId(response?.data?.token?.token?.user_id);
                     if (values?.role_id == 4) {
                         auth.login(updatedValues)
                         setRegistered(true)
                     }
                     else {
-                        auth.login(updatedValues)
-                        navigate("/home")
-                        window.location.reload();
+                        const res = auth.login(updatedValues)
+                        if (res) {
+                            navigate("/home")
+                            window.location.reload();
+                        }
                     }
                     getPaymentInstructions();
                     formik.resetForm();
@@ -70,6 +74,8 @@ export default function EmployerSignup() {
                 handleError(error);
             } finally {
                 setLoading(false);
+                // navigate("/home")
+                // window.location.reload();
             }
         },
     });

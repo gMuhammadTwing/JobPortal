@@ -78,7 +78,8 @@ const getHrefByPermission = (permission) => {
   return navItem ? navItem.href : null;
 };
 
-
+console.log(localStorage.payment)
+console.log(localStorage.role_id)
 const navigation = [
   { name: 'Home', href: 'home', current: true },
   {
@@ -96,7 +97,7 @@ const navigation = [
       { name: "Why Register?", href: 'why_subscribe' },
       {
         name: "Find a job",
-        href: localStorage.token ? (localStorage.payment == 'false' ? '#' : (localStorage?.status != 3 ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : '#')) : 'login',
+        href: localStorage.token ? (localStorage.role_id == 3 ? '/home' : (localStorage?.status != 3 ? ((localStorage.payment == 'true' || localStorage.role_id == 1 || localStorage.role_id == 5 || localStorage.role_id == 3) ? 'jobs' : 'payment-alert') : '#')) : 'login',
         single: 'find',
         current: false
       },
