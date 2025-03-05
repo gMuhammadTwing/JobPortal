@@ -22,7 +22,9 @@ export default function JoinCommunity() {
 
                 <div className="text-center p-10 space-y-4 max-w-7xl mx-auto">
                     <div className="font-bold text-2xl">Join Our Facebook</div>
-                    <div className="font-bold underline text-[#ff0000] text-2xl">Community</div>
+                    <div className="font-bold underline text-[#ff0000] text-2xl">
+                        <a href="https://www.facebook.com/profile.php?id=61567467893462" target="_blank">Community</a>
+                    </div>
                     <div className="text-center max-w-xl mx-auto">
                         Join the Veritas Jobs Facebook community, a place where you can meet other job-seekers and employers.
                     </div>
