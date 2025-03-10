@@ -213,7 +213,7 @@ export default function Index() {
                                                                 </select>
                                                             </span>
                                                         </td>
-                                                        <td className="py-4 pl-4 pr-3 text-smsm:pl-6 flex">
+                                                        <td className="py-8 pl-4 pr-3 text-smsm:pl-6 flex">
                                                             <Link to={"view-employer/" + item?.id}><EyeIcon className="w-5 h-5 cursor-pointer" title="View" /></Link>
                                                             <Link to={"edit-employer/" + item?.id}><PencilIcon className="w-5 h-5 cursor-pointer text-blue-500" title="Edit" /></Link>
                                                         </td>
